@@ -75,19 +75,19 @@ const Index = () => {
                 icon={<DollarSign size={32} />}
                 title="Smart Investments"
                 description="Invest in sustainable student housing that helps maintain affordable city centers while earning above-market returns."
-                opacity="opacity-60"
+                opacity="opacity-30"
               />
               <FeatureCard
                 icon={<Home size={32} />}
                 title="Quality Housing"
                 description="Find comfortable and affordable housing options, perfect for students and short-term stays."
-                opacity="opacity-60"
+                opacity="opacity-30"
               />
               <FeatureCard
                 icon={<Users size={32} />}
                 title="Community First"
                 description="Join a community of investors, students, and travelers all benefiting from shared spaces."
-                opacity="opacity-60"
+                opacity="opacity-30"
               />
             </div>
           </div>
@@ -124,7 +124,7 @@ const FeatureCard = ({
   icon,
   title,
   description,
-  opacity = "opacity-60"
+  opacity = "opacity-30"
 }: {
   icon: React.ReactNode;
   title: string;
