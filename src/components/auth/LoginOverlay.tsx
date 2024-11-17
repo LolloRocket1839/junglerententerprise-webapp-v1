@@ -112,7 +112,7 @@ const LoginOverlay = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10 bg-white/5 border-white/10 text-white placeholder-white/40 focus:border-primary"
-                  placeholder="student@university.edu"
+                  placeholder="user@domain.com"
                 />
               </div>
             </div>
