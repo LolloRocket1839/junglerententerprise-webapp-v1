@@ -50,7 +50,7 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-gradient-to-b from-primary-dark/20 via-background to-background backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-12 text-primary-dark">
             Why Choose Jungle Rent?
