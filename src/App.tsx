@@ -9,6 +9,7 @@ import Invest from "./pages/Invest";
 import Stay from "./pages/Stay";
 import Rent from "./pages/Rent";
 import Referral from "./pages/Referral";
+import LoginOverlay from "./components/auth/LoginOverlay";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ const App = () => (
           <Route path="/rent" element={<Rent />} />
           <Route path="/stay" element={<Stay />} />
           <Route path="/referral" element={<Referral />} />
+          <Route path="/login" element={<LoginOverlay />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
