@@ -11,7 +11,7 @@ const properties = [
     totalValue: "€2,500,000",
     tokenPrice: "€300",
     availability: "75%",
-    expectedROI: "10%",
+    expectedROI: "8.5%",
     image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
   },
   {
@@ -22,7 +22,7 @@ const properties = [
     totalValue: "€3,200,000",
     tokenPrice: "€300",
     availability: "60%",
-    expectedROI: "10%",
+    expectedROI: "9.2%",
     image: "https://images.unsplash.com/photo-1460317442991-0ec209397118?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
   },
   {
@@ -33,7 +33,7 @@ const properties = [
     totalValue: "€1,800,000",
     tokenPrice: "€300",
     availability: "85%",
-    expectedROI: "10%",
+    expectedROI: "7.8%",
     image: "https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3"
   },
 ];
