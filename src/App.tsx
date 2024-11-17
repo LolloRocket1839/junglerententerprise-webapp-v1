@@ -14,20 +14,20 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <nav className="bg-white shadow-sm">
+        <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b border-border/40">
           <div className="container mx-auto px-4">
             <div className="flex justify-between items-center h-16">
               <Link to="/" className="text-xl font-bold text-primary">
                 Jungle Rent
               </Link>
               <div className="flex gap-4">
-                <Button variant="ghost" asChild>
+                <Button variant="ghost" asChild className="text-secondary">
                   <Link to="/invest">Invest</Link>
                 </Button>
-                <Button variant="ghost" asChild>
+                <Button variant="ghost" asChild className="text-secondary">
                   <Link to="/rent">Rent</Link>
                 </Button>
-                <Button variant="ghost" asChild>
+                <Button variant="ghost" asChild className="text-secondary">
                   <Link to="/stay">Stay</Link>
                 </Button>
                 <Button variant="default" asChild>
