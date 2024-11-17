@@ -14,27 +14,40 @@ const SearchSection = () => {
         </p>
       </div>
 
-      <div className="max-w-4xl mx-auto">
-        <div className="glass-card p-3">
-          <div className="grid grid-cols-1 md:grid-cols-7 gap-3">
+      <div className="max-w-4xl mx-auto px-4">
+        <div className="glass-card p-4">
+          <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
             <div className="md:col-span-3 relative">
-              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60">
+                <MapPin className="w-5 h-5" />
+              </div>
               <input
                 type="text"
                 placeholder="University City"
-                className="glass-input w-full"
+                className="glass-input w-full pl-12"
+                aria-label="University City"
               />
             </div>
+            
             <div className="md:col-span-3 relative">
-              <Home className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-              <select className="glass-input w-full appearance-none">
-                <option>Room Type</option>
-                <option>Single Room</option>
-                <option>Double Room</option>
-                <option>Studio</option>
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60">
+                <Home className="w-5 h-5" />
+              </div>
+              <select 
+                className="glass-input w-full pl-12 appearance-none"
+                aria-label="Room Type"
+              >
+                <option value="">Room Type</option>
+                <option value="single">Single Room</option>
+                <option value="double">Double Room</option>
+                <option value="studio">Studio</option>
               </select>
             </div>
-            <button className="glass-button flex items-center justify-center gap-2 w-full">
+
+            <button 
+              className="glass-button flex items-center justify-center gap-3 w-full"
+              aria-label="Search"
+            >
               <Search className="w-5 h-5" />
               <span className="hidden md:inline">Search</span>
             </button>
