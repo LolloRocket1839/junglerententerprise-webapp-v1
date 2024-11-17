@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Search, MapPin, Calendar, Users } from 'lucide-react';
+import { Search, MapPin, Calendar, Users, Shield, Star, Wifi, Coffee, Book, ArrowRight } from 'lucide-react';
 
 const Rent = () => {
   return (
