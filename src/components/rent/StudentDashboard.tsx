@@ -108,7 +108,7 @@ const StudentDashboard = () => {
                   key={index}
                   className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-col items-center text-center gap-4">
                     <div className={`p-3 rounded-lg bg-${stat.type === 'warning' ? 'yellow' : stat.type === 'success' ? 'green' : 'blue'}-500/20`}>
                       <stat.icon className={`w-6 h-6 text-${stat.type === 'warning' ? 'yellow' : stat.type === 'success' ? 'green' : 'blue'}-500`} />
                     </div>
