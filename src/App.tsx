@@ -10,6 +10,7 @@ import Stay from "./pages/Stay";
 import Rent from "./pages/Rent";
 import Referral from "./pages/Referral";
 import LoginOverlay from "./components/auth/LoginOverlay";
+import JungleHelp from "./components/chat/JungleHelp";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +54,7 @@ const App = () => (
           <Route path="/referral" element={<Referral />} />
           <Route path="/login" element={<LoginOverlay />} />
         </Routes>
+        <JungleHelp />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
