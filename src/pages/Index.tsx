@@ -75,22 +75,26 @@ const Index = () => {
                 icon={<DollarSign size={32} />}
                 title="Smart Investments"
                 description="Invest in sustainable student housing that helps maintain affordable city centers while earning above-market returns."
+                opacity="opacity-60"
               />
               <FeatureCard
                 icon={<Home size={32} />}
                 title="Quality Housing"
                 description="Find comfortable and affordable housing options, perfect for students and short-term stays."
+                opacity="opacity-60"
               />
               <FeatureCard
                 icon={<Users size={32} />}
                 title="Community First"
                 description="Join a community of investors, students, and travelers all benefiting from shared spaces."
+                opacity="opacity-60"
               />
             </div>
           </div>
         </div>
       </section>
 
+      {/* CTA Section */}
       <section className="relative py-20">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary-dark/10 to-background/90" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -120,17 +124,19 @@ const FeatureCard = ({
   icon,
   title,
   description,
+  opacity = "opacity-60"
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
+  opacity?: string;
 }) => (
   <div className="p-6 rounded-lg backdrop-blur-sm bg-white/10 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300">
     <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4">
       {icon}
     </div>
     <h3 className="text-xl font-semibold mb-2 text-primary">{title}</h3>
-    <p className="text-secondary/80">{description}</p>
+    <p className={`text-secondary/80 ${opacity} hover:opacity-100 transition-opacity duration-300`}>{description}</p>
   </div>
 );
 
