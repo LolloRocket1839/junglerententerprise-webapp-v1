@@ -35,7 +35,7 @@ const StaySection = () => {
             Find your perfect short-term stay
           </h1>
           <p className="text-xl text-white/80 animate-fade-in">
-            Book verified accommodations near where your exams take place
+            Book verified accommodations near where you need to be
           </p>
         </div>
 
