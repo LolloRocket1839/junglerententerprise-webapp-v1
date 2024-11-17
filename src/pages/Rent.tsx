@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { Toaster } from "@/components/ui/toaster";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StudentDashboard from '@/components/rent/StudentDashboard';
 import LoginOverlay from '@/components/auth/LoginOverlay';
@@ -36,13 +36,13 @@ const Rent = () => {
           <TabsList className="grid w-full grid-cols-2 mb-8 bg-white/10 backdrop-blur-md border border-white/20">
             <TabsTrigger 
               value="search" 
-              className="data-[state=active]:bg-green-500 data-[state=active]:text-white py-3"
+              className="flex items-center justify-center data-[state=active]:bg-green-500 data-[state=active]:text-white py-3 text-center"
             >
               Find Accommodation
             </TabsTrigger>
             <TabsTrigger 
               value="profile" 
-              className="data-[state=active]:bg-green-500 data-[state=active]:text-white py-3"
+              className="flex items-center justify-center data-[state=active]:bg-green-500 data-[state=active]:text-white py-3 text-center"
             >
               Student Profile
             </TabsTrigger>
