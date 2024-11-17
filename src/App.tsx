@@ -36,7 +36,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-            isScrolled ? 'bg-background/95 backdrop-blur-xl shadow-lg' : 'bg-transparent'
+            isScrolled ? 'glass' : 'bg-transparent'
           }`}>
             <div className="container mx-auto px-6">
               <div className="flex justify-between items-center h-16">
@@ -61,7 +61,7 @@ const App = () => {
                   <Button 
                     variant="default" 
                     asChild 
-                    className="apple-button"
+                    className="glass-button"
                   >
                     <Link to="/login">Login</Link>
                   </Button>

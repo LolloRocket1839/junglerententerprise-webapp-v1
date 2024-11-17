@@ -39,6 +39,37 @@
   }
 }
 
+/* Glass Effects */
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg;
+  }
+
+  .glass-card {
+    @apply glass rounded-2xl transition-all duration-300 hover:bg-white/10;
+  }
+
+  .glass-button {
+    @apply glass rounded-full px-6 py-3 text-sm font-medium 
+           text-white transition-all duration-300 hover:bg-white/20 
+           active:scale-95 disabled:opacity-50;
+  }
+
+  .glass-input {
+    @apply glass rounded-lg px-4 py-2 
+           text-white placeholder-white/40 transition-all duration-300
+           focus:outline-none focus:ring-2 focus:ring-primary/50;
+  }
+
+  .glass-nav {
+    @apply glass sticky top-0 z-50 border-b border-white/10;
+  }
+
+  .glass-dialog {
+    @apply glass rounded-2xl shadow-2xl;
+  }
+}
+
 /* Enhanced Animations */
 @layer utilities {
   .animate-float {
@@ -91,41 +122,4 @@
     opacity: 1;
     filter: blur(0);
   }
-}
-
-/* Glass Effect */
-.glass {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10;
-}
-
-.glass-hover {
-  @apply hover:bg-white/10 transition-all duration-500;
-}
-
-/* Premium Card Effect */
-.premium-card {
-  @apply glass rounded-2xl p-6 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/10;
-}
-
-/* Apple-style Typography */
-.display-text {
-  @apply font-medium tracking-tight leading-tight;
-}
-
-.headline-text {
-  @apply font-semibold tracking-tight leading-tight;
-}
-
-/* Apple-style Button */
-.apple-button {
-  @apply rounded-full bg-white/10 backdrop-blur-xl px-6 py-3 text-sm font-medium 
-         text-white transition-all duration-300 hover:bg-white/20 
-         active:scale-95 disabled:opacity-50;
-}
-
-/* Apple-style Input */
-.apple-input {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-lg px-4 py-2 
-         text-white placeholder-white/40 transition-all duration-300
-         focus:outline-none focus:ring-2 focus:ring-primary/50;
 }
