@@ -21,9 +21,9 @@ const LoginOverlay = () => {
   };
 
   const handleClose = () => {
-    // If we came from the rent page with profile tab, stay there
     if (location.pathname === '/rent') {
-      navigate('/rent');
+      // Navigate to rent page with profile tab selected
+      navigate('/rent', { state: { activeTab: 'profile' } });
     } else {
       navigate('/');
     }
@@ -49,8 +49,10 @@ const LoginOverlay = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-4 top-4 text-white/60 hover:text-white"
+          className="absolute right-4 top-4 text-white/60 hover:text-white transition-all duration-200 
+            hover:bg-white/10 rounded-full p-2 backdrop-blur-sm"
           onClick={handleClose}
+          aria-label="Close login overlay"
         >
           <X className="h-6 w-6" />
         </Button>
@@ -159,14 +161,6 @@ const LoginOverlay = () => {
           </div>
         </div>
       </div>
-
-      <Button
-        variant="default"
-        className="fixed bottom-8 right-8 rounded-full shadow-lg flex items-center gap-2 z-50"
-      >
-        <MessageCircle className="w-6 h-6" />
-        <span>Jungle Help 24/7</span>
-      </Button>
     </div>
   );
 };
