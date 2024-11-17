@@ -74,7 +74,7 @@ const Index = () => {
               <FeatureCard
                 icon={<DollarSign size={32} />}
                 title="Smart Investments"
-                description="Invest in student housing through SFPs and earn returns from both long-term and short-term rentals."
+                description="Invest in sustainable student housing that helps maintain affordable city centers while earning above-market returns."
               />
               <FeatureCard
                 icon={<Home size={32} />}
