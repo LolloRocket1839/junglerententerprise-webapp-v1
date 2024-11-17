@@ -169,15 +169,6 @@ const StudentDashboard = () => {
           </div>
         </div>
       </div>
-
-      {/* Jungle Help Button */}
-      <button
-        onClick={() => setShowJungleHelp(true)}
-        className="fixed bottom-8 right-8 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg flex items-center gap-2"
-      >
-        <MessageCircle className="w-6 h-6" />
-        <span>Jungle Help 24/7</span>
-      </button>
     </div>
   );
 };
