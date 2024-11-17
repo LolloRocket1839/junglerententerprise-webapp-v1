@@ -21,7 +21,6 @@ const LoginOverlay = () => {
   };
 
   const handleClose = () => {
-    // If we came from the rent page with profile tab, stay there
     if (location.pathname === '/rent') {
       navigate('/rent');
     } else {
@@ -49,10 +48,11 @@ const LoginOverlay = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-4 top-4 text-white/60 hover:text-white"
+          className="absolute right-2 top-2 p-1.5 text-white/60 hover:text-white hover:bg-white/10 rounded-full transition-all duration-200"
           onClick={handleClose}
+          aria-label="Close login overlay"
         >
-          <X className="h-6 w-6" />
+          <X className="h-5 w-5" />
         </Button>
 
         <div className="p-8">
