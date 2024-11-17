@@ -17,7 +17,7 @@ const StaySection = () => {
     location: '',
     dates: '',
     guests: 1,
-    purpose: 'exam' // or 'vacation'
+    purpose: 'exam'
   });
 
   return (
@@ -35,7 +35,7 @@ const StaySection = () => {
             Find your perfect short-term stay
           </h1>
           <p className="text-xl text-white/80 animate-fade-in">
-            Book verified accommodations near your university
+            Book verified accommodations near where your exams take place
           </p>
         </div>
 
