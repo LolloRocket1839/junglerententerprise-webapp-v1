@@ -31,11 +31,9 @@ const LoginOverlay = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 backdrop-blur-sm bg-transparent">
+    <div className="fixed inset-0 z-50 backdrop-blur-md bg-black/40">
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-        w-full max-w-md mx-4 bg-white/10 backdrop-blur-lg
-        rounded-2xl border border-white/20 shadow-xl
-        animate-scale-in">
+        w-full max-w-md mx-4 glass rounded-2xl shadow-2xl animate-scale-in">
         <Button
           variant="ghost"
           size="icon"

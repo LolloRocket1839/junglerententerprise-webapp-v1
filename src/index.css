@@ -23,7 +23,7 @@
     --border: 160 20% 20%;
     --input: 160 20% 20%;
     --ring: 120 92% 57%;
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 }
 
@@ -32,7 +32,45 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 min-h-screen text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+/* Enhanced Animations */
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite;
+  }
+  
+  .animate-float-slower {
+    animation: float 10s ease-in-out infinite;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Glass Effect */
+.glass {
+  @apply bg-white/10 backdrop-blur-md border border-white/20;
+}
+
+.glass-hover {
+  @apply hover:bg-white/15 transition-colors duration-300;
+}
+
+/* Premium Card Effect */
+.premium-card {
+  @apply glass rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/10;
 }

@@ -21,7 +21,13 @@ const StaySection = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-800 to-emerald-900">
+    <div className="min-h-screen">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float-slow" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float-slower" />
+      </div>
+
       {/* Hero Search Section */}
       <div className="relative py-20 px-8">
         <div className="max-w-4xl mx-auto text-center mb-8">
@@ -87,7 +93,7 @@ const StaySection = () => {
           {[1, 2, 3, 4, 5, 6].map((item) => (
             <div 
               key={item} 
-              className="bg-white/10 backdrop-blur-md rounded-xl overflow-hidden border border-white/20 hover:border-green-500/50 transition-all hover:scale-[1.02] duration-300"
+              className="premium-card"
             >
               {/* Property Image */}
               <div className="relative h-48 bg-white/5">
