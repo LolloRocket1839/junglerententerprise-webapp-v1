@@ -14,13 +14,13 @@ const Invest = () => {
       </div>
 
       {/* Content */}
-      <div className="relative container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-white mb-8 animate-fade-in">
+      <div className="relative container mx-auto px-4 py-4 md:py-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 md:mb-8 animate-fade-in">
           Investment Dashboard
         </h1>
         
         {/* Stats Overview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
           <StatsCard
             title="Total Properties"
             value="24"
@@ -38,32 +38,35 @@ const Invest = () => {
             value="1,234"
             icon={Users}
             trend="up"
+            className="col-span-2 md:col-span-1"
           />
         </div>
 
         {/* Navigation Tabs */}
         <Tabs defaultValue="opportunities" className="w-full animate-fade-in">
-          <TabsList className="w-full glass mb-6">
-            <TabsTrigger value="opportunities" className="text-white">
-              Opportunities
-            </TabsTrigger>
-            <TabsTrigger value="my-investments" className="text-white">
-              My Investments
-            </TabsTrigger>
-            <TabsTrigger value="tokenization" className="text-white">
-              Tokenization
-            </TabsTrigger>
-            <TabsTrigger value="analytics" className="text-white">
-              Analytics
-            </TabsTrigger>
-          </TabsList>
+          <div className="overflow-x-auto pb-2">
+            <TabsList className="w-full md:w-auto glass mb-4 md:mb-6 inline-flex whitespace-nowrap">
+              <TabsTrigger value="opportunities" className="text-white px-3 md:px-4">
+                Opportunities
+              </TabsTrigger>
+              <TabsTrigger value="my-investments" className="text-white px-3 md:px-4">
+                My Investments
+              </TabsTrigger>
+              <TabsTrigger value="tokenization" className="text-white px-3 md:px-4">
+                Tokenization
+              </TabsTrigger>
+              <TabsTrigger value="analytics" className="text-white px-3 md:px-4">
+                Analytics
+              </TabsTrigger>
+            </TabsList>
+          </div>
           
           <TabsContent value="opportunities">
             <InvestmentOpportunities />
           </TabsContent>
           
           <TabsContent value="my-investments">
-            <Card className="glass p-6">
+            <Card className="glass p-4 md:p-6">
               <div className="text-white/60">
                 Coming soon in Phase 2
               </div>
@@ -71,7 +74,7 @@ const Invest = () => {
           </TabsContent>
           
           <TabsContent value="tokenization">
-            <Card className="glass p-6">
+            <Card className="glass p-4 md:p-6">
               <div className="text-white/60">
                 Coming soon in Phase 2
               </div>
@@ -79,7 +82,7 @@ const Invest = () => {
           </TabsContent>
           
           <TabsContent value="analytics">
-            <Card className="glass p-6">
+            <Card className="glass p-4 md:p-6">
               <div className="text-white/60">
                 Coming soon in Phase 2
               </div>
