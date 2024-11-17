@@ -20,22 +20,20 @@ const LoginOverlay = () => {
   };
 
   const handleClose = () => {
-    navigate('/');
+    navigate(-1); // This will go back to the previous page
   };
 
   return (
-    <div 
-      className="fixed inset-0 z-50 backdrop-blur-md bg-green-900/40 animate-fade-in"
-    >
+    <div className="fixed inset-0 z-50 backdrop-blur-md bg-green-900/40 animate-fade-in">
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
         w-full max-w-md mx-4 bg-white/10 backdrop-blur-lg
         rounded-2xl border border-white/20 shadow-xl
         animate-scale-in">
-        {/* Close Button */}
+        {/* Close Button - Now visible on all screen sizes */}
         <Button
           variant="ghost"
           size="icon"
-          className="absolute right-4 top-4 text-white/60 hover:text-white md:hidden"
+          className="absolute right-4 top-4 text-white/60 hover:text-white"
           onClick={handleClose}
         >
           <X className="h-6 w-6" />
