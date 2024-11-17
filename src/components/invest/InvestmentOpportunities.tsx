@@ -24,7 +24,7 @@ const InvestmentOpportunities = () => {
     },
     {
       title: "Average ROI",
-      value: "18.2%",
+      value: "10%", // Updated ROI value
       change: "+3.2%",
       icon: TrendingUp,
       trend: "up" as const
