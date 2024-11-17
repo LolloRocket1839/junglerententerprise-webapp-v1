@@ -3,13 +3,14 @@ import { MessageCircle, Mail, Lock, ArrowRight, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const LoginOverlay = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { toast } = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +21,18 @@ const LoginOverlay = () => {
   };
 
   const handleClose = () => {
-    navigate('/');
+    // If we came from the rent page with profile tab, stay there
+    if (location.pathname === '/rent') {
+      navigate('/rent');
+    } else {
+      navigate('/');
+    }
+  };
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      handleClose();
+    }
   };
 
   const handleSocialLogin = (provider: string) => {
@@ -31,7 +43,7 @@ const LoginOverlay = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 backdrop-blur-md bg-black/40">
+    <div className="fixed inset-0 z-50 backdrop-blur-md bg-black/40" onClick={handleBackdropClick}>
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
         w-full max-w-md mx-4 glass rounded-2xl shadow-2xl animate-scale-in">
         <Button
