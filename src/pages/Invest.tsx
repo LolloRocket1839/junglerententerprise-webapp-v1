@@ -6,35 +6,41 @@ import StatsCard from "@/components/invest/StatsCard";
 
 const Invest = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#065f46] to-[#047857] px-4 py-8">
-      {/* Stats Overview */}
-      <div className="container mx-auto mb-8">
+    <div className="min-h-screen relative">
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float-slow" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float-slower" />
+      </div>
+
+      {/* Content */}
+      <div className="relative container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-white mb-8 animate-fade-in">
           Investment Dashboard
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        {/* Stats Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <StatsCard
             title="Total Properties"
             value="24"
-            icon={<Building2 className="w-6 h-6" />}
+            icon={<Building2 className="w-6 h-6 text-primary" />}
           />
           <StatsCard
             title="Average ROI"
             value="10%"
-            icon={<TrendingUp className="w-6 h-6" />}
+            icon={<TrendingUp className="w-6 h-6 text-primary" />}
           />
           <StatsCard
             title="Active Investors"
             value="1,234"
-            icon={<Users className="w-6 h-6" />}
+            icon={<Users className="w-6 h-6 text-primary" />}
           />
         </div>
-      </div>
 
-      {/* Navigation Tabs */}
-      <div className="container mx-auto">
-        <Tabs defaultValue="opportunities" className="w-full">
-          <TabsList className="w-full bg-white/10 backdrop-blur-sm border border-white/20">
+        {/* Navigation Tabs */}
+        <Tabs defaultValue="opportunities" className="w-full animate-fade-in">
+          <TabsList className="w-full glass mb-6">
             <TabsTrigger value="opportunities" className="text-white">
               Opportunities
             </TabsTrigger>
@@ -48,26 +54,30 @@ const Invest = () => {
               Analytics
             </TabsTrigger>
           </TabsList>
+          
           <TabsContent value="opportunities">
             <InvestmentOpportunities />
           </TabsContent>
+          
           <TabsContent value="my-investments">
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <div className="p-6 text-white/60">
+            <Card className="glass p-6">
+              <div className="text-white/60">
                 Coming soon in Phase 2
               </div>
             </Card>
           </TabsContent>
+          
           <TabsContent value="tokenization">
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <div className="p-6 text-white/60">
+            <Card className="glass p-6">
+              <div className="text-white/60">
                 Coming soon in Phase 2
               </div>
             </Card>
           </TabsContent>
+          
           <TabsContent value="analytics">
-            <Card className="bg-white/10 backdrop-blur-sm border-white/20">
-              <div className="p-6 text-white/60">
+            <Card className="glass p-6">
+              <div className="text-white/60">
                 Coming soon in Phase 2
               </div>
             </Card>

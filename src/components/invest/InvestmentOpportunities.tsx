@@ -40,9 +40,12 @@ const properties = [
 
 const InvestmentOpportunities = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {properties.map((property) => (
-        <Card key={property.id} className="bg-white/10 backdrop-blur-sm border-white/20 overflow-hidden transition-all duration-300 hover:scale-102 hover:shadow-lg hover:shadow-[#22c55e]/20">
+        <Card 
+          key={property.id} 
+          className="glass overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20 animate-fade-in"
+        >
           <div className="aspect-video relative">
             <img
               src={property.image}
@@ -79,7 +82,7 @@ const InvestmentOpportunities = () => {
               </div>
               <div>
                 <p className="text-sm text-white/60">Expected ROI</p>
-                <p className="text-lg font-semibold text-[#4ade80]">
+                <p className="text-lg font-semibold text-primary">
                   {property.expectedROI}
                 </p>
               </div>
@@ -87,13 +90,13 @@ const InvestmentOpportunities = () => {
             <div className="flex gap-3">
               <Button
                 variant="outline"
-                className="flex-1 border-white/20 text-white hover:bg-white/20"
+                className="flex-1 glass hover:bg-white/20"
               >
                 Details
               </Button>
               <Button
                 variant="default"
-                className="flex-1 bg-[#22c55e] hover:bg-[#16a34a] text-white"
+                className="flex-1 bg-primary hover:bg-primary-dark text-white"
               >
                 Invest Now
               </Button>
