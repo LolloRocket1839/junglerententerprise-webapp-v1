@@ -30,12 +30,12 @@ const JungleHelp = () => {
         className="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-white rounded-full p-4 shadow-lg flex items-center gap-2 z-50 transition-all duration-200 animate-fade-in"
       >
         <MessageCircle className="w-6 h-6" />
-        <span>Jungle Help 24/7</span>
+        <span className="hidden sm:inline">Jungle Help 24/7</span>
       </button>
 
       {/* Chat Bot Modal */}
       {showChat && (
-        <div className="fixed bottom-24 right-6 w-96 bg-background/60 backdrop-blur-xl rounded-xl border border-white/20 shadow-2xl z-50 animate-fade-in">
+        <div className="fixed bottom-0 right-0 w-full sm:bottom-24 sm:right-6 sm:w-96 bg-background/60 backdrop-blur-xl rounded-t-xl sm:rounded-xl border border-white/20 shadow-2xl z-50 animate-fade-in">
           {/* Header */}
           <div className="p-4 border-b border-white/10 flex justify-between items-center bg-white/5 rounded-t-xl backdrop-blur-md">
             <div className="flex items-center gap-2">
@@ -56,7 +56,7 @@ const JungleHelp = () => {
           </div>
 
           {/* Chat Content */}
-          <div className="h-96 p-4 overflow-y-auto space-y-4">
+          <div className="h-[60vh] sm:h-96 p-4 overflow-y-auto space-y-4">
             {/* Bot Messages */}
             <div className="flex flex-col gap-2">
               <div className="bg-white/10 backdrop-blur-sm p-3 rounded-lg max-w-[80%] text-white animate-fade-in">
