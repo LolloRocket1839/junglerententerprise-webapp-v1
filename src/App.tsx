@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Index from "./pages/Index";
 import Invest from "./pages/Invest";
 import Stay from "./pages/Stay";
+import Referral from "./pages/Referral";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,9 @@ const App = () => (
                 <Button variant="ghost" asChild className="text-secondary">
                   <Link to="/stay">Stay</Link>
                 </Button>
+                <Button variant="ghost" asChild className="text-secondary">
+                  <Link to="/referral">Referral</Link>
+                </Button>
                 <Button variant="default" asChild>
                   <Link to="/login">Login</Link>
                 </Button>
@@ -43,6 +47,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/invest" element={<Invest />} />
           <Route path="/stay" element={<Stay />} />
+          <Route path="/referral" element={<Referral />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
