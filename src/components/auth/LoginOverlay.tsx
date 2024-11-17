@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageCircle, Mail, Lock, ArrowRight } from 'lucide-react';
+import { MessageCircle, Mail, Lock, ArrowRight, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
@@ -19,21 +19,28 @@ const LoginOverlay = () => {
     });
   };
 
-  const handleBackgroundClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      navigate('/');
-    }
+  const handleClose = () => {
+    navigate('/');
   };
 
   return (
     <div 
       className="fixed inset-0 z-50 backdrop-blur-md bg-green-900/40 animate-fade-in"
-      onClick={handleBackgroundClick}
     >
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
         w-full max-w-md mx-4 bg-white/10 backdrop-blur-lg
         rounded-2xl border border-white/20 shadow-xl
         animate-scale-in">
+        {/* Close Button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute right-4 top-4 text-white/60 hover:text-white md:hidden"
+          onClick={handleClose}
+        >
+          <X className="h-6 w-6" />
+        </Button>
+
         <div className="p-8">
           <div className="text-center mb-8 animate-float-slower">
             <h2 className="text-3xl font-bold text-white mb-2">
