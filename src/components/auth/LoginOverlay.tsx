@@ -21,11 +21,9 @@ const LoginOverlay = () => {
   };
 
   const handleClose = () => {
-    // If we're on the rent page, trigger the profile view
+    // If we came from the rent page with profile tab, stay there
     if (location.pathname === '/rent') {
-      const urlParams = new URLSearchParams(window.location.search);
-      urlParams.set('view', 'profile');
-      navigate(`/rent?${urlParams.toString()}`);
+      navigate('/rent');
     } else {
       navigate('/');
     }
@@ -45,22 +43,17 @@ const LoginOverlay = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 backdrop-blur-sm bg-black/40 transition-all duration-200" onClick={handleBackdropClick}>
+    <div className="fixed inset-0 z-50 backdrop-blur-md bg-black/40" onClick={handleBackdropClick}>
       <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
         w-full max-w-md mx-4 glass rounded-2xl shadow-2xl animate-scale-in">
-        <div className="absolute -right-2 -top-2 z-50">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 hover:scale-110 
-                     text-white/60 hover:text-white shadow-lg backdrop-blur-md
-                     transition-all duration-200 border border-white/20"
-            onClick={handleClose}
-            aria-label="Close login overlay"
-          >
-            <X className="h-5 w-5" />
-          </Button>
-        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute right-4 top-4 text-white/60 hover:text-white"
+          onClick={handleClose}
+        >
+          <X className="h-6 w-6" />
+        </Button>
 
         <div className="p-8">
           <div className="text-center mb-8 animate-float-slower">
