@@ -1,26 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MessageCircle, Mail, Lock, ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 
 const LoginOverlay = () => {
-  const [showOverlay, setShowOverlay] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { toast } = useToast();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowOverlay(true);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically handle the login logic
     toast({
       title: "Login Attempted",
       description: "This is a demo. Login functionality will be implemented soon.",
@@ -28,20 +18,11 @@ const LoginOverlay = () => {
   };
 
   return (
-    <div 
-      className={`fixed inset-0 z-50 transition-all duration-500 ${
-        showOverlay 
-          ? 'backdrop-blur-md bg-green-900/40' 
-          : 'backdrop-blur-none bg-transparent pointer-events-none'
-      }`}
-    >
-      <div className={`
-        fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+    <div className="fixed inset-0 z-50 backdrop-blur-md bg-green-900/40 animate-fade-in">
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
         w-full max-w-md mx-4 bg-white/10 backdrop-blur-lg
         rounded-2xl border border-white/20 shadow-xl
-        transition-all duration-500 animate-fade-in
-        ${showOverlay ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}
-      `}>
+        animate-scale-in">
         <div className="p-8">
           <div className="text-center mb-8 animate-float-slower">
             <h2 className="text-3xl font-bold text-white mb-2">
