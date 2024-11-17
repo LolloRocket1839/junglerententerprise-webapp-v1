@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import Index from "./pages/Index";
 import Invest from "./pages/Invest";
 import Stay from "./pages/Stay";
+import Rent from "./pages/Rent";
 import Referral from "./pages/Referral";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/invest" element={<Invest />} />
+          <Route path="/rent" element={<Rent />} />
           <Route path="/stay" element={<Stay />} />
           <Route path="/referral" element={<Referral />} />
         </Routes>
