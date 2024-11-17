@@ -88,7 +88,7 @@ const Rent = () => {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-8 py-12">
-        <Tabs defaultValue="search" className="w-full" onValueChange={handleTabChange}>
+        <Tabs defaultValue="profile" className="w-full" onValueChange={handleTabChange}>
           <TabsList className="grid w-full grid-cols-2 mb-8">
             <TabsTrigger value="search">Find Accommodation</TabsTrigger>
             <TabsTrigger value="profile">Student Profile</TabsTrigger>
