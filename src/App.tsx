@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Index from "./pages/Index";
 import Invest from "./pages/Invest";
 import Stay from "./pages/Stay";
@@ -18,6 +18,16 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -25,31 +35,33 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <nav className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full border-b border-white/10">
-            <div className="container mx-auto px-4">
+          <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+            isScrolled ? 'bg-background/95 backdrop-blur-xl shadow-lg' : 'bg-transparent'
+          }`}>
+            <div className="container mx-auto px-6">
               <div className="flex justify-between items-center h-16">
-                <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
+                <Link to="/" className="text-2xl font-medium bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
                   Jungle Rent
                 </Link>
                 
                 {/* Desktop Navigation */}
-                <div className="hidden md:flex gap-6">
-                  <Button variant="ghost" asChild className="text-white/80 hover:text-white transition-colors">
-                    <Link to="/invest">Invest</Link>
-                  </Button>
-                  <Button variant="ghost" asChild className="text-white/80 hover:text-white transition-colors">
-                    <Link to="/rent">Rent</Link>
-                  </Button>
-                  <Button variant="ghost" asChild className="text-white/80 hover:text-white transition-colors">
-                    <Link to="/stay">Stay</Link>
-                  </Button>
-                  <Button variant="ghost" asChild className="text-white/80 hover:text-white transition-colors">
-                    <Link to="/referral">Referral</Link>
-                  </Button>
+                <div className="hidden md:flex items-center space-x-8">
+                  <Link to="/invest" className="text-sm text-white/80 hover:text-white transition-colors">
+                    Invest
+                  </Link>
+                  <Link to="/rent" className="text-sm text-white/80 hover:text-white transition-colors">
+                    Rent
+                  </Link>
+                  <Link to="/stay" className="text-sm text-white/80 hover:text-white transition-colors">
+                    Stay
+                  </Link>
+                  <Link to="/referral" className="text-sm text-white/80 hover:text-white transition-colors">
+                    Referral
+                  </Link>
                   <Button 
                     variant="default" 
                     asChild 
-                    className="bg-primary hover:bg-primary-light text-background transition-all duration-300"
+                    className="apple-button"
                   >
                     <Link to="/login">Login</Link>
                   </Button>
@@ -66,34 +78,36 @@ const App = () => {
 
               {/* Mobile Navigation */}
               {isMenuOpen && (
-                <div className="md:hidden py-4 space-y-2 animate-fade-in bg-background/95 backdrop-blur">
-                  <Button variant="ghost" asChild className="w-full text-white/80 hover:text-white justify-start">
-                    <Link to="/invest" onClick={() => setIsMenuOpen(false)}>Invest</Link>
-                  </Button>
-                  <Button variant="ghost" asChild className="w-full text-white/80 hover:text-white justify-start">
-                    <Link to="/rent" onClick={() => setIsMenuOpen(false)}>Rent</Link>
-                  </Button>
-                  <Button variant="ghost" asChild className="w-full text-white/80 hover:text-white justify-start">
-                    <Link to="/stay" onClick={() => setIsMenuOpen(false)}>Stay</Link>
-                  </Button>
-                  <Button variant="ghost" asChild className="w-full text-white/80 hover:text-white justify-start">
-                    <Link to="/referral" onClick={() => setIsMenuOpen(false)}>Referral</Link>
-                  </Button>
-                  <Button variant="default" asChild className="w-full justify-start bg-primary hover:bg-primary-light text-background">
-                    <Link to="/login" onClick={() => setIsMenuOpen(false)}>Login</Link>
-                  </Button>
+                <div className="md:hidden py-4 space-y-2 animate-fade-in glass">
+                  <Link to="/invest" className="block px-4 py-2 text-white/80 hover:text-white transition-colors" onClick={() => setIsMenuOpen(false)}>
+                    Invest
+                  </Link>
+                  <Link to="/rent" className="block px-4 py-2 text-white/80 hover:text-white transition-colors" onClick={() => setIsMenuOpen(false)}>
+                    Rent
+                  </Link>
+                  <Link to="/stay" className="block px-4 py-2 text-white/80 hover:text-white transition-colors" onClick={() => setIsMenuOpen(false)}>
+                    Stay
+                  </Link>
+                  <Link to="/referral" className="block px-4 py-2 text-white/80 hover:text-white transition-colors" onClick={() => setIsMenuOpen(false)}>
+                    Referral
+                  </Link>
+                  <Link to="/login" className="block px-4 py-2 text-primary hover:text-primary-light transition-colors" onClick={() => setIsMenuOpen(false)}>
+                    Login
+                  </Link>
                 </div>
               )}
             </div>
           </nav>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/invest" element={<Invest />} />
-            <Route path="/rent" element={<Rent />} />
-            <Route path="/stay" element={<Stay />} />
-            <Route path="/referral" element={<Referral />} />
-            <Route path="/login" element={<LoginOverlay />} />
-          </Routes>
+          <div className="pt-16">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/invest" element={<Invest />} />
+              <Route path="/rent" element={<Rent />} />
+              <Route path="/stay" element={<Stay />} />
+              <Route path="/referral" element={<Referral />} />
+              <Route path="/login" element={<LoginOverlay />} />
+            </Routes>
+          </div>
           <JungleHelp />
         </BrowserRouter>
       </TooltipProvider>

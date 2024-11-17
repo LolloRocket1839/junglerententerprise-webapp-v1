@@ -25,12 +25,12 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#2EF62E", // Bright green
+          DEFAULT: "#2EF62E",
           light: "#4AFF4A",
           dark: "#1DB91D",
         },
         secondary: {
-          DEFAULT: "#FFFFFF", // White
+          DEFAULT: "#FFFFFF",
           light: "#FFFFFF",
           dark: "#E0E0E0",
         },
@@ -75,6 +75,10 @@ export default {
           "0%, 100%": { backgroundPosition: "0% 50%" },
           "50%": { backgroundPosition: "100% 50%" },
         },
+        "scale-in": {
+          "0%": { transform: "scale(0.95)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -83,6 +87,7 @@ export default {
         "float-slow": "float-slow 8s ease-in-out infinite",
         "float-slower": "float-slower 12s ease-in-out infinite",
         "gradient-slow": "gradient-slow 15s ease-in-out infinite",
+        "scale-in": "scale-in 0.2s ease-out",
       },
     },
   },
