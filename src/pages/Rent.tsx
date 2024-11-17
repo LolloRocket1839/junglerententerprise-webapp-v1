@@ -1,139 +1,207 @@
-import React from 'react';
-import { Button } from "@/components/ui/button";
-import { Search, MapPin, Calendar, Users } from 'lucide-react';
+import React, { useState } from 'react';
+import { 
+  Search, 
+  MapPin, 
+  Users, 
+  Home,
+  MessageCircle,
+  Upload,
+  Bell,
+  ChevronRight,
+  CheckCircle,
+  AlertCircle
+} from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import StudentDashboard from '@/components/rent/StudentDashboard';
+import LoginOverlay from '@/components/auth/LoginOverlay';
+import { useToast } from "@/components/ui/use-toast";
 
 const Rent = () => {
+  const [showChat, setShowChat] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const { toast } = useToast();
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      type: 'urgent',
+      title: 'Utility Bill Due',
+      message: 'Please confirm your portion of this month\'s utilities',
+      timeLeft: '2 days'
+    },
+    {
+      id: 2,
+      type: 'social',
+      title: 'House Meeting',
+      message: 'Vote for next weekend\'s cleaning schedule',
+      timeLeft: '5 hours'
+    }
+  ]);
+
+  const handleTabChange = (value: string) => {
+    if (value === "profile") {
+      setShowLogin(true);
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to access your student profile",
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-800 to-emerald-900">
-      {/* Hero Section */}
-      <div className="relative py-20 px-8">
-        <div className="max-w-4xl mx-auto text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
-            Find Your Perfect Student Home
-          </h1>
-          <p className="text-xl text-white/80 animate-fade-in">
-            Search verified student accommodations near your university
-          </p>
-        </div>
+      {showLogin && <LoginOverlay />}
+      
+      {/* Fixed Chat Bot Button */}
+      <button 
+        onClick={() => setShowChat(!showChat)}
+        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg flex items-center gap-2 z-50"
+      >
+        <MessageCircle className="w-6 h-6" />
+        <span>Jungle Help 24/7</span>
+      </button>
 
-        {/* Search Bar */}
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 animate-fade-in">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-3 flex items-center">
-                  <MapPin className="h-5 w-5 text-white/60" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="University City"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white placeholder-white/60 focus:outline-none focus:border-green-500"
-                />
+      {/* Chat Bot Modal */}
+      {showChat && (
+        <div className="fixed bottom-24 right-6 w-96 bg-white/10 backdrop-blur-md rounded-xl border border-white/20 shadow-xl z-50">
+          <div className="p-4 border-b border-white/10 flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                <MessageCircle className="w-5 h-5 text-white" />
               </div>
-
-              <div className="relative">
-                <div className="absolute inset-y-0 left-3 flex items-center">
-                  <Calendar className="h-5 w-5 text-white/60" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Move-in Date"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white placeholder-white/60 focus:outline-none focus:border-green-500"
-                />
+              <div>
+                <h3 className="font-bold text-white">Jungle Help</h3>
+                <p className="text-white/60 text-sm">Always online</p>
               </div>
-
-              <div className="relative">
-                <div className="absolute inset-y-0 left-3 flex items-center">
-                  <Users className="h-5 w-5 text-white/60" />
-                </div>
-                <select
-                  className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white/60 focus:outline-none focus:border-green-500 appearance-none"
-                >
-                  <option>Budget Range</option>
-                  <option>€500 - €800</option>
-                  <option>€800 - €1200</option>
-                  <option>€1200+</option>
-                </select>
-              </div>
-
-              <Button 
-                className="w-full bg-black/40 hover:bg-black/60 backdrop-blur-sm border border-white/10 text-white transition-all duration-300 shadow-lg"
-              >
-                <Search className="h-5 w-5 mr-2" />
-                Find Accommodation
-              </Button>
             </div>
+            <button 
+              onClick={() => setShowChat(false)}
+              className="text-white/60 hover:text-white"
+            >
+              ×
+            </button>
+          </div>
+          <div className="h-96 p-4 overflow-y-auto">
+            {/* Chat messages would go here */}
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Listings Section */}
-      <div className="max-w-7xl mx-auto px-8 pb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((item) => (
-            <div 
-              key={item} 
-              className="bg-white/10 backdrop-blur-md rounded-xl overflow-hidden border border-white/20 hover:border-green-500/50 transition-all hover:scale-[1.02] duration-300"
-            >
-              {/* Property Image */}
-              <div className="relative h-48 bg-white/5">
-                <div className="absolute top-3 left-3">
-                  <span className="bg-green-500 text-white text-sm px-3 py-1 rounded-full flex items-center gap-2">
-                    <Shield className="w-4 h-4" />
-                    Verified
-                  </span>
-                </div>
-              </div>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-8 py-12">
+        <Tabs defaultValue="search" className="w-full" onValueChange={handleTabChange}>
+          <TabsList className="grid w-full grid-cols-2 mb-8">
+            <TabsTrigger value="search">Find Accommodation</TabsTrigger>
+            <TabsTrigger value="profile">Student Profile</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="search">
+            {/* Hero Section */}
+            <div className="text-center mb-12">
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                Find Your Student Home
+              </h1>
+              <p className="text-xl text-white/80 mb-8">
+                Long-term rentals verified and managed by Jungle Rent
+              </p>
 
-              {/* Property Info */}
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-white mb-1">
-                      Student Loft Roma
-                    </h3>
-                    <p className="text-white/60 flex items-center gap-2">
-                      <MapPin className="w-4 h-4" />
-                      5 min from La Sapienza
-                    </p>
+              {/* Search Bar */}
+              <div className="max-w-3xl mx-auto">
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="relative">
+                      <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60 w-5 h-5" />
+                      <input
+                        type="text"
+                        placeholder="University City"
+                        className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white placeholder-white/60"
+                      />
+                    </div>
+                    <div className="relative">
+                      <Home className="absolute left-3 top-1/2 -translate-y-1/2 text-white/60 w-5 h-5" />
+                      <select className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white/60 appearance-none">
+                        <option>Room Type</option>
+                        <option>Single Room</option>
+                        <option>Double Room</option>
+                        <option>Studio</option>
+                      </select>
+                    </div>
+                    <button className="bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 px-4 transition-colors">
+                      Search Now
+                    </button>
                   </div>
-                  <div className="flex items-center gap-1 text-white">
-                    <Star className="w-4 h-4 fill-current" />
-                    4.8
-                  </div>
-                </div>
-
-                {/* Amenities */}
-                <div className="flex gap-4 mb-6">
-                  <div className="flex items-center gap-2 text-white/80">
-                    <Wifi className="w-4 h-4" />
-                    <span>WiFi</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-white/80">
-                    <Coffee className="w-4 h-4" />
-                    <span>Kitchen</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-white/80">
-                    <Book className="w-4 h-4" />
-                    <span>Study Area</span>
-                  </div>
-                </div>
-
-                {/* Price and CTA */}
-                <div className="flex items-end justify-between pt-4 border-t border-white/10">
-                  <div>
-                    <p className="text-2xl font-bold text-white">€45</p>
-                    <p className="text-white/60">per night</p>
-                  </div>
-                  <button className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
-                    <span>View Details</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+
+            {/* Application Process */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+              {[
+                {
+                  icon: Users,
+                  title: 'Personal Info',
+                  desc: 'Basic details and student status'
+                },
+                {
+                  icon: Upload,
+                  title: 'Documents',
+                  desc: 'Upload required guarantees'
+                },
+                {
+                  icon: CheckCircle,
+                  title: 'Verification',
+                  desc: 'Quick approval process'
+                },
+                {
+                  icon: Home,
+                  title: 'Move In',
+                  desc: 'Welcome to your new home'
+                }
+              ].map((step, index) => (
+                <div key={index} className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
+                  <step.icon className="w-8 h-8 text-green-500 mb-4" />
+                  <h3 className="text-xl font-bold text-white mb-2">{step.title}</h3>
+                  <p className="text-white/60">{step.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Notifications Center */}
+            <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-white">Notifications</h2>
+                <Bell className="w-6 h-6 text-white/60" />
+              </div>
+              <div className="space-y-4">
+                {notifications.map((notif) => (
+                  <div 
+                    key={notif.id}
+                    className="bg-white/5 rounded-lg p-4 flex items-center justify-between"
+                  >
+                    <div className="flex items-center gap-4">
+                      {notif.type === 'urgent' ? (
+                        <AlertCircle className="w-6 h-6 text-red-500" />
+                      ) : (
+                        <Bell className="w-6 h-6 text-blue-500" />
+                      )}
+                      <div>
+                        <h3 className="font-medium text-white">{notif.title}</h3>
+                        <p className="text-white/60">{notif.message}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-white/40 text-sm">{notif.timeLeft}</span>
+                      <ChevronRight className="w-5 h-5 text-white/40" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="profile">
+            <StudentDashboard />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
