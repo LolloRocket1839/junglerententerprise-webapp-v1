@@ -44,18 +44,18 @@ const Invest = () => {
 
         {/* Navigation Tabs */}
         <Tabs defaultValue="opportunities" className="w-full animate-fade-in">
-          <div className="overflow-x-auto pb-2">
-            <TabsList className="w-full md:w-auto glass mb-4 md:mb-6 grid grid-cols-2 md:inline-flex md:whitespace-nowrap gap-2 p-2">
-              <TabsTrigger value="opportunities" className="text-white px-3 md:px-4">
+          <div className="overflow-x-auto pb-4 md:pb-2">
+            <TabsList className="w-full md:w-auto glass mb-4 md:mb-6 grid grid-cols-1 sm:grid-cols-2 md:inline-flex md:whitespace-nowrap gap-3 p-3">
+              <TabsTrigger value="opportunities" className="text-white px-4 py-2 text-base">
                 Opportunities
               </TabsTrigger>
-              <TabsTrigger value="my-investments" className="text-white px-3 md:px-4">
+              <TabsTrigger value="my-investments" className="text-white px-4 py-2 text-base">
                 My Investments
               </TabsTrigger>
-              <TabsTrigger value="tokenization" className="text-white px-3 md:px-4">
+              <TabsTrigger value="tokenization" className="text-white px-4 py-2 text-base">
                 Tokenization
               </TabsTrigger>
-              <TabsTrigger value="analytics" className="text-white px-3 md:px-4">
+              <TabsTrigger value="analytics" className="text-white px-4 py-2 text-base">
                 Analytics
               </TabsTrigger>
             </TabsList>
