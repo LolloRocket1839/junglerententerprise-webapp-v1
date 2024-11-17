@@ -6,25 +6,37 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center justify-center bg-gradient-to-r from-primary-dark via-primary to-primary-light text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
-            Welcome to Jungle Rent
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto animate-fade-in">
-            Invest in student housing, rent your room, or find your perfect short-term stay
-          </p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center animate-fade-in">
-            <Button
-              variant="secondary"
-              size="lg"
-              className="bg-secondary hover:bg-secondary-dark text-primary-dark"
-              asChild
-            >
-              <Link to="/invest">
-                Discover Investments <ArrowRight className="ml-2" />
-              </Link>
-            </Button>
+      <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        {/* Dynamic background with multiple layers */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-primary/20 to-background animate-gradient-slow" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(46,246,46,0.15)_0%,transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(46,246,46,0.1)_0%,transparent_50%)]" />
+        
+        {/* Floating orbs */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float-slow" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-float-slower" />
+        
+        {/* Content with glassmorphism */}
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
+              Welcome to Jungle Rent
+            </h1>
+            <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto animate-fade-in text-secondary/90">
+              Invest in student housing, rent your room, or find your perfect short-term stay
+            </p>
+            <div className="flex flex-col md:flex-row gap-4 justify-center animate-fade-in">
+              <Button
+                variant="secondary"
+                size="lg"
+                className="group bg-primary/90 hover:bg-primary text-background transition-all duration-300 shadow-lg hover:shadow-primary/50"
+                asChild
+              >
+                <Link to="/invest" className="flex items-center">
+                  Discover Investments
+                  <ArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </Button>
             <Button
               variant="outline"
               size="lg"
@@ -45,6 +57,7 @@ const Index = () => {
                 Book Your Stay <ArrowRight className="ml-2" />
               </Link>
             </Button>
+            </div>
           </div>
         </div>
       </section>
