@@ -32,7 +32,7 @@ const StaySection = () => {
       <div className="relative py-20 px-8">
         <div className="max-w-4xl mx-auto text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
-            Find Your Perfect Short-Term Stay
+            Find your perfect short-term stay
           </h1>
           <p className="text-xl text-white/80 animate-fade-in">
             Book verified accommodations near your university
