@@ -20,7 +20,7 @@ const Invest = () => {
           />
           <StatsCard
             title="Average ROI"
-            value="8.5%"
+            value="10%"
             icon={<TrendingUp className="w-6 h-6" />}
           />
           <StatsCard
