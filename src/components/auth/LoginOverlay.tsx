@@ -20,7 +20,14 @@ const LoginOverlay = () => {
   };
 
   const handleClose = () => {
-    navigate('/'); // This will send the user back to the home page
+    navigate('/');
+  };
+
+  const handleSocialLogin = (provider: string) => {
+    toast({
+      title: `${provider} Login Attempted`,
+      description: "Social login will be implemented soon.",
+    });
   };
 
   return (
@@ -29,7 +36,6 @@ const LoginOverlay = () => {
         w-full max-w-md mx-4 bg-white/10 backdrop-blur-lg
         rounded-2xl border border-white/20 shadow-xl
         animate-scale-in">
-        {/* Close Button - Now visible on all screen sizes */}
         <Button
           variant="ghost"
           size="icon"
@@ -47,6 +53,47 @@ const LoginOverlay = () => {
             <p className="text-white/60">
               Your Student Housing Journey Begins Here
             </p>
+          </div>
+
+          <div className="space-y-4 mb-6">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full bg-white/10 hover:bg-white/15 text-white border-white/10"
+              onClick={() => handleSocialLogin('Google')}
+            >
+              <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5 mr-2" />
+              Continue with Google
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full bg-white/10 hover:bg-white/15 text-white border-white/10"
+              onClick={() => handleSocialLogin('Apple')}
+            >
+              <img src="https://www.apple.com/favicon.ico" alt="Apple" className="w-5 h-5 mr-2" />
+              Continue with Apple
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full bg-white/10 hover:bg-white/15 text-white border-white/10"
+              onClick={() => handleSocialLogin('Microsoft')}
+            >
+              <img src="https://www.microsoft.com/favicon.ico" alt="Microsoft" className="w-5 h-5 mr-2" />
+              Continue with Microsoft
+            </Button>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-white/10"></span>
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-white/40">Or continue with email</span>
+              </div>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -83,19 +130,10 @@ const LoginOverlay = () => {
             </div>
 
             <Button
-              type="button"
-              variant="outline"
-              className="w-full bg-white/10 hover:bg-white/15 text-white border-white/10"
-            >
-              <img src="/placeholder.svg" alt="University" className="w-5 h-5 rounded mr-2" />
-              Sign in with University SSO
-            </Button>
-
-            <Button
               type="submit"
               className="w-full"
             >
-              <span>Get Started</span>
+              <span>Sign In</span>
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </form>

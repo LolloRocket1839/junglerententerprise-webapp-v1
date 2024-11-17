@@ -7,7 +7,6 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative h-[80vh] flex items-center justify-center overflow-hidden">
-        {/* Dynamic background with multiple layers */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-primary/20 to-background animate-gradient-slow" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(46,246,46,0.15)_0%,transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(46,246,46,0.1)_0%,transparent_50%)]" />
@@ -37,26 +36,26 @@ const Index = () => {
                   <ArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="bg-white/10 hover:bg-white/20 border-white"
-              asChild
-            >
-              <Link to="/rent">
-                Rent Your Room <ArrowRight className="ml-2" />
-              </Link>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="bg-white/10 hover:bg-white/20 border-white"
-              asChild
-            >
-              <Link to="/stay">
-                Book Your Stay <ArrowRight className="ml-2" />
-              </Link>
-            </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="bg-white/10 hover:bg-white/20 border-white"
+                asChild
+              >
+                <Link to="/rent">
+                  Rent Your Room <ArrowRight className="ml-2" />
+                </Link>
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="bg-white/10 hover:bg-white/20 border-white"
+                asChild
+              >
+                <Link to="/stay">
+                  Book Your Stay <ArrowRight className="ml-2" />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -109,7 +108,7 @@ const Index = () => {
               className="bg-primary hover:bg-primary-light text-background transition-all duration-300"
               asChild
             >
-              <Link to="/register">
+              <Link to="/login">
                 Join Now <ArrowRight className="ml-2" />
               </Link>
             </Button>
