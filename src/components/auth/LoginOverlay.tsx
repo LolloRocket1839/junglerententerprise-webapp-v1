@@ -91,7 +91,7 @@ const LoginOverlay = () => {
                 <span className="w-full border-t border-white/10"></span>
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-background px-4 text-white/40 font-medium tracking-wider hover:text-primary transition-colors duration-200 flex items-center gap-2">
+                <span className="px-4 text-white/40 font-medium tracking-wider hover:text-primary transition-colors duration-200 flex items-center gap-2">
                   <span className="w-6 h-px bg-white/10"></span>
                   Continue with Email
                   <span className="w-6 h-px bg-white/10"></span>
