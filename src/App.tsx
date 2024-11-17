@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Index from "./pages/Index";
 import Invest from "./pages/Invest";
+import Stay from "./pages/Stay";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/invest" element={<Invest />} />
+          <Route path="/stay" element={<Stay />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
