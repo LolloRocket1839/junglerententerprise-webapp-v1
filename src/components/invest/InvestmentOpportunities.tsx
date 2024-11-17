@@ -20,28 +20,28 @@ const InvestmentOpportunities = () => {
       value: "2,345",
       change: "+12.5%",
       icon: Building2,
-      trend: "up"
+      trend: "up" as const
     },
     {
       title: "Average ROI",
       value: "18.2%",
       change: "+3.2%",
       icon: TrendingUp,
-      trend: "up"
+      trend: "up" as const
     },
     {
       title: "Active Investors",
       value: "12.5K",
       change: "+23.1%",
       icon: Users,
-      trend: "up"
+      trend: "up" as const
     },
     {
       title: "Total Investment",
       value: "$45.2M",
       change: "+8.9%",
       icon: Wallet,
-      trend: "up"
+      trend: "up" as const
     }
   ];
 

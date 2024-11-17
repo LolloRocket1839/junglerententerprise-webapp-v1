@@ -6,9 +6,9 @@ import { LucideIcon } from 'lucide-react';
 interface StatsCardProps {
   title: string;
   value: string;
-  change: string;
+  change?: string;
   icon: LucideIcon;
-  trend: 'up' | 'down';
+  trend?: 'up' | 'down';
 }
 
 const StatsCard: React.FC<StatsCardProps> = ({
@@ -16,7 +16,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
   value,
   change,
   icon: Icon,
-  trend
+  trend = 'up'
 }) => {
   return (
     <Card className="p-6 bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300">
@@ -27,18 +27,20 @@ const StatsCard: React.FC<StatsCardProps> = ({
         <div className="flex-1 text-center md:text-left">
           <p className="text-white/60 text-sm">{title}</p>
           <p className="text-2xl md:text-3xl font-bold text-white mt-1">{value}</p>
-          <div className="flex items-center justify-center md:justify-start gap-1 mt-2">
-            {trend === 'up' ? (
-              <ArrowUpIcon className="w-4 h-4 text-green-500" />
-            ) : (
-              <ArrowDownIcon className="w-4 h-4 text-red-500" />
-            )}
-            <span className={`text-sm ${
-              trend === 'up' ? 'text-green-500' : 'text-red-500'
-            }`}>
-              {change}
-            </span>
-          </div>
+          {change && (
+            <div className="flex items-center justify-center md:justify-start gap-1 mt-2">
+              {trend === 'up' ? (
+                <ArrowUpIcon className="w-4 h-4 text-green-500" />
+              ) : (
+                <ArrowDownIcon className="w-4 h-4 text-red-500" />
+              )}
+              <span className={`text-sm ${
+                trend === 'up' ? 'text-green-500' : 'text-red-500'
+              }`}>
+                {change}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </Card>

@@ -24,17 +24,20 @@ const Invest = () => {
           <StatsCard
             title="Total Properties"
             value="24"
-            icon={<Building2 className="w-6 h-6 text-primary" />}
+            icon={Building2}
+            trend="up"
           />
           <StatsCard
             title="Average ROI"
             value="10%"
-            icon={<TrendingUp className="w-6 h-6 text-primary" />}
+            icon={TrendingUp}
+            trend="up"
           />
           <StatsCard
             title="Active Investors"
             value="1,234"
-            icon={<Users className="w-6 h-6 text-primary" />}
+            icon={Users}
+            trend="up"
           />
         </div>
 
