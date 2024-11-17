@@ -89,22 +89,25 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary-light text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join Jungle Rent today and be part of the future of student housing investment and
-            management.
-          </p>
-          <Button
-            size="lg"
-            className="bg-secondary hover:bg-secondary-dark text-primary-dark"
-            asChild
-          >
-            <Link to="/register">
-              Join Now <ArrowRight className="ml-2" />
-            </Link>
-          </Button>
+      <section className="relative py-20">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary-dark/10 to-background/90" />
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl">
+            <h2 className="text-4xl font-bold mb-6 text-secondary">Ready to Get Started?</h2>
+            <p className="text-xl mb-8 max-w-2xl mx-auto text-secondary/90">
+              Join Jungle Rent today and be part of the future of student housing investment and
+              management.
+            </p>
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary-light text-background transition-all duration-300"
+              asChild
+            >
+              <Link to="/register">
+                Join Now <ArrowRight className="ml-2" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
     </div>
