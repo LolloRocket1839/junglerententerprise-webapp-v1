@@ -21,8 +21,11 @@ const LoginOverlay = () => {
   };
 
   const handleClose = () => {
+    // If we're on the rent page, trigger the profile view
     if (location.pathname === '/rent') {
-      navigate('/rent');
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set('view', 'profile');
+      navigate(`/rent?${urlParams.toString()}`);
     } else {
       navigate('/');
     }
