@@ -31,18 +31,24 @@ const Rent = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-8 py-12">
-        <Tabs defaultValue="profile" className="w-full" onValueChange={handleTabChange}>
+      <div className="relative z-10 w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
+        <Tabs defaultValue="search" className="w-full" onValueChange={handleTabChange}>
           <TabsList className="grid w-full grid-cols-2 mb-8 bg-white/10 backdrop-blur-md border border-white/20">
-            <TabsTrigger value="search" className="data-[state=active]:bg-green-500 data-[state=active]:text-white">
+            <TabsTrigger 
+              value="search" 
+              className="data-[state=active]:bg-green-500 data-[state=active]:text-white py-3"
+            >
               Find Accommodation
             </TabsTrigger>
-            <TabsTrigger value="profile" className="data-[state=active]:bg-green-500 data-[state=active]:text-white">
+            <TabsTrigger 
+              value="profile" 
+              className="data-[state=active]:bg-green-500 data-[state=active]:text-white py-3"
+            >
               Student Profile
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="search">
+          <TabsContent value="search" className="space-y-8">
             <SearchSection />
             <ProcessSteps />
           </TabsContent>
