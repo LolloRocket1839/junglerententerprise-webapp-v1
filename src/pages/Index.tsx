@@ -18,7 +18,7 @@ const Index = () => {
         {/* Content with glassmorphism */}
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in text-primary">
               Welcome to Jungle Rent
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto animate-fade-in text-secondary/90">
