@@ -63,32 +63,34 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gradient-to-b from-primary/30 via-primary-dark/5 to-background/95 backdrop-blur-sm">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-primary-dark">
-            Why Choose Jungle Rent?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureCard
-              icon={<DollarSign size={32} />}
-              title="Smart Investments"
-              description="Invest in student housing through SFPs and earn returns from both long-term and short-term rentals."
-            />
-            <FeatureCard
-              icon={<Home size={32} />}
-              title="Quality Housing"
-              description="Find comfortable and affordable housing options, perfect for students and short-term stays."
-            />
-            <FeatureCard
-              icon={<Users size={32} />}
-              title="Community First"
-              description="Join a community of investors, students, and travelers all benefiting from shared spaces."
-            />
+      <section className="relative py-20">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-primary-dark/5 to-background/95" />
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl">
+            <h2 className="text-4xl font-bold text-center mb-12 text-primary">
+              Why Choose Jungle Rent?
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <FeatureCard
+                icon={<DollarSign size={32} />}
+                title="Smart Investments"
+                description="Invest in student housing through SFPs and earn returns from both long-term and short-term rentals."
+              />
+              <FeatureCard
+                icon={<Home size={32} />}
+                title="Quality Housing"
+                description="Find comfortable and affordable housing options, perfect for students and short-term stays."
+              />
+              <FeatureCard
+                icon={<Users size={32} />}
+                title="Community First"
+                description="Join a community of investors, students, and travelers all benefiting from shared spaces."
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="relative py-20">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary-dark/10 to-background/90" />
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -123,12 +125,12 @@ const FeatureCard = ({
   title: string;
   description: string;
 }) => (
-  <div className="p-6 rounded-lg bg-white shadow-lg hover:shadow-xl transition-shadow">
-    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-4">
+  <div className="p-6 rounded-lg backdrop-blur-sm bg-white/10 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300">
+    <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4">
       {icon}
     </div>
-    <h3 className="text-xl font-semibold mb-2 text-primary-dark">{title}</h3>
-    <p className="text-gray-600">{description}</p>
+    <h3 className="text-xl font-semibold mb-2 text-primary">{title}</h3>
+    <p className="text-secondary/80">{description}</p>
   </div>
 );
 
