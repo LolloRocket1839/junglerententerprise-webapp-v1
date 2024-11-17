@@ -5,7 +5,11 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const LoginOverlay = () => {
+interface LoginOverlayProps {
+  onClose?: () => void;
+}
+
+const LoginOverlay: React.FC<LoginOverlayProps> = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { toast } = useToast();
@@ -21,8 +25,10 @@ const LoginOverlay = () => {
   };
 
   const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
     if (location.pathname === '/rent') {
-      // Navigate to rent page with profile tab selected
       navigate('/rent', { state: { activeTab: 'profile' } });
     } else {
       navigate('/');

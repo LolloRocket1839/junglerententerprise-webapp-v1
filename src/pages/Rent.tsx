@@ -14,7 +14,6 @@ const Rent = () => {
   const [activeTab, setActiveTab] = useState('search');
 
   useEffect(() => {
-    // Check if we have a state with activeTab
     if (location.state?.activeTab) {
       setActiveTab(location.state.activeTab);
     }
@@ -31,9 +30,13 @@ const Rent = () => {
     setActiveTab(value);
   };
 
+  const handleLoginClose = () => {
+    setShowLogin(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900">
-      {showLogin && <LoginOverlay />}
+      {showLogin && <LoginOverlay onClose={handleLoginClose} />}
       
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden">
