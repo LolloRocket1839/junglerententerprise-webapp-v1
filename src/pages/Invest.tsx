@@ -45,7 +45,7 @@ const Invest = () => {
         {/* Navigation Tabs */}
         <Tabs defaultValue="opportunities" className="w-full animate-fade-in">
           <div className="overflow-x-auto pb-2">
-            <TabsList className="w-full md:w-auto glass mb-4 md:mb-6 inline-flex whitespace-nowrap">
+            <TabsList className="w-full md:w-auto glass mb-4 md:mb-6 grid grid-cols-2 md:inline-flex md:whitespace-nowrap">
               <TabsTrigger value="opportunities" className="text-white px-3 md:px-4">
                 Opportunities
               </TabsTrigger>
