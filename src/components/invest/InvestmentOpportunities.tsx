@@ -44,47 +44,45 @@ const InvestmentOpportunities = () => {
       {properties.map((property) => (
         <Card 
           key={property.id} 
-          className="bg-white/[0.03] border border-white/[0.08] overflow-hidden transition-all duration-300 
-                   hover:scale-[1.02] hover:shadow-card-hover hover:border-success/20 hover:bg-white/[0.05]"
+          className="glass overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/20 animate-fade-in"
         >
-          <div className="aspect-video relative overflow-hidden">
-            <div className="absolute inset-0 bg-image-overlay z-10" />
+          <div className="aspect-video relative">
             <img
               src={property.image}
               alt={property.name}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              className="w-full h-full object-cover"
             />
           </div>
           <div className="p-6">
-            <h3 className="text-xl font-semibold text-white/90 mb-2">
+            <h3 className="text-xl font-semibold text-white mb-2">
               {property.name}
             </h3>
-            <div className="flex items-center gap-2 text-white/70 mb-4">
+            <div className="flex items-center gap-2 text-white/60 mb-4">
               <MapPin className="w-4 h-4" />
               <span className="text-sm">{property.location}</span>
             </div>
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div>
-                <p className="text-sm text-white/70">Total Value</p>
-                <p className="text-lg font-semibold text-white/90">
+                <p className="text-sm text-white/60">Total Value</p>
+                <p className="text-lg font-semibold text-white">
                   {property.totalValue}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-white/70">Token Price</p>
-                <p className="text-lg font-semibold text-white/90">
+                <p className="text-sm text-white/60">Token Price</p>
+                <p className="text-lg font-semibold text-white">
                   {property.tokenPrice}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-white/70">Availability</p>
-                <p className="text-lg font-semibold text-neutral">
+                <p className="text-sm text-white/60">Availability</p>
+                <p className="text-lg font-semibold text-white">
                   {property.availability}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-white/70">Expected ROI</p>
-                <p className="text-lg font-semibold text-success">
+                <p className="text-sm text-white/60">Expected ROI</p>
+                <p className="text-lg font-semibold text-primary">
                   {property.expectedROI}
                 </p>
               </div>
@@ -92,15 +90,13 @@ const InvestmentOpportunities = () => {
             <div className="flex gap-3">
               <Button
                 variant="outline"
-                className="flex-1 bg-white/[0.03] border-white/[0.08] hover:bg-white/[0.05] 
-                         hover:border-success/20 transition-all duration-300"
+                className="flex-1 glass hover:bg-white/20"
               >
                 Details
               </Button>
               <Button
                 variant="default"
-                className="flex-1 bg-primary hover:bg-primary-hover active:bg-primary-active 
-                         text-white transition-all duration-300"
+                className="flex-1 bg-primary hover:bg-primary-dark text-white"
               >
                 Invest Now
               </Button>
