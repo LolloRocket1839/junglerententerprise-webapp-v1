@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { EnvironmentProvider } from "./providers/EnvironmentProvider";
 import Index from "./pages/Index";
 import Invest from "./pages/Invest";
 import Stay from "./pages/Stay";
@@ -32,12 +33,13 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-            isScrolled ? 'glass' : 'bg-transparent'
-          }`}>
+        <EnvironmentProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+              isScrolled ? 'glass' : 'bg-transparent'
+            }`}>
             <div className="container mx-auto px-6">
               <div className="flex justify-between items-center h-16">
                 <Link to="/" className="text-2xl font-medium bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
@@ -97,19 +99,20 @@ const App = () => {
                 </div>
               )}
             </div>
-          </nav>
-          <div className="pt-16">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/invest" element={<Invest />} />
-              <Route path="/rent" element={<Rent />} />
-              <Route path="/stay" element={<Stay />} />
-              <Route path="/referral" element={<Referral />} />
-              <Route path="/login" element={<LoginOverlay />} />
-            </Routes>
-          </div>
-          <JungleHelp />
-        </BrowserRouter>
+            </nav>
+            <div className="pt-16">
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/invest" element={<Invest />} />
+                <Route path="/rent" element={<Rent />} />
+                <Route path="/stay" element={<Stay />} />
+                <Route path="/referral" element={<Referral />} />
+                <Route path="/login" element={<LoginOverlay />} />
+              </Routes>
+            </div>
+            <JungleHelp />
+          </BrowserRouter>
+        </EnvironmentProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );
