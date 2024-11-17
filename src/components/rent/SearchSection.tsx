@@ -15,19 +15,19 @@ const SearchSection = () => {
       </div>
 
       <div className="max-w-4xl mx-auto">
-        <div className="glass-card p-3">
-          <div className="grid grid-cols-1 md:grid-cols-7 gap-3">
+        <div className="glass-card p-6 md:p-8">
+          <div className="grid grid-cols-1 md:grid-cols-7 gap-4 md:gap-6">
             <div className="md:col-span-3 relative">
-              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
               <input
                 type="text"
                 placeholder="University City"
-                className="glass-input w-full"
+                className="glass-input w-full pl-12"
               />
             </div>
             <div className="md:col-span-3 relative">
-              <Home className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-              <select className="glass-input w-full appearance-none">
+              <Home className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+              <select className="glass-input w-full pl-12 appearance-none">
                 <option>Room Type</option>
                 <option>Single Room</option>
                 <option>Double Room</option>
