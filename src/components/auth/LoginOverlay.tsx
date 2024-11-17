@@ -20,7 +20,7 @@ const LoginOverlay = () => {
   };
 
   const handleClose = () => {
-    navigate(-1); // This will go back to the previous page
+    navigate('/'); // This will send the user back to the home page
   };
 
   return (
