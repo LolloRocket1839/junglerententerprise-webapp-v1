@@ -7,19 +7,19 @@ import StatsCard from "@/components/invest/StatsCard";
 const Invest = () => {
   return (
     <div className="min-h-screen relative">
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float-slow" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float-slower" />
+      {/* Decorative Elements - Optimized for mobile */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-96 h-96 bg-primary/10 rounded-full blur-2xl md:blur-3xl" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-2xl md:blur-3xl" />
       </div>
 
       {/* Content */}
       <div className="relative container mx-auto px-4 py-4 md:py-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 md:mb-8 animate-fade-in">
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4 md:mb-8">
           Investment Dashboard
         </h1>
         
-        {/* Stats Overview */}
+        {/* Stats Overview - Optimized grid layout */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8">
           <StatsCard
             title="Total Properties"
@@ -42,9 +42,9 @@ const Invest = () => {
           />
         </div>
 
-        {/* Navigation Tabs */}
-        <Tabs defaultValue="opportunities" className="w-full animate-fade-in">
-          <div className="overflow-x-auto pb-4 md:pb-2">
+        {/* Navigation Tabs - Mobile optimized */}
+        <Tabs defaultValue="opportunities" className="w-full">
+          <div className="overflow-visible md:overflow-x-auto pb-4 md:pb-2">
             <TabsList className="w-full md:w-auto glass mb-4 md:mb-6 grid grid-cols-1 sm:grid-cols-2 md:inline-flex md:whitespace-nowrap gap-3 p-3">
               <TabsTrigger value="opportunities" className="text-white px-4 py-2 text-base">
                 Opportunities
@@ -61,11 +61,11 @@ const Invest = () => {
             </TabsList>
           </div>
           
-          <TabsContent value="opportunities">
+          <TabsContent value="opportunities" className="focus:outline-none">
             <InvestmentOpportunities />
           </TabsContent>
           
-          <TabsContent value="my-investments">
+          <TabsContent value="my-investments" className="focus:outline-none">
             <Card className="glass p-4 md:p-6">
               <div className="text-white/60">
                 Coming soon in Phase 2
@@ -73,7 +73,7 @@ const Invest = () => {
             </Card>
           </TabsContent>
           
-          <TabsContent value="tokenization">
+          <TabsContent value="tokenization" className="focus:outline-none">
             <Card className="glass p-4 md:p-6">
               <div className="text-white/60">
                 Coming soon in Phase 2
@@ -81,7 +81,7 @@ const Invest = () => {
             </Card>
           </TabsContent>
           
-          <TabsContent value="analytics">
+          <TabsContent value="analytics" className="focus:outline-none">
             <Card className="glass p-4 md:p-6">
               <div className="text-white/60">
                 Coming soon in Phase 2
