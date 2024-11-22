@@ -17,6 +17,7 @@ import StudentSwap from './StudentSwap';
 import StudentHeader from './StudentHeader';
 import DashboardStats from './DashboardStats';
 import ActivityFeed from './ActivityFeed';
+import RoommateFinder from './roommate/RoommateFinder';
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -149,12 +150,7 @@ const StudentDashboard = () => {
             
             {activeTab === 'swap' && <StudentSwap />}
             
-            {activeTab === 'roommate' && (
-              <div className="glass-card p-6">
-                <h3 className="text-lg font-semibold text-white">Find Your Roommate</h3>
-                <p className="text-white/60 mt-2">Coming soon! This feature will help you find and connect with potential roommates.</p>
-              </div>
-            )}
+            {activeTab === 'roommate' && <RoommateFinder />}
             
             {activeTab === 'messages' && (
               <div className="glass-card p-6">
