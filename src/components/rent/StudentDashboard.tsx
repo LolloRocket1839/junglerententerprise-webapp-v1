@@ -8,6 +8,7 @@ import {
   Clock,
   AlertCircle
 } from 'lucide-react';
+import StudentSchedule from './StudentSchedule';
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -72,7 +73,9 @@ const StudentDashboard = () => {
 
           {/* Main Content Area */}
           <div className="lg:col-span-9 space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {activeTab === 'overview' && (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {[
                 {
                   icon: Clock,
@@ -115,9 +118,9 @@ const StudentDashboard = () => {
                   </div>
                 </div>
               ))}
-            </div>
+                </div>
 
-            <div className="glass-card p-4 sm:p-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
+                <div className="glass-card p-4 sm:p-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
               <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Recent Activity</h3>
               <div className="space-y-3 sm:space-y-4">
                 {[
@@ -159,7 +162,25 @@ const StudentDashboard = () => {
                   </div>
                 ))}
               </div>
-            </div>
+                </div>
+              </>
+            )}
+            
+            {activeTab === 'schedule' && <StudentSchedule />}
+            
+            {activeTab === 'messages' && (
+              <div className="glass-card p-6">
+                <h3 className="text-lg font-semibold text-white">Messages</h3>
+                <p className="text-white/60 mt-2">No messages yet.</p>
+              </div>
+            )}
+            
+            {activeTab === 'settings' && (
+              <div className="glass-card p-6">
+                <h3 className="text-lg font-semibold text-white">Settings</h3>
+                <p className="text-white/60 mt-2">Settings panel coming soon.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
