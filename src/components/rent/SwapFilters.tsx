@@ -14,17 +14,17 @@ const SwapFilters = ({ selectedCategory, onCategoryChange }: SwapFiltersProps) =
         value={selectedCategory}
         onValueChange={(value) => onCategoryChange(value as SwapCategory)}
       >
-        <SelectTrigger className="w-[200px] glass-input">
+        <SelectTrigger className="w-[200px] glass-input hover:bg-white/20 active:bg-white/30 focus:bg-white/25">
           <SelectValue placeholder="Select category" />
         </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="room">Rooms</SelectItem>
-          <SelectItem value="services">Services</SelectItem>
-          <SelectItem value="clothes">Clothes</SelectItem>
-          <SelectItem value="electronics">Electronics</SelectItem>
-          <SelectItem value="books">Books</SelectItem>
-          <SelectItem value="collectibles">Collectibles</SelectItem>
-          <SelectItem value="various">Various Items</SelectItem>
+        <SelectContent className="bg-white/90 backdrop-blur-xl border border-white/20">
+          <SelectItem value="room" className="hover:bg-primary/20 focus:bg-primary/30">Rooms</SelectItem>
+          <SelectItem value="services" className="hover:bg-primary/20 focus:bg-primary/30">Services</SelectItem>
+          <SelectItem value="clothes" className="hover:bg-primary/20 focus:bg-primary/30">Clothes</SelectItem>
+          <SelectItem value="electronics" className="hover:bg-primary/20 focus:bg-primary/30">Electronics</SelectItem>
+          <SelectItem value="books" className="hover:bg-primary/20 focus:bg-primary/30">Books</SelectItem>
+          <SelectItem value="collectibles" className="hover:bg-primary/20 focus:bg-primary/30">Collectibles</SelectItem>
+          <SelectItem value="various" className="hover:bg-primary/20 focus:bg-primary/30">Various Items</SelectItem>
         </SelectContent>
       </Select>
     </div>
