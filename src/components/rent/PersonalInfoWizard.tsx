@@ -3,6 +3,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { format } from "date-fns";
 
 interface Question {
   id: string;
@@ -82,6 +83,13 @@ const PersonalInfoWizard = ({ open, onOpenChange }: PersonalInfoWizardProps) => 
   };
 
   const handleAnswer = (value: string) => {
+    if (currentQuestion.type === 'date') {
+      // Format the date as YYYY-MM-DD for storage
+      const date = new Date(value);
+      if (!isNaN(date.getTime())) {
+        value = format(date, 'yyyy-MM-dd');
+      }
+    }
     setAnswers(prev => ({
       ...prev,
       [currentQuestion.id]: value
@@ -115,7 +123,8 @@ const PersonalInfoWizard = ({ open, onOpenChange }: PersonalInfoWizardProps) => 
                 className="bg-transparent border-b border-white/20 rounded-none 
                          focus:border-primary/50 transition-all duration-300 
                          hover:border-white/40 focus:ring-0 px-1"
-                placeholder="Type your answer here..."
+                placeholder={currentQuestion.type === 'date' ? 'YYYY-MM-DD' : 'Type your answer here...'}
+                max={currentQuestion.type === 'date' ? new Date().toISOString().split('T')[0] : undefined}
               />
             </div>
 
