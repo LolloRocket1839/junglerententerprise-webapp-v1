@@ -104,7 +104,7 @@ const PersonalInfoWizard = ({ open, onOpenChange }: PersonalInfoWizardProps) => 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="glass-dialog sm:max-w-[425px]">
+      <DialogContent className="glass-dialog sm:max-w-[425px] border-none bg-black/40">
         <div className="p-6">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-white mb-2">Personal Information</h2>
@@ -113,16 +113,18 @@ const PersonalInfoWizard = ({ open, onOpenChange }: PersonalInfoWizardProps) => 
 
           <div className="space-y-6">
             <div className="animate-fade-in">
-              <label className="block text-white mb-2">{currentQuestion.question}</label>
+              <label className="block text-white/80 mb-2">{currentQuestion.question}</label>
               {currentQuestion.type === 'select' ? (
                 <select
-                  className="w-full bg-white/10 text-white border border-white/20 rounded-lg p-2"
+                  className="w-full bg-transparent text-white border-b border-white/20 
+                           focus:border-primary/50 transition-all duration-300 outline-none 
+                           py-2 px-1 appearance-none hover:border-white/40"
                   value={answers[currentQuestion.id] || ''}
                   onChange={(e) => handleAnswer(e.target.value)}
                 >
-                  <option value="">Select an option</option>
+                  <option value="" className="bg-gray-900">Select an option</option>
                   {currentQuestion.options?.map((option) => (
-                    <option key={option} value={option}>{option}</option>
+                    <option key={option} value={option} className="bg-gray-900">{option}</option>
                   ))}
                 </select>
               ) : (
@@ -130,21 +132,27 @@ const PersonalInfoWizard = ({ open, onOpenChange }: PersonalInfoWizardProps) => 
                   type={currentQuestion.type}
                   value={answers[currentQuestion.id] || ''}
                   onChange={(e) => handleAnswer(e.target.value)}
-                  className="bg-white/10 text-white border-white/20"
+                  className="bg-transparent border-b border-white/20 rounded-none 
+                           focus:border-primary/50 transition-all duration-300 
+                           hover:border-white/40 focus:ring-0 px-1"
+                  placeholder="Type your answer here..."
                 />
               )}
             </div>
 
             <div className="flex justify-between pt-4">
               <Button
-                variant="outline"
+                variant="ghost"
                 onClick={handleBack}
                 disabled={currentStep === 0}
-                className="bg-white/10 hover:bg-white/20"
+                className="text-white/70 hover:text-white hover:bg-white/10"
               >
                 Back
               </Button>
-              <Button onClick={handleNext}>
+              <Button 
+                onClick={handleNext}
+                className="bg-primary hover:bg-primary/90 text-black"
+              >
                 {currentStep === questions.length - 1 ? 'Finish' : 'Next'}
               </Button>
             </div>
