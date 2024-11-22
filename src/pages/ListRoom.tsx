@@ -16,7 +16,9 @@ const ListRoom = () => {
   const handleAddTag = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && currentTag.trim()) {
       e.preventDefault();
-      setTags([...tags, currentTag.trim()]);
+      if (!tags.includes(currentTag.trim())) {
+        setTags([...tags, currentTag.trim()]);
+      }
       setCurrentTag("");
     }
   };
@@ -31,6 +33,7 @@ const ListRoom = () => {
       title: "Room Listed Successfully",
       description: "Your room has been listed for swap. You'll be notified of interested parties.",
     });
+    // Here you would typically save the room data including tags
     navigate("/rent");
   };
 

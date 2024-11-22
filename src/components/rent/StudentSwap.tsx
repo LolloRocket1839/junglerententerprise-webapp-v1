@@ -29,7 +29,7 @@ const StudentSwap = () => {
       },
       timestamp: "1 hour ago",
       lastUpdated: "2 days ago",
-      tags: ["Same Price", "Immediate"]
+      tags: ["Same Price", "Immediate", "Nightlife", "City Center", "Student Area"]
     },
     {
       id: 2,
@@ -50,7 +50,7 @@ const StudentSwap = () => {
       },
       timestamp: "3 hours ago",
       lastUpdated: "1 day ago",
-      tags: ["Price Difference", "Flexible Move"]
+      tags: ["Price Difference", "Flexible Move", "Near University", "Quiet Area"]
     },
     {
       id: 3,
