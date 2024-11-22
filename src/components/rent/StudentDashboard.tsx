@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   Calendar,
   Bell,
@@ -7,7 +6,8 @@ import {
   Settings,
   Clock,
   AlertCircle,
-  LayoutGrid
+  LayoutGrid,
+  Newspaper
 } from 'lucide-react';
 import StudentSchedule from './StudentSchedule';
 
@@ -53,6 +53,7 @@ const StudentDashboard = () => {
                   { icon: Home, label: 'Overview', id: 'overview' },
                   { icon: Calendar, label: 'Schedule', id: 'schedule' },
                   { icon: MessageCircle, label: 'Messages', id: 'messages' },
+                  { icon: Newspaper, label: 'Newsfeed', id: 'newsfeed' },
                   { icon: LayoutGrid, label: 'Hub', id: 'hub' },
                   { icon: Settings, label: 'Settings', id: 'settings' },
                 ].map((item) => (
