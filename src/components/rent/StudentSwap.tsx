@@ -20,7 +20,8 @@ const StudentSwap = () => {
         price: 650,
         features: ["Balcony", "Private Bathroom"],
         rating: 4,
-        reviews: 12
+        reviews: 12,
+        image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
       },
       lookingFor: {
         hub: "Villa Roma Sud",
@@ -41,7 +42,8 @@ const StudentSwap = () => {
         price: 750,
         features: ["Corner Room", "City View"],
         rating: 5,
-        reviews: 8
+        reviews: 8,
+        image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04"
       },
       lookingFor: {
         hub: "Villa Roma Nord",

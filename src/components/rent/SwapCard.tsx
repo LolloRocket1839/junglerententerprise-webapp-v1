@@ -36,6 +36,19 @@ const SwapCard = ({ swap, onContactClick }: SwapCardProps) => {
         <>
           <div className="mt-4 space-y-6">
             <div className="p-4 rounded-lg bg-white/5">
+              {/* Room Image */}
+              <div className="relative h-48 rounded-lg overflow-hidden mb-4">
+                <img 
+                  src={swap.currentHub.image || "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"} 
+                  alt={`${swap.currentHub.name} - ${swap.currentHub.room}`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute top-4 right-4 flex items-center gap-1 bg-black/50 rounded-full px-3 py-1">
+                  <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                  <span className="text-white text-sm">{swap.currentHub.rating}</span>
+                </div>
+              </div>
+
               <div className="flex items-center justify-between text-white/90 mb-2">
                 <div className="flex items-center space-x-2">
                   <Home className="w-4 h-4" />
