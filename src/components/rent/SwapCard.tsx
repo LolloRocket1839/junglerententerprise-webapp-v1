@@ -1,5 +1,6 @@
 import { Tag, ArrowLeftRight, MessageCircle, Home, PlusCircle, MinusCircle, Star } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useNavigate } from 'react-router-dom';
 
 interface SwapCardProps {
   swap: any; // We'll keep the existing type for now
@@ -7,6 +8,14 @@ interface SwapCardProps {
 }
 
 const SwapCard = ({ swap, onContactClick }: SwapCardProps) => {
+  const navigate = useNavigate();
+
+  const handleContactClick = () => {
+    onContactClick(swap.id);
+    // Navigate to the hub section with the specific hub name as a parameter
+    navigate(`/stay?hub=${encodeURIComponent(swap.currentHub.name)}`);
+  };
+
   const renderRoomReview = () => {
     if (swap.category === 'room' && swap.currentHub.rating) {
       return (
@@ -160,7 +169,7 @@ const SwapCard = ({ swap, onContactClick }: SwapCardProps) => {
             <Button 
               variant="ghost" 
               className="flex items-center space-x-2 text-white/60 hover:text-white hover:bg-white/10"
-              onClick={() => onContactClick(swap.id)}
+              onClick={handleContactClick}
             >
               <MessageCircle className="w-5 h-5" />
               <span>Contact Owner</span>
