@@ -11,9 +11,11 @@ import {
   Newspaper,
   Heart,
   MessageSquare,
-  Share2
+  Share2,
+  ArrowLeftRight
 } from 'lucide-react';
 import StudentSchedule from './StudentSchedule';
+import StudentSwap from './StudentSwap';
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -90,6 +92,7 @@ const StudentDashboard = () => {
                   { icon: Calendar, label: 'Schedule', id: 'schedule' },
                   { icon: MessageCircle, label: 'Messages', id: 'messages' },
                   { icon: Newspaper, label: 'Newsfeed', id: 'newsfeed' },
+                  { icon: ArrowLeftRight, label: 'Swap', id: 'swap' },
                   { icon: LayoutGrid, label: 'Hub', id: 'hub' },
                   { icon: Settings, label: 'Settings', id: 'settings' },
                 ].map((item) => (
@@ -251,6 +254,8 @@ const StudentDashboard = () => {
                 ))}
               </div>
             )}
+            
+            {activeTab === 'swap' && <StudentSwap />}
             
             {activeTab === 'messages' && (
               <div className="glass-card p-6">
