@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
+import { Link } from "react-router-dom";
 import SwapFilters, { SwapCategory } from './SwapFilters';
 import SwapCard from './SwapCard';
 
@@ -84,8 +85,8 @@ const StudentSwap = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-lg font-semibold text-white">Swap Opportunities</h3>
-        <Button variant="default" className="glass-button">
-          List New Item
+        <Button variant="default" className="glass-button" asChild>
+          <Link to="/list-room">List New Item</Link>
         </Button>
       </div>
 
