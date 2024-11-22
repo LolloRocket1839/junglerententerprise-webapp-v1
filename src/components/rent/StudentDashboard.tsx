@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Calendar,
   Bell,
@@ -79,92 +80,92 @@ const StudentDashboard = () => {
             {activeTab === 'overview' && (
               <>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {[
-                {
-                  icon: Clock,
-                  label: 'Next House Meeting',
-                  value: 'Tomorrow, 18:00',
-                  type: 'primary'
-                },
-                {
-                  icon: Bell,
-                  label: 'Notifications',
-                  value: '3 New',
-                  type: 'primary'
-                },
-                {
-                  icon: Calendar,
-                  label: 'Next Event',
-                  value: 'House Dinner',
-                  type: 'primary'
-                },
-                {
-                  icon: Home,
-                  label: 'Room Status',
-                  value: 'All Good',
-                  type: 'primary'
-                }
-              ].map((stat, index) => (
-                <div
-                  key={index}
-                  className="glass-card p-4 sm:p-6 animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="flex flex-col items-center text-center gap-3 sm:gap-4">
-                    <div className="p-2 sm:p-3 rounded-lg bg-primary/20">
-                      <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                  {[
+                    {
+                      icon: Clock,
+                      label: 'Next House Meeting',
+                      value: 'Tomorrow, 18:00',
+                      type: 'primary'
+                    },
+                    {
+                      icon: Bell,
+                      label: 'Notifications',
+                      value: '3 New',
+                      type: 'primary'
+                    },
+                    {
+                      icon: Calendar,
+                      label: 'Next Event',
+                      value: 'House Dinner',
+                      type: 'primary'
+                    },
+                    {
+                      icon: Home,
+                      label: 'Room Status',
+                      value: 'All Good',
+                      type: 'primary'
+                    }
+                  ].map((stat, index) => (
+                    <div
+                      key={index}
+                      className="glass-card p-4 sm:p-6 animate-fade-in"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className="flex flex-col items-center text-center gap-3 sm:gap-4">
+                        <div className="p-2 sm:p-3 rounded-lg bg-primary/20">
+                          <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                        </div>
+                        <div>
+                          <p className="text-white/60 text-xs sm:text-sm">{stat.label}</p>
+                          <p className="text-white text-sm sm:text-base font-medium mt-1">{stat.value}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-white/60 text-xs sm:text-sm">{stat.label}</p>
-                      <p className="text-white text-sm sm:text-base font-medium mt-1">{stat.value}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  ))}
                 </div>
 
                 <div className="glass-card p-4 sm:p-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Recent Activity</h3>
-              <div className="space-y-3 sm:space-y-4">
-                {[
-                  {
-                    icon: AlertCircle,
-                    title: 'Utility Bill Due',
-                    message: "Please confirm your portion of this month's utilities",
-                    time: '2 days',
-                  },
-                  {
-                    icon: Calendar,
-                    title: 'House Meeting',
-                    message: "Vote for next weekend's cleaning schedule",
-                    time: '5 hours',
-                  },
-                  {
-                    icon: Home,
-                    title: 'Room Check',
-                    message: 'Monthly room inspection scheduled',
-                    time: 'Tomorrow',
-                  }
-                ].map((notification, index) => (
-                  <div
-                    key={index}
-                    className="glass hover:bg-white/10 p-3 sm:p-4 rounded-lg transition-all duration-300 cursor-pointer"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3 sm:gap-4">
-                        <div className="p-2 rounded-lg bg-primary/20">
-                          <notification.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                        </div>
-                        <div>
-                          <h4 className="text-white text-sm sm:text-base font-medium">{notification.title}</h4>
-                          <p className="text-white/60 text-xs sm:text-sm">{notification.message}</p>
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Recent Activity</h3>
+                  <div className="space-y-3 sm:space-y-4">
+                    {[
+                      {
+                        icon: AlertCircle,
+                        title: 'Utility Bill Due',
+                        message: "Please confirm your portion of this month's utilities",
+                        time: '2 days',
+                      },
+                      {
+                        icon: Calendar,
+                        title: 'House Meeting',
+                        message: "Vote for next weekend's cleaning schedule",
+                        time: '5 hours',
+                      },
+                      {
+                        icon: Home,
+                        title: 'Room Check',
+                        message: 'Monthly room inspection scheduled',
+                        time: 'Tomorrow',
+                      }
+                    ].map((notification, index) => (
+                      <div
+                        key={index}
+                        className="glass hover:bg-white/10 p-3 sm:p-4 rounded-lg transition-all duration-300 cursor-pointer"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3 sm:gap-4">
+                            <div className="p-2 rounded-lg bg-primary/20">
+                              <notification.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                            </div>
+                            <div>
+                              <h4 className="text-white text-sm sm:text-base font-medium">{notification.title}</h4>
+                              <p className="text-white/60 text-xs sm:text-sm">{notification.message}</p>
+                            </div>
+                          </div>
+                          <span className="text-white/40 text-xs sm:text-sm">{notification.time}</span>
                         </div>
                       </div>
-                      <span className="text-white/40 text-xs sm:text-sm">{notification.time}</span>
-                    </div>
+                    ))}
                   </div>
-                ))}
-              </div>
                 </div>
               </>
             )}
