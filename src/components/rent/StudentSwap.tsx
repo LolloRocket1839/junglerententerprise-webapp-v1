@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import SwapFilters, { SwapCategory } from './swap/SwapFilters';
-import SwapList from './swap/SwapList';
+import SwapFilters, { SwapCategory } from '../rent/SwapFilters';
+import SwapList from '../rent/SwapList';
 
 const StudentSwap = () => {
   const [selectedCategory, setSelectedCategory] = useState<SwapCategory>('room');
