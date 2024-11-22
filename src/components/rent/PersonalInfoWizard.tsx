@@ -3,7 +3,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { format } from "date-fns";
+import { format, parse, isValid } from "date-fns";
 
 interface Question {
   id: string;
@@ -82,18 +82,57 @@ const PersonalInfoWizard = ({ open, onOpenChange }: PersonalInfoWizardProps) => 
     }
   };
 
-  const handleAnswer = (value: string) => {
-    if (currentQuestion.type === 'date') {
-      // Format the date as YYYY-MM-DD for storage
-      const date = new Date(value);
-      if (!isNaN(date.getTime())) {
-        value = format(date, 'yyyy-MM-dd');
+  const formatDateInput = (input: string) => {
+    // Remove all non-numeric characters
+    const numbersOnly = input.replace(/\D/g, '');
+    
+    // Handle different input patterns
+    if (numbersOnly.length >= 8) {
+      // For inputs like 07041999
+      const day = numbersOnly.substring(0, 2);
+      const month = numbersOnly.substring(2, 4);
+      const year = numbersOnly.substring(4, 8);
+      
+      try {
+        const date = parse(`${day}${month}${year}`, 'ddMMyyyy', new Date());
+        if (isValid(date)) {
+          return format(date, 'dd-MM-yyyy');
+        }
+      } catch (e) {
+        return input;
+      }
+    } else if (numbersOnly.length === 6) {
+      // For inputs like 070499
+      const day = numbersOnly.substring(0, 2);
+      const month = numbersOnly.substring(2, 4);
+      const year = '19' + numbersOnly.substring(4, 6); // Assuming 19xx for 2-digit years
+      
+      try {
+        const date = parse(`${day}${month}${year}`, 'ddMMyyyy', new Date());
+        if (isValid(date)) {
+          return format(date, 'dd-MM-yyyy');
+        }
+      } catch (e) {
+        return input;
       }
     }
-    setAnswers(prev => ({
-      ...prev,
-      [currentQuestion.id]: value
-    }));
+    
+    return input;
+  };
+
+  const handleAnswer = (value: string) => {
+    if (currentQuestion.type === 'date') {
+      const formattedDate = formatDateInput(value);
+      setAnswers(prev => ({
+        ...prev,
+        [currentQuestion.id]: formattedDate
+      }));
+    } else {
+      setAnswers(prev => ({
+        ...prev,
+        [currentQuestion.id]: value
+      }));
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -116,15 +155,14 @@ const PersonalInfoWizard = ({ open, onOpenChange }: PersonalInfoWizardProps) => 
             <div className="animate-fade-in">
               <label className="block text-white/80 mb-2">{currentQuestion.question}</label>
               <Input
-                type={currentQuestion.type}
+                type={currentQuestion.type === 'date' ? 'text' : currentQuestion.type}
                 value={answers[currentQuestion.id] || ''}
                 onChange={(e) => handleAnswer(e.target.value)}
                 onKeyDown={handleKeyPress}
                 className="bg-transparent border-b border-white/20 rounded-none 
                          focus:border-primary/50 transition-all duration-300 
                          hover:border-white/40 focus:ring-0 px-1"
-                placeholder={currentQuestion.type === 'date' ? 'YYYY-MM-DD' : 'Type your answer here...'}
-                max={currentQuestion.type === 'date' ? new Date().toISOString().split('T')[0] : undefined}
+                placeholder={currentQuestion.type === 'date' ? 'DD-MM-YYYY' : 'Type your answer here...'}
               />
             </div>
 
