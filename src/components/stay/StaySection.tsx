@@ -20,6 +20,63 @@ const StaySection = () => {
     purpose: 'exam'
   });
 
+  const stayListings = [
+    {
+      id: 1,
+      title: "Student Loft Roma",
+      location: "5 min from La Sapienza",
+      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742",
+      rating: 4.8,
+      price: 45,
+      amenities: ["WiFi", "Kitchen", "Study Area"]
+    },
+    {
+      id: 2,
+      title: "Academia Milano",
+      location: "Near Politecnico",
+      image: "https://images.unsplash.com/photo-1497604401993-f2e922e5cb0a",
+      rating: 4.7,
+      price: 55,
+      amenities: ["WiFi", "Kitchen", "Study Area"]
+    },
+    {
+      id: 3,
+      title: "Galileo's View Florence",
+      location: "10 min from University of Florence",
+      image: "https://images.unsplash.com/photo-1459767129954-1b1c1f9b9ace",
+      rating: 4.9,
+      price: 50,
+      amenities: ["WiFi", "Kitchen", "Study Area"]
+    },
+    {
+      id: 4,
+      title: "Da Vinci Residence",
+      location: "Central Turin",
+      image: "https://images.unsplash.com/photo-1460574283810-2aab119d8511",
+      rating: 4.6,
+      price: 40,
+      amenities: ["WiFi", "Kitchen", "Study Area"]
+    },
+    {
+      id: 5,
+      title: "Archimedes House",
+      location: "Syracuse Historic Center",
+      image: "https://images.unsplash.com/photo-1449157291145-7efd050a4d0e",
+      rating: 4.7,
+      price: 35,
+      amenities: ["WiFi", "Kitchen", "Study Area"]
+    },
+    {
+      id: 6,
+      title: "Pythagoras Garden",
+      location: "Bologna University Area",
+      image: "https://images.unsplash.com/photo-1433086966358-54859d0ed716",
+      rating: 4.8,
+      price: 45,
+      amenities: ["WiFi", "Kitchen", "Study Area"]
+    }
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Decorative Elements */}
@@ -90,13 +147,19 @@ const StaySection = () => {
       {/* Listings Section */}
       <div className="max-w-7xl mx-auto px-8 pb-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((item) => (
+          {stayListings.map((listing) => (
             <div 
-              key={item} 
-              className="premium-card"
+              key={listing.id} 
+              className="premium-card group"
             >
               {/* Property Image */}
-              <div className="relative h-48 bg-white/5">
+              <div className="relative h-48 bg-white/5 overflow-hidden">
+                <img 
+                  src={listing.image} 
+                  alt={listing.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  loading="lazy"
+                />
                 <div className="absolute top-3 left-3">
                   <span className="bg-green-500 text-white text-sm px-3 py-1 rounded-full flex items-center gap-2">
                     <Shield className="w-4 h-4" />
@@ -110,16 +173,16 @@ const StaySection = () => {
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <h3 className="text-xl font-bold text-white mb-1">
-                      Student Loft Roma
+                      {listing.title}
                     </h3>
                     <p className="text-white/60 flex items-center gap-2">
                       <MapPin className="w-4 h-4" />
-                      5 min from La Sapienza
+                      {listing.location}
                     </p>
                   </div>
                   <div className="flex items-center gap-1 text-white">
                     <Star className="w-4 h-4 fill-current" />
-                    4.8
+                    {listing.rating}
                   </div>
                 </div>
 
@@ -142,7 +205,7 @@ const StaySection = () => {
                 {/* Price and CTA */}
                 <div className="flex items-end justify-between pt-4 border-t border-white/10">
                   <div>
-                    <p className="text-2xl font-bold text-white">€45</p>
+                    <p className="text-2xl font-bold text-white">€{listing.price}</p>
                     <p className="text-white/60">per night</p>
                   </div>
                   <button className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
