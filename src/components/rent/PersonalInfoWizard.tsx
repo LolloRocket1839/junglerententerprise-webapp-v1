@@ -88,6 +88,13 @@ const PersonalInfoWizard = ({ open, onOpenChange }: PersonalInfoWizardProps) => 
     }));
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleNext();
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="glass-dialog sm:max-w-[425px] border-none bg-black/40">
@@ -104,6 +111,7 @@ const PersonalInfoWizard = ({ open, onOpenChange }: PersonalInfoWizardProps) => 
                 type={currentQuestion.type}
                 value={answers[currentQuestion.id] || ''}
                 onChange={(e) => handleAnswer(e.target.value)}
+                onKeyDown={handleKeyPress}
                 className="bg-transparent border-b border-white/20 rounded-none 
                          focus:border-primary/50 transition-all duration-300 
                          hover:border-white/40 focus:ring-0 px-1"
