@@ -21,7 +21,7 @@ const StudentSwap = () => {
         features: ["Balcony", "Private Bathroom"],
         rating: 4,
         reviews: 12,
-        image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
+        image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
       },
       lookingFor: {
         hub: "Villa Roma Sud",
@@ -43,7 +43,7 @@ const StudentSwap = () => {
         features: ["Corner Room", "City View"],
         rating: 5,
         reviews: 8,
-        image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04"
+        image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
       },
       lookingFor: {
         hub: "Villa Roma Nord",
@@ -74,8 +74,6 @@ const StudentSwap = () => {
     }
   ];
 
-  const filteredSwaps = mockSwaps.filter(swap => swap.category === selectedCategory);
-
   const handleContactClick = (swapId: number) => {
     toast({
       title: "Contact Request Sent",
@@ -97,13 +95,15 @@ const StudentSwap = () => {
         onCategoryChange={setSelectedCategory}
       />
       
-      {filteredSwaps.map((swap) => (
-        <SwapCard 
-          key={swap.id} 
-          swap={swap}
-          onContactClick={handleContactClick}
-        />
-      ))}
+      {mockSwaps
+        .filter(swap => swap.category === selectedCategory)
+        .map((swap) => (
+          <SwapCard 
+            key={swap.id} 
+            swap={swap}
+            onContactClick={handleContactClick}
+          />
+        ))}
     </div>
   );
 };

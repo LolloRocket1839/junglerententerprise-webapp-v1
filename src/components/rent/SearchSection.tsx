@@ -5,7 +5,7 @@ const SearchSection = () => {
   const mockRooms = [
     {
       id: 1,
-      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
+      image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
       hub: "Villa Roma Nord",
       room: "Room 304",
       price: 650,
@@ -16,7 +16,7 @@ const SearchSection = () => {
     },
     {
       id: 2,
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
+      image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
       hub: "Villa Roma Sud",
       room: "Room 215",
       price: 750,
