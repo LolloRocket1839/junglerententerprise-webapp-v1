@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { User, Upload, CheckCircle, Home } from 'lucide-react';
 import DocumentUploadDialog from './DocumentUploadDialog';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useToast } from "@/components/ui/use-toast";
 
 const steps = [
   {
@@ -31,6 +33,18 @@ const steps = [
 
 const ProcessSteps = () => {
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { toast } = useToast();
+
+  const handleStepClick = (index: number) => {
+    if (index === 0) {
+      // Navigate to profile tab
+      navigate(location.pathname, { state: { activeTab: 'profile' } });
+    } else if (index === 1) {
+      setIsUploadOpen(true);
+    }
+  };
 
   return (
     <>
@@ -39,14 +53,12 @@ const ProcessSteps = () => {
           <div
             key={index}
             className={`glass-card group relative p-6 hover:scale-[1.02] transition-all duration-300 ${
-              index === 1 ? 'cursor-pointer' : ''
+              (index === 0 || index === 1) ? 'cursor-pointer' : ''
             }`}
             style={{
               background: `linear-gradient(to bottom right, ${step.color})`
             }}
-            onClick={() => {
-              if (index === 1) setIsUploadOpen(true);
-            }}
+            onClick={() => handleStepClick(index)}
           >
             <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl" />
             <div className="relative">
