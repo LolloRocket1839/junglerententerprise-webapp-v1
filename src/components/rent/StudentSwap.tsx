@@ -4,9 +4,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { Link } from "react-router-dom";
 import SwapFilters, { SwapCategory } from './SwapFilters';
 import SwapCard from './SwapCard';
+import FileUploadDialog from '../ui/FileUploadDialog';
 
 const StudentSwap = () => {
   const [selectedCategory, setSelectedCategory] = useState<SwapCategory>('room');
+  const [isUploadOpen, setIsUploadOpen] = useState(false);
   const { toast } = useToast();
 
   const mockSwaps = [
@@ -81,14 +83,34 @@ const StudentSwap = () => {
     });
   };
 
+  const handleFilesUploaded = (files: File[]) => {
+    // Here you would typically handle the uploaded files
+    console.log('Files uploaded:', files);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-lg font-semibold text-white">Swap Opportunities</h3>
-        <Button variant="default" className="glass-button" asChild>
-          <Link to="/list-room">List New Item</Link>
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            variant="default" 
+            className="glass-button"
+            onClick={() => setIsUploadOpen(true)}
+          >
+            Upload Files
+          </Button>
+          <Button variant="default" className="glass-button" asChild>
+            <Link to="/list-room">List New Item</Link>
+          </Button>
+        </div>
       </div>
+
+      <FileUploadDialog
+        open={isUploadOpen}
+        onOpenChange={setIsUploadOpen}
+        onFilesUploaded={handleFilesUploaded}
+      />
 
       <SwapFilters 
         selectedCategory={selectedCategory}
