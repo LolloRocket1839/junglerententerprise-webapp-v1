@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useDropzone } from 'react-dropzone';
-import { Upload, File, Cloud, Microsoft, X } from 'lucide-react';
+import { Upload, File, Cloud, ExternalLink, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import { useState, useCallback } from 'react';
@@ -85,7 +85,7 @@ const DocumentUploadDialog = ({ open, onOpenChange }: DocumentUploadDialogProps)
               className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border-white/10"
               onClick={() => window.open('https://onedrive.live.com')}
             >
-              <Microsoft className="w-4 h-4" />
+              <ExternalLink className="w-4 h-4" />
               OneDrive
             </Button>
           </div>
