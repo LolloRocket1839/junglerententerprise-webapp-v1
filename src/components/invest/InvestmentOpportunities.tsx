@@ -52,7 +52,7 @@ const InvestmentOpportunities = () => {
       location: "Rome, Italy",
       price: "$850,000",
       roi: "12.5%",
-      image: "/placeholder.svg"
+      image: "https://images.unsplash.com/photo-1460574283810-2aab119d8511"
     },
     {
       id: 2,
@@ -60,7 +60,7 @@ const InvestmentOpportunities = () => {
       location: "Berlin, Germany",
       price: "$1,200,000",
       roi: "15.2%",
-      image: "/placeholder.svg"
+      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625"
     },
     {
       id: 3,
@@ -68,7 +68,7 @@ const InvestmentOpportunities = () => {
       location: "Paris, France",
       price: "$950,000",
       roi: "11.8%",
-      image: "/placeholder.svg"
+      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742"
     }
   ];
 
@@ -114,6 +114,7 @@ const InvestmentOpportunities = () => {
                     src={property.image}
                     alt={property.title}
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    loading="lazy"
                   />
                 </div>
                 <div className="p-6">
