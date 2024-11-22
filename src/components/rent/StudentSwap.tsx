@@ -1,11 +1,16 @@
 import { Tag, ArrowLeftRight, MessageSquare, Home, PlusCircle, MinusCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useState } from 'react';
+import SwapFilters, { SwapCategory } from './SwapFilters';
 
 const StudentSwap = () => {
+  const [selectedCategory, setSelectedCategory] = useState<SwapCategory>('room');
+
   const mockSwaps = [
     {
       id: 1,
       author: "Marco B.",
+      category: "room",
       currentHub: {
         name: "Villa Roma Nord",
         room: "Room 304",
@@ -23,6 +28,7 @@ const StudentSwap = () => {
     {
       id: 2,
       author: "Sarah K.",
+      category: "room",
       currentHub: {
         name: "Villa Roma Sud",
         room: "Room 215",
@@ -40,32 +46,120 @@ const StudentSwap = () => {
     {
       id: 3,
       author: "David L.",
-      currentHub: {
-        name: "Villa Roma Est",
-        room: "Room 512",
-        price: 600,
-        features: ["Shared Bathroom", "Study Area"]
-      },
-      lookingFor: {
-        hub: "Villa Roma Centrale",
-        priceRange: 700,
-        features: ["Private Bathroom"]
-      },
+      category: "electronics",
+      item: "MacBook Pro 2021",
+      lookingFor: "Gaming Laptop",
       timestamp: "1 day ago",
-      tags: ["Willing to Pay More"]
+      tags: ["Electronics", "Laptops"]
+    },
+    {
+      id: 4,
+      author: "Emma R.",
+      category: "books",
+      item: "Computer Science Textbooks",
+      lookingFor: "Economics Books",
+      timestamp: "2 days ago",
+      tags: ["Academic", "Textbooks"]
     }
   ];
+
+  const filteredSwaps = mockSwaps.filter(swap => swap.category === selectedCategory);
+
+  const renderSwapContent = (swap: any) => {
+    if (swap.category === 'room') {
+      return (
+        <>
+          <div className="mt-4 space-y-6">
+            <div className="p-4 rounded-lg bg-white/5">
+              <div className="flex items-center space-x-2 text-white/90 mb-2">
+                <Home className="w-4 h-4" />
+                <span className="font-medium">Current Room:</span>
+              </div>
+              <div className="space-y-2">
+                <p className="text-white/90">{swap.currentHub.name} - {swap.currentHub.room}</p>
+                <p className="text-primary font-medium">€{swap.currentHub.price}/month</p>
+                <div className="flex flex-wrap gap-2">
+                  {swap.currentHub.features.map((feature: string, index: number) => (
+                    <span 
+                      key={index}
+                      className="px-2 py-1 rounded-full text-xs bg-white/10 text-white/80"
+                    >
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <div className="flex items-center space-x-3">
+                <ArrowLeftRight className="w-5 h-5 text-primary" />
+                {swap.currentHub.price !== swap.lookingFor.priceRange && (
+                  <>
+                    {swap.lookingFor.priceRange > swap.currentHub.price ? (
+                      <div className="flex items-center text-green-500">
+                        <PlusCircle className="w-4 h-4 mr-1" />
+                        <span>€{swap.lookingFor.priceRange - swap.currentHub.price}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center text-red-500">
+                        <MinusCircle className="w-4 h-4 mr-1" />
+                        <span>€{swap.currentHub.price - swap.lookingFor.priceRange}</span>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div className="p-4 rounded-lg bg-white/5">
+              <div className="flex items-center space-x-2 text-white/90 mb-2">
+                <Home className="w-4 h-4" />
+                <span className="font-medium">Looking For:</span>
+              </div>
+              <div className="space-y-2">
+                <p className="text-white/90">{swap.lookingFor.hub}</p>
+                <p className="text-primary font-medium">Up to €{swap.lookingFor.priceRange}/month</p>
+                <div className="flex flex-wrap gap-2">
+                  {swap.lookingFor.features.map((feature: string, index: number) => (
+                    <span 
+                      key={index}
+                      className="px-2 py-1 rounded-full text-xs bg-white/10 text-white/80"
+                    >
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <div className="mt-4">
+          <p className="text-white/90">Offering: {swap.item}</p>
+          <p className="text-white/90 mt-2">Looking for: {swap.lookingFor}</p>
+        </div>
+      );
+    }
+  };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-lg font-semibold text-white">Room Swap Opportunities</h3>
+        <h3 className="text-lg font-semibold text-white">Swap Opportunities</h3>
         <Button variant="default" className="glass-button">
-          List My Room
+          List New Item
         </Button>
       </div>
+
+      <SwapFilters 
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+      />
       
-      {mockSwaps.map((swap) => (
+      {filteredSwaps.map((swap) => (
         <div key={swap.id} className="glass-card p-6 animate-fade-in">
           <div className="flex items-start space-x-4">
             <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
@@ -81,75 +175,10 @@ const StudentSwap = () => {
                 </div>
               </div>
               
-              <div className="mt-4 space-y-6">
-                {/* Current Room */}
-                <div className="p-4 rounded-lg bg-white/5">
-                  <div className="flex items-center space-x-2 text-white/90 mb-2">
-                    <Home className="w-4 h-4" />
-                    <span className="font-medium">Current Room:</span>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-white/90">{swap.currentHub.name} - {swap.currentHub.room}</p>
-                    <p className="text-primary font-medium">€{swap.currentHub.price}/month</p>
-                    <div className="flex flex-wrap gap-2">
-                      {swap.currentHub.features.map((feature, index) => (
-                        <span 
-                          key={index}
-                          className="px-2 py-1 rounded-full text-xs bg-white/10 text-white/80"
-                        >
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex justify-center">
-                  <div className="flex items-center space-x-3">
-                    <ArrowLeftRight className="w-5 h-5 text-primary" />
-                    {swap.currentHub.price !== swap.lookingFor.priceRange && (
-                      <>
-                        {swap.lookingFor.priceRange > swap.currentHub.price ? (
-                          <div className="flex items-center text-green-500">
-                            <PlusCircle className="w-4 h-4 mr-1" />
-                            <span>€{swap.lookingFor.priceRange - swap.currentHub.price}</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center text-red-500">
-                            <MinusCircle className="w-4 h-4 mr-1" />
-                            <span>€{swap.currentHub.price - swap.lookingFor.priceRange}</span>
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </div>
-
-                {/* Looking For */}
-                <div className="p-4 rounded-lg bg-white/5">
-                  <div className="flex items-center space-x-2 text-white/90 mb-2">
-                    <Home className="w-4 h-4" />
-                    <span className="font-medium">Looking For:</span>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-white/90">{swap.lookingFor.hub}</p>
-                    <p className="text-primary font-medium">Up to €{swap.lookingFor.priceRange}/month</p>
-                    <div className="flex flex-wrap gap-2">
-                      {swap.lookingFor.features.map((feature, index) => (
-                        <span 
-                          key={index}
-                          className="px-2 py-1 rounded-full text-xs bg-white/10 text-white/80"
-                        >
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {renderSwapContent(swap)}
 
               <div className="flex flex-wrap gap-2 mt-4">
-                {swap.tags.map((tag, index) => (
+                {swap.tags.map((tag: string, index: number) => (
                   <span 
                     key={index}
                     className="px-2 py-1 rounded-full text-xs bg-primary/20 text-primary"
