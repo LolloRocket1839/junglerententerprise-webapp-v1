@@ -9,7 +9,8 @@ import {
   MessageSquare,
   Share2,
   ArrowLeftRight,
-  Home
+  Home,
+  UserSearch
 } from 'lucide-react';
 import StudentSchedule from './StudentSchedule';
 import StudentSwap from './StudentSwap';
@@ -69,6 +70,7 @@ const StudentDashboard = () => {
                   { icon: MessageCircle, label: 'Messages', id: 'messages' },
                   { icon: Newspaper, label: 'Newsfeed', id: 'newsfeed' },
                   { icon: ArrowLeftRight, label: 'Swap', id: 'swap' },
+                  { icon: UserSearch, label: 'Find Roommate', id: 'roommate' },
                   { icon: LayoutGrid, label: 'Hub', id: 'hub' },
                   { icon: Settings, label: 'Settings', id: 'settings' },
                 ].map((item) => (
@@ -146,6 +148,13 @@ const StudentDashboard = () => {
             )}
             
             {activeTab === 'swap' && <StudentSwap />}
+            
+            {activeTab === 'roommate' && (
+              <div className="glass-card p-6">
+                <h3 className="text-lg font-semibold text-white">Find Your Roommate</h3>
+                <p className="text-white/60 mt-2">Coming soon! This feature will help you find and connect with potential roommates.</p>
+              </div>
+            )}
             
             {activeTab === 'messages' && (
               <div className="glass-card p-6">
