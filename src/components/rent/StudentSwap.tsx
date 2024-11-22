@@ -16,7 +16,7 @@ const StudentSwap = () => {
       category: "room",
       currentHub: {
         name: "Villa Roma Nord",
-        room: "Room 304",
+        room: "Albert Einstein Suite",
         price: 650,
         features: ["Balcony", "Private Bathroom"],
         rating: 4,
@@ -38,7 +38,7 @@ const StudentSwap = () => {
       category: "room",
       currentHub: {
         name: "Villa Roma Sud",
-        room: "Room 215",
+        room: "Ursula von der Leyen Studio",
         price: 750,
         features: ["Corner Room", "City View"],
         rating: 5,
