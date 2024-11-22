@@ -6,7 +6,8 @@ import {
   MessageCircle,
   Settings,
   Clock,
-  AlertCircle
+  AlertCircle,
+  LayoutGrid
 } from 'lucide-react';
 import StudentSchedule from './StudentSchedule';
 
@@ -52,6 +53,7 @@ const StudentDashboard = () => {
                   { icon: Home, label: 'Overview', id: 'overview' },
                   { icon: Calendar, label: 'Schedule', id: 'schedule' },
                   { icon: MessageCircle, label: 'Messages', id: 'messages' },
+                  { icon: LayoutGrid, label: 'Hub', id: 'hub' },
                   { icon: Settings, label: 'Settings', id: 'settings' },
                 ].map((item) => (
                   <button
