@@ -6,18 +6,7 @@ import { Flame, Snowflake, Trophy, Star, User, Heart, Badge } from 'lucide-react
 import { Progress } from "@/components/ui/progress";
 import { storeResponse } from './utils/storageUtils';
 import { questions } from './data/questions';
-
-interface Question {
-  id: number;
-  text: string;
-  category: string;
-  options: {
-    text: string;
-    icon: 'flame' | 'snowflake' | 'trophy' | 'star' | 'user' | 'heart' | 'badge';
-    trait: string;
-  }[];
-  weight: number;
-}
+import { Question, QuestionIcon } from './types/questions';
 
 const QuestionPool = () => {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
@@ -60,7 +49,7 @@ const QuestionPool = () => {
     setShowStats(false);
   };
 
-  const getIcon = (iconName: string) => {
+  const getIcon = (iconName: QuestionIcon) => {
     const icons = {
       flame: Flame,
       snowflake: Snowflake,
@@ -70,7 +59,7 @@ const QuestionPool = () => {
       heart: Heart,
       badge: Badge
     };
-    const IconComponent = icons[iconName as keyof typeof icons];
+    const IconComponent = icons[iconName];
     return <IconComponent className="h-5 w-5" />;
   };
 

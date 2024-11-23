@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowRight, Trophy, Star, Brain } from "lucide-react";
-import { Question } from "./QuestionPool";
+import { Question } from './types/questions';
 
 interface QuestionDisplayProps {
   question: Question;

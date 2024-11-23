@@ -1,4 +1,6 @@
-export const questions = [
+import { Question } from '../types/questions';
+
+export const questions: Question[] = [
   {
     id: 1,
     text: "Would you rather walk barefoot on lava for 10 seconds or dive naked into freezing water in the North Pole for 10 minutes?",
