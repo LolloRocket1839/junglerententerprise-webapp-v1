@@ -108,8 +108,8 @@ const Index = () => {
               className="bg-primary hover:bg-primary-light text-background transition-all duration-300"
               asChild
             >
-              <Link to="/login">
-                Join Now <ArrowRight className="ml-2" />
+              <Link to="/invest">
+                Get Started <ArrowRight className="ml-2" />
               </Link>
             </Button>
           </div>
