@@ -9,7 +9,313 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      bookings: {
+        Row: {
+          check_in: string
+          check_out: string
+          created_at: string
+          hub_id: string | null
+          id: string
+          profile_id: string | null
+          status: string
+          total_price: number
+          updated_at: string
+        }
+        Insert: {
+          check_in: string
+          check_out: string
+          created_at?: string
+          hub_id?: string | null
+          id?: string
+          profile_id?: string | null
+          status?: string
+          total_price: number
+          updated_at?: string
+        }
+        Update: {
+          check_in?: string
+          check_out?: string
+          created_at?: string
+          hub_id?: string | null
+          id?: string
+          profile_id?: string | null
+          status?: string
+          total_price?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookings_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "hubs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bookings_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hubs: {
+        Row: {
+          amenities: string[] | null
+          created_at: string
+          description: string | null
+          id: string
+          images: string[] | null
+          location: string
+          name: string
+          price_per_night: number
+          rating: number | null
+          reviews_count: number | null
+          updated_at: string
+        }
+        Insert: {
+          amenities?: string[] | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          location: string
+          name: string
+          price_per_night: number
+          rating?: number | null
+          reviews_count?: number | null
+          updated_at?: string
+        }
+        Update: {
+          amenities?: string[] | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          location?: string
+          name?: string
+          price_per_night?: number
+          rating?: number | null
+          reviews_count?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      jungle_wallet: {
+        Row: {
+          balance: number | null
+          created_at: string
+          id: string
+          profile_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          balance?: number | null
+          created_at?: string
+          id?: string
+          profile_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          balance?: number | null
+          created_at?: string
+          id?: string
+          profile_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jungle_wallet_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          current_city: string | null
+          date_of_birth: string | null
+          first_name: string | null
+          future_city: string | null
+          id: string
+          last_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          current_city?: string | null
+          date_of_birth?: string | null
+          first_name?: string | null
+          future_city?: string | null
+          id: string
+          last_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          current_city?: string | null
+          date_of_birth?: string | null
+          first_name?: string | null
+          future_city?: string | null
+          id?: string
+          last_name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          hub_id: string | null
+          id: string
+          profile_id: string | null
+          rating: number | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          hub_id?: string | null
+          id?: string
+          profile_id?: string | null
+          rating?: number | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          hub_id?: string | null
+          id?: string
+          profile_id?: string | null
+          rating?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "hubs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      roommate_answers: {
+        Row: {
+          answer: string
+          created_at: string
+          id: string
+          profile_id: string | null
+          question_id: string | null
+          trait: string | null
+        }
+        Insert: {
+          answer: string
+          created_at?: string
+          id?: string
+          profile_id?: string | null
+          question_id?: string | null
+          trait?: string | null
+        }
+        Update: {
+          answer?: string
+          created_at?: string
+          id?: string
+          profile_id?: string | null
+          question_id?: string | null
+          trait?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roommate_answers_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roommate_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "roommate_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      roommate_questions: {
+        Row: {
+          category: string
+          coin_reward: number | null
+          created_at: string
+          id: string
+          options: Json
+          question: string
+        }
+        Insert: {
+          category: string
+          coin_reward?: number | null
+          created_at?: string
+          id?: string
+          options: Json
+          question: string
+        }
+        Update: {
+          category?: string
+          coin_reward?: number | null
+          created_at?: string
+          id?: string
+          options?: Json
+          question?: string
+        }
+        Relationships: []
+      }
+      wallet_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string | null
+          id: string
+          type: string
+          wallet_id: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          type: string
+          wallet_id?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          type?: string
+          wallet_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wallet_transactions_wallet_id_fkey"
+            columns: ["wallet_id"]
+            isOneToOne: false
+            referencedRelation: "jungle_wallet"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
