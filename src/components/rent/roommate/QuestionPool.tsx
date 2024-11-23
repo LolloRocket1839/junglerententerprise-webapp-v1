@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { ArrowRight, Save, Coins } from 'lucide-react';
+import { ArrowRight, Save, Coins, MessageSquare } from 'lucide-react';
 import { storeResponse, getStoredResponses } from './utils/storageUtils';
 import { questions } from './data/questions';
 
@@ -19,11 +20,11 @@ const QuestionPool = () => {
   const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
   const [jungleCoins, setJungleCoins] = useState(0);
   const [customAnswer, setCustomAnswer] = useState("");
+  const [freeformAnswer, setFreeformAnswer] = useState("");
   const { toast } = useToast();
 
   useEffect(() => {
     loadNextQuestion();
-    // Load saved jungle coins from localStorage
     const savedCoins = localStorage.getItem('jungleCoins');
     if (savedCoins) {
       setJungleCoins(parseInt(savedCoins));
@@ -42,6 +43,7 @@ const QuestionPool = () => {
     
     const randomIndex = Math.floor(Math.random() * unansweredQuestions.length);
     setCurrentQuestion(unansweredQuestions[randomIndex]);
+    setFreeformAnswer(""); // Reset freeform answer for new question
   };
 
   const updateJungleCoins = (amount: number) => {
@@ -61,7 +63,6 @@ const QuestionPool = () => {
       await storeResponse(currentQuestion.id, answer);
       setAnsweredQuestions(prev => {
         const newAnswered = [...prev, currentQuestion.id];
-        // Award 1 coin for every 4 questions
         if (newAnswered.length % 4 === 0) {
           updateJungleCoins(1);
         }
@@ -85,7 +86,6 @@ const QuestionPool = () => {
   const handleCustomQuestion = async () => {
     if (!customAnswer.trim()) return;
     
-    // Award 3 coins for contributing a custom answer
     updateJungleCoins(3);
     setCustomAnswer("");
     
@@ -93,6 +93,29 @@ const QuestionPool = () => {
       title: "Thank you for your contribution!",
       description: "You've earned 3 Jungle Coins for sharing your insights.",
     });
+  };
+
+  const handleFreeformAnswer = async () => {
+    if (!currentQuestion || !freeformAnswer.trim()) return;
+
+    try {
+      await storeResponse(currentQuestion.id, freeformAnswer);
+      updateJungleCoins(2); // Award 2 coins for freeform answer
+      setAnsweredQuestions(prev => [...prev, currentQuestion.id]);
+      
+      toast({
+        title: "Creative response saved!",
+        description: "You earned 2 Jungle Coins for your detailed answer.",
+      });
+      
+      loadNextQuestion();
+    } catch (error) {
+      toast({
+        title: "Error saving response",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    }
   };
 
   if (!currentQuestion) {
@@ -137,26 +160,51 @@ const QuestionPool = () => {
           </div>
 
           <div className="pt-6 border-t border-white/10">
-            <h4 className="text-white font-medium mb-3">Have something to add?</h4>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={customAnswer}
-                onChange={(e) => setCustomAnswer(e.target.value)}
-                placeholder="Share your thoughts or suggest a question..."
-                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder:text-white/40"
-              />
-              <Button
-                variant="default"
-                onClick={handleCustomQuestion}
-                disabled={!customAnswer.trim()}
-              >
-                Share
-              </Button>
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-white font-medium mb-3 flex items-center gap-2">
+                  <MessageSquare className="h-4 w-4" />
+                  Share your detailed answer
+                </h4>
+                <Textarea
+                  value={freeformAnswer}
+                  onChange={(e) => setFreeformAnswer(e.target.value)}
+                  placeholder="Write your own answer to earn 2 Jungle Coins..."
+                  className="min-h-[100px] bg-white/5 border-white/10 text-white placeholder:text-white/40"
+                />
+                <Button
+                  variant="default"
+                  onClick={handleFreeformAnswer}
+                  disabled={!freeformAnswer.trim()}
+                  className="mt-2"
+                >
+                  Submit Custom Answer
+                </Button>
+              </div>
+
+              <div>
+                <h4 className="text-white font-medium mb-3">Have something to add?</h4>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={customAnswer}
+                    onChange={(e) => setCustomAnswer(e.target.value)}
+                    placeholder="Share your thoughts or suggest a question..."
+                    className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder:text-white/40"
+                  />
+                  <Button
+                    variant="default"
+                    onClick={handleCustomQuestion}
+                    disabled={!customAnswer.trim()}
+                  >
+                    Share
+                  </Button>
+                </div>
+                <p className="text-white/40 text-sm mt-2">
+                  Earn 3 Jungle Coins by sharing your insights!
+                </p>
+              </div>
             </div>
-            <p className="text-white/40 text-sm mt-2">
-              Earn 3 Jungle Coins by sharing your insights!
-            </p>
           </div>
 
           <div className="flex items-center justify-between pt-4 border-t border-white/10">
