@@ -1,24 +1,27 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, Trophy, Star, Brain } from "lucide-react";
-import { Question } from './types/questions';
+import { ArrowRight, Trophy, Star, Brain, Coins } from 'lucide-react';
+import { Question, QuestionIcon } from './types/questions';
+import { useToast } from "@/components/ui/use-toast";
 
 interface QuestionDisplayProps {
   question: Question;
-  onAnswer: (answer: string) => void;
+  onAnswer: (answer: string, trait: string) => void;
   progress: number;
   streak: number;
+  coins: number;
 }
 
-const QuestionDisplay = ({ question, onAnswer, progress, streak }: QuestionDisplayProps) => {
+const QuestionDisplay = ({ question, onAnswer, progress, streak, coins }: QuestionDisplayProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showStats, setShowStats] = useState(false);
+  const { toast } = useToast();
 
-  const handleAnswer = (answer: string) => {
-    setSelectedAnswer(answer);
+  const handleAnswer = (option: { text: string; trait: string }) => {
+    setSelectedAnswer(option.text);
     setTimeout(() => {
-      onAnswer(answer);
+      onAnswer(option.text, option.trait);
       setSelectedAnswer(null);
       setShowStats(false);
     }, 1000);
@@ -27,13 +30,21 @@ const QuestionDisplay = ({ question, onAnswer, progress, streak }: QuestionDispl
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Progress and Streak */}
+      {/* Progress and Stats */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-primary" />
-          <span className="text-sm text-primary font-medium">
-            {streak} Day Streak!
-          </span>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <Trophy className="h-5 w-5 text-primary" />
+            <span className="text-sm text-primary font-medium">
+              {streak} Day Streak!
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Coins className="h-5 w-5 text-yellow-500" />
+            <span className="text-sm text-white/60">
+              {coins} Coins
+            </span>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <Brain className="h-5 w-5 text-primary" />
@@ -66,16 +77,16 @@ const QuestionDisplay = ({ question, onAnswer, progress, streak }: QuestionDispl
           {question.options.map((option, index) => (
             <Button
               key={index}
-              variant={selectedAnswer === option ? "default" : "outline"}
+              variant={selectedAnswer === option.text ? "default" : "outline"}
               className={`
                 w-full justify-start text-left transition-all duration-300
-                ${selectedAnswer === option ? 'bg-primary text-white scale-105' : 'hover:bg-primary/20 hover:text-primary'}
+                ${selectedAnswer === option.text ? 'bg-primary text-white scale-105' : 'hover:bg-primary/20 hover:text-primary'}
                 ${showStats ? 'pointer-events-none' : ''}
                 animate-scale-in
               `}
               onClick={() => handleAnswer(option)}
             >
-              {option}
+              {option.text}
               <ArrowRight className="ml-auto h-4 w-4" />
             </Button>
           ))}
