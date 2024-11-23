@@ -13,6 +13,7 @@ import {
   UserSearch,
   ShoppingBag
 } from 'lucide-react';
+import { Button } from "@/components/ui/button"; // Add this import
 import StudentSchedule from './StudentSchedule';
 import StudentSwap from './StudentSwap';
 import StudentHeader from './StudentHeader';
