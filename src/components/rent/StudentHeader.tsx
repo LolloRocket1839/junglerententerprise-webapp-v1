@@ -1,6 +1,7 @@
 import { Bell, Settings, LogOut, User, Settings2, Moon } from 'lucide-react';
 import { useState } from 'react';
 import PersonalInfoWizard from './PersonalInfoWizard';
+import JungleWallet from './JungleWallet';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +13,14 @@ import {
 
 const StudentHeader = () => {
   const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false);
+  
+  // Mock data for demonstration - in a real app, this would come from your backend
+  const mockTransactions = [
+    { type: "Question Answered", amount: 10, timestamp: new Date().toISOString() },
+    { type: "7-Day Streak Bonus", amount: 50, timestamp: new Date().toISOString() },
+    { type: "Weekly Challenge", amount: 100, timestamp: new Date().toISOString() },
+    { type: "Marketplace Purchase", amount: -150, timestamp: new Date().toISOString() },
+  ];
 
   return (
     <nav className="glass-nav">
@@ -28,6 +37,11 @@ const StudentHeader = () => {
               <h2 className="text-white text-sm sm:text-base font-medium">Marco Studente</h2>
               <p className="text-white/60 text-xs sm:text-sm">Villa Roma Centrale</p>
             </div>
+          </div>
+
+          {/* Jungle Wallet */}
+          <div className="flex-1 flex justify-center">
+            <JungleWallet balance={210} transactions={mockTransactions} />
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
