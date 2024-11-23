@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { ArrowRight, Trophy, Star, Brain, Coins } from 'lucide-react';
-import { Question, QuestionIcon } from './types/questions';
+import { ArrowRight, Trophy, Star, Brain, Coins, Sparkles } from 'lucide-react';
+import { Question } from './types/questions';
 import { useToast } from "@/components/ui/use-toast";
+import { motion } from "framer-motion";
 
 interface QuestionDisplayProps {
   question: Question;
@@ -16,16 +17,26 @@ interface QuestionDisplayProps {
 const QuestionDisplay = ({ question, onAnswer, progress, streak, coins }: QuestionDisplayProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showStats, setShowStats] = useState(false);
+  const [showCoinAnimation, setShowCoinAnimation] = useState(false);
   const { toast } = useToast();
 
   const handleAnswer = (option: { text: string; trait: string }) => {
     setSelectedAnswer(option.text);
+    setShowCoinAnimation(true);
+    
     setTimeout(() => {
       onAnswer(option.text, option.trait);
       setSelectedAnswer(null);
       setShowStats(false);
+      setShowCoinAnimation(false);
     }, 1000);
+    
     setShowStats(true);
+    
+    toast({
+      title: `+${question.coinReward} Coins!`,
+      description: "Keep answering to earn more rewards!",
+    });
   };
 
   return (
@@ -63,14 +74,38 @@ const QuestionDisplay = ({ question, onAnswer, progress, streak, coins }: Questi
       {/* Question */}
       <div className="space-y-4">
         <div className="space-y-2">
-          <span className="text-sm text-primary font-medium flex items-center gap-2">
-            <Star className="h-4 w-4" />
-            {question.category}
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-primary font-medium flex items-center gap-2">
+              <Star className="h-4 w-4" />
+              {question.category}
+            </span>
+            {question.isMystery && (
+              <span className="flex items-center gap-1 text-sm text-yellow-500">
+                <Sparkles className="h-4 w-4" />
+                Mystery Box
+              </span>
+            )}
+          </div>
           <h3 className="text-xl font-semibold text-white">
             {question.text}
           </h3>
+          <div className="flex items-center gap-1 text-sm text-yellow-500">
+            <Coins className="h-4 w-4" />
+            Reward: {question.coinReward} Coins
+          </div>
         </div>
+
+        {/* Coin Animation */}
+        {showCoinAnimation && (
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
+            className="absolute top-4 right-4 text-yellow-500 font-bold"
+          >
+            +{question.coinReward}
+          </motion.div>
+        )}
 
         {/* Options */}
         <div className="grid gap-3">

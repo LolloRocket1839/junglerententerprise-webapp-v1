@@ -4,7 +4,8 @@ export const questions: Question[] = [
   {
     id: 1,
     text: "Would you rather walk barefoot on lava for 10 seconds or dive naked into freezing water in the North Pole for 10 minutes?",
-    category: "Adventurous",
+    category: "Adventure",
+    coinReward: 10,
     options: [
       {
         text: "Walk on lava",
@@ -23,6 +24,7 @@ export const questions: Question[] = [
     id: 2,
     text: "Would you rather live in a treehouse in the jungle or a floating house in the ocean?",
     category: "Lifestyle",
+    coinReward: 10,
     options: [
       {
         text: "Treehouse in the jungle",
@@ -39,18 +41,20 @@ export const questions: Question[] = [
   },
   {
     id: 3,
-    text: "Would you rather have the ability to speak every language or play every musical instrument?",
-    category: "Creative",
+    text: "If you could instantly master any skill, would you choose music or languages?",
+    category: "Creativity",
+    coinReward: 15,
+    isMystery: true,
     options: [
       {
-        text: "Speak every language",
-        icon: "user",
-        trait: "Communicator"
+        text: "Master all music",
+        icon: "star",
+        trait: "Artist"
       },
       {
-        text: "Play every instrument",
-        icon: "heart",
-        trait: "Artist"
+        text: "Master all languages",
+        icon: "user",
+        trait: "Communicator"
       }
     ],
     weight: 1
@@ -59,6 +63,7 @@ export const questions: Question[] = [
     id: 4,
     text: "Would you rather have a personal chef or a personal housekeeper?",
     category: "Lifestyle",
+    coinReward: 10,
     options: [
       {
         text: "Personal chef",
@@ -76,7 +81,8 @@ export const questions: Question[] = [
   {
     id: 5,
     text: "Would you rather be able to teleport anywhere or read minds?",
-    category: "Adventurous",
+    category: "Adventure",
+    coinReward: 15,
     options: [
       {
         text: "Teleport anywhere",
@@ -95,6 +101,7 @@ export const questions: Question[] = [
     id: 6,
     text: "Would you rather host amazing parties or have intimate dinner gatherings?",
     category: "Social",
+    coinReward: 10,
     options: [
       {
         text: "Amazing parties",
@@ -113,6 +120,7 @@ export const questions: Question[] = [
     id: 7,
     text: "Would you rather wake up at sunrise every day or stay up until midnight?",
     category: "Lifestyle",
+    coinReward: 10,
     options: [
       {
         text: "Wake at sunrise",
@@ -131,6 +139,7 @@ export const questions: Question[] = [
     id: 8,
     text: "Would you rather have a pet dragon or a pet unicorn?",
     category: "Creative",
+    coinReward: 15,
     options: [
       {
         text: "Pet dragon",
@@ -149,6 +158,7 @@ export const questions: Question[] = [
     id: 9,
     text: "Would you rather always have to sing instead of speak or always have to dance while walking?",
     category: "Creative",
+    coinReward: 10,
     options: [
       {
         text: "Always sing",
@@ -167,6 +177,7 @@ export const questions: Question[] = [
     id: 10,
     text: "Would you rather have weekly game nights or movie marathons?",
     category: "Social",
+    coinReward: 10,
     options: [
       {
         text: "Game nights",
