@@ -2,27 +2,23 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import Index from "./pages/Index";
 import Invest from "./pages/Invest";
 import Stay from "./pages/Stay";
 import Rent from "./pages/Rent";
 import Referral from "./pages/Referral";
-import LoginOverlay from "./components/auth/LoginOverlay";
 import JungleHelp from "./components/chat/JungleHelp";
 import ListRoom from "./pages/ListRoom";
-import { useToast } from "@/components/ui/use-toast";
 
 const queryClient = new QueryClient();
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,11 +28,6 @@ const Navigation = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate('/login');
-  };
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -62,13 +53,6 @@ const Navigation = () => {
             <Link to="/referral" className="text-sm text-white/80 hover:text-white transition-colors">
               Referral
             </Link>
-            <Button 
-              variant="default" 
-              onClick={handleLogout}
-              className="glass-button"
-            >
-              Logout
-            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -95,12 +79,6 @@ const Navigation = () => {
             <Link to="/referral" className="block px-4 py-2 text-white/80 hover:text-white transition-colors" onClick={() => setIsMenuOpen(false)}>
               Referral
             </Link>
-            <button 
-              onClick={handleLogout} 
-              className="block w-full text-left px-4 py-2 text-primary hover:text-primary-light transition-colors"
-            >
-              Logout
-            </button>
           </div>
         )}
       </div>
@@ -109,99 +87,28 @@ const Navigation = () => {
 };
 
 const App = () => {
-  const [showLogin, setShowLogin] = useState(false);
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route
-              path="/*"
-              element={
-                <ProtectedRoute>
-                  <Navigation />
-                  <div className="pt-16">
-                    <Routes>
-                      <Route path="/" element={<Index />} />
-                      <Route path="/invest" element={<Invest />} />
-                      <Route path="/rent" element={<Rent />} />
-                      <Route path="/stay" element={<Stay />} />
-                      <Route path="/referral" element={<Referral />} />
-                      <Route path="/list-room" element={<ListRoom />} />
-                    </Routes>
-                  </div>
-                  <JungleHelp />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/login" element={<LoginOverlay onClose={() => setShowLogin(false)} />} />
-          </Routes>
+          <Navigation />
+          <div className="pt-16">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/invest" element={<Invest />} />
+              <Route path="/rent" element={<Rent />} />
+              <Route path="/stay" element={<Stay />} />
+              <Route path="/referral" element={<Referral />} />
+              <Route path="/list-room" element={<ListRoom />} />
+            </Routes>
+          </div>
+          <JungleHelp />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );
-};
-
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
-  const { toast } = useToast();
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        
-        if (error) throw error;
-        
-        if (!session) {
-          navigate('/login');
-        } else {
-          setAuthenticated(true);
-        }
-      } catch (error) {
-        console.error('Auth error:', error);
-        toast({
-          variant: "destructive",
-          title: "Authentication Error",
-          description: "Please try logging in again",
-        });
-        navigate('/login');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (!session) {
-        setAuthenticated(false);
-        navigate('/login');
-      } else {
-        setAuthenticated(true);
-      }
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, [navigate, toast]);
-
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-    </div>;
-  }
-
-  if (!authenticated) {
-    return null;
-  }
-
-  return <>{children}</>;
 };
 
 export default App;
