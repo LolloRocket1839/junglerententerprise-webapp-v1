@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import { ArrowRight, Save } from 'lucide-react';
+import { ArrowRight, Save, Coins } from 'lucide-react';
 import { storeResponse, getStoredResponses } from './utils/storageUtils';
 import { questions } from './data/questions';
 
@@ -17,10 +17,17 @@ export interface Question {
 const QuestionPool = () => {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
+  const [jungleCoins, setJungleCoins] = useState(0);
+  const [customAnswer, setCustomAnswer] = useState("");
   const { toast } = useToast();
 
   useEffect(() => {
     loadNextQuestion();
+    // Load saved jungle coins from localStorage
+    const savedCoins = localStorage.getItem('jungleCoins');
+    if (savedCoins) {
+      setJungleCoins(parseInt(savedCoins));
+    }
   }, []);
 
   const loadNextQuestion = () => {
@@ -37,12 +44,30 @@ const QuestionPool = () => {
     setCurrentQuestion(unansweredQuestions[randomIndex]);
   };
 
+  const updateJungleCoins = (amount: number) => {
+    const newTotal = jungleCoins + amount;
+    setJungleCoins(newTotal);
+    localStorage.setItem('jungleCoins', newTotal.toString());
+    toast({
+      title: `+${amount} Jungle Coins!`,
+      description: `New balance: ${newTotal} coins`,
+    });
+  };
+
   const handleAnswer = async (answer: string) => {
     if (!currentQuestion) return;
 
     try {
       await storeResponse(currentQuestion.id, answer);
-      setAnsweredQuestions(prev => [...prev, currentQuestion.id]);
+      setAnsweredQuestions(prev => {
+        const newAnswered = [...prev, currentQuestion.id];
+        // Award 1 coin for every 4 questions
+        if (newAnswered.length % 4 === 0) {
+          updateJungleCoins(1);
+        }
+        return newAnswered;
+      });
+      
       toast({
         title: "Response saved!",
         description: "Moving to next question...",
@@ -57,6 +82,19 @@ const QuestionPool = () => {
     }
   };
 
+  const handleCustomQuestion = async () => {
+    if (!customAnswer.trim()) return;
+    
+    // Award 3 coins for contributing a custom answer
+    updateJungleCoins(3);
+    setCustomAnswer("");
+    
+    toast({
+      title: "Thank you for your contribution!",
+      description: "You've earned 3 Jungle Coins for sharing your insights.",
+    });
+  };
+
   if (!currentQuestion) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -66,52 +104,83 @@ const QuestionPool = () => {
   }
 
   return (
-    <Card className="p-6 animate-fade-in bg-white/5 backdrop-blur-sm border-white/10">
-      <div className="space-y-6">
-        <div className="space-y-2">
-          <span className="text-sm text-primary font-medium">
-            {currentQuestion.category}
-          </span>
-          <h3 className="text-xl font-semibold text-white">
-            {currentQuestion.text}
-          </h3>
-        </div>
+    <div className="space-y-6">
+      <Card className="p-6 animate-fade-in bg-white/5 backdrop-blur-sm border-white/10">
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <div className="space-y-2">
+              <span className="text-sm text-primary font-medium">
+                {currentQuestion.category}
+              </span>
+              <h3 className="text-xl font-semibold text-white">
+                {currentQuestion.text}
+              </h3>
+            </div>
+            <div className="flex items-center gap-2 text-primary">
+              <Coins className="h-5 w-5" />
+              <span className="font-semibold">{jungleCoins}</span>
+            </div>
+          </div>
 
-        <div className="grid gap-3">
-          {currentQuestion.options.map((option, index) => (
+          <div className="grid gap-3">
+            {currentQuestion.options.map((option, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                className="w-full justify-start text-left hover:bg-primary/20 hover:text-primary"
+                onClick={() => handleAnswer(option)}
+              >
+                {option}
+                <ArrowRight className="ml-auto h-4 w-4" />
+              </Button>
+            ))}
+          </div>
+
+          <div className="pt-6 border-t border-white/10">
+            <h4 className="text-white font-medium mb-3">Have something to add?</h4>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={customAnswer}
+                onChange={(e) => setCustomAnswer(e.target.value)}
+                placeholder="Share your thoughts or suggest a question..."
+                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder:text-white/40"
+              />
+              <Button
+                variant="default"
+                onClick={handleCustomQuestion}
+                disabled={!customAnswer.trim()}
+              >
+                Share
+              </Button>
+            </div>
+            <p className="text-white/40 text-sm mt-2">
+              Earn 3 Jungle Coins by sharing your insights!
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between pt-4 border-t border-white/10">
+            <span className="text-sm text-white/60">
+              {answeredQuestions.length} questions answered
+            </span>
             <Button
-              key={index}
               variant="outline"
-              className="w-full justify-start text-left hover:bg-primary/20 hover:text-primary"
-              onClick={() => handleAnswer(option)}
+              size="sm"
+              className="text-primary border-primary/20"
+              onClick={() => {
+                toast({
+                  title: "Progress saved",
+                  description: "Your responses have been stored locally",
+                });
+              }}
             >
-              {option}
-              <ArrowRight className="ml-auto h-4 w-4" />
+              <Save className="mr-2 h-4 w-4" />
+              Save Progress
             </Button>
-          ))}
+          </div>
         </div>
-
-        <div className="flex items-center justify-between pt-4 border-t border-white/10">
-          <span className="text-sm text-white/60">
-            {answeredQuestions.length} questions answered
-          </span>
-          <Button
-            variant="outline"
-            size="sm"
-            className="text-primary border-primary/20"
-            onClick={() => {
-              toast({
-                title: "Progress saved",
-                description: "Your responses have been stored locally",
-              });
-            }}
-          >
-            <Save className="mr-2 h-4 w-4" />
-            Save Progress
-          </Button>
-        </div>
-      </div>
-    </Card>
+      </Card>
+    </div>
   );
 };
 
