@@ -6,7 +6,9 @@ import { Flame, Snowflake, Trophy, Star, User, Heart, Badge } from 'lucide-react
 import { Progress } from "@/components/ui/progress";
 import { storeResponse } from './utils/storageUtils';
 import { questions } from './data/questions';
-import { Question, QuestionIcon } from './types/questions';
+import { Question, QuestionIcon, QuestionCategory } from './types/questions';
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 const QuestionPool = () => {
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
@@ -16,12 +18,20 @@ const QuestionPool = () => {
   const [lastAnswered, setLastAnswered] = useState<Date | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [showStats, setShowStats] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<QuestionCategory | 'all'>('all');
+  const [hasStarted, setHasStarted] = useState(false);
   const { toast } = useToast();
 
+  const categories: QuestionCategory[] = Array.from(
+    new Set(questions.map(q => q.category))
+  );
+
   useEffect(() => {
-    loadNextQuestion();
+    if (hasStarted) {
+      loadNextQuestion();
+    }
     loadUserProgress();
-  }, []);
+  }, [hasStarted, selectedCategory]);
 
   const loadUserProgress = () => {
     const savedCoins = localStorage.getItem('jungleCoins');
@@ -34,7 +44,12 @@ const QuestionPool = () => {
   };
 
   const loadNextQuestion = () => {
-    const unansweredQuestions = questions.filter(q => !answeredQuestions.includes(q.id));
+    const filteredQuestions = selectedCategory === 'all' 
+      ? questions 
+      : questions.filter(q => q.category === selectedCategory);
+    
+    const unansweredQuestions = filteredQuestions.filter(q => !answeredQuestions.includes(q.id));
+    
     if (unansweredQuestions.length === 0) {
       toast({
         title: "🎉 All questions completed!",
@@ -116,6 +131,38 @@ const QuestionPool = () => {
     setJungleCoins(newTotal);
     localStorage.setItem('jungleCoins', newTotal.toString());
   };
+
+  if (!hasStarted) {
+    return (
+      <Card className="p-6 animate-fade-in glass-card">
+        <div className="space-y-6">
+          <h3 className="text-xl font-semibold text-white">Choose Your Question Category</h3>
+          <RadioGroup
+            defaultValue="all"
+            onValueChange={(value) => setSelectedCategory(value as QuestionCategory | 'all')}
+            className="space-y-4"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="all" id="all" />
+              <Label htmlFor="all" className="text-white">All Categories</Label>
+            </div>
+            {categories.map((category) => (
+              <div key={category} className="flex items-center space-x-2">
+                <RadioGroupItem value={category} id={category} />
+                <Label htmlFor={category} className="text-white">{category}</Label>
+              </div>
+            ))}
+          </RadioGroup>
+          <Button 
+            className="w-full"
+            onClick={() => setHasStarted(true)}
+          >
+            Start Quiz
+          </Button>
+        </div>
+      </Card>
+    );
+  }
 
   const progress = (answeredQuestions.length / questions.length) * 100;
 
