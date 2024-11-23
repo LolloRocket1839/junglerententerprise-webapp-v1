@@ -138,7 +138,7 @@ export const questions: Question[] = [
   {
     id: 8,
     text: "Would you rather have a pet dragon or a pet unicorn?",
-    category: "Creative",
+    category: "Creativity",
     coinReward: 15,
     options: [
       {
@@ -157,7 +157,7 @@ export const questions: Question[] = [
   {
     id: 9,
     text: "Would you rather always have to sing instead of speak or always have to dance while walking?",
-    category: "Creative",
+    category: "Creativity",
     coinReward: 10,
     options: [
       {

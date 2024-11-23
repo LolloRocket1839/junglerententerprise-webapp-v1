@@ -1,6 +1,6 @@
 export type QuestionIcon = "flame" | "snowflake" | "heart" | "star" | "user" | "badge" | "trophy";
 
-export type QuestionCategory = "Lifestyle" | "Adventure" | "Creativity" | "Hypothetical" | "Relationships" | "Humor" | "Mystery";
+export type QuestionCategory = "Lifestyle" | "Adventure" | "Creativity" | "Hypothetical" | "Relationships" | "Humor" | "Mystery" | "Social" | "Creative";
 
 export interface Question {
   id: number;
