@@ -1,134 +1,182 @@
-import { Question } from '../QuestionPool';
-
-export const questions: Question[] = [
+export const questions = [
   {
     id: 1,
-    text: "What's your ideal way to spend a weekend?",
-    category: "Lifestyle",
+    text: "Would you rather walk barefoot on lava for 10 seconds or dive naked into freezing water in the North Pole for 10 minutes?",
+    category: "Adventurous",
     options: [
-      "Exploring the city and socializing",
-      "Relaxing at home with movies/books",
-      "Mix of social activities and alone time",
-      "Outdoor activities and adventures",
-      "Studying or working on projects"
+      {
+        text: "Walk on lava",
+        icon: "flame",
+        trait: "Risk-Taker"
+      },
+      {
+        text: "Dive into freezing water",
+        icon: "snowflake",
+        trait: "Resilient"
+      }
     ],
     weight: 1
   },
   {
     id: 2,
-    text: "When do you usually go to bed?",
+    text: "Would you rather live in a treehouse in the jungle or a floating house in the ocean?",
     category: "Lifestyle",
     options: [
-      "Before 10 PM",
-      "Between 10 PM and midnight",
-      "Between midnight and 2 AM",
-      "After 2 AM",
-      "Irregular schedule"
+      {
+        text: "Treehouse in the jungle",
+        icon: "heart",
+        trait: "Nature Lover"
+      },
+      {
+        text: "Floating house in the ocean",
+        icon: "star",
+        trait: "Free Spirit"
+      }
     ],
     weight: 1
   },
   {
     id: 3,
-    text: "How do you prefer to handle shared spaces?",
-    category: "Housing",
+    text: "Would you rather have the ability to speak every language or play every musical instrument?",
+    category: "Creative",
     options: [
-      "Strict cleaning schedule",
-      "Clean as needed, but regularly",
-      "Clean when it gets noticeably dirty",
-      "Hire cleaning service",
-      "Flexible approach"
+      {
+        text: "Speak every language",
+        icon: "user",
+        trait: "Communicator"
+      },
+      {
+        text: "Play every instrument",
+        icon: "heart",
+        trait: "Artist"
+      }
     ],
-    weight: 1.5
+    weight: 1
   },
   {
     id: 4,
-    text: "What's your favorite time of day and why?",
-    category: "Personality",
+    text: "Would you rather have a personal chef or a personal housekeeper?",
+    category: "Lifestyle",
     options: [
-      "Morning - I love fresh starts",
-      "Afternoon - Peak productivity time",
-      "Evening - Perfect for relaxation",
-      "Night - Peace and quiet",
-      "No preference - I'm flexible"
+      {
+        text: "Personal chef",
+        icon: "star",
+        trait: "Foodie"
+      },
+      {
+        text: "Personal housekeeper",
+        icon: "badge",
+        trait: "Organized"
+      }
     ],
     weight: 1
   },
   {
     id: 5,
-    text: "Are you more of a morning person or a night owl?",
-    category: "Lifestyle",
+    text: "Would you rather be able to teleport anywhere or read minds?",
+    category: "Adventurous",
     options: [
-      "Definitely a morning person",
-      "More productive in the morning",
-      "More active in the evening",
-      "Complete night owl",
-      "Depends on my schedule"
+      {
+        text: "Teleport anywhere",
+        icon: "flame",
+        trait: "Explorer"
+      },
+      {
+        text: "Read minds",
+        icon: "user",
+        trait: "Empathetic"
+      }
     ],
-    weight: 1.2
+    weight: 1
   },
   {
     id: 6,
-    text: "What's your preferred cuisine?",
-    category: "Lifestyle",
+    text: "Would you rather host amazing parties or have intimate dinner gatherings?",
+    category: "Social",
     options: [
-      "Italian",
-      "Asian",
-      "Mexican",
-      "Mediterranean",
-      "I enjoy trying everything"
+      {
+        text: "Amazing parties",
+        icon: "star",
+        trait: "Social Butterfly"
+      },
+      {
+        text: "Intimate dinners",
+        icon: "heart",
+        trait: "Close-knit"
+      }
     ],
     weight: 1
   },
   {
     id: 7,
-    text: "Do you prefer beaches or mountains for a getaway?",
-    category: "Personality",
+    text: "Would you rather wake up at sunrise every day or stay up until midnight?",
+    category: "Lifestyle",
     options: [
-      "Definitely beaches",
-      "Mountains all the way",
-      "Both equally",
-      "Neither - I prefer cities",
-      "Depends on the season"
+      {
+        text: "Wake at sunrise",
+        icon: "star",
+        trait: "Early Bird"
+      },
+      {
+        text: "Stay up late",
+        icon: "snowflake",
+        trait: "Night Owl"
+      }
     ],
     weight: 1
   },
   {
     id: 8,
-    text: "Are you more spontaneous or a planner?",
-    category: "Personality",
+    text: "Would you rather have a pet dragon or a pet unicorn?",
+    category: "Creative",
     options: [
-      "Very spontaneous",
-      "Mostly spontaneous with some planning",
-      "Balance of both",
-      "Usually plan things out",
-      "Detailed planner"
+      {
+        text: "Pet dragon",
+        icon: "flame",
+        trait: "Adventurous"
+      },
+      {
+        text: "Pet unicorn",
+        icon: "heart",
+        trait: "Dreamer"
+      }
     ],
-    weight: 1.5
+    weight: 1
   },
   {
     id: 9,
-    text: "What's your ideal way to spend a lazy Sunday?",
-    category: "Lifestyle",
+    text: "Would you rather always have to sing instead of speak or always have to dance while walking?",
+    category: "Creative",
     options: [
-      "Binge-watching shows/movies",
-      "Reading and relaxing",
-      "Cooking or baking",
-      "Going for walks or light activities",
-      "Catching up with friends"
+      {
+        text: "Always sing",
+        icon: "star",
+        trait: "Expressive"
+      },
+      {
+        text: "Always dance",
+        icon: "badge",
+        trait: "Free-spirited"
+      }
     ],
     weight: 1
   },
   {
     id: 10,
-    text: "Do you prefer working from home or going to campus/office?",
-    category: "Lifestyle",
+    text: "Would you rather have weekly game nights or movie marathons?",
+    category: "Social",
     options: [
-      "Strongly prefer working from home",
-      "Mix of both, but more home",
-      "Equal mix of both",
-      "Mix of both, but more outside",
-      "Strongly prefer going out"
+      {
+        text: "Game nights",
+        icon: "trophy",
+        trait: "Competitive"
+      },
+      {
+        text: "Movie marathons",
+        icon: "star",
+        trait: "Relaxed"
+      }
     ],
-    weight: 1.3
+    weight: 1
   }
 ];
