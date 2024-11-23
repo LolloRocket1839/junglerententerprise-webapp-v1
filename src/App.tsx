@@ -15,6 +15,7 @@ import Referral from "./pages/Referral";
 import LoginOverlay from "./components/auth/LoginOverlay";
 import JungleHelp from "./components/chat/JungleHelp";
 import ListRoom from "./pages/ListRoom";
+import { useToast } from "@/components/ui/use-toast";
 
 const queryClient = new QueryClient();
 
@@ -148,10 +149,38 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        if (error) throw error;
+        
+        if (!session) {
+          navigate('/login');
+        } else {
+          setAuthenticated(true);
+        }
+      } catch (error) {
+        console.error('Auth error:', error);
+        toast({
+          variant: "destructive",
+          title: "Authentication Error",
+          description: "Please try logging in again",
+        });
+        navigate('/login');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
+        setAuthenticated(false);
         navigate('/login');
       } else {
         setAuthenticated(true);
@@ -160,7 +189,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, toast]);
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">
