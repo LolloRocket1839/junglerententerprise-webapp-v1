@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StudentDashboard from '@/components/rent/StudentDashboard';
-import LoginOverlay from '@/components/auth/LoginOverlay';
 import { useToast } from "@/components/ui/use-toast";
 import SearchSection from '@/components/rent/SearchSection';
 import ProcessSteps from '@/components/rent/ProcessSteps';
 import { useLocation } from 'react-router-dom';
 
 const Rent = () => {
-  const [showLogin, setShowLogin] = useState(false);
   const { toast } = useToast();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('search');
@@ -20,24 +18,11 @@ const Rent = () => {
   }, [location.state]);
 
   const handleTabChange = (value: string) => {
-    if (value === "profile") {
-      setShowLogin(true);
-      toast({
-        title: "Authentication Required",
-        description: "Please log in to access your student profile",
-      });
-    }
     setActiveTab(value);
-  };
-
-  const handleLoginClose = () => {
-    setShowLogin(false);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900">
-      {showLogin && <LoginOverlay onClose={() => setShowLogin(false)} />}
-      
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl" />
