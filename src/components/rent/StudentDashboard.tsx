@@ -19,6 +19,7 @@ import StudentHeader from './StudentHeader';
 import DashboardStats from './DashboardStats';
 import ActivityFeed from './ActivityFeed';
 import RoommateFinder from './roommate/RoommateFinder';
+import MarketplaceGrid from '../marketplace/MarketplaceGrid';
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -155,9 +156,17 @@ const StudentDashboard = () => {
             {activeTab === 'roommate' && <RoommateFinder />}
             
             {activeTab === 'marketplace' && (
-              <div className="glass-card p-6">
-                <h3 className="text-lg font-semibold text-white">Marketplace</h3>
-                <p className="text-white/60 mt-2">Browse and list items for sale in your student community.</p>
+              <div className="space-y-6">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">Jungle Exchange</h3>
+                    <p className="text-white/60">Buy, sell, and trade items within your student community</p>
+                  </div>
+                  <Button variant="default" className="glass-button">
+                    List New Item
+                  </Button>
+                </div>
+                <MarketplaceGrid />
               </div>
             )}
             
