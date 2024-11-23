@@ -16,7 +16,7 @@ const Referral = () => {
   return (
     <>
       <ReferralDashboard />
-      {showLogin && <LoginOverlay />}
+      {showLogin && <LoginOverlay onClose={() => setShowLogin(false)} />}
     </>
   );
 };

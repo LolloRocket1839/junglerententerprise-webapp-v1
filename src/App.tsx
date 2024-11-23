@@ -108,6 +108,8 @@ const Navigation = () => {
 };
 
 const App = () => {
+  const [showLogin, setShowLogin] = useState(false);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -115,7 +117,6 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<LoginOverlay />} />
             <Route
               path="/*"
               element={
@@ -135,6 +136,7 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
+            <Route path="/login" element={<LoginOverlay onClose={() => setShowLogin(false)} />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
@@ -145,20 +147,29 @@ const App = () => {
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
         navigate('/login');
+      } else {
+        setAuthenticated(true);
       }
       setLoading(false);
     });
+
+    return () => subscription.unsubscribe();
   }, [navigate]);
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">
       <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
     </div>;
+  }
+
+  if (!authenticated) {
+    return null;
   }
 
   return <>{children}</>;

@@ -36,7 +36,7 @@ const Rent = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900">
-      {showLogin && <LoginOverlay onClose={handleLoginClose} />}
+      {showLogin && <LoginOverlay onClose={() => setShowLogin(false)} />}
       
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden">
