@@ -31,7 +31,7 @@ const JungleWallet = ({ balance, transactions }: JungleWalletProps) => {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-white">Jungle Wallet</h3>
-            <span className="text-primary font-bold">{balance} Coins</span>
+            <span className="text-primary font-bold">{balance} JungleCoins</span>
           </div>
           <ScrollArea className="h-[200px] rounded-md">
             <div className="space-y-2">
