@@ -13,7 +13,7 @@ import {
   UserSearch,
   ShoppingBag
 } from 'lucide-react';
-import { Button } from "@/components/ui/button"; // Add this import
+import { Button } from "@/components/ui/button";
 import StudentSchedule from './StudentSchedule';
 import StudentSwap from './StudentSwap';
 import StudentHeader from './StudentHeader';
@@ -24,38 +24,6 @@ import MarketplaceGrid from '../marketplace/MarketplaceGrid';
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
-
-  const mockNewsFeed = [
-    {
-      id: 1,
-      author: "Maria Silva",
-      hub: "Villa Roma Nord",
-      content: "Just hosted a great international dinner at our hub! Students from 5 different countries shared their traditional dishes. 🌍🍝",
-      timestamp: "2 hours ago",
-      likes: 24,
-      comments: 8,
-      image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&auto=format"
-    },
-    {
-      id: 2,
-      author: "Alex Chen",
-      hub: "Villa Roma Sud",
-      content: "Study group forming for finals week! Join us in the common area every evening from 6-9pm. Coffee provided! ☕📚",
-      timestamp: "5 hours ago",
-      likes: 15,
-      comments: 12
-    },
-    {
-      id: 3,
-      author: "Sophie Martin",
-      hub: "Villa Roma Est",
-      content: "Our hub's rooftop garden project is finally complete! Come check out our new sustainable urban garden. 🌱",
-      timestamp: "1 day ago",
-      likes: 45,
-      comments: 16,
-      image: "https://images.unsplash.com/photo-1558435186-d31d126391fa?w=500&auto=format"
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#111111] to-[#222222]">
@@ -106,51 +74,6 @@ const StudentDashboard = () => {
             )}
             
             {activeTab === 'schedule' && <StudentSchedule />}
-            
-            {activeTab === 'newsfeed' && (
-              <div className="space-y-6">
-                {mockNewsFeed.map((post) => (
-                  <div key={post.id} className="glass-card p-6 animate-fade-in">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                        <span className="text-primary font-bold">
-                          {post.author.charAt(0)}
-                        </span>
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <h3 className="text-white font-medium">{post.author}</h3>
-                            <p className="text-white/60 text-sm">{post.hub} • {post.timestamp}</p>
-                          </div>
-                        </div>
-                        <p className="mt-3 text-white/90">{post.content}</p>
-                        {post.image && (
-                          <img 
-                            src={post.image} 
-                            alt="Post content" 
-                            className="mt-4 rounded-lg w-full object-cover max-h-96"
-                          />
-                        )}
-                        <div className="flex items-center space-x-6 mt-4 pt-4 border-t border-white/10">
-                          <button className="flex items-center space-x-2 text-white/60 hover:text-white transition-colors">
-                            <Heart className="w-5 h-5" />
-                            <span>{post.likes}</span>
-                          </button>
-                          <button className="flex items-center space-x-2 text-white/60 hover:text-white transition-colors">
-                            <MessageSquare className="w-5 h-5" />
-                            <span>{post.comments}</span>
-                          </button>
-                          <button className="flex items-center space-x-2 text-white/60 hover:text-white transition-colors">
-                            <Share2 className="w-5 h-5" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
             
             {activeTab === 'swap' && <StudentSwap />}
             

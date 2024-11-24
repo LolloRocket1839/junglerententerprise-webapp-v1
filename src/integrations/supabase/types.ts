@@ -281,6 +281,44 @@ export type Database = {
         }
         Relationships: []
       }
+      student_profiles: {
+        Row: {
+          created_at: string
+          id: string
+          student_id: string | null
+          study_program: string | null
+          university: string | null
+          updated_at: string
+          year_of_study: number | null
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          student_id?: string | null
+          study_program?: string | null
+          university?: string | null
+          updated_at?: string
+          year_of_study?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          student_id?: string | null
+          study_program?: string | null
+          university?: string | null
+          updated_at?: string
+          year_of_study?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       wallet_transactions: {
         Row: {
           amount: number
