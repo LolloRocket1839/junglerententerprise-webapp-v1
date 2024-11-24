@@ -32,12 +32,15 @@ const Rent = () => {
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Tabs value={activeTab} className="w-full" onValueChange={handleTabChange}>
-          <TabsList className="grid w-full grid-cols-2 mb-8 bg-white/10 backdrop-blur-md border border-white/20">
+          <TabsList className="grid w-full grid-cols-3 mb-8 bg-white/10 backdrop-blur-md border border-white/20">
             <TabsTrigger value="search" className="data-[state=active]:bg-green-500 data-[state=active]:text-white">
               Find Accommodation
             </TabsTrigger>
             <TabsTrigger value="profile" className="data-[state=active]:bg-green-500 data-[state=active]:text-white">
               Student Profile
+            </TabsTrigger>
+            <TabsTrigger value="dashboard" className="data-[state=active]:bg-green-500 data-[state=active]:text-white">
+              Student Dashboard
             </TabsTrigger>
           </TabsList>
           
@@ -47,6 +50,13 @@ const Rent = () => {
           </TabsContent>
 
           <TabsContent value="profile">
+            <div className="glass-card p-6">
+              <h2 className="text-2xl font-bold text-white mb-4">Student Profile</h2>
+              {/* Profile content will be implemented here */}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="dashboard">
             <StudentDashboard />
           </TabsContent>
         </Tabs>

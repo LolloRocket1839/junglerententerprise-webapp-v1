@@ -12,7 +12,6 @@ import Rent from "./pages/Rent";
 import Referral from "./pages/Referral";
 import JungleHelp from "./components/chat/JungleHelp";
 import ListRoom from "./pages/ListRoom";
-import StudentDashboard from "./components/rent/StudentDashboard";
 
 const queryClient = new QueryClient();
 
@@ -53,9 +52,6 @@ const Navigation = () => {
             <Link to="/referral" className="text-sm text-white/80 hover:text-white transition-colors">
               Referral
             </Link>
-            <Link to="/student" className="text-sm text-white/80 hover:text-white transition-colors">
-              Student
-            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -82,9 +78,6 @@ const Navigation = () => {
             <Link to="/referral" className="block px-4 py-2 text-white/80 hover:text-white transition-colors" onClick={() => setIsMenuOpen(false)}>
               Referral
             </Link>
-            <Link to="/student" className="block px-4 py-2 text-white/80 hover:text-white transition-colors" onClick={() => setIsMenuOpen(false)}>
-              Student
-            </Link>
           </div>
         )}
       </div>
@@ -108,7 +101,6 @@ const App = () => {
               <Route path="/stay" element={<Stay />} />
               <Route path="/referral" element={<Referral />} />
               <Route path="/list-room" element={<ListRoom />} />
-              <Route path="/student" element={<StudentDashboard />} />
             </Routes>
           </div>
           <JungleHelp />
