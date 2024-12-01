@@ -2,10 +2,11 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import RoommateProfile from "./RoommateProfile";
 import QuestionPool from "./QuestionPool";
+import RudolphGame from "./rudolph/RudolphGame";
 import { Button } from "@/components/ui/button";
-import { ClipboardCheck, Users } from "lucide-react";
+import { ClipboardCheck, Users, Scale } from "lucide-react";
 
-type View = "questions" | "matches";
+type View = "questions" | "matches" | "rudolph";
 
 const RoommateFinder = () => {
   const [currentView, setCurrentView] = useState<View>("questions");
@@ -56,6 +57,14 @@ const RoommateFinder = () => {
             Questionnaire
           </Button>
           <Button
+            variant={currentView === "rudolph" ? "default" : "outline"}
+            onClick={() => setCurrentView("rudolph")}
+            className="gap-2"
+          >
+            <Scale className="w-4 h-4" />
+            Rudolph Game
+          </Button>
+          <Button
             variant={currentView === "matches" ? "default" : "outline"}
             onClick={() => setCurrentView("matches")}
             className="gap-2"
@@ -66,9 +75,11 @@ const RoommateFinder = () => {
         </div>
       </div>
 
-      {currentView === "questions" ? (
-        <QuestionPool />
-      ) : (
+      {currentView === "questions" && <QuestionPool />}
+      
+      {currentView === "rudolph" && <RudolphGame />}
+      
+      {currentView === "matches" && (
         <div className="p-6">
           {currentIndex >= MOCK_PROFILES.length ? (
             <div className="flex flex-col items-center justify-center min-h-[400px] text-center">

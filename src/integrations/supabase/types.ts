@@ -281,6 +281,111 @@ export type Database = {
         }
         Relationships: []
       }
+      rudolph_comparisons: {
+        Row: {
+          category: string
+          component_a: string
+          component_b: string
+          created_at: string
+          id: string
+          rudolph_value: number
+        }
+        Insert: {
+          category: string
+          component_a: string
+          component_b: string
+          created_at?: string
+          id?: string
+          rudolph_value?: number
+        }
+        Update: {
+          category?: string
+          component_a?: string
+          component_b?: string
+          created_at?: string
+          id?: string
+          rudolph_value?: number
+        }
+        Relationships: []
+      }
+      rudolph_personalities: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          max_score: number
+          min_score: number
+          name: string
+          quote: string
+          special_power: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          max_score: number
+          min_score: number
+          name: string
+          quote: string
+          special_power: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          max_score?: number
+          min_score?: number
+          name?: string
+          quote?: string
+          special_power?: string
+        }
+        Relationships: []
+      }
+      rudolph_progress: {
+        Row: {
+          choice: string
+          comparison_id: string | null
+          created_at: string
+          id: string
+          profile_id: string | null
+          quantum_state: boolean | null
+          rudolph_score: number
+        }
+        Insert: {
+          choice: string
+          comparison_id?: string | null
+          created_at?: string
+          id?: string
+          profile_id?: string | null
+          quantum_state?: boolean | null
+          rudolph_score: number
+        }
+        Update: {
+          choice?: string
+          comparison_id?: string | null
+          created_at?: string
+          id?: string
+          profile_id?: string | null
+          quantum_state?: boolean | null
+          rudolph_score?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rudolph_progress_comparison_id_fkey"
+            columns: ["comparison_id"]
+            isOneToOne: false
+            referencedRelation: "rudolph_comparisons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rudolph_progress_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       student_profiles: {
         Row: {
           created_at: string
