@@ -5,7 +5,7 @@ import type { Comparison } from './RudolphGame';
 
 interface Props {
   comparison: Comparison;
-  onChoice: (choice: string, comparisonId: string) => void;
+  onChoice: (choice: 'component_a' | 'component_b', comparisonId: string) => void;
 }
 
 const RudolphComparison = ({ comparison, onChoice }: Props) => {
@@ -19,7 +19,7 @@ const RudolphComparison = ({ comparison, onChoice }: Props) => {
         <Button
           variant="outline"
           className="h-40 relative overflow-hidden group hover:scale-105 transition-transform"
-          onClick={() => onChoice(comparison.component_a, comparison.id)}
+          onClick={() => onChoice('component_a', comparison.id)}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 group-hover:opacity-100 opacity-0 transition-opacity" />
           <p className="text-lg font-medium">{comparison.component_a}</p>
@@ -28,7 +28,7 @@ const RudolphComparison = ({ comparison, onChoice }: Props) => {
         <Button
           variant="outline"
           className="h-40 relative overflow-hidden group hover:scale-105 transition-transform"
-          onClick={() => onChoice(comparison.component_b, comparison.id)}
+          onClick={() => onChoice('component_b', comparison.id)}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 group-hover:opacity-100 opacity-0 transition-opacity" />
           <p className="text-lg font-medium">{comparison.component_b}</p>
