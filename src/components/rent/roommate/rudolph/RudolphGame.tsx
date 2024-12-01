@@ -16,6 +16,8 @@ export type Comparison = {
   rudolph_value: number;
 };
 
+type Choice = 'component_a' | 'component_b';
+
 const RudolphGame = () => {
   const [comparisons, setComparisons] = useState<Comparison[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -47,7 +49,7 @@ const RudolphGame = () => {
     }
   };
 
-  const handleChoice = async (choice: 'component_a' | 'component_b', comparisonId: string) => {
+  const handleChoice = async (choice: Choice, comparisonId: string) => {
     try {
       const comparison = comparisons[currentIndex];
       const rudolphScore = choice === 'component_a' ? comparison.rudolph_value : -comparison.rudolph_value;
