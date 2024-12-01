@@ -47,10 +47,10 @@ const RudolphGame = () => {
     }
   };
 
-  const handleChoice = async (choice: string, comparisonId: string) => {
+  const handleChoice = async (choice: 'component_a' | 'component_b', comparisonId: string) => {
     try {
       const comparison = comparisons[currentIndex];
-      const rudolphScore = choice === comparison.component_a ? comparison.rudolph_value : -comparison.rudolph_value;
+      const rudolphScore = choice === 'component_a' ? comparison.rudolph_value : -comparison.rudolph_value;
       
       // Save progress
       const { error } = await supabase
