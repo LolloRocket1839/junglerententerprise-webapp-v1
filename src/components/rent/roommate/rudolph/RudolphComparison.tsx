@@ -11,32 +11,36 @@ interface Props {
 const RudolphComparison = ({ comparison, onChoice }: Props) => {
   return (
     <div className="space-y-6">
-      <h3 className="text-xl font-semibold text-center text-white">
-        Which has more Rudolph?
+      <h3 className="text-2xl font-semibold text-center text-white mb-8">
+        Which has more Rudolph energy?
       </h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Button
           variant="outline"
-          className="h-40 relative overflow-hidden group hover:scale-105 transition-transform"
+          className="h-48 relative overflow-hidden group hover:scale-105 transition-transform p-6"
           onClick={() => onChoice('component_a', comparison.id)}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 group-hover:opacity-100 opacity-0 transition-opacity" />
-          <p className="text-lg font-medium">{comparison.component_a}</p>
+          <p className="text-xl font-medium text-white leading-relaxed whitespace-pre-wrap">
+            {comparison.component_a}
+          </p>
         </Button>
 
         <Button
           variant="outline"
-          className="h-40 relative overflow-hidden group hover:scale-105 transition-transform"
+          className="h-48 relative overflow-hidden group hover:scale-105 transition-transform p-6"
           onClick={() => onChoice('component_b', comparison.id)}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 group-hover:opacity-100 opacity-0 transition-opacity" />
-          <p className="text-lg font-medium">{comparison.component_b}</p>
+          <p className="text-xl font-medium text-white leading-relaxed whitespace-pre-wrap">
+            {comparison.component_b}
+          </p>
         </Button>
       </div>
 
-      <div className="flex justify-center">
-        <ArrowLeftRight className="h-6 w-6 text-primary animate-pulse" />
+      <div className="flex justify-center mt-4">
+        <ArrowLeftRight className="h-8 w-8 text-primary animate-pulse" />
       </div>
     </div>
   );

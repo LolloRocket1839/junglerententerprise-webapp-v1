@@ -94,8 +94,8 @@ const RudolphGame = () => {
 
   if (isLoading) {
     return (
-      <Card className="p-6 animate-pulse">
-        <div className="h-64 bg-gray-200 rounded-lg"></div>
+      <Card className="p-8 animate-pulse bg-black/20 backdrop-blur-sm">
+        <div className="h-64 bg-white/5 rounded-lg"></div>
       </Card>
     );
   }
@@ -108,18 +108,18 @@ const RudolphGame = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <Card className="p-6">
-        <div className="space-y-6">
+      <Card className="p-8 bg-black/20 backdrop-blur-sm">
+        <div className="space-y-8">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Scale className="h-5 w-5 text-primary" />
-              <span className="text-sm font-medium">
-                Current Rudolph Score: {score.toFixed(1)}R
+            <div className="flex items-center gap-3">
+              <Scale className="h-6 w-6 text-primary" />
+              <span className="text-lg font-medium text-white">
+                Rudolph Score: {score.toFixed(1)}R
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <Brain className="h-5 w-5 text-primary" />
-              <span className="text-sm text-white/60">
+            <div className="flex items-center gap-3">
+              <Brain className="h-6 w-6 text-primary" />
+              <span className="text-lg text-white">
                 Question {currentIndex + 1} of {comparisons.length}
               </span>
             </div>
