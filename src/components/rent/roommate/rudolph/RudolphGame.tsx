@@ -54,19 +54,17 @@ const RudolphGame = () => {
       const comparison = comparisons[currentIndex];
       const rudolphScore = choice === 'component_a' ? comparison.rudolph_value : -comparison.rudolph_value;
       
-      // Save progress
       const { error } = await supabase
         .from('rudolph_progress')
         .insert({
           comparison_id: comparisonId,
           choice,
           rudolph_score: rudolphScore,
-          quantum_state: Math.random() < 0.001 // 0.1% chance of quantum state
+          quantum_state: Math.random() < 0.001
         });
 
       if (error) throw error;
 
-      // Update score and progress
       setScore(prev => prev + rudolphScore);
       
       if (currentIndex < comparisons.length - 1) {
@@ -75,7 +73,6 @@ const RudolphGame = () => {
         setIsComplete(true);
       }
 
-      // Add some Rudolph coins for participation
       const { error: walletError } = await supabase.rpc('add_jungle_coins', {
         amount: 5,
         reason: 'Rudolph Measurement participation'
