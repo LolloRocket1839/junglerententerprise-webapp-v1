@@ -1,7 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight } from 'lucide-react';
-import type { Comparison, Choice } from './RudolphGame';
+import type { Comparison } from './RudolphGame';
+
+export type Choice = 'component_a' | 'component_b';
 
 interface Props {
   comparison: Comparison;

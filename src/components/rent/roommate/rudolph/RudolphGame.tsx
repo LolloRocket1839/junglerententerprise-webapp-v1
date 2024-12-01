@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Sparkles, Scale, Brain, Share2 } from 'lucide-react';
 import RudolphComparison from './RudolphComparison';
 import RudolphResults from './RudolphResults';
+import type { Choice } from './RudolphComparison';
 
 export type Comparison = {
   id: string;
@@ -15,8 +16,6 @@ export type Comparison = {
   component_b: string;
   rudolph_value: number;
 };
-
-export type Choice = 'component_a' | 'component_b';
 
 const RudolphGame = () => {
   const [comparisons, setComparisons] = useState<Comparison[]>([]);
