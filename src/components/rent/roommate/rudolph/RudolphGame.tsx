@@ -16,7 +16,7 @@ export type Comparison = {
   rudolph_value: number;
 };
 
-type Choice = 'component_a' | 'component_b';
+export type Choice = 'component_a' | 'component_b';
 
 const RudolphGame = () => {
   const [comparisons, setComparisons] = useState<Comparison[]>([]);

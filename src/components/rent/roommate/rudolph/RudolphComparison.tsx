@@ -1,11 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftRight } from 'lucide-react';
-import type { Comparison } from './RudolphGame';
+import type { Comparison, Choice } from './RudolphGame';
 
 interface Props {
   comparison: Comparison;
-  onChoice: (choice: 'component_a' | 'component_b', comparisonId: string) => void;
+  onChoice: (choice: Choice, comparisonId: string) => void;
 }
 
 const RudolphComparison = ({ comparison, onChoice }: Props) => {
