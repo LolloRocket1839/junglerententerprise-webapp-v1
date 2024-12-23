@@ -2,7 +2,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Calendar, DollarSign, User, Heart, Smoking, Dog } from "lucide-react";
+import { Calendar, DollarSign, User, Heart, Ban, Dog } from "lucide-react";
 import { formatDistance } from "date-fns";
 import { Json } from "@/integrations/supabase/types";
 
@@ -94,7 +94,7 @@ const RoommateProfilePreview = ({ profile, onViewProfile }: RoommateProfilePrevi
 
 const getPreferenceIcon = (key: string) => {
   const icons: Record<string, JSX.Element> = {
-    smoking: <Smoking className="w-3 h-3 mr-1" />,
+    smoking: <Ban className="w-3 h-3 mr-1" />,
     pets: <Dog className="w-3 h-3 mr-1" />,
     lifestyle: <Heart className="w-3 h-3 mr-1" />
   };
