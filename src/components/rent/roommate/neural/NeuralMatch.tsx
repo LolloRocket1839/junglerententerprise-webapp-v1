@@ -37,11 +37,25 @@ const NeuralMatch = () => {
       if (error) throw error;
       
       if (data) {
-        const formattedNodes = data.map(node => ({
-          ...node,
-          resources: Array.isArray(node.resources) ? node.resources.map(r => String(r)) : [],
-          position: node.position || { x: 0, y: 0, z: 0 }
-        }));
+        const formattedNodes = data.map(node => {
+          // Ensure position is properly formatted
+          let position = { x: 0, y: 0, z: 0 };
+          if (node.position && typeof node.position === 'object') {
+            const pos = node.position as any;
+            position = {
+              x: typeof pos.x === 'number' ? pos.x : 0,
+              y: typeof pos.y === 'number' ? pos.y : 0,
+              z: typeof pos.z === 'number' ? pos.z : 0
+            };
+          }
+
+          return {
+            ...node,
+            resources: Array.isArray(node.resources) ? node.resources.map(r => String(r)) : [],
+            position
+          } as InterestNode;
+        });
+        
         setNodes(formattedNodes);
       }
     } catch (error) {
