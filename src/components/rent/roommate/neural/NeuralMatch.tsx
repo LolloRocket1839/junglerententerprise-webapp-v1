@@ -10,10 +10,13 @@ import { supabase } from "@/integrations/supabase/client";
 export interface InterestNode {
   id: string;
   title: string;
-  description: string;
-  category: string;
+  description: string | null;
+  category: string | null;
   resources: string[];
   position: { x: number; y: number; z: number };
+  profile_id: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 const NeuralMatch = () => {
@@ -32,7 +35,15 @@ const NeuralMatch = () => {
         .select('*');
       
       if (error) throw error;
-      if (data) setNodes(data);
+      
+      if (data) {
+        const formattedNodes = data.map(node => ({
+          ...node,
+          resources: Array.isArray(node.resources) ? node.resources : [],
+          position: typeof node.position === 'object' ? node.position : { x: 0, y: 0, z: 0 }
+        }));
+        setNodes(formattedNodes);
+      }
     } catch (error) {
       console.error('Error loading nodes:', error);
       toast({

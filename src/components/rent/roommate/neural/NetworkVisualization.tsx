@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { InterestNode } from './NeuralMatch';
 
 interface NetworkVisualizationProps {
@@ -41,7 +41,8 @@ const NetworkVisualization = ({ nodes }: NetworkVisualizationProps) => {
     // Add nodes to scene
     nodes.forEach((node) => {
       const mesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
-      mesh.position.set(node.position.x, node.position.y, node.position.z);
+      const position = node.position as { x: number; y: number; z: number };
+      mesh.position.set(position.x, position.y, position.z);
       scene.add(mesh);
     });
 
