@@ -137,6 +137,9 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          bio: string | null
+          budget_max: number | null
+          budget_min: number | null
           created_at: string
           current_city: string | null
           date_of_birth: string | null
@@ -144,10 +147,15 @@ export type Database = {
           future_city: string | null
           id: string
           last_name: string | null
+          move_in_date: string | null
+          preferences: Json | null
           updated_at: string
         }
         Insert: {
           avatar_url?: string | null
+          bio?: string | null
+          budget_max?: number | null
+          budget_min?: number | null
           created_at?: string
           current_city?: string | null
           date_of_birth?: string | null
@@ -155,10 +163,15 @@ export type Database = {
           future_city?: string | null
           id: string
           last_name?: string | null
+          move_in_date?: string | null
+          preferences?: Json | null
           updated_at?: string
         }
         Update: {
           avatar_url?: string | null
+          bio?: string | null
+          budget_max?: number | null
+          budget_min?: number | null
           created_at?: string
           current_city?: string | null
           date_of_birth?: string | null
@@ -166,6 +179,8 @@ export type Database = {
           future_city?: string | null
           id?: string
           last_name?: string | null
+          move_in_date?: string | null
+          preferences?: Json | null
           updated_at?: string
         }
         Relationships: []
