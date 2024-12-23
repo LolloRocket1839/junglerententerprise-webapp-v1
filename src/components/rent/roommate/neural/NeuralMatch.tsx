@@ -7,13 +7,19 @@ import NetworkVisualization from './NetworkVisualization';
 import MatchStats from './MatchStats';
 import { supabase } from "@/integrations/supabase/client";
 
+export interface Position {
+  x: number;
+  y: number;
+  z: number;
+}
+
 export interface InterestNode {
   id: string;
   title: string;
   description: string | null;
   category: string | null;
   resources: string[];
-  position: { x: number; y: number; z: number };
+  position: Position;
   profile_id: string | null;
   created_at: string;
   updated_at: string;
@@ -39,7 +45,8 @@ const NeuralMatch = () => {
       if (data) {
         const formattedNodes = data.map(node => {
           // Ensure position is properly formatted
-          let position = { x: 0, y: 0, z: 0 };
+          let position: Position = { x: 0, y: 0, z: 0 };
+          
           if (node.position && typeof node.position === 'object') {
             const pos = node.position as any;
             position = {
@@ -49,11 +56,22 @@ const NeuralMatch = () => {
             };
           }
 
+          // Ensure resources is properly formatted
+          const resources = Array.isArray(node.resources) 
+            ? node.resources.map(r => String(r))
+            : [];
+
           return {
-            ...node,
-            resources: Array.isArray(node.resources) ? node.resources.map(r => String(r)) : [],
-            position
-          } as InterestNode;
+            id: node.id,
+            title: node.title,
+            description: node.description,
+            category: node.category,
+            resources,
+            position,
+            profile_id: node.profile_id,
+            created_at: node.created_at,
+            updated_at: node.updated_at
+          };
         });
         
         setNodes(formattedNodes);
