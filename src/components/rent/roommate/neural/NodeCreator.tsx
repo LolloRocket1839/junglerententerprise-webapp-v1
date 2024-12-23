@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,6 +22,19 @@ const NodeCreator = ({ open, onOpenChange, onNodeCreated }: NodeCreatorProps) =>
     e.preventDefault();
     
     try {
+      // Get the current authenticated user
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      
+      if (authError) throw authError;
+      if (!user) {
+        toast({
+          title: "Authentication Required",
+          description: "Please sign in to create neurons",
+          variant: "destructive",
+        });
+        return;
+      }
+
       const { error } = await supabase
         .from('interest_nodes')
         .insert({
@@ -32,7 +45,8 @@ const NodeCreator = ({ open, onOpenChange, onNodeCreated }: NodeCreatorProps) =>
             x: Math.random() * 100 - 50,
             y: Math.random() * 100 - 50,
             z: Math.random() * 100 - 50
-          }
+          },
+          profile_id: user.id // Set the profile_id to the current user's ID
         });
 
       if (error) throw error;
@@ -62,6 +76,9 @@ const NodeCreator = ({ open, onOpenChange, onNodeCreated }: NodeCreatorProps) =>
       <DialogContent className="sm:max-w-[425px] bg-[#101010] text-white">
         <DialogHeader>
           <DialogTitle>Create New Neuron</DialogTitle>
+          <DialogDescription className="text-gray-400">
+            Add a new interest to your neural network
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
