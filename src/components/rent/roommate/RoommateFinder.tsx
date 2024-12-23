@@ -4,8 +4,9 @@ import RoommateProfile from "./RoommateProfile";
 import QuestionPool from "./QuestionPool";
 import RudolphGame from "./rudolph/RudolphGame";
 import RoommateProfileGrid from "./RoommateProfileGrid";
+import { MixAndMatch } from "./MixAndMatch";
 import { Button } from "@/components/ui/button";
-import { ClipboardCheck, Users, Scale } from "lucide-react";
+import { ClipboardCheck, Users, Scale, Shuffle } from "lucide-react";
 
 type View = "questions" | "matches" | "rudolph";
 
@@ -42,13 +43,12 @@ const RoommateFinder = () => {
             <Users className="w-4 h-4" />
             View Matches
           </Button>
+          <MixAndMatch />
         </div>
       </div>
 
       {currentView === "questions" && <QuestionPool />}
-      
       {currentView === "rudolph" && <RudolphGame />}
-      
       {currentView === "matches" && <RoommateProfileGrid />}
     </div>
   );
