@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar, DollarSign, User } from "lucide-react";
 import { formatDistance } from "date-fns";
+import { Json } from "@/integrations/supabase/types";
 
 interface RoommateProfilePreviewProps {
   profile: {
@@ -15,12 +16,19 @@ interface RoommateProfilePreviewProps {
     budget_min: number | null;
     budget_max: number | null;
     move_in_date: string | null;
-    preferences: Record<string, any> | null;
+    preferences: Json | null;
   };
   onViewProfile: (id: string) => void;
 }
 
 const RoommateProfilePreview = ({ profile, onViewProfile }: RoommateProfilePreviewProps) => {
+  // Parse preferences if they exist and are a string
+  const parsedPreferences = profile.preferences 
+    ? (typeof profile.preferences === 'string' 
+        ? JSON.parse(profile.preferences) 
+        : profile.preferences)
+    : {};
+
   return (
     <Card className="glass-card overflow-hidden animate-fade-in">
       <div className="p-6 space-y-4">
@@ -57,11 +65,11 @@ const RoommateProfilePreview = ({ profile, onViewProfile }: RoommateProfilePrevi
             </div>
           )}
 
-          {profile.preferences && (
+          {Object.keys(parsedPreferences).length > 0 && (
             <div className="flex flex-wrap gap-2 mt-3">
-              {Object.entries(profile.preferences).map(([key, value]) => (
+              {Object.entries(parsedPreferences).map(([key, value]) => (
                 <Badge key={key} variant="secondary" className="bg-primary/20 text-primary">
-                  {key}: {value}
+                  {key}: {String(value)}
                 </Badge>
               ))}
             </div>
