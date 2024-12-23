@@ -22,19 +22,6 @@ const NodeCreator = ({ open, onOpenChange, onNodeCreated }: NodeCreatorProps) =>
     e.preventDefault();
     
     try {
-      // Get the current authenticated user
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
-      
-      if (authError) throw authError;
-      if (!user) {
-        toast({
-          title: "Authentication Required",
-          description: "Please sign in to create neurons",
-          variant: "destructive",
-        });
-        return;
-      }
-
       const { error } = await supabase
         .from('interest_nodes')
         .insert({
@@ -45,8 +32,7 @@ const NodeCreator = ({ open, onOpenChange, onNodeCreated }: NodeCreatorProps) =>
             x: Math.random() * 100 - 50,
             y: Math.random() * 100 - 50,
             z: Math.random() * 100 - 50
-          },
-          profile_id: user.id // Set the profile_id to the current user's ID
+          }
         });
 
       if (error) throw error;

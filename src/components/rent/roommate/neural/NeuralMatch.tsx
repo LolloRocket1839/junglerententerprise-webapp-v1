@@ -39,8 +39,8 @@ const NeuralMatch = () => {
       if (data) {
         const formattedNodes = data.map(node => ({
           ...node,
-          resources: Array.isArray(node.resources) ? node.resources : [],
-          position: typeof node.position === 'object' ? node.position : { x: 0, y: 0, z: 0 }
+          resources: Array.isArray(node.resources) ? node.resources.map(r => String(r)) : [],
+          position: node.position || { x: 0, y: 0, z: 0 }
         }));
         setNodes(formattedNodes);
       }
