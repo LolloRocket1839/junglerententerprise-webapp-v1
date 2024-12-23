@@ -17,6 +17,14 @@ interface Profile {
   budget_max: number | null;
 }
 
+interface RoommateMatch {
+  id: string;
+  profile_id: string;
+  target_profile_id: string;
+  liked: boolean;
+  created_at: string;
+}
+
 export function MixAndMatch() {
   const [isOpen, setIsOpen] = useState(false);
   const [profiles, setProfiles] = useState<Profile[]>([]);
@@ -59,13 +67,12 @@ export function MixAndMatch() {
     const targetProfile = profiles[currentIndex];
 
     try {
-      const { data: existingMatch, error: matchError } = await supabase
+      // Check if there's a match
+      const { data: existingMatch } = await supabase
         .from('roommate_matches')
         .select('*')
         .eq('profile_id', targetProfile.id)
-        .single();
-
-      if (matchError && matchError.code !== 'PGNF') throw matchError;
+        .single() as { data: RoommateMatch | null };
 
       if (liked && existingMatch?.liked) {
         toast({
@@ -74,12 +81,13 @@ export function MixAndMatch() {
         });
       }
 
+      // Record the swipe
       const { error: swipeError } = await supabase
         .from('roommate_matches')
         .upsert({
           profile_id: targetProfile.id,
           liked: liked,
-        });
+        }) as { error: Error | null };
 
       if (swipeError) throw swipeError;
 

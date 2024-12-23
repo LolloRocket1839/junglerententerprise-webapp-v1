@@ -269,6 +269,45 @@ export type Database = {
           },
         ]
       }
+      roommate_matches: {
+        Row: {
+          created_at: string
+          id: string
+          liked: boolean
+          profile_id: string | null
+          target_profile_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          liked: boolean
+          profile_id?: string | null
+          target_profile_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          liked?: boolean
+          profile_id?: string | null
+          target_profile_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roommate_matches_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roommate_matches_target_profile_id_fkey"
+            columns: ["target_profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       roommate_questions: {
         Row: {
           category: string
