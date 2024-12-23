@@ -3,7 +3,13 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
-type Choice = 'component_a' | 'component_b';
+export type Choice = 'component_a' | 'component_b';
+
+export interface Comparison {
+  id: string;
+  component_a: string;
+  component_b: string;
+}
 
 const RudolphGame = () => {
   const [selectedChoice, setSelectedChoice] = useState<Choice | null>(null);
