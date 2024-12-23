@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Heart, Ban, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -40,9 +40,21 @@ export function MixAndMatch() {
 
   const loadProfiles = async () => {
     try {
+      const { data: userData } = await supabase.auth.getUser();
+      if (!userData.user) {
+        toast({
+          title: "Authentication required",
+          description: "Please log in to use the Mix & Match feature.",
+          variant: "destructive",
+        });
+        setIsOpen(false);
+        return;
+      }
+
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
+        .neq('id', userData.user.id)
         .limit(50);
 
       if (error) throw error;
@@ -64,32 +76,47 @@ export function MixAndMatch() {
   const handleSwipe = async (liked: boolean) => {
     if (currentIndex >= profiles.length) return;
 
+    const { data: userData } = await supabase.auth.getUser();
+    if (!userData.user) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to use this feature.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const targetProfile = profiles[currentIndex];
 
     try {
       // Check if there's a match
-      const { data: existingMatch } = await supabase
+      const { data: existingMatch, error: matchError } = await supabase
         .from('roommate_matches')
         .select('*')
         .eq('profile_id', targetProfile.id)
-        .single() as { data: RoommateMatch | null };
+        .eq('target_profile_id', userData.user.id)
+        .eq('liked', true)
+        .maybeSingle();
 
-      if (liked && existingMatch?.liked) {
+      if (matchError) throw matchError;
+
+      // Record the swipe
+      const { error: swipeError } = await supabase
+        .from('roommate_matches')
+        .insert({
+          profile_id: userData.user.id,
+          target_profile_id: targetProfile.id,
+          liked: liked,
+        });
+
+      if (swipeError) throw swipeError;
+
+      if (liked && existingMatch) {
         toast({
           title: "It's a match! 🎉",
           description: `You matched with ${targetProfile.first_name}!`,
         });
       }
-
-      // Record the swipe
-      const { error: swipeError } = await supabase
-        .from('roommate_matches')
-        .upsert({
-          profile_id: targetProfile.id,
-          liked: liked,
-        }) as { error: Error | null };
-
-      if (swipeError) throw swipeError;
 
       setCurrentIndex(prev => prev + 1);
     } catch (error) {
@@ -115,6 +142,7 @@ export function MixAndMatch() {
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="sm:max-w-[500px] p-0">
+          <DialogTitle className="sr-only">Mix & Match</DialogTitle>
           <Button
             variant="ghost"
             size="icon"
