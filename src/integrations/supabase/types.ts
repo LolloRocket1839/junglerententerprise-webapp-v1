@@ -102,6 +102,50 @@ export type Database = {
         }
         Relationships: []
       }
+      interest_nodes: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          position: Json | null
+          profile_id: string | null
+          resources: Json | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          position?: Json | null
+          profile_id?: string | null
+          resources?: Json | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          position?: Json | null
+          profile_id?: string | null
+          resources?: Json | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interest_nodes_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       jungle_wallet: {
         Row: {
           balance: number | null
@@ -130,6 +174,45 @@ export type Database = {
             columns: ["profile_id"]
             isOneToOne: true
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      node_connections: {
+        Row: {
+          created_at: string
+          id: string
+          source_node_id: string | null
+          strength: number | null
+          target_node_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          source_node_id?: string | null
+          strength?: number | null
+          target_node_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          source_node_id?: string | null
+          strength?: number | null
+          target_node_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "node_connections_source_node_id_fkey"
+            columns: ["source_node_id"]
+            isOneToOne: false
+            referencedRelation: "interest_nodes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "node_connections_target_node_id_fkey"
+            columns: ["target_node_id"]
+            isOneToOne: false
+            referencedRelation: "interest_nodes"
             referencedColumns: ["id"]
           },
         ]

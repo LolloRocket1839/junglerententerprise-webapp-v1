@@ -6,9 +6,10 @@ import RudolphGame from "./rudolph/RudolphGame";
 import RoommateProfileGrid from "./RoommateProfileGrid";
 import { MixAndMatch } from "./MixAndMatch";
 import { Button } from "@/components/ui/button";
-import { ClipboardCheck, Users, Scale, Shuffle } from "lucide-react";
+import { ClipboardCheck, Users, Scale, Shuffle, Brain } from "lucide-react";
+import NeuralMatch from "./neural/NeuralMatch";
 
-type View = "questions" | "matches" | "rudolph";
+type View = "questions" | "matches" | "rudolph" | "neural";
 
 const RoommateFinder = () => {
   const [currentView, setCurrentView] = useState<View>("matches");
@@ -43,13 +44,21 @@ const RoommateFinder = () => {
             <Users className="w-4 h-4" />
             View Matches
           </Button>
-          <MixAndMatch />
+          <Button
+            variant={currentView === "neural" ? "default" : "outline"}
+            onClick={() => setCurrentView("neural")}
+            className="gap-2"
+          >
+            <Brain className="w-4 h-4" />
+            Neural Match
+          </Button>
         </div>
       </div>
 
       {currentView === "questions" && <QuestionPool />}
       {currentView === "rudolph" && <RudolphGame />}
       {currentView === "matches" && <RoommateProfileGrid />}
+      {currentView === "neural" && <NeuralMatch />}
     </div>
   );
 };
