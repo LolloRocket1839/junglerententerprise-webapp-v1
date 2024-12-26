@@ -45,7 +45,7 @@ const SwapFilters = ({ selectedCategory, onCategoryChange }: SwapFiltersProps) =
         </Select>
 
         <div className="flex gap-2">
-          <Badge variant="secondary" className="glass">Popular</Badge>
+          <Badge variant="secondary" className="glass bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30">Popular</Badge>
           <Badge variant="secondary" className="glass">New</Badge>
         </div>
       </div>
