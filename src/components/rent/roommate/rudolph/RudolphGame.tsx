@@ -21,6 +21,9 @@ interface Question {
     dimension: string;
     value: number;
   }[];
+  information_gain?: number;
+  complexity_level?: number;
+  created_at?: string;
 }
 
 const RudolphGame = () => {
@@ -46,8 +49,14 @@ const RudolphGame = () => {
       
       // Type cast the data to match our Question interface
       const typedQuestions = (data || []).map(q => ({
-        ...q,
-        options: q.options as Question['options']
+        id: q.id,
+        question: q.question,
+        category: q.category,
+        options: q.options as Question['options'],
+        dimension_correlations: q.dimension_correlations as Question['dimension_correlations'],
+        information_gain: q.information_gain,
+        complexity_level: q.complexity_level,
+        created_at: q.created_at
       }));
       
       setQuestions(typedQuestions);
