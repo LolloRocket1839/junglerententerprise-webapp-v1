@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import RudolphComparison from './RudolphComparison';
@@ -12,6 +12,20 @@ const RudolphGame = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [streak, setStreak] = useState(0);
   const [totalChoices, setTotalChoices] = useState(0);
+
+  // Persist counts in localStorage
+  useEffect(() => {
+    const savedStreak = localStorage.getItem('rudolph_streak');
+    const savedTotal = localStorage.getItem('rudolph_total');
+    if (savedStreak) setStreak(parseInt(savedStreak));
+    if (savedTotal) setTotalChoices(parseInt(savedTotal));
+  }, []);
+
+  // Save counts to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('rudolph_streak', streak.toString());
+    localStorage.setItem('rudolph_total', totalChoices.toString());
+  }, [streak, totalChoices]);
 
   const { data: comparisons, isLoading, error } = useQuery({
     queryKey: ['rudolph-comparisons'],
@@ -46,7 +60,7 @@ const RudolphGame = () => {
 
       toast({
         title: "Choice recorded!",
-        description: `Streak: ${streak + 1}`,
+        description: `Streak: ${streak + 1} | Total: ${totalChoices + 1}`,
       });
     } catch (error) {
       console.error('Error recording choice:', error);
@@ -83,14 +97,22 @@ const RudolphGame = () => {
         <h2 className="text-2xl font-bold text-white mb-2">The Rudolph Game</h2>
         <p className="text-white/60">Choose between options to reveal your personality type</p>
         <div className="flex justify-center gap-4 mt-4">
-          <div className="glass-card px-4 py-2 rounded-lg">
+          <motion.div 
+            className="glass-card px-4 py-2 rounded-lg"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <span className="text-white/80">Streak: </span>
             <span className="text-primary font-bold">{streak}</span>
-          </div>
-          <div className="glass-card px-4 py-2 rounded-lg">
+          </motion.div>
+          <motion.div 
+            className="glass-card px-4 py-2 rounded-lg"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <span className="text-white/80">Total Choices: </span>
             <span className="text-primary font-bold">{totalChoices}</span>
-          </div>
+          </motion.div>
         </div>
       </div>
 

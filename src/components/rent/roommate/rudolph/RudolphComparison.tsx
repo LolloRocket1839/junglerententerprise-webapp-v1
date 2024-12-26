@@ -17,15 +17,20 @@ const RudolphComparison = ({ comparison, onChoice, streak }: RudolphComparisonPr
     if (streak < 5) return "Keep going!";
     if (streak < 10) return "You're on fire! 🔥";
     if (streak < 15) return "Unstoppable! ⚡";
-    return "Legendary! 👑";
+    if (streak < 20) return "Legendary! 👑";
+    return "Godlike! 🌟";
   };
 
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <span className="inline-block bg-primary/20 text-primary px-4 py-1 rounded-full text-sm">
+        <motion.span
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="inline-block bg-primary/20 text-primary px-4 py-1 rounded-full text-sm"
+        >
           {comparison.category}
-        </span>
+        </motion.span>
         {streak > 0 && (
           <motion.p
             initial={{ opacity: 0, y: 10 }}
