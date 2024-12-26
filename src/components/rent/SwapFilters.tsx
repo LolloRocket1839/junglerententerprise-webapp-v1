@@ -45,16 +45,40 @@ const SwapFilters = ({ selectedCategory, onCategoryChange }: SwapFiltersProps) =
         </Select>
 
         <div className="flex gap-2">
-          <Badge variant="secondary" className="glass bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30">Popular</Badge>
-          <Badge variant="secondary" className="glass bg-success/20 text-success border border-success/30 hover:bg-success/30">New</Badge>
+          <Badge 
+            variant="secondary" 
+            className="glass bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]"
+          >
+            Popular
+          </Badge>
+          <Badge 
+            variant="secondary" 
+            className="glass bg-success/20 text-success border border-success/30 hover:bg-success/30 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px]"
+          >
+            New
+          </Badge>
         </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Badge variant="outline" className="glass-button">Same Value</Badge>
-        <Badge variant="outline" className="glass-button">Quick Swap</Badge>
-        <Badge variant="outline" className="glass-button">Verified</Badge>
-        <Badge variant="outline" className="glass-button">Premium</Badge>
+        <Badge 
+          variant="outline" 
+          className="glass-button whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]"
+        >
+          The entire Milky Way
+        </Badge>
+        <Badge 
+          variant="outline" 
+          className="glass-button whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]"
+        >
+          Choose The entire Milky Way
+        </Badge>
+        <Badge 
+          variant="outline" 
+          className="glass-button whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]"
+        >
+          That feeling when you find your keys immediately after panicking
+        </Badge>
       </div>
     </div>
   );
