@@ -132,6 +132,28 @@ const StudentSwap = () => {
       lookingFor: "Comic Book Collection",
       timestamp: "5 days ago",
       tags: ["Music", "Vintage", "Collection"]
+    },
+    {
+      id: 10,
+      author: "Yugi M.",
+      category: "collectibles",
+      item: "Blue-Eyes White Dragon",
+      description: "First Edition, Near Mint Condition",
+      image: "https://images.unsplash.com/photo-1610631787813-9eeb1a2386cc",
+      lookingFor: "Dark Magician or Exodia Pieces",
+      timestamp: "2 days ago",
+      tags: ["Yu-Gi-Oh", "Rare", "Trading Card"]
+    },
+    {
+      id: 11,
+      author: "John C.",
+      category: "collectibles",
+      item: "Ancient Roman Coins",
+      description: "Collection of authenticated denarii",
+      image: "https://images.unsplash.com/photo-1620678494671-07d27bbe0ba6",
+      lookingFor: "Greek Coins or Medieval Coins",
+      timestamp: "1 week ago",
+      tags: ["Numismatics", "Ancient", "Historical"]
     }
   ];
 
