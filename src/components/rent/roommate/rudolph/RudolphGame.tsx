@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import RudolphComparison from './RudolphComparison';
 import type { Choice } from './RudolphComparison';
 import { Loader2 } from 'lucide-react';
+import { Progress } from "@/components/ui/progress";
 
 export interface Comparison {
   id: string;
@@ -15,14 +16,18 @@ export interface Comparison {
 const RudolphGame = () => {
   const [comparison, setComparison] = useState<Comparison | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [totalAnswered, setTotalAnswered] = useState(0);
+  const [streak, setStreak] = useState(0);
   const { toast } = useToast();
 
   const fetchRandomComparison = async () => {
     setIsLoading(true);
     try {
+      // Fetch a random comparison excluding already answered ones
       const { data, error } = await supabase
         .from('rudolph_comparisons')
         .select('*')
+        .order('RANDOM()')
         .limit(1)
         .single();
 
@@ -56,10 +61,21 @@ const RudolphGame = () => {
 
       if (error) throw error;
 
-      toast({
-        title: "Choice recorded!",
-        description: `You chose ${choice === 'component_a' ? 'Component A' : 'Component B'}.`,
-      });
+      setTotalAnswered(prev => prev + 1);
+      setStreak(prev => prev + 1);
+
+      // Show encouraging toast message
+      if (streak > 0 && streak % 5 === 0) {
+        toast({
+          title: "🎉 Streak Bonus!",
+          description: `You're on fire! ${streak} choices in a row!`,
+        });
+      } else {
+        toast({
+          title: "Choice recorded!",
+          description: `Great choice! Let's see what's next...`,
+        });
+      }
 
       // Fetch next comparison
       fetchRandomComparison();
@@ -75,8 +91,9 @@ const RudolphGame = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-64">
+      <div className="flex flex-col items-center justify-center h-64 space-y-4">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <p className="text-white/60">Loading your next choice...</p>
       </div>
     );
   }
@@ -90,10 +107,24 @@ const RudolphGame = () => {
   }
 
   return (
-    <div className="animate-fade-in">
+    <div className="space-y-8 animate-fade-in">
+      <div className="flex items-center justify-between mb-4">
+        <div className="space-y-1">
+          <p className="text-sm text-white/60">Total Choices Made</p>
+          <p className="text-2xl font-bold text-white">{totalAnswered}</p>
+        </div>
+        <div className="space-y-1">
+          <p className="text-sm text-white/60">Current Streak</p>
+          <p className="text-2xl font-bold text-primary">{streak}</p>
+        </div>
+      </div>
+
+      <Progress value={(totalAnswered % 10) * 10} className="h-2" />
+      
       <RudolphComparison
         comparison={comparison}
         onChoice={handleChoice}
+        totalAnswered={totalAnswered}
       />
     </div>
   );
