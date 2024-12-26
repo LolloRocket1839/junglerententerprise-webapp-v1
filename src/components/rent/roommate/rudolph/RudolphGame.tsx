@@ -17,6 +17,10 @@ interface Question {
     dimension: string;
     value: number;
   }[];
+  dimension_correlations?: {
+    dimension: string;
+    value: number;
+  }[];
 }
 
 const RudolphGame = () => {
@@ -39,7 +43,14 @@ const RudolphGame = () => {
         .order('created_at');
 
       if (error) throw error;
-      setQuestions(data || []);
+      
+      // Type cast the data to match our Question interface
+      const typedQuestions = (data || []).map(q => ({
+        ...q,
+        options: q.options as Question['options']
+      }));
+      
+      setQuestions(typedQuestions);
       setIsLoading(false);
     } catch (error) {
       console.error('Error loading questions:', error);
@@ -70,19 +81,31 @@ const RudolphGame = () => {
       setIsComplete(true);
       // Save final scores
       try {
+        // Get user ID first
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user?.id) {
+          throw new Error('No authenticated user found');
+        }
+
         const { error } = await supabase
           .from('rudolph_user_dimensions')
           .upsert(
             Object.entries(newScores).map(([dimension, score]) => ({
               dimension_id: dimension,
               score,
-              profile_id: (await supabase.auth.getUser()).data.user?.id,
+              profile_id: user.id,
             }))
           );
 
         if (error) throw error;
       } catch (error) {
         console.error('Error saving scores:', error);
+        toast({
+          title: "Error",
+          description: "Failed to save your results. Please try again.",
+          variant: "destructive",
+        });
       }
     }
   };
