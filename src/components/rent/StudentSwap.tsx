@@ -58,21 +58,80 @@ const StudentSwap = () => {
     },
     {
       id: 3,
-      author: "David L.",
-      category: "electronics",
-      item: "MacBook Pro 2021",
-      lookingFor: "Gaming Laptop",
-      timestamp: "1 day ago",
-      tags: ["Electronics", "Laptops"]
+      author: "Emma S.",
+      category: "clothes",
+      item: "Designer Winter Coat",
+      description: "Barely worn designer winter coat, size M",
+      image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3",
+      lookingFor: "Summer Dresses or Accessories",
+      timestamp: "2 hours ago",
+      tags: ["Premium", "Designer", "Winter Wear"]
     },
     {
       id: 4,
-      author: "Emma R.",
-      category: "books",
-      item: "Computer Science Textbooks",
-      lookingFor: "Economics Books",
+      author: "Marco R.",
+      category: "clothes",
+      item: "Vintage Leather Jacket",
+      description: "Classic style, great condition, size L",
+      image: "https://images.unsplash.com/photo-1551028719-00167b16eac5",
+      lookingFor: "Modern Streetwear",
+      timestamp: "5 hours ago",
+      tags: ["Vintage", "Leather", "Classic"]
+    },
+    {
+      id: 5,
+      author: "Sofia L.",
+      category: "services",
+      item: "Italian Language Lessons",
+      description: "Native speaker offering language exchange",
+      image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c",
+      lookingFor: "Web Development Help",
+      timestamp: "1 day ago",
+      tags: ["Language", "Education", "Exchange"]
+    },
+    {
+      id: 6,
+      author: "Alex K.",
+      category: "services",
+      item: "Photography Sessions",
+      description: "Professional portrait photography",
+      image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32",
+      lookingFor: "Graphic Design Work",
       timestamp: "2 days ago",
-      tags: ["Academic", "Textbooks"]
+      tags: ["Creative", "Photography", "Professional"]
+    },
+    {
+      id: 7,
+      author: "Lena M.",
+      category: "electronics",
+      item: "Gaming Console",
+      description: "Latest model with 2 controllers",
+      image: "https://images.unsplash.com/photo-1486401899868-0e435ed85128",
+      lookingFor: "Laptop or Tablet",
+      timestamp: "3 days ago",
+      tags: ["Gaming", "Electronics", "Entertainment"]
+    },
+    {
+      id: 8,
+      author: "David P.",
+      category: "books",
+      item: "Computer Science Collection",
+      description: "Complete set of programming books",
+      image: "https://images.unsplash.com/photo-1532012197267-da84d127e765",
+      lookingFor: "Art & Design Books",
+      timestamp: "4 days ago",
+      tags: ["Education", "Programming", "Technical"]
+    },
+    {
+      id: 9,
+      author: "Maria C.",
+      category: "collectibles",
+      item: "Vintage Vinyl Records",
+      description: "Classic rock collection from the 70s",
+      image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba",
+      lookingFor: "Comic Book Collection",
+      timestamp: "5 days ago",
+      tags: ["Music", "Vintage", "Collection"]
     }
   ];
 
@@ -84,8 +143,11 @@ const StudentSwap = () => {
   };
 
   const handleFilesUploaded = (files: File[]) => {
-    // Here you would typically handle the uploaded files
     console.log('Files uploaded:', files);
+    toast({
+      title: "Files Uploaded Successfully",
+      description: "Your swap listing will be reviewed shortly.",
+    });
   };
 
   return (
@@ -117,15 +179,17 @@ const StudentSwap = () => {
         onCategoryChange={setSelectedCategory}
       />
       
-      {mockSwaps
-        .filter(swap => swap.category === selectedCategory)
-        .map((swap) => (
-          <SwapCard 
-            key={swap.id} 
-            swap={swap}
-            onContactClick={handleContactClick}
-          />
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {mockSwaps
+          .filter(swap => swap.category === selectedCategory)
+          .map((swap) => (
+            <SwapCard 
+              key={swap.id} 
+              swap={swap}
+              onContactClick={handleContactClick}
+            />
+          ))}
+      </div>
     </div>
   );
 };
