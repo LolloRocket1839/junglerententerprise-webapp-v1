@@ -59,27 +59,6 @@ const SwapFilters = ({ selectedCategory, onCategoryChange }: SwapFiltersProps) =
           </Badge>
         </div>
       </div>
-
-      <div className="flex flex-wrap gap-2">
-        <Badge 
-          variant="outline" 
-          className="bg-primary/20 hover:bg-primary/30 text-white px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-200"
-        >
-          The entire Milky Way
-        </Badge>
-        <Badge 
-          variant="outline" 
-          className="bg-primary/20 hover:bg-primary/30 text-white px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-200"
-        >
-          Choose The entire Milky Way
-        </Badge>
-        <Badge 
-          variant="outline" 
-          className="bg-primary/20 hover:bg-primary/30 text-white px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-200 max-w-lg truncate"
-        >
-          That feeling when you find your keys immediately after panicking about losing them
-        </Badge>
-      </div>
     </div>
   );
 };
