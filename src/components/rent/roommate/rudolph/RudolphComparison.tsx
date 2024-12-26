@@ -14,7 +14,7 @@ interface RudolphComparisonProps {
 
 const RudolphComparison = ({ comparison, onChoice, streak }: RudolphComparisonProps) => {
   const getEncouragement = (streak: number) => {
-    if (streak < 5) return "Keep going!";
+    if (streak < 5) return "Keep going! 🌱";
     if (streak < 10) return "You're on fire! 🔥";
     if (streak < 15) return "Unstoppable! ⚡";
     if (streak < 20) return "Legendary! 👑";

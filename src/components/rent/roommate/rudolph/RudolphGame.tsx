@@ -4,34 +4,20 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { Trophy, Share2, RefreshCw, Lightbulb, Timer, Star } from 'lucide-react';
 import RudolphComparison from './RudolphComparison';
 
 const RudolphGame = () => {
   const { toast } = useToast();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [streak, setStreak] = useState(0);
-  const [totalChoices, setTotalChoices] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
+  const [hintsLeft, setHintsLeft] = useState(3);
+  const [timer, setTimer] = useState(30);
+  const [multiplier, setMultiplier] = useState(1);
 
-  // Persist counts and score in localStorage
-  useEffect(() => {
-    const savedStreak = localStorage.getItem('rudolph_streak');
-    const savedTotal = localStorage.getItem('rudolph_total');
-    const savedScore = localStorage.getItem('rudolph_score');
-    if (savedStreak) setStreak(parseInt(savedStreak));
-    if (savedTotal) setTotalChoices(parseInt(savedTotal));
-    if (savedScore) setTotalScore(parseFloat(savedScore));
-  }, []);
-
-  // Save counts and score to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem('rudolph_streak', streak.toString());
-    localStorage.setItem('rudolph_total', totalChoices.toString());
-    localStorage.setItem('rudolph_score', totalScore.toString());
-  }, [streak, totalChoices, totalScore]);
-
+  // Load comparisons from Supabase
   const { data: comparisons, isLoading, error } = useQuery({
     queryKey: ['rudolph-comparisons'],
     queryFn: async () => {
@@ -45,24 +31,35 @@ const RudolphGame = () => {
     },
   });
 
-  const calculateScore = (choice: string, comparison: any) => {
-    // Base score calculation on the rudolph_value from the comparison
-    const baseScore = comparison.rudolph_value || 0;
+  // Timer effect
+  useEffect(() => {
+    if (!comparisons) return;
     
-    // Adjust score based on the choice (component_a is considered the baseline)
-    if (choice === comparison.component_a) {
-      return baseScore;
-    } else {
-      // For component_b, we invert the score effect
-      return 1 - baseScore;
-    }
+    const countdown = setInterval(() => {
+      setTimer((prev) => {
+        if (prev <= 0) {
+          handleChoice('timeout', comparisons[currentIndex].id);
+          return 30;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(countdown);
+  }, [currentIndex, comparisons]);
+
+  // Calculate score based on choice and timing
+  const calculateScore = (choice: string, comparison: any) => {
+    const baseScore = choice === comparison.component_a ? comparison.rudolph_value : 1 - comparison.rudolph_value;
+    const timeBonus = timer / 30; // Time bonus factor
+    return baseScore * multiplier * (0.5 + timeBonus * 0.5);
   };
 
   const handleChoice = async (choice: string, comparisonId: string) => {
     if (!comparisons) return;
     
-    const currentComparison = comparisons[currentIndex % comparisons.length];
-    const choiceScore = calculateScore(choice, currentComparison);
+    const currentComparison = comparisons[currentIndex];
+    const score = calculateScore(choice, currentComparison);
 
     try {
       const { error } = await supabase
@@ -71,107 +68,191 @@ const RudolphGame = () => {
           {
             comparison_id: comparisonId,
             choice,
-            rudolph_score: choiceScore,
+            rudolph_score: score,
           }
         ]);
 
       if (error) throw error;
 
-      setTotalChoices(prev => prev + 1);
-      setStreak(prev => prev + 1);
-      setTotalScore(prev => prev + choiceScore);
+      // Update streak and score
+      if (score > 0.6) {
+        setStreak(prev => prev + 1);
+        if (streak + 1 === 5) {
+          setMultiplier(2);
+          toast({
+            title: "🌟 Streak Bonus!",
+            description: "Double points activated for next 3 choices!",
+          });
+        }
+      } else {
+        setStreak(0);
+        setMultiplier(1);
+      }
+
+      setTotalScore(prev => prev + score);
       setCurrentIndex(prev => prev + 1);
+      setTimer(30);
 
-      // Provide feedback based on the choice
-      const feedback = choiceScore > 0.7 
-        ? "Excellent choice! 🌟" 
-        : choiceScore > 0.4 
-          ? "Good decision! ✨" 
-          : "Interesting choice... 🤔";
-
+      // Show feedback
       toast({
-        title: feedback,
-        description: `Score: +${choiceScore.toFixed(2)} | Total: ${(totalScore + choiceScore).toFixed(2)}`,
+        title: score > 0.6 ? "Great choice! 🎯" : "Keep trying! 💪",
+        description: `Score: +${score.toFixed(2)} | Streak: ${streak}`,
       });
+
     } catch (error) {
       console.error('Error recording choice:', error);
       toast({
         title: "Error",
-        description: "Failed to record your choice. Please try again.",
+        description: "Failed to record your choice",
         variant: "destructive",
       });
     }
   };
 
+  const useHint = () => {
+    if (hintsLeft <= 0) {
+      toast({
+        title: "No hints left!",
+        description: "Keep playing to earn more hints",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setHintsLeft(prev => prev - 1);
+    toast({
+      title: "💡 Hint Used",
+      description: "Consider the long-term impact of your choice!",
+    });
+  };
+
+  const shareResults = async () => {
+    const text = `🦌 I scored ${totalScore.toFixed(2)} points in Rudolph Game with a ${streak} streak! Can you beat my score?`;
+    
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Rudolph Game Score',
+          text,
+          url: window.location.href,
+        });
+      } else {
+        await navigator.clipboard.writeText(text);
+        toast({
+          title: "Copied to clipboard!",
+          description: "Share your score with friends",
+        });
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+    }
+  };
+
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary" />
       </div>
     );
   }
 
   if (error || !comparisons) {
     return (
-      <div className="text-center py-8">
-        <p className="text-red-500">Something went wrong. Please try again later.</p>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <p className="text-red-500">Something went wrong. Please try again.</p>
+          <Button onClick={() => window.location.reload()}>
+            <RefreshCw className="mr-2 h-4 w-4" />
+            Retry
+          </Button>
+        </div>
       </div>
     );
   }
 
-  // If we've shown all comparisons, loop back to start
-  const currentComparison = comparisons[currentIndex % comparisons.length];
-  const progress = ((currentIndex % comparisons.length) / comparisons.length) * 100;
-
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-white mb-2">The Rudolph Game</h2>
-        <p className="text-white/60 mb-4">Choose between options to reveal your personality type</p>
-        
-        {/* Progress Bar */}
-        <div className="w-full max-w-md mx-auto mb-6">
-          <Progress value={progress} className="h-2" />
-          <p className="text-sm text-white/60 mt-2">
-            Question {(currentIndex % comparisons.length) + 1} of {comparisons.length}
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] text-white p-6">
+      <div className="max-w-4xl mx-auto space-y-8">
+        {/* Header Stats */}
+        <div className="grid grid-cols-3 gap-4">
+          <motion.div 
+            className="glass-card p-4 text-center"
+            whileHover={{ scale: 1.02 }}
+          >
+            <Trophy className="h-6 w-6 text-primary mx-auto mb-2" />
+            <p className="text-sm text-white/60">Score</p>
+            <p className="text-xl font-bold">{totalScore.toFixed(2)}</p>
+          </motion.div>
+          
+          <motion.div 
+            className="glass-card p-4 text-center"
+            whileHover={{ scale: 1.02 }}
+          >
+            <Star className="h-6 w-6 text-yellow-500 mx-auto mb-2" />
+            <p className="text-sm text-white/60">Streak</p>
+            <p className="text-xl font-bold">{streak}</p>
+          </motion.div>
+          
+          <motion.div 
+            className="glass-card p-4 text-center"
+            whileHover={{ scale: 1.02 }}
+          >
+            <Timer className="h-6 w-6 text-blue-400 mx-auto mb-2" />
+            <p className="text-sm text-white/60">Time</p>
+            <p className="text-xl font-bold">{timer}s</p>
+          </motion.div>
         </div>
 
-        <div className="flex justify-center gap-4 mt-4">
-          <motion.div 
-            className="glass-card px-4 py-2 rounded-lg"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        {/* Progress Bar */}
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm text-white/60">
+            <span>Progress</span>
+            <span>{currentIndex + 1} / {comparisons.length}</span>
+          </div>
+          <Progress value={((currentIndex + 1) / comparisons.length) * 100} />
+        </div>
+
+        {/* Game Area */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
           >
-            <span className="text-white/80">Streak: </span>
-            <span className="text-primary font-bold">{streak}</span>
+            <RudolphComparison
+              comparison={comparisons[currentIndex % comparisons.length]}
+              onChoice={handleChoice}
+              streak={streak}
+            />
           </motion.div>
-          <motion.div 
-            className="glass-card px-4 py-2 rounded-lg"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        </AnimatePresence>
+
+        {/* Action Buttons */}
+        <div className="flex justify-center gap-4">
+          <Button 
+            variant="outline" 
+            onClick={useHint}
+            disabled={hintsLeft <= 0}
+            className="gap-2"
           >
-            <span className="text-white/80">Total Score: </span>
-            <span className="text-primary font-bold">{totalScore.toFixed(2)}</span>
-          </motion.div>
+            <Lightbulb className="h-4 w-4" />
+            Hint ({hintsLeft})
+          </Button>
+          
+          <Button onClick={shareResults} className="gap-2">
+            <Share2 className="h-4 w-4" />
+            Share Score
+          </Button>
+        </div>
+
+        {/* Game Info */}
+        <div className="text-center text-sm text-white/40 space-y-1">
+          <p>No Rudolphs were harmed in this game</p>
+          <p>Current multiplier: x{multiplier}</p>
         </div>
       </div>
-
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
-        >
-          <RudolphComparison
-            comparison={currentComparison}
-            onChoice={handleChoice}
-            streak={streak}
-          />
-        </motion.div>
-      </AnimatePresence>
     </div>
   );
 };
