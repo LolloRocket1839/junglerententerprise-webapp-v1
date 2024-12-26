@@ -47,13 +47,13 @@ const SwapFilters = ({ selectedCategory, onCategoryChange }: SwapFiltersProps) =
         <div className="flex gap-2">
           <Badge 
             variant="secondary" 
-            className="glass bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30 px-3 py-1 text-sm font-medium"
+            className="bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30 px-4 py-1.5 text-sm font-medium rounded-full"
           >
             Popular
           </Badge>
           <Badge 
             variant="secondary" 
-            className="glass bg-success/20 text-success border border-success/30 hover:bg-success/30 px-3 py-1 text-sm font-medium"
+            className="bg-success/20 text-success border border-success/30 hover:bg-success/30 px-4 py-1.5 text-sm font-medium rounded-full"
           >
             New
           </Badge>
@@ -63,19 +63,19 @@ const SwapFilters = ({ selectedCategory, onCategoryChange }: SwapFiltersProps) =
       <div className="flex flex-wrap gap-2">
         <Badge 
           variant="outline" 
-          className="glass-button px-4 py-2 text-sm font-medium text-white/90 hover:text-white transition-colors duration-200"
+          className="bg-primary/20 hover:bg-primary/30 text-white px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-200"
         >
           The entire Milky Way
         </Badge>
         <Badge 
           variant="outline" 
-          className="glass-button px-4 py-2 text-sm font-medium text-white/90 hover:text-white transition-colors duration-200"
+          className="bg-primary/20 hover:bg-primary/30 text-white px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-200"
         >
           Choose The entire Milky Way
         </Badge>
         <Badge 
           variant="outline" 
-          className="glass-button px-4 py-2 text-sm font-medium text-white/90 hover:text-white transition-colors duration-200 max-w-md truncate"
+          className="bg-primary/20 hover:bg-primary/30 text-white px-6 py-2.5 text-sm font-medium rounded-full transition-all duration-200 max-w-lg truncate"
         >
           That feeling when you find your keys immediately after panicking about losing them
         </Badge>
