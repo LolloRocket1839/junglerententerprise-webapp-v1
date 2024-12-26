@@ -5,6 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
 import RudolphComparison from './RudolphComparison';
 
 const RudolphGame = () => {
@@ -12,20 +13,24 @@ const RudolphGame = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [streak, setStreak] = useState(0);
   const [totalChoices, setTotalChoices] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
 
-  // Persist counts in localStorage
+  // Persist counts and score in localStorage
   useEffect(() => {
     const savedStreak = localStorage.getItem('rudolph_streak');
     const savedTotal = localStorage.getItem('rudolph_total');
+    const savedScore = localStorage.getItem('rudolph_score');
     if (savedStreak) setStreak(parseInt(savedStreak));
     if (savedTotal) setTotalChoices(parseInt(savedTotal));
+    if (savedScore) setTotalScore(parseFloat(savedScore));
   }, []);
 
-  // Save counts to localStorage whenever they change
+  // Save counts and score to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('rudolph_streak', streak.toString());
     localStorage.setItem('rudolph_total', totalChoices.toString());
-  }, [streak, totalChoices]);
+    localStorage.setItem('rudolph_score', totalScore.toString());
+  }, [streak, totalChoices, totalScore]);
 
   const { data: comparisons, isLoading, error } = useQuery({
     queryKey: ['rudolph-comparisons'],
@@ -40,7 +45,25 @@ const RudolphGame = () => {
     },
   });
 
+  const calculateScore = (choice: string, comparison: any) => {
+    // Base score calculation on the rudolph_value from the comparison
+    const baseScore = comparison.rudolph_value || 0;
+    
+    // Adjust score based on the choice (component_a is considered the baseline)
+    if (choice === comparison.component_a) {
+      return baseScore;
+    } else {
+      // For component_b, we invert the score effect
+      return 1 - baseScore;
+    }
+  };
+
   const handleChoice = async (choice: string, comparisonId: string) => {
+    if (!comparisons) return;
+    
+    const currentComparison = comparisons[currentIndex % comparisons.length];
+    const choiceScore = calculateScore(choice, currentComparison);
+
     try {
       const { error } = await supabase
         .from('rudolph_progress')
@@ -48,7 +71,7 @@ const RudolphGame = () => {
           {
             comparison_id: comparisonId,
             choice,
-            rudolph_score: Math.random(), // This would be replaced with actual scoring logic
+            rudolph_score: choiceScore,
           }
         ]);
 
@@ -56,11 +79,19 @@ const RudolphGame = () => {
 
       setTotalChoices(prev => prev + 1);
       setStreak(prev => prev + 1);
+      setTotalScore(prev => prev + choiceScore);
       setCurrentIndex(prev => prev + 1);
 
+      // Provide feedback based on the choice
+      const feedback = choiceScore > 0.7 
+        ? "Excellent choice! 🌟" 
+        : choiceScore > 0.4 
+          ? "Good decision! ✨" 
+          : "Interesting choice... 🤔";
+
       toast({
-        title: "Choice recorded!",
-        description: `Streak: ${streak + 1} | Total: ${totalChoices + 1}`,
+        title: feedback,
+        description: `Score: +${choiceScore.toFixed(2)} | Total: ${(totalScore + choiceScore).toFixed(2)}`,
       });
     } catch (error) {
       console.error('Error recording choice:', error);
@@ -90,12 +121,22 @@ const RudolphGame = () => {
 
   // If we've shown all comparisons, loop back to start
   const currentComparison = comparisons[currentIndex % comparisons.length];
+  const progress = ((currentIndex % comparisons.length) / comparisons.length) * 100;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-bold text-white mb-2">The Rudolph Game</h2>
-        <p className="text-white/60">Choose between options to reveal your personality type</p>
+        <p className="text-white/60 mb-4">Choose between options to reveal your personality type</p>
+        
+        {/* Progress Bar */}
+        <div className="w-full max-w-md mx-auto mb-6">
+          <Progress value={progress} className="h-2" />
+          <p className="text-sm text-white/60 mt-2">
+            Question {(currentIndex % comparisons.length) + 1} of {comparisons.length}
+          </p>
+        </div>
+
         <div className="flex justify-center gap-4 mt-4">
           <motion.div 
             className="glass-card px-4 py-2 rounded-lg"
@@ -110,8 +151,8 @@ const RudolphGame = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="text-white/80">Total Choices: </span>
-            <span className="text-primary font-bold">{totalChoices}</span>
+            <span className="text-white/80">Total Score: </span>
+            <span className="text-primary font-bold">{totalScore.toFixed(2)}</span>
           </motion.div>
         </div>
       </div>
