@@ -2,32 +2,14 @@ import { useState, useEffect } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import RudolphQuestion from './RudolphQuestion';
 import RudolphResults from './RudolphResults';
 import { Trophy, Brain } from 'lucide-react';
-
-interface Question {
-  id: string;
-  question: string;
-  category: string;
-  options: {
-    text: string;
-    dimension: string;
-    value: number;
-  }[];
-  dimension_correlations?: {
-    dimension: string;
-    value: number;
-  }[];
-  information_gain?: number;
-  complexity_level?: number;
-  created_at?: string;
-}
+import { RudolphQuestion as RudolphQuestionType } from './types';
 
 const RudolphGame = () => {
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<RudolphQuestionType[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userScores, setUserScores] = useState<Record<string, number>>({});
   const [isComplete, setIsComplete] = useState(false);
@@ -52,8 +34,8 @@ const RudolphGame = () => {
         id: q.id,
         question: q.question,
         category: q.category,
-        options: q.options as Question['options'],
-        dimension_correlations: q.dimension_correlations as Question['dimension_correlations'],
+        options: q.options as RudolphQuestionType['options'],
+        dimension_correlations: q.dimension_correlations as RudolphQuestionType['dimension_correlations'],
         information_gain: q.information_gain,
         complexity_level: q.complexity_level,
         created_at: q.created_at
@@ -88,7 +70,7 @@ const RudolphGame = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       setIsComplete(true);
-      // Save final scores
+      
       try {
         // Get user ID first
         const { data: { user } } = await supabase.auth.getUser();
@@ -97,15 +79,16 @@ const RudolphGame = () => {
           throw new Error('No authenticated user found');
         }
 
+        // Save final scores
+        const dimensionScores = Object.entries(newScores).map(([dimension, score]) => ({
+          dimension_id: dimension,
+          score,
+          profile_id: user.id
+        }));
+
         const { error } = await supabase
           .from('rudolph_user_dimensions')
-          .upsert(
-            Object.entries(newScores).map(([dimension, score]) => ({
-              dimension_id: dimension,
-              score,
-              profile_id: user.id,
-            }))
-          );
+          .upsert(dimensionScores);
 
         if (error) throw error;
       } catch (error) {
