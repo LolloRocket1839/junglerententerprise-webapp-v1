@@ -132,6 +132,50 @@ const StudentSwap = () => {
       lookingFor: "Comic Book Collection",
       timestamp: "5 days ago",
       tags: ["Music", "Vintage", "Collection"]
+    },
+    {
+      id: 10,
+      author: "Alex R.",
+      category: "collectibles",
+      item: "Yu-Gi-Oh! Blue-Eyes White Dragon",
+      description: "Original 2002 print, near mint condition. Looking for other rare cards.",
+      image: "https://images.unsplash.com/photo-1610851467358-f1b8aca8054b",
+      lookingFor: "Dark Magician or Black Luster Soldier",
+      timestamp: "2 hours ago",
+      tags: ["Trading Cards", "Rare", "Mint Condition"]
+    },
+    {
+      id: 11,
+      author: "Sarah M.",
+      category: "collectibles",
+      item: "Ancient Roman Coin Collection",
+      description: "Set of 5 authenticated Roman denarii from 100-200 AD",
+      image: "https://images.unsplash.com/photo-1605792657660-596af9009e82",
+      lookingFor: "Greek Coins or Medieval European Coins",
+      timestamp: "4 hours ago",
+      tags: ["Numismatics", "Ancient", "Authenticated"]
+    },
+    {
+      id: 12,
+      author: "Mike T.",
+      category: "collectibles",
+      item: "Yu-Gi-Oh! Exodia Set",
+      description: "Complete set of all 5 pieces, lightly played condition",
+      image: "https://images.unsplash.com/photo-1593814681464-eee9be5abe9e",
+      lookingFor: "Egyptian God Cards Set",
+      timestamp: "1 day ago",
+      tags: ["Complete Set", "Legendary", "Trading Cards"]
+    },
+    {
+      id: 13,
+      author: "Emma L.",
+      category: "collectibles",
+      item: "Silver Dollar Collection",
+      description: "20th century American silver dollars, including rare dates",
+      image: "https://images.unsplash.com/photo-1621778455241-65b35b5d1ae3",
+      lookingFor: "Gold Coins or Commemorative Sets",
+      timestamp: "3 days ago",
+      tags: ["Silver", "American", "Rare Dates"]
     }
   ];
 
