@@ -445,6 +445,33 @@ export type Database = {
         }
         Relationships: []
       }
+      rudolph_dimensions: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          max_value: number | null
+          min_value: number | null
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          max_value?: number | null
+          min_value?: number | null
+          name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          max_value?: number | null
+          min_value?: number | null
+          name?: string
+        }
+        Relationships: []
+      }
       rudolph_personalities: {
         Row: {
           created_at: string
@@ -516,6 +543,81 @@ export type Database = {
           },
           {
             foreignKeyName: "rudolph_progress_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rudolph_questions: {
+        Row: {
+          category: string
+          complexity_level: number | null
+          created_at: string
+          dimension_correlations: Json | null
+          id: string
+          information_gain: number | null
+          options: Json
+          question: string
+        }
+        Insert: {
+          category: string
+          complexity_level?: number | null
+          created_at?: string
+          dimension_correlations?: Json | null
+          id?: string
+          information_gain?: number | null
+          options: Json
+          question: string
+        }
+        Update: {
+          category?: string
+          complexity_level?: number | null
+          created_at?: string
+          dimension_correlations?: Json | null
+          id?: string
+          information_gain?: number | null
+          options?: Json
+          question?: string
+        }
+        Relationships: []
+      }
+      rudolph_user_dimensions: {
+        Row: {
+          created_at: string
+          dimension_id: string | null
+          id: string
+          profile_id: string | null
+          score: number
+          uncertainty: number | null
+        }
+        Insert: {
+          created_at?: string
+          dimension_id?: string | null
+          id?: string
+          profile_id?: string | null
+          score: number
+          uncertainty?: number | null
+        }
+        Update: {
+          created_at?: string
+          dimension_id?: string | null
+          id?: string
+          profile_id?: string | null
+          score?: number
+          uncertainty?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rudolph_user_dimensions_dimension_id_fkey"
+            columns: ["dimension_id"]
+            isOneToOne: false
+            referencedRelation: "rudolph_dimensions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rudolph_user_dimensions_profile_id_fkey"
             columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
