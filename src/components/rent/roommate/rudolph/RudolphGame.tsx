@@ -33,8 +33,8 @@ const RudolphGame = () => {
         id: q.id,
         question: q.question,
         category: q.category,
-        options: q.options,
-        dimension_correlations: q.dimension_correlations,
+        options: Array.isArray(q.options) ? q.options : [],
+        dimension_correlations: Array.isArray(q.dimension_correlations) ? q.dimension_correlations : [],
         information_gain: q.information_gain,
         complexity_level: q.complexity_level,
         created_at: q.created_at

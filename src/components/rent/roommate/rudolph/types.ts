@@ -2,18 +2,22 @@ export interface RudolphQuestion {
   id: string;
   question: string;
   category: string;
-  options: {
-    text: string;
-    dimension: string;
-    value: number;
-  }[];
-  dimension_correlations?: {
-    dimension: string;
-    value: number;
-  }[];
+  options: RudolphOption[];
+  dimension_correlations?: DimensionCorrelation[];
   information_gain?: number;
   complexity_level?: number;
   created_at?: string;
+}
+
+export interface RudolphOption {
+  text: string;
+  value?: number;
+  dimension_correlations?: DimensionCorrelation[];
+}
+
+export interface DimensionCorrelation {
+  dimension: string;
+  value: number;
 }
 
 export interface RudolphProfile {
