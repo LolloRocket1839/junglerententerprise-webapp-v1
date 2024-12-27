@@ -3,14 +3,14 @@ import { Brain, Plus, Users } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Neuron } from './types';
+import { InterestNode } from './types';
 import { createNeuronFromAnswer } from './neuronGenerator';
 import { integrateNeuronIntoNetwork, saveNeuronToDatabase } from './neuronNetwork';
 import NetworkVisualization from './NetworkVisualization';
 import MatchStats from './MatchStats';
 
 const NeuralMatch = () => {
-  const [network, setNetwork] = useState<Neuron[]>([]);
+  const [network, setNetwork] = useState<InterestNode[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -38,7 +38,7 @@ const NeuralMatch = () => {
 
       if (error) throw error;
 
-      const neurons: Neuron[] = nodes.map(node => ({
+      const neurons: InterestNode[] = nodes.map(node => ({
         id: node.id,
         tags: node.resources as string[],
         weight: 1,

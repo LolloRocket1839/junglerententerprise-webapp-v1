@@ -1,4 +1,4 @@
-import { Neuron } from "./types";
+import { InterestNode } from "./types";
 
 const possibleTags = [
   "adventure", "serenity", "social", "introspection",
@@ -33,7 +33,7 @@ export function parseAnswerToTags(answer: string): string[] {
   return getRandomTags(3);
 }
 
-export function createNeuronFromAnswer(answer: string, profileId?: string): Neuron {
+export function createNeuronFromAnswer(answer: string, profileId?: string): InterestNode {
   const tags = parseAnswerToTags(answer);
   return {
     id: crypto.randomUUID(),

@@ -1,10 +1,10 @@
-import { Neuron } from "./types";
+import { InterestNode } from "./types";
 import { supabase } from "@/integrations/supabase/client";
 
 export function integrateNeuronIntoNetwork(
-  newNeuron: Neuron,
-  existingNeurons: Neuron[]
-): Neuron[] {
+  newNeuron: InterestNode,
+  existingNeurons: InterestNode[]
+): InterestNode[] {
   const updatedNeurons = existingNeurons.map((oldNeuron) => {
     const overlap = oldNeuron.tags.filter((tag) => newNeuron.tags.includes(tag));
     if (overlap.length > 0) {
@@ -25,7 +25,7 @@ export function integrateNeuronIntoNetwork(
   return [...updatedNeurons, newNeuron];
 }
 
-export async function saveNeuronToDatabase(neuron: Neuron) {
+export async function saveNeuronToDatabase(neuron: InterestNode) {
   try {
     const { error } = await supabase
       .from('interest_nodes')
