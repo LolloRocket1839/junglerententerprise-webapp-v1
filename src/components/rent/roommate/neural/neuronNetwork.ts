@@ -12,7 +12,6 @@ export function integrateNeuronIntoNetwork(
       const updatedConnections = new Set(oldNeuron.connections);
       updatedConnections.add(newNeuron.id);
       newNeuron.connections.push(oldNeuron.id);
-
       return {
         ...oldNeuron,
         weight: updatedWeight,

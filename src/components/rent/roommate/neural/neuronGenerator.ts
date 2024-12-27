@@ -7,7 +7,7 @@ const possibleTags = [
   "focused", "flexible", "traditional", "innovative"
 ];
 
-export function getRandomTags(count: number): string[] {
+function getRandomTags(count: number): string[] {
   const shuffled = [...possibleTags].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
@@ -15,7 +15,6 @@ export function getRandomTags(count: number): string[] {
 export function parseAnswerToTags(answer: string): string[] {
   const lowerAnswer = answer.toLowerCase();
   
-  // Basic keyword matching
   if (lowerAnswer.includes("party") || lowerAnswer.includes("social")) {
     return ["social", "energetic", ...getRandomTags(1)];
   }
@@ -29,7 +28,6 @@ export function parseAnswerToTags(answer: string): string[] {
     return ["spontaneous", "adventure", ...getRandomTags(1)];
   }
   
-  // Fallback to random tags
   return getRandomTags(3);
 }
 
