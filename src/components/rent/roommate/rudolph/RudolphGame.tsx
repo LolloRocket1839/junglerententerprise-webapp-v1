@@ -29,13 +29,12 @@ const RudolphGame = () => {
 
       if (error) throw error;
       
-      // Type cast the data to match our Question interface
       const typedQuestions = (data || []).map(q => ({
         id: q.id,
         question: q.question,
         category: q.category,
-        options: q.options as RudolphQuestionType['options'],
-        dimension_correlations: q.dimension_correlations as RudolphQuestionType['dimension_correlations'],
+        options: q.options,
+        dimension_correlations: q.dimension_correlations,
         information_gain: q.information_gain,
         complexity_level: q.complexity_level,
         created_at: q.created_at
@@ -54,51 +53,73 @@ const RudolphGame = () => {
   };
 
   const handleAnswer = async (selectedOption: any) => {
-    const currentQuestion = questions[currentQuestionIndex];
-    
-    // Update scores
-    const newScores = { ...userScores };
-    selectedOption.dimension_correlations?.forEach((correlation: any) => {
-      const dimension = correlation.dimension;
-      const value = correlation.value;
-      newScores[dimension] = (newScores[dimension] || 0) + value;
-    });
-    setUserScores(newScores);
-
-    // Move to next question or complete
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      setIsComplete(true);
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
       
-      try {
-        // Get user ID first
-        const { data: { user } } = await supabase.auth.getUser();
-        
-        if (!user?.id) {
-          throw new Error('No authenticated user found');
-        }
+      if (!user) {
+        toast({
+          title: "Authentication Required",
+          description: "Please sign in to save your progress.",
+          variant: "destructive",
+        });
+        return;
+      }
 
-        // Save final scores
+      const currentQuestion = questions[currentQuestionIndex];
+      
+      // Save progress
+      const { error: progressError } = await supabase
+        .from('rudolph_progress')
+        .insert({
+          profile_id: user.id,
+          comparison_id: currentQuestion.id,
+          choice: selectedOption.text,
+          rudolph_score: selectedOption.value || 0
+        });
+
+      if (progressError) throw progressError;
+
+      // Update dimension scores
+      if (selectedOption.dimension_correlations) {
+        const newScores = { ...userScores };
+        selectedOption.dimension_correlations.forEach((correlation: any) => {
+          const dimension = correlation.dimension;
+          const value = correlation.value;
+          newScores[dimension] = (newScores[dimension] || 0) + value;
+        });
+        setUserScores(newScores);
+
+        // Save dimension scores
         const dimensionScores = Object.entries(newScores).map(([dimension, score]) => ({
           dimension_id: dimension,
           score,
           profile_id: user.id
         }));
 
-        const { error } = await supabase
+        const { error: dimensionError } = await supabase
           .from('rudolph_user_dimensions')
           .upsert(dimensionScores);
 
-        if (error) throw error;
-      } catch (error) {
-        console.error('Error saving scores:', error);
+        if (dimensionError) throw dimensionError;
+      }
+
+      // Move to next question or complete
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } else {
+        setIsComplete(true);
         toast({
-          title: "Error",
-          description: "Failed to save your results. Please try again.",
-          variant: "destructive",
+          title: "Game Complete! 🎉",
+          description: "Your personality profile has been generated.",
         });
       }
+    } catch (error) {
+      console.error('Error saving progress:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save your progress. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
