@@ -2,89 +2,100 @@ import { useState, useEffect } from 'react';
 import { Brain, Plus, Users } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import NodeCreator from './NodeCreator';
+import { supabase } from "@/integrations/supabase/client";
+import { Neuron } from './types';
+import { createNeuronFromAnswer } from './neuronGenerator';
+import { integrateNeuronIntoNetwork, saveNeuronToDatabase } from './neuronNetwork';
 import NetworkVisualization from './NetworkVisualization';
 import MatchStats from './MatchStats';
-import { supabase } from "@/integrations/supabase/client";
-
-export interface Position {
-  x: number;
-  y: number;
-  z: number;
-}
-
-export interface InterestNode {
-  id: string;
-  title: string;
-  description: string | null;
-  category: string | null;
-  resources: string[];
-  position: Position;
-  profile_id: string | null;
-  created_at: string;
-  updated_at: string;
-}
 
 const NeuralMatch = () => {
-  const [nodes, setNodes] = useState<InterestNode[]>([]);
-  const [isCreatingNode, setIsCreatingNode] = useState(false);
+  const [network, setNetwork] = useState<Neuron[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    loadNodes();
+    loadNetwork();
   }, []);
 
-  const loadNodes = async () => {
+  const loadNetwork = async () => {
     try {
-      const { data, error } = await supabase
-        .from('interest_nodes')
-        .select('*');
+      const { data: { user } } = await supabase.auth.getUser();
       
-      if (error) throw error;
-      
-      if (data) {
-        const formattedNodes = data.map(node => {
-          // Ensure position is properly formatted
-          let position: Position = { x: 0, y: 0, z: 0 };
-          
-          if (node.position && typeof node.position === 'object') {
-            const pos = node.position as any;
-            position = {
-              x: typeof pos.x === 'number' ? pos.x : 0,
-              y: typeof pos.y === 'number' ? pos.y : 0,
-              z: typeof pos.z === 'number' ? pos.z : 0
-            };
-          }
-
-          // Ensure resources is properly formatted
-          const resources = Array.isArray(node.resources) 
-            ? node.resources.map(r => String(r))
-            : [];
-
-          return {
-            id: node.id,
-            title: node.title,
-            description: node.description,
-            category: node.category,
-            resources,
-            position,
-            profile_id: node.profile_id,
-            created_at: node.created_at,
-            updated_at: node.updated_at
-          };
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to use the neural matching system.",
+          variant: "destructive"
         });
-        
-        setNodes(formattedNodes);
+        return;
       }
+
+      const { data: nodes, error } = await supabase
+        .from('interest_nodes')
+        .select('*')
+        .eq('profile_id', user.id);
+
+      if (error) throw error;
+
+      const neurons: Neuron[] = nodes.map(node => ({
+        id: node.id,
+        tags: node.resources as string[],
+        weight: 1,
+        connections: [],
+        profile_id: node.profile_id,
+        position: node.position as { x: number; y: number; z: number }
+      }));
+
+      setNetwork(neurons);
+      setIsLoading(false);
     } catch (error) {
-      console.error('Error loading nodes:', error);
+      console.error('Error loading network:', error);
       toast({
         title: "Error",
-        description: "Failed to load interest nodes",
-        variant: "destructive",
+        description: "Failed to load neural network",
+        variant: "destructive"
       });
     }
   };
+
+  const handleAnswer = async (answer: string) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to save your answers.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const newNeuron = createNeuronFromAnswer(answer, user.id);
+      const updatedNetwork = integrateNeuronIntoNetwork(newNeuron, network);
+      
+      await saveNeuronToDatabase(newNeuron);
+      
+      setNetwork(updatedNetwork);
+      
+      toast({
+        title: "Neural network updated",
+        description: `New neuron created with tags: ${newNeuron.tags.join(", ")}`,
+      });
+    } catch (error) {
+      console.error('Error handling answer:', error);
+      toast({
+        title: "Error",
+        description: "Failed to process your answer",
+        variant: "destructive"
+      });
+    }
+  };
+
+  if (isLoading) {
+    return <div className="p-8 text-white">Loading neural network...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-[#101010] text-white p-6">
@@ -95,11 +106,7 @@ const NeuralMatch = () => {
             <h2 className="text-2xl font-bold">Neural Match</h2>
           </div>
           <div className="flex gap-3">
-            <Button 
-              variant="outline" 
-              className="gap-2"
-              onClick={() => setIsCreatingNode(true)}
-            >
+            <Button variant="outline" className="gap-2">
               <Plus className="w-4 h-4" />
               Add Neuron
             </Button>
@@ -113,19 +120,13 @@ const NeuralMatch = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3">
             <div className="glass-card h-[600px] relative overflow-hidden">
-              <NetworkVisualization nodes={nodes} />
+              <NetworkVisualization nodes={network} />
             </div>
           </div>
           <div className="space-y-6">
-            <MatchStats nodes={nodes} />
+            <MatchStats nodes={network} />
           </div>
         </div>
-
-        <NodeCreator 
-          open={isCreatingNode}
-          onOpenChange={setIsCreatingNode}
-          onNodeCreated={loadNodes}
-        />
       </div>
     </div>
   );
