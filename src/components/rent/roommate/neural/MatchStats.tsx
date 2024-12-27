@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Brain } from "lucide-react";
-import { InterestNode } from './NeuralMatch';
+import { InterestNode } from './types';
 
 interface MatchStatsProps {
   nodes: InterestNode[];
