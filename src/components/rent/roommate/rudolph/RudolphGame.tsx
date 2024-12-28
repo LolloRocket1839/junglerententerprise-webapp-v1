@@ -7,7 +7,7 @@ import RudolphQuestion from './RudolphQuestion';
 import RudolphResults from './RudolphResults';
 import { Trophy, Brain, Scale } from 'lucide-react';
 import { RudolphQuestion as RudolphQuestionType } from './types';
-import { IncomparableChoice } from './IncomparableChoice';
+import IncomparableChoice from './IncomparableChoice';
 
 const RudolphGame = () => {
   const [questions, setQuestions] = useState<RudolphQuestionType[]>([]);
@@ -34,12 +34,16 @@ const RudolphGame = () => {
 
       if (error) throw error;
       
-      const typedQuestions = (data || []).map(q => ({
+      const typedQuestions: RudolphQuestionType[] = (data || []).map(q => ({
         id: q.id,
         question: q.question,
         category: q.category,
-        options: Array.isArray(q.options) ? q.options : [],
-        dimension_correlations: Array.isArray(q.dimension_correlations) ? q.dimension_correlations : [],
+        options: Array.isArray(q.options) ? q.options.map(opt => ({
+          text: opt.text,
+          value: opt.value,
+          dimension_correlations: opt.dimension_correlations
+        })) : [],
+        dimension_correlations: q.dimension_correlations,
         information_gain: q.information_gain,
         complexity_level: q.complexity_level,
         created_at: q.created_at
@@ -151,7 +155,8 @@ const RudolphGame = () => {
         .insert({
           profile_id: user.id,
           choice: choice,
-          quantum_state: true
+          quantum_state: true,
+          rudolph_score: 0 // Adding required field with neutral value for incomparable choices
         });
 
       setCurrentIncomparableIndex(prev => prev + 1);

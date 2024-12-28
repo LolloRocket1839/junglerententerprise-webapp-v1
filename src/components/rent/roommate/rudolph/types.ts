@@ -29,3 +29,9 @@ export interface RudolphUserDimension {
   score: number;
   profile_id: string;
 }
+
+export interface IncomparableChoice {
+  item_a: string;
+  item_b: string;
+  category: string;
+}
