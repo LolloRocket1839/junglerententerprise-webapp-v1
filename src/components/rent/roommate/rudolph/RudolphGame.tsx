@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import RudolphQuestion from './RudolphQuestion';
 import RudolphResults from './RudolphResults';
 import { Trophy, Brain, Scale } from 'lucide-react';
-import { RudolphQuestion as RudolphQuestionType } from './types';
+import { RudolphQuestion as RudolphQuestionType, DimensionCorrelation } from './types';
 import IncomparableChoice from './IncomparableChoice';
 
 const RudolphGame = () => {
@@ -38,12 +38,22 @@ const RudolphGame = () => {
         id: q.id,
         question: q.question,
         category: q.category,
-        options: Array.isArray(q.options) ? q.options.map(opt => ({
-          text: opt.text,
-          value: opt.value,
-          dimension_correlations: opt.dimension_correlations
+        options: Array.isArray(q.options) ? q.options.map((opt: any) => ({
+          text: opt.text || '',
+          value: opt.value || 0,
+          dimension_correlations: Array.isArray(opt.dimension_correlations) 
+            ? opt.dimension_correlations.map((corr: any) => ({
+                dimension: corr.dimension || '',
+                value: corr.value || 0
+              }))
+            : []
         })) : [],
-        dimension_correlations: q.dimension_correlations,
+        dimension_correlations: Array.isArray(q.dimension_correlations) 
+          ? q.dimension_correlations.map((corr: any) => ({
+              dimension: corr.dimension || '',
+              value: corr.value || 0
+            }))
+          : [],
         information_gain: q.information_gain,
         complexity_level: q.complexity_level,
         created_at: q.created_at
