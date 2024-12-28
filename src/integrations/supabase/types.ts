@@ -472,6 +472,30 @@ export type Database = {
         }
         Relationships: []
       }
+      rudolph_incomparables: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          item_a: string
+          item_b: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          item_a: string
+          item_b: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          item_a?: string
+          item_b?: string
+        }
+        Relationships: []
+      }
       rudolph_personalities: {
         Row: {
           created_at: string

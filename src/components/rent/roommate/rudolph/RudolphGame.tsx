@@ -5,19 +5,24 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import RudolphQuestion from './RudolphQuestion';
 import RudolphResults from './RudolphResults';
-import { Trophy, Brain } from 'lucide-react';
+import { Trophy, Brain, Scale } from 'lucide-react';
 import { RudolphQuestion as RudolphQuestionType } from './types';
+import { IncomparableChoice } from './IncomparableChoice';
 
 const RudolphGame = () => {
   const [questions, setQuestions] = useState<RudolphQuestionType[]>([]);
+  const [incomparables, setIncomparables] = useState<any[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentIncomparableIndex, setCurrentIncomparableIndex] = useState(0);
   const [userScores, setUserScores] = useState<Record<string, number>>({});
   const [isComplete, setIsComplete] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showIncomparable, setShowIncomparable] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
     loadQuestions();
+    loadIncomparables();
   }, []);
 
   const loadQuestions = async () => {
@@ -49,6 +54,20 @@ const RudolphGame = () => {
         description: "Failed to load questions. Please try again.",
         variant: "destructive",
       });
+    }
+  };
+
+  const loadIncomparables = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('rudolph_incomparables')
+        .select('*')
+        .order('created_at');
+
+      if (error) throw error;
+      setIncomparables(data || []);
+    } catch (error) {
+      console.error('Error loading incomparables:', error);
     }
   };
 
@@ -103,15 +122,11 @@ const RudolphGame = () => {
         if (dimensionError) throw dimensionError;
       }
 
-      // Move to next question or complete
-      if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      // Show incomparable every 3 questions
+      if ((currentQuestionIndex + 1) % 3 === 0 && incomparables.length > currentIncomparableIndex) {
+        setShowIncomparable(true);
       } else {
-        setIsComplete(true);
-        toast({
-          title: "Game Complete! 🎉",
-          description: "Your personality profile has been generated.",
-        });
+        moveToNextQuestion();
       }
     } catch (error) {
       console.error('Error saving progress:', error);
@@ -119,6 +134,42 @@ const RudolphGame = () => {
         title: "Error",
         description: "Failed to save your progress. Please try again.",
         variant: "destructive",
+      });
+    }
+  };
+
+  const handleIncomparableChoice = async (choice: string) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) return;
+
+      const currentIncomparable = incomparables[currentIncomparableIndex];
+      
+      await supabase
+        .from('rudolph_progress')
+        .insert({
+          profile_id: user.id,
+          choice: choice,
+          quantum_state: true
+        });
+
+      setCurrentIncomparableIndex(prev => prev + 1);
+      setShowIncomparable(false);
+      moveToNextQuestion();
+    } catch (error) {
+      console.error('Error saving incomparable choice:', error);
+    }
+  };
+
+  const moveToNextQuestion = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      setIsComplete(true);
+      toast({
+        title: "Game Complete! 🎉",
+        description: "Your personality profile has been generated.",
       });
     }
   };
@@ -150,9 +201,13 @@ const RudolphGame = () => {
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Brain className="h-5 w-5 text-primary" />
+              {showIncomparable ? (
+                <Scale className="h-5 w-5 text-primary" />
+              ) : (
+                <Brain className="h-5 w-5 text-primary" />
+              )}
               <span className="text-sm text-white/60">
-                Personality Analysis
+                {showIncomparable ? "Quantum Comparison" : "Personality Analysis"}
               </span>
             </div>
           </div>
@@ -160,12 +215,19 @@ const RudolphGame = () => {
           {/* Progress bar */}
           <Progress value={progress} className="h-2" />
 
-          {/* Question */}
-          {questions[currentQuestionIndex] && (
-            <RudolphQuestion
-              question={questions[currentQuestionIndex]}
-              onAnswer={handleAnswer}
+          {/* Question or Incomparable Choice */}
+          {showIncomparable ? (
+            <IncomparableChoice
+              incomparable={incomparables[currentIncomparableIndex]}
+              onChoice={handleIncomparableChoice}
             />
+          ) : (
+            questions[currentQuestionIndex] && (
+              <RudolphQuestion
+                question={questions[currentQuestionIndex]}
+                onAnswer={handleAnswer}
+              />
+            )
           )}
         </div>
       </Card>
