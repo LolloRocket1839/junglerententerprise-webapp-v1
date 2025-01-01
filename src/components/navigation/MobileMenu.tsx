@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { LogIn, LogOut, UserPlus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 interface MobileMenuProps {
   session: any;
@@ -12,9 +12,30 @@ interface MobileMenuProps {
 }
 
 const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) => {
-  const handleNavigation = () => {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleNavigation = (path: string) => {
     onClose();
     onNavigate();
+    navigate(path);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      handleNavigation('/');
+      toast({
+        title: "Signed out successfully",
+        description: "Come back soon!",
+      });
+    } catch (error) {
+      toast({
+        title: "Error signing out",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -26,50 +47,42 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
       <div className="absolute right-0 h-full w-3/4 max-w-sm bg-gradient-to-b from-background to-background/95 p-6 shadow-xl">
         <div className="flex flex-col space-y-6">
-          <Link
-            to="/invest"
-            className="text-lg text-white/80 hover:text-white transition-colors"
-            onClick={handleNavigation}
+          <button
+            onClick={() => handleNavigation("/invest")}
+            className="text-lg text-left text-white/80 hover:text-white transition-colors"
           >
             Invest
-          </Link>
-          <Link
-            to="/rent"
-            className="text-lg text-white/80 hover:text-white transition-colors"
-            onClick={handleNavigation}
+          </button>
+          <button
+            onClick={() => handleNavigation("/rent")}
+            className="text-lg text-left text-white/80 hover:text-white transition-colors"
           >
             Rent
-          </Link>
-          <Link
-            to="/stay"
-            className="text-lg text-white/80 hover:text-white transition-colors"
-            onClick={handleNavigation}
+          </button>
+          <button
+            onClick={() => handleNavigation("/stay")}
+            className="text-lg text-left text-white/80 hover:text-white transition-colors"
           >
             Stay
-          </Link>
-          <Link
-            to="/referral"
-            className="text-lg text-white/80 hover:text-white transition-colors"
-            onClick={handleNavigation}
+          </button>
+          <button
+            onClick={() => handleNavigation("/referral")}
+            className="text-lg text-left text-white/80 hover:text-white transition-colors"
           >
             Referral
-          </Link>
-          <Link
-            to="/student"
-            className="text-lg text-white/80 hover:text-white transition-colors"
-            onClick={handleNavigation}
+          </button>
+          <button
+            onClick={() => handleNavigation("/student")}
+            className="text-lg text-left text-white/80 hover:text-white transition-colors"
           >
             Student
-          </Link>
+          </button>
 
           <div className="pt-6 border-t border-white/10">
             {session ? (
               <Button
                 variant="outline"
-                onClick={async () => {
-                  await supabase.auth.signOut();
-                  handleNavigation();
-                }}
+                onClick={handleSignOut}
                 className="w-full flex items-center justify-center gap-2"
               >
                 <LogOut className="w-4 h-4" />
@@ -79,25 +92,19 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
               <div className="space-y-4">
                 <Button
                   variant="outline"
-                  onClick={handleNavigation}
+                  onClick={() => handleNavigation("/auth")}
                   className="w-full flex items-center justify-center gap-2"
-                  asChild
                 >
-                  <Link to="/auth">
-                    <LogIn className="w-4 h-4" />
-                    Sign In
-                  </Link>
+                  <LogIn className="w-4 h-4" />
+                  Sign In
                 </Button>
                 <Button
                   variant="default"
-                  onClick={handleNavigation}
+                  onClick={() => handleNavigation("/auth")}
                   className="w-full flex items-center justify-center gap-2"
-                  asChild
                 >
-                  <Link to="/auth">
-                    <UserPlus className="w-4 h-4" />
-                    Sign Up
-                  </Link>
+                  <UserPlus className="w-4 h-4" />
+                  Sign Up
                 </Button>
               </div>
             )}
