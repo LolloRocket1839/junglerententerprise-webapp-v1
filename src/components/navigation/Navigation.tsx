@@ -36,7 +36,7 @@ const Navigation = () => {
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isScrolled ? 'glass' : 'bg-transparent'
+      isScrolled ? 'bg-[#1A1F2C]/95 backdrop-blur-sm border-b border-white/10' : 'bg-transparent'
     }`}>
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16">
@@ -50,10 +50,15 @@ const Navigation = () => {
           <DesktopNav session={session} />
           
           <button 
-            className="md:hidden text-white/80 hover:text-white p-2"
+            className="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
             onClick={() => setIsMenuOpen(true)}
+            aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? (
+              <X size={24} className="text-white" />
+            ) : (
+              <Menu size={24} className="text-white" />
+            )}
           </button>
         </div>
       </div>

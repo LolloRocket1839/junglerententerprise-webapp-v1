@@ -44,46 +44,46 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
         isOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
-      <div className="absolute right-0 h-full w-3/4 max-w-sm bg-gradient-to-b from-background to-background/95 p-6 shadow-xl">
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute right-0 h-full w-3/4 max-w-sm bg-[#1A1F2C] p-6 shadow-xl">
         <div className="flex flex-col space-y-6">
           <button
             onClick={() => handleNavigation("/invest")}
-            className="text-lg text-left text-white/80 hover:text-white transition-colors"
+            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
             Invest
           </button>
           <button
             onClick={() => handleNavigation("/rent")}
-            className="text-lg text-left text-white/80 hover:text-white transition-colors"
+            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
             Rent
           </button>
           <button
             onClick={() => handleNavigation("/stay")}
-            className="text-lg text-left text-white/80 hover:text-white transition-colors"
+            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
             Stay
           </button>
           <button
             onClick={() => handleNavigation("/referral")}
-            className="text-lg text-left text-white/80 hover:text-white transition-colors"
+            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
             Referral
           </button>
           <button
             onClick={() => handleNavigation("/student")}
-            className="text-lg text-left text-white/80 hover:text-white transition-colors"
+            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
             Student
           </button>
 
-          <div className="pt-6 border-t border-white/10">
+          <div className="pt-6 border-t border-white/20">
             {session ? (
               <Button
                 variant="outline"
                 onClick={handleSignOut}
-                className="w-full flex items-center justify-center gap-2"
+                className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20"
               >
                 <LogOut className="w-4 h-4" />
                 Sign Out
@@ -93,7 +93,7 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
                 <Button
                   variant="outline"
                   onClick={() => handleNavigation("/auth")}
-                  className="w-full flex items-center justify-center gap-2"
+                  className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20"
                 >
                   <LogIn className="w-4 h-4" />
                   Sign In
@@ -101,7 +101,7 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
                 <Button
                   variant="default"
                   onClick={() => handleNavigation("/auth")}
-                  className="w-full flex items-center justify-center gap-2"
+                  className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-background"
                 >
                   <UserPlus className="w-4 h-4" />
                   Sign Up
