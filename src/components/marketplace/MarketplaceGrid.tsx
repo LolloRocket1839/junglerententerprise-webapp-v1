@@ -88,14 +88,14 @@ const MarketplaceGrid = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#111111] to-[#222222]">
       {/* Fixed Search Header */}
-      <div className="sticky top-16 z-10 bg-white border-b border-gray-200 px-4 py-3 space-y-3">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+      <div className="sticky top-16 z-10 bg-black/50 backdrop-blur-xl border-b border-white/10 px-4 py-3 space-y-3">
+        <div className="relative max-w-2xl mx-auto">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 h-4 w-4" />
           <Input
-            placeholder="Search items..."
-            className="pl-10 pr-4 h-12 w-full bg-gray-100 border-none"
+            placeholder="Search marketplace..."
+            className="pl-10 pr-4 h-12 w-full glass-input bg-white/5 border-white/10 text-white placeholder:text-white/40"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -104,21 +104,21 @@ const MarketplaceGrid = () => {
               onClick={() => setSearchQuery('')}
               className="absolute right-3 top-1/2 transform -translate-y-1/2"
             >
-              <X className="h-4 w-4 text-gray-400" />
+              <X className="h-4 w-4 text-white/60" />
             </button>
           )}
         </div>
 
         {/* Category Pills */}
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide max-w-2xl mx-auto">
           {(['all', 'furniture', 'electronics', 'textbooks', 'services'] as const).map((category) => (
             <Badge
               key={category}
               variant={selectedCategory === category ? "default" : "outline"}
-              className={`px-4 py-1.5 rounded-full cursor-pointer whitespace-nowrap ${
+              className={`px-4 py-1.5 rounded-full cursor-pointer whitespace-nowrap transition-all duration-300 ${
                 selectedCategory === category 
-                  ? 'bg-primary text-white' 
-                  : 'bg-white text-gray-600 border border-gray-300'
+                  ? 'bg-primary text-black font-medium' 
+                  : 'bg-white/5 text-white/80 border border-white/10 hover:bg-white/10'
               }`}
               onClick={() => setSelectedCategory(category)}
             >
@@ -129,8 +129,8 @@ const MarketplaceGrid = () => {
       </div>
 
       {/* Items Grid */}
-      <div className="p-4">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="p-4 max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredItems.map((item) => (
             <MarketplaceItem 
               key={item.id}
