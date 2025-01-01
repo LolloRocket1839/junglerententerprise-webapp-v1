@@ -74,8 +74,8 @@ const InvestmentOpportunities = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1A1F2C] via-[#2A2F3C] to-[#3A3F4C] px-4 py-6 md:p-8">
-      {/* Stats Grid - Improved mobile layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
+      {/* Stats Grid - Improved mobile spacing */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {stats.map((stat, index) => (
           <StatsCard
             key={index}
@@ -90,23 +90,23 @@ const InvestmentOpportunities = () => {
 
       {/* Investment Tabs - Enhanced mobile experience */}
       <Tabs defaultValue="all" className="w-full">
-        <ScrollArea className="w-full whitespace-nowrap mb-6">
-          <TabsList className="inline-flex h-auto p-1 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10">
+        <ScrollArea className="w-full whitespace-nowrap rounded-lg mb-6 px-1">
+          <TabsList className="inline-flex h-12 p-1 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10">
             {["All Properties", "Student Housing", "Apartments", "Villas"].map((tab) => (
               <TabsTrigger
                 key={tab}
                 value={tab.toLowerCase().replace(" ", "-")}
-                className="px-4 py-2.5 text-sm md:text-base data-[state=active]:bg-primary data-[state=active]:text-white"
+                className="px-6 py-3 text-base rounded-md data-[state=active]:bg-primary data-[state=active]:text-white min-w-[120px] h-10"
               >
                 {tab}
               </TabsTrigger>
             ))}
           </TabsList>
-          <ScrollBar orientation="horizontal" />
+          <ScrollBar orientation="horizontal" className="opacity-0" />
         </ScrollArea>
 
-        <TabsContent value="all" className="mt-0">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <TabsContent value="all" className="mt-0 focus-visible:outline-none">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {properties.map((property) => (
               <Card key={property.id} className="overflow-hidden bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300">
                 <div className="aspect-video relative overflow-hidden">
@@ -117,26 +117,26 @@ const InvestmentOpportunities = () => {
                     loading="lazy"
                   />
                 </div>
-                <div className="p-4 md:p-6">
-                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2">{property.title}</h3>
-                  <p className="text-sm md:text-base text-white/60 mb-4">{property.location}</p>
-                  <div className="flex justify-between items-center mb-4">
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-white mb-2">{property.title}</h3>
+                  <p className="text-base text-white/60 mb-4">{property.location}</p>
+                  <div className="flex justify-between items-center mb-6">
                     <div>
-                      <p className="text-xs text-white/60">Price</p>
-                      <p className="text-base md:text-lg font-semibold text-white">{property.price}</p>
+                      <p className="text-sm text-white/60">Price</p>
+                      <p className="text-lg font-semibold text-white">{property.price}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs text-white/60">Expected ROI</p>
-                      <p className="text-base md:text-lg font-semibold text-primary">{property.roi}</p>
+                      <p className="text-sm text-white/60">Expected ROI</p>
+                      <p className="text-lg font-semibold text-primary">{property.roi}</p>
                     </div>
                   </div>
-                  <div className="flex gap-2">
-                    <Button className="w-full group text-sm md:text-base py-2">
+                  <div className="flex gap-3">
+                    <Button className="flex-1 text-base py-6 group">
                       Invest Now
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
-                    <Button variant="outline" size="icon" className="bg-white/5 border-white/10 hover:bg-white/10">
-                      <Info className="w-4 h-4" />
+                    <Button variant="outline" size="icon" className="h-12 w-12 bg-white/5 border-white/10 hover:bg-white/10">
+                      <Info className="w-5 h-5" />
                     </Button>
                   </div>
                 </div>
