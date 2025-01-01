@@ -24,7 +24,7 @@ const InvestmentOpportunities = () => {
     },
     {
       title: "Average ROI",
-      value: "10%", // Updated ROI value
+      value: "10%",
       change: "+3.2%",
       icon: TrendingUp,
       trend: "up" as const
@@ -73,9 +73,9 @@ const InvestmentOpportunities = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 p-4 md:p-8">
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#1A1F2C] via-[#2A2F3C] to-[#3A3F4C] px-4 py-6 md:p-8">
+      {/* Stats Grid - Improved mobile layout */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
         {stats.map((stat, index) => (
           <StatsCard
             key={index}
@@ -88,15 +88,15 @@ const InvestmentOpportunities = () => {
         ))}
       </div>
 
-      {/* Investment Tabs */}
+      {/* Investment Tabs - Enhanced mobile experience */}
       <Tabs defaultValue="all" className="w-full">
-        <ScrollArea className="w-full whitespace-nowrap">
-          <TabsList className="w-full md:w-auto inline-flex h-auto p-1 bg-white/10 backdrop-blur-sm">
+        <ScrollArea className="w-full whitespace-nowrap mb-6">
+          <TabsList className="inline-flex h-auto p-1 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10">
             {["All Properties", "Student Housing", "Apartments", "Villas"].map((tab) => (
               <TabsTrigger
                 key={tab}
                 value={tab.toLowerCase().replace(" ", "-")}
-                className="px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-white"
+                className="px-4 py-2.5 text-sm md:text-base data-[state=active]:bg-primary data-[state=active]:text-white"
               >
                 {tab}
               </TabsTrigger>
@@ -105,10 +105,10 @@ const InvestmentOpportunities = () => {
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
 
-        <TabsContent value="all" className="mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <TabsContent value="all" className="mt-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {properties.map((property) => (
-              <Card key={property.id} className="overflow-hidden bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300">
+              <Card key={property.id} className="overflow-hidden bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300">
                 <div className="aspect-video relative overflow-hidden">
                   <img
                     src={property.image}
@@ -117,25 +117,25 @@ const InvestmentOpportunities = () => {
                     loading="lazy"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-white mb-2">{property.title}</h3>
-                  <p className="text-white/60 mb-4">{property.location}</p>
+                <div className="p-4 md:p-6">
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2">{property.title}</h3>
+                  <p className="text-sm md:text-base text-white/60 mb-4">{property.location}</p>
                   <div className="flex justify-between items-center mb-4">
                     <div>
-                      <p className="text-sm text-white/60">Price</p>
-                      <p className="text-lg font-semibold text-white">{property.price}</p>
+                      <p className="text-xs text-white/60">Price</p>
+                      <p className="text-base md:text-lg font-semibold text-white">{property.price}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-white/60">Expected ROI</p>
-                      <p className="text-lg font-semibold text-primary">{property.roi}</p>
+                      <p className="text-xs text-white/60">Expected ROI</p>
+                      <p className="text-base md:text-lg font-semibold text-primary">{property.roi}</p>
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Button className="w-full group">
+                    <Button className="w-full group text-sm md:text-base py-2">
                       Invest Now
                       <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
-                    <Button variant="outline" size="icon" className="bg-white/10 border-white/20 hover:bg-white/20">
+                    <Button variant="outline" size="icon" className="bg-white/5 border-white/10 hover:bg-white/10">
                       <Info className="w-4 h-4" />
                     </Button>
                   </div>
