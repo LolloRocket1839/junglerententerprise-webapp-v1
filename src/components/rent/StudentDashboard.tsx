@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Calendar,
   MessageCircle,
@@ -21,9 +22,36 @@ import DashboardStats from './DashboardStats';
 import ActivityFeed from './ActivityFeed';
 import RoommateFinder from './roommate/RoommateFinder';
 import MarketplaceGrid from '../marketplace/MarketplaceGrid';
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 const StudentDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast({
+          title: "Authentication required",
+          description: "Please sign in to access the dashboard.",
+          variant: "destructive"
+        });
+        navigate('/auth');
+      } else if (!session.user.email_confirmed_at) {
+        toast({
+          title: "Email verification required",
+          description: "Please verify your email to access all features.",
+          variant: "destructive"
+        });
+        navigate('/auth');
+      }
+    };
+
+    checkAuth();
+  }, [navigate, toast]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#111111] to-[#222222]">
