@@ -36,12 +36,12 @@ const MarketplaceHeader = ({
         )}
       </div>
 
-      <div className="flex flex-wrap gap-2 max-w-2xl mx-auto">
+      <div className="flex flex-wrap gap-2 justify-center max-w-2xl mx-auto">
         {(['all', 'furniture', 'electronics', 'textbooks', 'services'] as const).map((category) => (
           <Badge
             key={category}
             variant={selectedCategory === category ? "default" : "outline"}
-            className={`px-4 py-1.5 rounded-full cursor-pointer whitespace-nowrap transition-all duration-300 ${
+            className={`px-4 py-1.5 rounded-full cursor-pointer transition-all duration-300 ${
               selectedCategory === category 
                 ? 'bg-primary text-black font-medium' 
                 : 'bg-white/5 text-white/80 border border-white/10 hover:bg-white/10'
