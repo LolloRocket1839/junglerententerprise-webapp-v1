@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Home, DollarSign, Users } from "lucide-react";
+import { ArrowRight, Home, DollarSign, Users, Calendar, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Index = () => {
@@ -22,38 +22,75 @@ const Index = () => {
               Welcome to Jungle Rent
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto animate-fade-in text-secondary/90">
-              Invest in student housing, rent your room, or find your perfect short-term stay
+              Your one-stop platform for student housing solutions
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center animate-fade-in">
+          </div>
+        </div>
+      </section>
+
+      {/* User Type Selection */}
+      <section className="relative py-20">
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Investor Path */}
+            <div className="backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl hover:shadow-primary/20 transition-all">
+              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4">
+                <DollarSign size={24} />
+              </div>
+              <h2 className="text-2xl font-bold mb-4 text-primary">For Investors</h2>
+              <p className="text-secondary/80 mb-6">
+                Invest in sustainable student housing and earn above-market returns while supporting affordable education.
+              </p>
               <Button
                 variant="secondary"
                 size="lg"
-                className="group bg-primary/90 hover:bg-primary text-background transition-all duration-300 shadow-lg hover:shadow-primary/50"
+                className="w-full bg-primary/90 hover:bg-primary text-background"
                 asChild
               >
-                <Link to="/invest" className="flex items-center">
-                  Discover Investments
-                  <ArrowRight className="ml-2 transform group-hover:translate-x-1 transition-transform" />
+                <Link to="/invest">
+                  Start Investing <ArrowRight className="ml-2" />
                 </Link>
               </Button>
+            </div>
+
+            {/* Student Path */}
+            <div className="backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl hover:shadow-primary/20 transition-all">
+              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4">
+                <GraduationCap size={24} />
+              </div>
+              <h2 className="text-2xl font-bold mb-4 text-primary">For Students</h2>
+              <p className="text-secondary/80 mb-6">
+                Find your perfect long-term student accommodation and connect with potential roommates.
+              </p>
               <Button
-                variant="outline"
+                variant="secondary"
                 size="lg"
-                className="bg-white/10 hover:bg-white/20 border-white"
+                className="w-full bg-primary/90 hover:bg-primary text-background"
                 asChild
               >
                 <Link to="/rent">
-                  Rent Your Room <ArrowRight className="ml-2" />
+                  Find Housing <ArrowRight className="ml-2" />
                 </Link>
               </Button>
+            </div>
+
+            {/* Short-term Stay Path */}
+            <div className="backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl hover:shadow-primary/20 transition-all">
+              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4">
+                <Calendar size={24} />
+              </div>
+              <h2 className="text-2xl font-bold mb-4 text-primary">Short-term Stay</h2>
+              <p className="text-secondary/80 mb-6">
+                Looking for temporary accommodation for exams, internships, or short courses? Find the perfect spot.
+              </p>
               <Button
-                variant="outline"
+                variant="secondary"
                 size="lg"
-                className="bg-white/10 hover:bg-white/20 border-white"
+                className="w-full bg-primary/90 hover:bg-primary text-background"
                 asChild
               >
                 <Link to="/stay">
-                  Book Your Stay <ArrowRight className="ml-2" />
+                  Book Stay <ArrowRight className="ml-2" />
                 </Link>
               </Button>
             </div>
@@ -61,82 +98,33 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="relative py-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/30 via-primary-dark/5 to-background/95" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl">
-            <h2 className="text-4xl font-bold text-center mb-12 text-primary">
-              Why Choose Jungle Rent?
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <FeatureCard
-                icon={<DollarSign size={32} />}
-                title="Smart Investments"
-                description="Invest in sustainable student housing that helps maintain affordable city centers while earning above-market returns."
-                opacity="opacity-60"
-              />
-              <FeatureCard
-                icon={<Home size={32} />}
-                title="Quality Housing"
-                description="Find comfortable and affordable housing options, perfect for students and short-term stays."
-                opacity="opacity-60"
-              />
-              <FeatureCard
-                icon={<Users size={32} />}
-                title="Community First"
-                description="Join a community of investors, students, and travelers all benefiting from shared spaces."
-                opacity="opacity-60"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative py-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-primary-dark/10 to-background/90" />
+      {/* How It Works */}
+      <section className="relative py-20 bg-gradient-to-b from-primary/20 via-primary-dark/10 to-background/90">
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="backdrop-blur-sm bg-white/5 p-8 rounded-2xl border border-white/10 shadow-2xl">
-            <h2 className="text-4xl font-bold mb-6 text-secondary">Ready to Get Started?</h2>
+            <h2 className="text-4xl font-bold mb-6 text-secondary">How Jungle Rent Works</h2>
             <p className="text-xl mb-8 max-w-2xl mx-auto text-secondary/90">
-              Join Jungle Rent today and be part of the future of student housing investment and
-              management.
+              We connect investors, students, and short-term stayers to create a sustainable student housing ecosystem.
             </p>
-            <Button
-              size="lg"
-              className="bg-primary hover:bg-primary-light text-background transition-all duration-300"
-              asChild
-            >
-              <Link to="/invest">
-                Get Started <ArrowRight className="ml-2" />
-              </Link>
-            </Button>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2 text-primary">For Investors</h3>
+                <p className="text-secondary/80">Invest in verified student properties and earn returns while supporting education.</p>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2 text-primary">For Students</h3>
+                <p className="text-secondary/80">Find affordable long-term housing and connect with compatible roommates.</p>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold mb-2 text-primary">For Short Stays</h3>
+                <p className="text-secondary/80">Book temporary accommodation for exams, internships, or short courses.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
     </div>
   );
 };
-
-const FeatureCard = ({
-  icon,
-  title,
-  description,
-  opacity = "opacity-60"
-}: {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  opacity?: string;
-}) => (
-  <div className="p-6 rounded-lg backdrop-blur-sm bg-white/10 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300">
-    <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4">
-      {icon}
-    </div>
-    <h3 className="text-xl font-semibold mb-2 text-primary">{title}</h3>
-    <p className={`text-secondary/80 ${opacity} hover:opacity-100 transition-opacity duration-300`}>{description}</p>
-  </div>
-);
 
 export default Index;
