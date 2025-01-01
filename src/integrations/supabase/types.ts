@@ -60,6 +60,61 @@ export type Database = {
           },
         ]
       }
+      chat_messages: {
+        Row: {
+          attachments: string[] | null
+          created_at: string
+          id: string
+          match_id: string | null
+          message: string
+          read_at: string | null
+          receiver_id: string | null
+          sender_id: string | null
+        }
+        Insert: {
+          attachments?: string[] | null
+          created_at?: string
+          id?: string
+          match_id?: string | null
+          message: string
+          read_at?: string | null
+          receiver_id?: string | null
+          sender_id?: string | null
+        }
+        Update: {
+          attachments?: string[] | null
+          created_at?: string
+          id?: string
+          match_id?: string | null
+          message?: string
+          read_at?: string | null
+          receiver_id?: string | null
+          sender_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "roommate_matches"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_messages_receiver_id_fkey"
+            columns: ["receiver_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_messages_sender_id_fkey"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hubs: {
         Row: {
           amenities: string[] | null
@@ -213,6 +268,47 @@ export type Database = {
             columns: ["target_node_id"]
             isOneToOne: false
             referencedRelation: "interest_nodes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notifications: {
+        Row: {
+          created_at: string
+          data: Json | null
+          id: string
+          message: string
+          profile_id: string | null
+          read_at: string | null
+          title: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          message: string
+          profile_id?: string | null
+          read_at?: string | null
+          title: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          message?: string
+          profile_id?: string | null
+          read_at?: string | null
+          title?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -727,7 +823,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_notification: {
+        Args: {
+          profile_id: string
+          type: string
+          title: string
+          message: string
+          data?: Json
+        }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
