@@ -1,6 +1,6 @@
 import { Heart } from 'lucide-react';
 import { Card } from "@/components/ui/card";
-import { MarketplaceItemType } from './MarketplaceGrid';
+import { MarketplaceItemType } from './types';
 
 interface MarketplaceItemProps {
   item: MarketplaceItemType;
