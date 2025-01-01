@@ -1,13 +1,5 @@
-import { Heart, MessageCircle, Star } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Heart } from 'lucide-react';
+import { Card } from "@/components/ui/card";
 import { MarketplaceItemType } from './MarketplaceGrid';
 
 interface MarketplaceItemProps {
@@ -17,47 +9,41 @@ interface MarketplaceItemProps {
 
 const MarketplaceItem = ({ item, onWishlist }: MarketplaceItemProps) => {
   return (
-    <Card className="glass-card overflow-hidden">
-      <div className="relative h-48">
-        <img 
-          src={item.imageUrl} 
-          alt={item.name}
-          className="w-full h-full object-cover"
-        />
+    <Card className="overflow-hidden border-none shadow-sm hover:shadow-md transition-shadow">
+      <div className="relative">
+        {/* Image Container with Fixed Aspect Ratio */}
+        <div className="relative pt-[100%]">
+          <img 
+            src={item.imageUrl} 
+            alt={item.name}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </div>
+        
+        {/* Wishlist Button */}
         <button
-          onClick={onWishlist}
-          className="absolute top-2 right-2 p-2 rounded-full bg-black/50 hover:bg-black/70 transition-colors"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onWishlist();
+          }}
+          className="absolute top-2 right-2 p-2 rounded-full bg-white shadow-md hover:scale-110 transition-transform"
         >
-          <Heart className="h-5 w-5 text-white" />
+          <Heart className="h-4 w-4 text-gray-600" />
         </button>
       </div>
       
-      <CardHeader>
+      {/* Content */}
+      <div className="p-3 space-y-1">
         <div className="flex justify-between items-start">
-          <div>
-            <CardTitle className="text-lg">{item.name}</CardTitle>
-            <CardDescription className="text-sm text-white/60">
-              Listed by {item.seller.name}
-            </CardDescription>
-          </div>
-          <div className="flex items-center gap-1">
-            <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
-            <span className="text-sm text-white/80">{item.seller.rating}</span>
-          </div>
+          <p className="font-medium text-sm line-clamp-1">{item.name}</p>
+          <p className="text-sm font-semibold text-primary">€{item.price}</p>
         </div>
-      </CardHeader>
-      
-      <CardContent>
-        <p className="text-sm text-white/80 line-clamp-2">{item.description}</p>
-        <p className="mt-2 text-xl font-bold text-primary">€{item.price}</p>
-      </CardContent>
-      
-      <CardFooter className="flex justify-between">
-        <Button variant="default" className="w-full">
-          <MessageCircle className="mr-2 h-4 w-4" />
-          Contact Seller
-        </Button>
-      </CardFooter>
+        
+        <p className="text-xs text-gray-500 line-clamp-1">
+          {item.seller.name} • {item.seller.rating}★
+        </p>
+      </div>
     </Card>
   );
 };

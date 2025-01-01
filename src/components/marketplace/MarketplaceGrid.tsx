@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter, X } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import MarketplaceItem from './MarketplaceItem';
 import { useToast } from "@/components/ui/use-toast";
+import { Badge } from "@/components/ui/badge";
 
 export type MarketplaceCategory = 'furniture' | 'electronics' | 'textbooks' | 'services' | 'all';
 
@@ -87,41 +88,57 @@ const MarketplaceGrid = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Search and Filter Bar */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1">
+    <div className="min-h-screen bg-gray-50">
+      {/* Fixed Search Header */}
+      <div className="sticky top-16 z-10 bg-white border-b border-gray-200 px-4 py-3 space-y-3">
+        <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
             placeholder="Search items..."
-            className="pl-10"
+            className="pl-10 pr-4 h-12 w-full bg-gray-100 border-none"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2"
+            >
+              <X className="h-4 w-4 text-gray-400" />
+            </button>
+          )}
         </div>
-        <div className="flex gap-2">
+
+        {/* Category Pills */}
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
           {(['all', 'furniture', 'electronics', 'textbooks', 'services'] as const).map((category) => (
-            <Button
+            <Badge
               key={category}
               variant={selectedCategory === category ? "default" : "outline"}
+              className={`px-4 py-1.5 rounded-full cursor-pointer whitespace-nowrap ${
+                selectedCategory === category 
+                  ? 'bg-primary text-white' 
+                  : 'bg-white text-gray-600 border border-gray-300'
+              }`}
               onClick={() => setSelectedCategory(category)}
-              className="capitalize"
             >
-              {category}
-            </Button>
+              {category === 'all' ? 'All Items' : category.charAt(0).toUpperCase() + category.slice(1)}
+            </Badge>
           ))}
         </div>
       </div>
 
       {/* Items Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredItems.map((item) => (
-          <MarketplaceItem 
-            key={item.id}
-            item={item}
-            onWishlist={() => handleWishlist(item.id)}
-          />
-        ))}
+      <div className="p-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+          {filteredItems.map((item) => (
+            <MarketplaceItem 
+              key={item.id}
+              item={item}
+              onWishlist={() => handleWishlist(item.id)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
