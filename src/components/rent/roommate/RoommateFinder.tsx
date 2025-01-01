@@ -2,14 +2,13 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import RoommateProfile from "./RoommateProfile";
 import QuestionPool from "./QuestionPool";
-import RudolphGame from "./rudolph/RudolphGame";
 import RoommateProfileGrid from "./RoommateProfileGrid";
 import { MixAndMatch } from "./MixAndMatch";
 import { Button } from "@/components/ui/button";
-import { ClipboardCheck, Users, Scale, Shuffle, Brain } from "lucide-react";
+import { ClipboardCheck, Users, Brain } from "lucide-react";
 import NeuralMatch from "./neural/NeuralMatch";
 
-type View = "questions" | "matches" | "rudolph" | "neural";
+type View = "questions" | "matches" | "neural";
 
 const RoommateFinder = () => {
   const [currentView, setCurrentView] = useState<View>("matches");
@@ -27,14 +26,6 @@ const RoommateFinder = () => {
           >
             <ClipboardCheck className="w-4 h-4" />
             Questionnaire
-          </Button>
-          <Button
-            variant={currentView === "rudolph" ? "default" : "outline"}
-            onClick={() => setCurrentView("rudolph")}
-            className="gap-2"
-          >
-            <Scale className="w-4 h-4" />
-            Rudolph Game
           </Button>
           <Button
             variant={currentView === "matches" ? "default" : "outline"}
@@ -56,7 +47,6 @@ const RoommateFinder = () => {
       </div>
 
       {currentView === "questions" && <QuestionPool />}
-      {currentView === "rudolph" && <RudolphGame />}
       {currentView === "matches" && <RoommateProfileGrid />}
       {currentView === "neural" && <NeuralMatch />}
     </div>
