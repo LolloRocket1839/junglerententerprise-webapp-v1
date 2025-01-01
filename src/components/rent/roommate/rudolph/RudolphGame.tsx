@@ -3,10 +3,11 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 import RudolphQuestion from './RudolphQuestion';
 import RudolphResults from './RudolphResults';
-import { Trophy, Brain, Scale } from 'lucide-react';
-import { RudolphQuestion as RudolphQuestionType, DimensionCorrelation } from './types';
+import { Trophy, Brain, Scale, Bug } from 'lucide-react';
+import { RudolphQuestion as RudolphQuestionType } from './types';
 import IncomparableChoice from './IncomparableChoice';
 
 const RudolphGame = () => {
@@ -18,6 +19,7 @@ const RudolphGame = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [showIncomparable, setShowIncomparable] = useState(false);
+  const [devMode, setDevMode] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -83,6 +85,15 @@ const RudolphGame = () => {
     } catch (error) {
       console.error('Error loading incomparables:', error);
     }
+  };
+
+  const toggleDevMode = () => {
+    setDevMode(!devMode);
+    toast({
+      title: devMode ? "Development Mode Disabled" : "Development Mode Enabled",
+      description: devMode ? "Switching to production mode" : "Debug information will be shown",
+      variant: devMode ? "default" : "destructive",
+    });
   };
 
   const handleAnswer = async (selectedOption: any) => {
@@ -215,20 +226,44 @@ const RudolphGame = () => {
                 Question {currentQuestionIndex + 1} of {questions.length}
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              {showIncomparable ? (
-                <Scale className="h-5 w-5 text-primary" />
-              ) : (
-                <Brain className="h-5 w-5 text-primary" />
-              )}
-              <span className="text-sm text-white/60">
-                {showIncomparable ? "Quantum Comparison" : "Personality Analysis"}
-              </span>
+            <div className="flex items-center gap-4">
+              <Button
+                variant={devMode ? "destructive" : "outline"}
+                size="sm"
+                onClick={toggleDevMode}
+                className="flex items-center gap-2"
+              >
+                <Bug className="h-4 w-4" />
+                {devMode ? "Disable Dev Mode" : "Enable Dev Mode"}
+              </Button>
+              <div className="flex items-center gap-2">
+                {showIncomparable ? (
+                  <Scale className="h-5 w-5 text-primary" />
+                ) : (
+                  <Brain className="h-5 w-5 text-primary" />
+                )}
+                <span className="text-sm text-white/60">
+                  {showIncomparable ? "Quantum Comparison" : "Personality Analysis"}
+                </span>
+              </div>
             </div>
           </div>
 
           {/* Progress bar */}
           <Progress value={progress} className="h-2" />
+
+          {/* Debug Information */}
+          {devMode && (
+            <div className="p-4 bg-destructive/10 rounded-lg border border-destructive/20">
+              <h4 className="text-sm font-medium text-destructive mb-2">Debug Information</h4>
+              <div className="space-y-2 text-sm text-destructive/80">
+                <p>Current Question Index: {currentQuestionIndex}</p>
+                <p>Incomparable Index: {currentIncomparableIndex}</p>
+                <p>Show Incomparable: {showIncomparable.toString()}</p>
+                <p>User Scores: {JSON.stringify(userScores, null, 2)}</p>
+              </div>
+            </div>
+          )}
 
           {/* Question or Incomparable Choice */}
           {showIncomparable ? (
