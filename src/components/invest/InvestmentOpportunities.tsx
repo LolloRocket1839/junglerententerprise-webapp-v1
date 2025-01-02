@@ -30,36 +30,69 @@ const InvestmentOpportunities = () => {
         return [
           {
             id: '1',
-            name: 'Jungle Villa',
-            location: 'Bali, Indonesia',
-            description: 'Luxury villa in the heart of the jungle',
+            name: 'Luxury Villa Bali',
+            location: 'Ubud, Bali, Indonesia',
+            description: 'Stunning villa with private pool and jungle views',
             price_per_night: 250,
-            amenities: ['Pool', 'Spa', 'Gym'],
-            images: ['/placeholder.svg'],
+            amenities: ['Private Pool', 'Spa', 'Gym', 'Garden'],
+            images: ['https://images.unsplash.com/photo-1518005020951-eccb494ad742'],
             rating: 8.5,
             reviews_count: 24
           },
           {
             id: '2',
-            name: 'Beach House',
-            location: 'Maldives',
-            description: 'Beachfront property with stunning views',
+            name: 'Oceanfront Paradise',
+            location: 'Maafushi, Maldives',
+            description: 'Beachfront property with panoramic ocean views',
             price_per_night: 350,
-            amenities: ['Private Beach', 'Pool', 'Butler'],
-            images: ['/placeholder.svg'],
+            amenities: ['Private Beach', 'Pool', 'Butler', 'Water Sports'],
+            images: ['https://images.unsplash.com/photo-1499793983690-e29da59ef1c2'],
             rating: 9.0,
             reviews_count: 32
           },
           {
             id: '3',
-            name: 'Mountain Retreat',
-            location: 'Swiss Alps',
-            description: 'Cozy retreat with panoramic mountain views',
+            name: 'Alpine Lodge',
+            location: 'Zermatt, Swiss Alps',
+            description: 'Luxury mountain retreat with Matterhorn views',
             price_per_night: 200,
-            amenities: ['Fireplace', 'Sauna', 'Ski Storage'],
-            images: ['/placeholder.svg'],
+            amenities: ['Fireplace', 'Sauna', 'Ski Storage', 'Mountain Views'],
+            images: ['https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1'],
             rating: 8.8,
             reviews_count: 18
+          },
+          {
+            id: '4',
+            name: 'Urban Penthouse',
+            location: 'Manhattan, New York',
+            description: 'Luxurious penthouse with city skyline views',
+            price_per_night: 500,
+            amenities: ['Terrace', 'Gym', 'Concierge', 'City Views'],
+            images: ['https://images.unsplash.com/photo-1496307653780-42ee777d4833'],
+            rating: 9.2,
+            reviews_count: 45
+          },
+          {
+            id: '5',
+            name: 'Tuscan Villa',
+            location: 'Florence, Italy',
+            description: 'Historic villa with vineyard and olive grove',
+            price_per_night: 300,
+            amenities: ['Wine Cellar', 'Pool', 'Garden', 'Vineyard'],
+            images: ['https://images.unsplash.com/photo-1533387520709-752d83de3630'],
+            rating: 8.9,
+            reviews_count: 29
+          },
+          {
+            id: '6',
+            name: 'Santorini Haven',
+            location: 'Oia, Santorini',
+            description: 'Traditional cave house with caldera views',
+            price_per_night: 400,
+            amenities: ['Private Pool', 'Terrace', 'Butler', 'Sunset Views'],
+            images: ['https://images.unsplash.com/photo-1469796466635-455ede028aca'],
+            rating: 9.5,
+            reviews_count: 52
           }
         ] as Property[];
       }
@@ -145,6 +178,7 @@ const InvestmentOpportunities = () => {
             }}
             onInvest={() => {}}
             onInfo={() => {}}
+            className="glass-card backdrop-blur-md bg-black/40 border-white/10"
           />
         ))}
       </div>
