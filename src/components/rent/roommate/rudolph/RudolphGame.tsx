@@ -111,14 +111,21 @@ const RudolphGame = () => {
 
       const currentQuestion = questions[currentQuestionIndex];
       
-      // Save progress
+      // Generate UUID for the new progress entry
+      const progressId = crypto.randomUUID();
+      const now = new Date().toISOString();
+      
+      // Save progress with required fields
       const { error: progressError } = await supabase
         .from('rudolph_progress')
         .insert({
+          id: progressId,
+          created_at: now,
           profile_id: user.id,
           comparison_id: currentQuestion.id,
           choice: selectedOption.text,
-          rudolph_score: selectedOption.value || 0
+          rudolph_score: selectedOption.value || 0,
+          quantum_state: false
         });
 
       if (progressError) throw progressError;
@@ -171,13 +178,19 @@ const RudolphGame = () => {
 
       const currentIncomparable = incomparables[currentIncomparableIndex];
       
+      // Generate UUID and timestamp for the new entry
+      const progressId = crypto.randomUUID();
+      const now = new Date().toISOString();
+      
       await supabase
         .from('rudolph_progress')
         .insert({
+          id: progressId,
+          created_at: now,
           profile_id: user.id,
           choice: choice,
           quantum_state: true,
-          rudolph_score: 0 // Adding required field with neutral value for incomparable choices
+          rudolph_score: 0
         });
 
       setCurrentIncomparableIndex(prev => prev + 1);
