@@ -20,7 +20,7 @@ export type Database = {
           hub_id?: string | null;
           amount: number;
           tokens: number;
-          status: string;
+          status?: string;
           created_at?: string;
           updated_at?: string;
         };
@@ -984,7 +984,7 @@ export type Tables<
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never,
+    : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
