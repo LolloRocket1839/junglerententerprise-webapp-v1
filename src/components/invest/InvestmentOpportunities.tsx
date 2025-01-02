@@ -1,12 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Info } from 'lucide-react';
-import { useQuery } from "@tanstack/react-query";
+import { ArrowRight, Info, Loader2 } from 'lucide-react';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const InvestmentOpportunities = () => {
+  const [selectedProperty, setSelectedProperty] = useState<any>(null);
+  const [investmentAmount, setInvestmentAmount] = useState<string>('');
+  const queryClient = useQueryClient();
+
   // Fetch investment opportunities (hubs)
   const { data: properties, isLoading } = useQuery({
     queryKey: ['investment-properties'],
@@ -26,13 +40,61 @@ const InvestmentOpportunities = () => {
     }
   });
 
-  const handleInvest = (propertyId: string) => {
-    // This would open a detailed investment flow in production
-    toast.info("Investment flow coming in Phase 2");
+  // Create investment mutation
+  const createInvestment = useMutation({
+    mutationFn: async ({ hubId, amount }: { hubId: string, amount: number }) => {
+      const { data: session } = await supabase.auth.getSession();
+      if (!session?.session?.user) {
+        throw new Error('You must be logged in to invest');
+      }
+
+      const { data, error } = await supabase
+        .from('investments')
+        .insert([
+          {
+            profile_id: session.session.user.id,
+            hub_id: hubId,
+            amount: amount,
+            tokens: Math.floor(amount / 100), // Example: 1 token per $100
+          }
+        ])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: () => {
+      toast.success("Investment submitted successfully!");
+      setSelectedProperty(null);
+      setInvestmentAmount('');
+      queryClient.invalidateQueries({ queryKey: ['investment-properties'] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    }
+  });
+
+  const handleInvest = (property: any) => {
+    setSelectedProperty(property);
+  };
+
+  const handleSubmitInvestment = async () => {
+    if (!selectedProperty || !investmentAmount) return;
+
+    const amount = parseFloat(investmentAmount);
+    if (isNaN(amount) || amount <= 0) {
+      toast.error("Please enter a valid investment amount");
+      return;
+    }
+
+    createInvestment.mutate({
+      hubId: selectedProperty.id,
+      amount: amount
+    });
   };
 
   const handleInfo = (propertyId: string) => {
-    // This would show detailed property information in production
     toast.info("Detailed property information coming in Phase 2");
   };
 
@@ -92,7 +154,7 @@ const InvestmentOpportunities = () => {
               <div className="flex gap-3">
                 <Button 
                   className="flex-1 py-5 text-sm"
-                  onClick={() => handleInvest(property.id)}
+                  onClick={() => handleInvest(property)}
                 >
                   Invest Now
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -110,6 +172,47 @@ const InvestmentOpportunities = () => {
           </Card>
         ))}
       </div>
+
+      {/* Investment Dialog */}
+      <Dialog open={!!selectedProperty} onOpenChange={(open) => !open && setSelectedProperty(null)}>
+        <DialogContent className="sm:max-w-[425px] bg-background">
+          <DialogHeader>
+            <DialogTitle>Invest in {selectedProperty?.name}</DialogTitle>
+            <DialogDescription>
+              Enter the amount you'd like to invest in this property.
+              Minimum investment is $100.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="amount">Investment Amount ($)</Label>
+              <Input
+                id="amount"
+                type="number"
+                min="100"
+                step="100"
+                value={investmentAmount}
+                onChange={(e) => setInvestmentAmount(e.target.value)}
+                placeholder="Enter amount..."
+              />
+              <p className="text-sm text-muted-foreground">
+                You will receive {investmentAmount ? Math.floor(parseFloat(investmentAmount) / 100) : 0} tokens
+              </p>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              onClick={handleSubmitInvestment}
+              disabled={createInvestment.isPending}
+            >
+              {createInvestment.isPending && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Confirm Investment
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
