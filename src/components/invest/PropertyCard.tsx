@@ -8,11 +8,12 @@ interface PropertyCardProps {
   property: Property;
   onInvest: (property: Property) => void;
   onInfo: (propertyId: string) => void;
+  className?: string; // Added className prop as optional
 }
 
-const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo }) => {
+const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo, className }) => {
   return (
-    <Card className="overflow-hidden bg-white/5 backdrop-blur-sm border-white/10 transition-all duration-300">
+    <Card className={className}>
       <div className="aspect-video relative">
         {property.images?.[0] ? (
           <img
