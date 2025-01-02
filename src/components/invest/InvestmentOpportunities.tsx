@@ -27,6 +27,45 @@ const InvestmentOpportunities = () => {
         throw error;
       }
 
+      // Add example properties if no data exists
+      if (!data || data.length === 0) {
+        return [
+          {
+            id: '1',
+            name: 'Jungle Villa',
+            location: 'Bali, Indonesia',
+            description: 'Luxury villa in the heart of the jungle',
+            price_per_night: 250,
+            amenities: ['Pool', 'Spa', 'Gym'],
+            images: ['/placeholder.svg'],
+            rating: 8.5,
+            reviews_count: 24
+          },
+          {
+            id: '2',
+            name: 'Beach House',
+            location: 'Maldives',
+            description: 'Beachfront property with stunning views',
+            price_per_night: 350,
+            amenities: ['Private Beach', 'Pool', 'Butler'],
+            images: ['/placeholder.svg'],
+            rating: 9.0,
+            reviews_count: 32
+          },
+          {
+            id: '3',
+            name: 'Mountain Retreat',
+            location: 'Swiss Alps',
+            description: 'Cozy retreat with panoramic mountain views',
+            price_per_night: 200,
+            amenities: ['Fireplace', 'Sauna', 'Ski Storage'],
+            images: ['/placeholder.svg'],
+            rating: 8.8,
+            reviews_count: 18
+          }
+        ] as Property[];
+      }
+
       return data as Property[];
     }
   });

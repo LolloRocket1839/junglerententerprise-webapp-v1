@@ -243,54 +243,6 @@ export type Database = {
           },
         ]
       }
-      investments: {
-        Row: {
-          amount: number
-          created_at: string
-          hub_id: string | null
-          id: string
-          profile_id: string | null
-          status: string
-          tokens: number
-          updated_at: string
-        }
-        Insert: {
-          amount: number
-          created_at?: string
-          hub_id?: string | null
-          id?: string
-          profile_id?: string | null
-          status: string
-          tokens: number
-          updated_at?: string
-        }
-        Update: {
-          amount?: number
-          created_at?: string
-          hub_id?: string | null
-          id?: string
-          profile_id?: string | null
-          status?: string
-          tokens?: number
-          updated_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "investments_hub_id_fkey"
-            columns: ["hub_id"]
-            isOneToOne: false
-            referencedRelation: "hubs"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "investments_profile_id_fkey"
-            columns: ["profile_id"]
-            isOneToOne: false
-            referencedRelation: "profiles"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       jungle_wallet: {
         Row: {
           balance: number | null
@@ -698,7 +650,7 @@ export type Database = {
           id?: string
           max_value?: number | null
           min_value?: number | null
-          name?: string
+          name: string
         }
         Relationships: []
       }
@@ -772,8 +724,8 @@ export type Database = {
         Insert: {
           choice: string
           comparison_id?: string | null
-          created_at?: string
-          id?: string
+          created_at: string
+          id: string
           profile_id?: string | null
           quantum_state?: boolean | null
           rudolph_score: number
