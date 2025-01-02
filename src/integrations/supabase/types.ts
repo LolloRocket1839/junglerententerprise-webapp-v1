@@ -201,6 +201,54 @@ export type Database = {
           },
         ]
       }
+      investments: {
+        Row: {
+          amount: number
+          created_at: string
+          hub_id: string | null
+          id: string
+          profile_id: string | null
+          status: string
+          tokens: number
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          hub_id?: string | null
+          id?: string
+          profile_id?: string | null
+          status: string
+          tokens: number
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          hub_id?: string | null
+          id?: string
+          profile_id?: string | null
+          status?: string
+          tokens?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "investments_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "hubs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "investments_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       jungle_wallet: {
         Row: {
           balance: number | null
@@ -400,7 +448,7 @@ export type Database = {
           date_of_birth?: string | null
           first_name?: string | null
           future_city?: string | null
-          id?: string
+          id: string
           last_name?: string | null
           move_in_date?: string | null
           preferences?: Json | null
@@ -896,7 +944,7 @@ export type Tables<
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
@@ -983,3 +1031,14 @@ export type CompositeTypes<
   : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
     ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
+
+export interface Investment {
+  id: string;
+  profile_id: string | null;
+  hub_id: string | null;
+  amount: number;
+  tokens: number;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}

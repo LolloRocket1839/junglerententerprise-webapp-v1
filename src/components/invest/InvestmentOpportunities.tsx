@@ -15,9 +15,22 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Investment } from '@/integrations/supabase/types';
+
+interface Property {
+  id: string;
+  name: string;
+  location: string;
+  description: string | null;
+  price_per_night: number;
+  amenities: string[] | null;
+  images: string[] | null;
+  rating: number | null;
+  reviews_count: number | null;
+}
 
 const InvestmentOpportunities = () => {
-  const [selectedProperty, setSelectedProperty] = useState<any>(null);
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [investmentAmount, setInvestmentAmount] = useState<string>('');
   const queryClient = useQueryClient();
 
@@ -36,7 +49,7 @@ const InvestmentOpportunities = () => {
         throw error;
       }
 
-      return data || [];
+      return data as Property[];
     }
   });
 
@@ -55,14 +68,15 @@ const InvestmentOpportunities = () => {
             profile_id: session.session.user.id,
             hub_id: hubId,
             amount: amount,
-            tokens: Math.floor(amount / 100), // Example: 1 token per $100
+            tokens: Math.floor(amount / 100), // 1 token per $100
+            status: 'pending'
           }
         ])
         .select()
         .single();
 
       if (error) throw error;
-      return data;
+      return data as Investment;
     },
     onSuccess: () => {
       toast.success("Investment submitted successfully!");
@@ -75,7 +89,7 @@ const InvestmentOpportunities = () => {
     }
   });
 
-  const handleInvest = (property: any) => {
+  const handleInvest = (property: Property) => {
     setSelectedProperty(property);
   };
 
