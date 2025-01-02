@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import StatsCard from './StatsCard';
 import {
@@ -73,8 +72,8 @@ const InvestmentOpportunities = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Stats Grid - Mobile optimized */}
+    <div className="space-y-8">
+      {/* Stats Grid - Improved mobile spacing */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {stats.map((stat, index) => (
           <StatsCard
@@ -84,18 +83,19 @@ const InvestmentOpportunities = () => {
             change={stat.change}
             icon={stat.icon}
             trend={stat.trend}
+            className="h-full"
           />
         ))}
       </div>
 
-      {/* Properties Grid - Mobile optimized */}
+      {/* Properties Grid - Improved mobile layout */}
       <div className="grid grid-cols-1 gap-6">
         {properties.map((property) => (
           <Card 
             key={property.id} 
             className="overflow-hidden bg-white/5 backdrop-blur-sm border-white/10 transition-all duration-300"
           >
-            <div className="aspect-video relative overflow-hidden">
+            <div className="aspect-video relative">
               <img
                 src={property.image}
                 alt={property.title}
@@ -103,7 +103,7 @@ const InvestmentOpportunities = () => {
                 loading="lazy"
               />
             </div>
-            <div className="p-4 space-y-4">
+            <div className="p-6 space-y-4">
               <div>
                 <h3 className="text-lg font-semibold text-white">{property.title}</h3>
                 <p className="text-sm text-white/60">{property.location}</p>
@@ -118,7 +118,7 @@ const InvestmentOpportunities = () => {
                   <p className="text-base font-semibold text-primary">{property.roi}</p>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-3">
                 <Button className="flex-1 py-5 text-sm">
                   Invest Now
                   <ArrowRight className="w-4 h-4 ml-2" />
