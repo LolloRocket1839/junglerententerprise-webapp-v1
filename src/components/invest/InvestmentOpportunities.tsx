@@ -4,7 +4,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Property } from './types';
-import { Investment } from '@/integrations/supabase/types';
 import PropertyCard from './PropertyCard';
 import InvestmentDialog from './InvestmentDialog';
 
@@ -92,7 +91,7 @@ const InvestmentOpportunities = () => {
         .single();
 
       if (error) throw error;
-      return data as Investment;
+      return data;
     },
     onSuccess: () => {
       toast.success("Investment submitted successfully!");
@@ -130,7 +129,7 @@ const InvestmentOpportunities = () => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-0">
         {[1, 2, 3].map((i) => (
           <PropertyCard
             key={i}
@@ -154,8 +153,8 @@ const InvestmentOpportunities = () => {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="grid grid-cols-1 gap-6">
+    <div className="space-y-8 px-4 md:px-0">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {properties?.map((property) => (
           <PropertyCard
             key={property.id}
