@@ -1,7 +1,10 @@
 import { Bell, Settings, LogOut, User, Settings2, Moon, Leaf, TreePalm } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PersonalInfoWizard from './PersonalInfoWizard';
 import JungleWallet from './JungleWallet';
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +16,7 @@ import {
 
 const StudentHeader = () => {
   const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false);
+  const { toast } = useToast();
   
   // Mock data for demonstration - in a real app, this would come from your backend
   const mockTransactions = [
@@ -21,6 +25,72 @@ const StudentHeader = () => {
     { type: "Community Challenge", amount: 100, timestamp: new Date().toISOString() },
     { type: "Jungle Shop Purchase", amount: -150, timestamp: new Date().toISOString() },
   ];
+
+  // Fetch notifications
+  const { data: notifications = [] } = useQuery({
+    queryKey: ['notifications'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('notifications')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (error) {
+        toast({
+          title: "Error fetching notifications",
+          description: error.message,
+          variant: "destructive",
+        });
+        return [];
+      }
+      return data;
+    },
+  });
+
+  // Listen for new notifications
+  useEffect(() => {
+    const channel = supabase
+      .channel('schema-db-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'notifications'
+        },
+        (payload) => {
+          toast({
+            title: payload.new.title,
+            description: payload.new.message,
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [toast]);
+
+  // Count unread notifications
+  const unreadCount = notifications.filter(n => !n.read_at).length;
+
+  // Mark notifications as read
+  const markAsRead = async () => {
+    const { error } = await supabase
+      .from('notifications')
+      .update({ read_at: new Date().toISOString() })
+      .is('read_at', null);
+
+    if (error) {
+      toast({
+        title: "Error marking notifications as read",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
     <nav className="glass-nav relative overflow-hidden">
@@ -54,10 +124,38 @@ const StudentHeader = () => {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
-            <button className="p-1.5 sm:p-2 text-white/60 hover:text-white rounded-lg hover:bg-white/10 transition-colors relative group">
-              <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
-              <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full group-hover:animate-pulse" />
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button 
+                  className="p-1.5 sm:p-2 text-white/60 hover:text-white rounded-lg hover:bg-white/10 transition-colors relative group"
+                  onClick={markAsRead}
+                >
+                  <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
+                  {unreadCount > 0 && (
+                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full group-hover:animate-pulse" />
+                  )}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-80 glass" align="end">
+                <DropdownMenuLabel className="text-white/80">Notifications</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {notifications.length === 0 ? (
+                  <div className="py-4 px-2 text-center text-white/60">
+                    No notifications
+                  </div>
+                ) : (
+                  notifications.map((notification) => (
+                    <DropdownMenuItem key={notification.id} className="flex flex-col items-start gap-1 py-2 cursor-default">
+                      <div className="font-medium text-white">{notification.title}</div>
+                      <div className="text-sm text-white/60">{notification.message}</div>
+                      <div className="text-xs text-white/40">
+                        {new Date(notification.created_at).toLocaleDateString()}
+                      </div>
+                    </DropdownMenuItem>
+                  ))
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="p-1.5 sm:p-2 text-white/60 hover:text-white rounded-lg hover:bg-white/10 transition-colors">
