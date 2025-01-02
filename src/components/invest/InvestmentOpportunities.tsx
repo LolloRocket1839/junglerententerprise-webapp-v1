@@ -1,40 +1,18 @@
 import React, { useState } from 'react';
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Info, Loader2 } from 'lucide-react';
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Dialog } from "@/components/ui/dialog";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Property } from './types';
 import { Investment } from '@/integrations/supabase/types';
-
-interface Property {
-  id: string;
-  name: string;
-  location: string;
-  description: string | null;
-  price_per_night: number;
-  amenities: string[] | null;
-  images: string[] | null;
-  rating: number | null;
-  reviews_count: number | null;
-}
+import PropertyCard from './PropertyCard';
+import InvestmentDialog from './InvestmentDialog';
 
 const InvestmentOpportunities = () => {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [investmentAmount, setInvestmentAmount] = useState<string>('');
   const queryClient = useQueryClient();
 
-  // Fetch investment opportunities (hubs)
   const { data: properties, isLoading } = useQuery({
     queryKey: ['investment-properties'],
     queryFn: async () => {
@@ -53,7 +31,6 @@ const InvestmentOpportunities = () => {
     }
   });
 
-  // Create investment mutation
   const createInvestment = useMutation({
     mutationFn: async ({ hubId, amount }: { hubId: string, amount: number }) => {
       const { data: session } = await supabase.auth.getSession();
@@ -116,9 +93,21 @@ const InvestmentOpportunities = () => {
     return (
       <div className="grid grid-cols-1 gap-6">
         {[1, 2, 3].map((i) => (
-          <Card 
+          <PropertyCard
             key={i}
-            className="animate-pulse bg-white/5 backdrop-blur-sm border-white/10 h-[400px]"
+            property={{
+              id: i.toString(),
+              name: '',
+              location: '',
+              description: null,
+              price_per_night: 0,
+              amenities: null,
+              images: null,
+              rating: null,
+              reviews_count: null
+            }}
+            onInvest={() => {}}
+            onInfo={() => {}}
           />
         ))}
       </div>
@@ -127,105 +116,30 @@ const InvestmentOpportunities = () => {
 
   return (
     <div className="space-y-8">
-      {/* Properties Grid */}
       <div className="grid grid-cols-1 gap-6">
         {properties?.map((property) => (
-          <Card 
-            key={property.id} 
-            className="overflow-hidden bg-white/5 backdrop-blur-sm border-white/10 transition-all duration-300"
-          >
-            <div className="aspect-video relative">
-              {property.images?.[0] ? (
-                <img
-                  src={property.images[0]}
-                  alt={property.name}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="w-full h-full bg-white/5" />
-              )}
-            </div>
-            <div className="p-6 space-y-4">
-              <div>
-                <h3 className="text-lg font-semibold text-white">{property.name}</h3>
-                <p className="text-sm text-white/60">{property.location}</p>
-              </div>
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="text-xs text-white/60">Price per night</p>
-                  <p className="text-base font-semibold text-white">
-                    ${property.price_per_night}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-white/60">Expected ROI</p>
-                  <p className="text-base font-semibold text-primary">
-                    {property.rating ? `${property.rating}%` : 'TBD'}
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <Button 
-                  className="flex-1 py-5 text-sm"
-                  onClick={() => handleInvest(property)}
-                >
-                  Invest Now
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="icon" 
-                  className="h-[42px] w-[42px] bg-white/5 border-white/10"
-                  onClick={() => handleInfo(property.id)}
-                >
-                  <Info className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          </Card>
+          <PropertyCard
+            key={property.id}
+            property={property}
+            onInvest={handleInvest}
+            onInfo={handleInfo}
+          />
         ))}
       </div>
 
-      {/* Investment Dialog */}
-      <Dialog open={!!selectedProperty} onOpenChange={(open) => !open && setSelectedProperty(null)}>
-        <DialogContent className="sm:max-w-[425px] bg-background">
-          <DialogHeader>
-            <DialogTitle>Invest in {selectedProperty?.name}</DialogTitle>
-            <DialogDescription>
-              Enter the amount you'd like to invest in this property.
-              Minimum investment is $100.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="amount">Investment Amount ($)</Label>
-              <Input
-                id="amount"
-                type="number"
-                min="100"
-                step="100"
-                value={investmentAmount}
-                onChange={(e) => setInvestmentAmount(e.target.value)}
-                placeholder="Enter amount..."
-              />
-              <p className="text-sm text-muted-foreground">
-                You will receive {investmentAmount ? Math.floor(parseFloat(investmentAmount) / 100) : 0} tokens
-              </p>
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              onClick={handleSubmitInvestment}
-              disabled={createInvestment.isPending}
-            >
-              {createInvestment.isPending && (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              )}
-              Confirm Investment
-            </Button>
-          </DialogFooter>
-        </DialogContent>
+      <Dialog 
+        open={!!selectedProperty} 
+        onOpenChange={(open) => !open && setSelectedProperty(null)}
+      >
+        {selectedProperty && (
+          <InvestmentDialog
+            property={selectedProperty}
+            investmentAmount={investmentAmount}
+            setInvestmentAmount={setInvestmentAmount}
+            onSubmit={handleSubmitInvestment}
+            isSubmitting={createInvestment.isPending}
+          />
+        )}
       </Dialog>
     </div>
   );
