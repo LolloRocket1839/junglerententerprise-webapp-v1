@@ -23,17 +23,17 @@ const StatsCard: React.FC<StatsCardProps> = ({
 }) => {
   return (
     <Card className={cn(
-      "p-6 bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300",
+      "p-4 md:p-6 bg-white/5 backdrop-blur-sm border-white/10 hover:bg-white/10 transition-all duration-300",
       className
     )}>
       <div className="flex items-start gap-4">
-        <div className="p-3 rounded-lg bg-primary/20">
-          <Icon className="w-5 h-5 text-primary" />
+        <div className="p-2 md:p-3 rounded-lg bg-primary/20">
+          <Icon className="w-4 h-4 md:w-5 md:h-5 text-primary" />
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm text-white/60 truncate mb-1">{title}</p>
           <div className="flex items-center gap-2">
-            <p className="text-xl font-bold text-white truncate">{value}</p>
+            <p className="text-lg md:text-xl font-bold text-white truncate">{value}</p>
             {change && (
               <span className={`text-xs ${
                 trend === 'up' ? 'text-green-500' : 'text-red-500'
