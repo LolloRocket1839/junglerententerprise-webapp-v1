@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Home, DollarSign, Users, Calendar, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
+import OnboardingTour from "@/components/onboarding/OnboardingTour";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <OnboardingTour />
+      
       {/* Hero Section - Mobile Optimized */}
       <section className="relative min-h-[60vh] sm:min-h-[80vh] flex items-center justify-center overflow-hidden px-4 py-8 sm:py-0">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/40 via-primary/20 to-background animate-gradient-slow" />
@@ -24,6 +27,17 @@ const Index = () => {
             <p className="text-base sm:text-xl md:text-2xl mb-4 sm:mb-8 max-w-2xl mx-auto animate-fade-in text-secondary/90">
               Your one-stop platform for student housing solutions
             </p>
+            
+            {/* New CTA Button */}
+            <Button
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-background font-semibold px-8 py-6 text-lg animate-bounce-slow"
+              asChild
+            >
+              <Link to="/auth" className="flex items-center gap-2">
+                Get Started <ArrowRight className="w-5 h-5" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -44,7 +58,7 @@ const Index = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                className="w-full bg-primary/90 hover:bg-primary text-background text-sm sm:text-base"
+                className="w-full bg-primary/90 hover:bg-primary text-background text-sm sm:text-base invest-link"
                 asChild
               >
                 <Link to="/invest" className="flex items-center justify-center gap-2">
@@ -65,7 +79,7 @@ const Index = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                className="w-full bg-primary/90 hover:bg-primary text-background text-sm sm:text-base"
+                className="w-full bg-primary/90 hover:bg-primary text-background text-sm sm:text-base rent-link"
                 asChild
               >
                 <Link to="/rent" className="flex items-center justify-center gap-2">
@@ -86,7 +100,7 @@ const Index = () => {
               <Button
                 variant="secondary"
                 size="lg"
-                className="w-full bg-primary/90 hover:bg-primary text-background text-sm sm:text-base"
+                className="w-full bg-primary/90 hover:bg-primary text-background text-sm sm:text-base stay-link"
                 asChild
               >
                 <Link to="/stay" className="flex items-center justify-center gap-2">
