@@ -25,7 +25,7 @@ const Index = () => {
               Welcome to Jungle Rent
             </h1>
             <p className="text-base sm:text-xl md:text-2xl mb-4 sm:mb-8 max-w-2xl mx-auto animate-fade-in text-secondary/90">
-              Your one-stop platform for student housing solutions
+              The rent that pays
             </p>
             
             {/* New CTA Button */}
