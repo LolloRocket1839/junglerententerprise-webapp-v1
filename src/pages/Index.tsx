@@ -9,7 +9,10 @@ const Index = () => {
       <OnboardingTour />
       
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
+      <section 
+        className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8"
+        aria-label="Welcome section"
+      >
         {/* Background gradients */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/20 to-background animate-gradient-slow" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(46,246,46,0.15)_0%,transparent_60%)]" />
@@ -32,34 +35,43 @@ const Index = () => {
               Rent that pays
             </p>
             
-            {/* Enhanced CTA Button with better touch target */}
+            {/* Enhanced CTA Button with better accessibility */}
             <Button
               size="lg"
               className="bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary 
                          text-background font-semibold px-6 sm:px-8 py-3 sm:py-6 text-base sm:text-lg 
                          transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-md group
-                         min-w-[200px] sm:min-w-[250px] touch-manipulation"
+                         min-w-[200px] sm:min-w-[250px] touch-manipulation
+                         focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background focus:outline-none"
               asChild
+              aria-label="Get started with Jungle Rent"
             >
               <Link to="/auth" className="flex items-center justify-center gap-2">
                 Get Started 
-                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
               </Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* User Type Selection - Enhanced with responsive grid */}
-      <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+      {/* User Type Selection - Enhanced with accessibility */}
+      <section 
+        className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8"
+        aria-label="Choose your role"
+      >
         <div className="container mx-auto relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-            {/* Investor Card - Enhanced touch targets and responsive spacing */}
-            <div className="backdrop-blur-sm bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl 
-                          hover:shadow-primary/20 transition-all duration-300 group touch-manipulation">
+            {/* Investor Card */}
+            <div 
+              className="backdrop-blur-sm bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl 
+                        hover:shadow-primary/20 transition-all duration-300 group touch-manipulation"
+              role="region"
+              aria-label="Investor information"
+            >
               <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4 
                             group-hover:scale-110 transition-transform duration-300">
-                <DollarSign className="w-6 h-6" />
+                <DollarSign className="w-6 h-6" aria-hidden="true" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">For Investors</h2>
               <p className="text-secondary/80 mb-4 sm:mb-6 text-sm sm:text-base">
@@ -69,22 +81,27 @@ const Index = () => {
                 variant="secondary"
                 size="lg"
                 className="w-full bg-primary/90 hover:bg-primary text-background group invest-link
-                          py-3 sm:py-4 text-base sm:text-lg touch-manipulation"
+                          py-3 sm:py-4 text-base sm:text-lg touch-manipulation
+                          focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background focus:outline-none"
                 asChild
               >
                 <Link to="/invest" className="flex items-center justify-center gap-2">
                   Start Investing 
-                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
               </Button>
             </div>
 
-            {/* Student Card - Enhanced touch targets and responsive spacing */}
-            <div className="backdrop-blur-sm bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl 
-                          hover:shadow-primary/20 transition-all duration-300 group touch-manipulation">
+            {/* Student Card */}
+            <div 
+              className="backdrop-blur-sm bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl 
+                        hover:shadow-primary/20 transition-all duration-300 group touch-manipulation"
+              role="region"
+              aria-label="Student information"
+            >
               <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4 
                             group-hover:scale-110 transition-transform duration-300">
-                <GraduationCap className="w-6 h-6" />
+                <GraduationCap className="w-6 h-6" aria-hidden="true" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">For Students</h2>
               <p className="text-secondary/80 mb-4 sm:mb-6 text-sm sm:text-base">
@@ -94,22 +111,27 @@ const Index = () => {
                 variant="secondary"
                 size="lg"
                 className="w-full bg-primary/90 hover:bg-primary text-background group rent-link
-                          py-3 sm:py-4 text-base sm:text-lg touch-manipulation"
+                          py-3 sm:py-4 text-base sm:text-lg touch-manipulation
+                          focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background focus:outline-none"
                 asChild
               >
                 <Link to="/rent" className="flex items-center justify-center gap-2">
                   Find Housing 
-                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
               </Button>
             </div>
 
-            {/* Short-term Stay Card - Enhanced touch targets and responsive spacing */}
-            <div className="backdrop-blur-sm bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl 
-                          hover:shadow-primary/20 transition-all duration-300 group touch-manipulation">
+            {/* Short-term Stay Card */}
+            <div 
+              className="backdrop-blur-sm bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl 
+                        hover:shadow-primary/20 transition-all duration-300 group touch-manipulation"
+              role="region"
+              aria-label="Short-term stay information"
+            >
               <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary mb-4 
                             group-hover:scale-110 transition-transform duration-300">
-                <Calendar className="w-6 h-6" />
+                <Calendar className="w-6 h-6" aria-hidden="true" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-primary">Short-term Stay</h2>
               <p className="text-secondary/80 mb-4 sm:mb-6 text-sm sm:text-base">
@@ -119,12 +141,13 @@ const Index = () => {
                 variant="secondary"
                 size="lg"
                 className="w-full bg-primary/90 hover:bg-primary text-background group stay-link
-                          py-3 sm:py-4 text-base sm:text-lg touch-manipulation"
+                          py-3 sm:py-4 text-base sm:text-lg touch-manipulation
+                          focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background focus:outline-none"
                 asChild
               >
                 <Link to="/stay" className="flex items-center justify-center gap-2">
                   Book Stay 
-                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
               </Button>
             </div>
@@ -132,8 +155,11 @@ const Index = () => {
         </div>
       </section>
 
-      {/* How It Works Section - Enhanced with responsive spacing and touch targets */}
-      <section className="relative py-12 sm:py-16 md:py-20 bg-gradient-to-b from-primary/20 via-primary-dark/10 to-background/90 px-4 sm:px-6 lg:px-8">
+      {/* How It Works Section */}
+      <section 
+        className="relative py-12 sm:py-16 md:py-20 bg-gradient-to-b from-primary/20 via-primary-dark/10 to-background/90 px-4 sm:px-6 lg:px-8"
+        aria-label="How it works"
+      >
         <div className="container mx-auto text-center relative z-10">
           <div className="backdrop-blur-sm bg-white/5 p-6 sm:p-8 rounded-2xl border border-white/10 shadow-2xl max-w-6xl mx-auto">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 text-secondary">How Jungle Rent Works</h2>
@@ -141,18 +167,33 @@ const Index = () => {
               We connect investors, students, and short-term stayers to create a sustainable student housing ecosystem.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 text-left">
-              <div className="p-4 sm:p-6 backdrop-blur-sm bg-white/5 rounded-lg border border-white/10 
-                            transition-all duration-300 hover:bg-white/10 touch-manipulation">
+              <div 
+                className="p-4 sm:p-6 backdrop-blur-sm bg-white/5 rounded-lg border border-white/10 
+                          transition-all duration-300 hover:bg-white/10 touch-manipulation
+                          focus-within:ring-2 focus-within:ring-primary/50"
+                role="article"
+                aria-label="Information for investors"
+              >
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary">For Investors</h3>
                 <p className="text-secondary/80 text-sm sm:text-base">Invest in verified student properties and earn returns while supporting education.</p>
               </div>
-              <div className="p-4 sm:p-6 backdrop-blur-sm bg-white/5 rounded-lg border border-white/10 
-                            transition-all duration-300 hover:bg-white/10 touch-manipulation">
+              <div 
+                className="p-4 sm:p-6 backdrop-blur-sm bg-white/5 rounded-lg border border-white/10 
+                          transition-all duration-300 hover:bg-white/10 touch-manipulation
+                          focus-within:ring-2 focus-within:ring-primary/50"
+                role="article"
+                aria-label="Information for students"
+              >
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary">For Students</h3>
                 <p className="text-secondary/80 text-sm sm:text-base">Find affordable long-term housing and connect with compatible roommates.</p>
               </div>
-              <div className="p-4 sm:p-6 backdrop-blur-sm bg-white/5 rounded-lg border border-white/10 
-                            transition-all duration-300 hover:bg-white/10 touch-manipulation">
+              <div 
+                className="p-4 sm:p-6 backdrop-blur-sm bg-white/5 rounded-lg border border-white/10 
+                          transition-all duration-300 hover:bg-white/10 touch-manipulation
+                          focus-within:ring-2 focus-within:ring-primary/50"
+                role="article"
+                aria-label="Information for short stays"
+              >
                 <h3 className="text-lg sm:text-xl font-semibold mb-2 text-primary">For Short Stays</h3>
                 <p className="text-secondary/80 text-sm sm:text-base">Book temporary accommodation for exams, internships, or short courses.</p>
               </div>
