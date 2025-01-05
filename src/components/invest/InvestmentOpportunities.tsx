@@ -6,13 +6,15 @@ import { toast } from "sonner";
 import { Property } from './types';
 import PropertyCard from './PropertyCard';
 import InvestmentDialog from './InvestmentDialog';
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const InvestmentOpportunities = () => {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [investmentAmount, setInvestmentAmount] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const queryClient = useQueryClient();
 
-  const { data: properties, isLoading } = useQuery({
+  const { data: properties, isLoading, error: queryError } = useQuery({
     queryKey: ['investment-properties'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -22,8 +24,8 @@ const InvestmentOpportunities = () => {
         .limit(6);
 
       if (error) {
-        toast.error("Failed to load investment opportunities");
-        throw error;
+        console.error('Error fetching properties:', error);
+        throw new Error('Failed to load investment opportunities');
       }
 
       if (!data || data.length === 0) {
@@ -122,21 +124,27 @@ const InvestmentOpportunities = () => {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Investment error:', error);
+        throw new Error(error.message);
+      }
       return data;
     },
     onSuccess: () => {
       toast.success("Investment submitted successfully!");
       setSelectedProperty(null);
       setInvestmentAmount('');
+      setError('');
       queryClient.invalidateQueries({ queryKey: ['investment-properties'] });
     },
-    onError: (error) => {
-      toast.error(error.message);
+    onError: (error: Error) => {
+      setError(error.message);
+      toast.error("Investment failed. Please try again.");
     }
   });
 
   const handleInvest = (property: Property) => {
+    setError('');
     setSelectedProperty(property);
   };
 
@@ -144,8 +152,8 @@ const InvestmentOpportunities = () => {
     if (!selectedProperty || !investmentAmount) return;
 
     const amount = parseFloat(investmentAmount);
-    if (isNaN(amount) || amount <= 0) {
-      toast.error("Please enter a valid investment amount");
+    if (isNaN(amount) || amount < 100) {
+      setError("Please enter a valid investment amount (minimum $100)");
       return;
     }
 
@@ -159,44 +167,50 @@ const InvestmentOpportunities = () => {
     toast.info("Detailed property information coming in Phase 2");
   };
 
-  if (isLoading) {
+  if (queryError) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 p-4 md:p-0 mb-20">
-        {[1, 2, 3].map((i) => (
-          <PropertyCard
-            key={i}
-            property={{
-              id: i.toString(),
-              name: '',
-              location: '',
-              description: null,
-              price_per_night: 0,
-              amenities: null,
-              images: null,
-              rating: null,
-              reviews_count: null
-            }}
-            onInvest={() => {}}
-            onInfo={() => {}}
-            className="glass-card backdrop-blur-md bg-black/40 border-white/10"
-          />
-        ))}
-      </div>
+      <Alert variant="destructive" className="mb-8">
+        <AlertDescription>
+          Failed to load investment opportunities. Please try again later.
+        </AlertDescription>
+      </Alert>
     );
   }
 
   return (
     <div className="space-y-6 p-4 md:p-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-        {properties?.map((property) => (
-          <PropertyCard
-            key={property.id}
-            property={property}
-            onInvest={handleInvest}
-            onInfo={handleInfo}
-            className="glass-card backdrop-blur-md bg-black/40 border-white/10"
-          />
-        ))}
+        {isLoading ? (
+          [1, 2, 3].map((i) => (
+            <PropertyCard
+              key={i}
+              property={{
+                id: i.toString(),
+                name: '',
+                location: '',
+                description: null,
+                price_per_night: 0,
+                amenities: null,
+                images: null,
+                rating: null,
+                reviews_count: null
+              }}
+              onInvest={() => {}}
+              onInfo={() => {}}
+              className="glass-card backdrop-blur-md bg-black/40 border-white/10 animate-pulse"
+            />
+          ))
+        ) : (
+          properties?.map((property) => (
+            <PropertyCard
+              key={property.id}
+              property={property}
+              onInvest={handleInvest}
+              onInfo={handleInfo}
+              className="glass-card backdrop-blur-md bg-black/40 border-white/10"
+            />
+          ))
+        )}
       </div>
 
       <Dialog 
@@ -210,6 +224,7 @@ const InvestmentOpportunities = () => {
             setInvestmentAmount={setInvestmentAmount}
             onSubmit={handleSubmitInvestment}
             isSubmitting={createInvestment.isPending}
+            error={error}
           />
         )}
       </Dialog>

@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Property } from './types';
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface InvestmentDialogProps {
   property: Property;
@@ -18,6 +19,7 @@ interface InvestmentDialogProps {
   setInvestmentAmount: (amount: string) => void;
   onSubmit: () => void;
   isSubmitting: boolean;
+  error?: string;
 }
 
 const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
@@ -25,7 +27,8 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
   investmentAmount,
   setInvestmentAmount,
   onSubmit,
-  isSubmitting
+  isSubmitting,
+  error
 }) => {
   return (
     <DialogContent className="sm:max-w-[425px] bg-background">
@@ -36,6 +39,13 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
           Minimum investment is $100.
         </DialogDescription>
       </DialogHeader>
+
+      {error && (
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+
       <div className="grid gap-4 py-4">
         <div className="space-y-2">
           <Label htmlFor="amount">Investment Amount ($)</Label>
@@ -47,21 +57,24 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
             value={investmentAmount}
             onChange={(e) => setInvestmentAmount(e.target.value)}
             placeholder="Enter amount..."
+            disabled={isSubmitting}
           />
           <p className="text-sm text-muted-foreground">
             You will receive {investmentAmount ? Math.floor(parseFloat(investmentAmount) / 100) : 0} tokens
           </p>
         </div>
       </div>
+
       <DialogFooter>
         <Button
           onClick={onSubmit}
           disabled={isSubmitting}
+          className="relative"
         >
           {isSubmitting && (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           )}
-          Confirm Investment
+          {isSubmitting ? 'Processing...' : 'Confirm Investment'}
         </Button>
       </DialogFooter>
     </DialogContent>
