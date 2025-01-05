@@ -25,7 +25,7 @@ const Index = () => {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wider mb-4 sm:mb-6 animate-fade-in 
                          bg-gradient-to-r from-primary-light via-primary to-primary-light bg-clip-text text-transparent
                          drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)] leading-relaxed tracking-wide">
-              Welcome to <span className="tracking-widest">Jungle</span> <span className="tracking-widest">Rent</span>
+              Welcome to <span className="tracking-widest inline-block pb-1">Jungle</span> <span className="tracking-widest">Rent</span>
             </h1>
             
             <p className="text-base sm:text-lg md:text-2xl mb-6 sm:mb-8 animate-fade-in text-secondary/90">
