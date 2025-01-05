@@ -8,23 +8,26 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <OnboardingTour />
       
-      {/* Hero Section - Enhanced with better responsive design */}
+      {/* Hero Section */}
       <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
-        {/* Background gradients - Adjusted for better mobile display */}
+        {/* Background gradients */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-primary/20 to-background animate-gradient-slow" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(46,246,46,0.15)_0%,transparent_60%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,rgba(46,246,46,0.1)_0%,transparent_50%)]" />
         
-        {/* Animated background elements - Responsive sizing */}
+        {/* Animated background elements */}
         <div className="absolute top-1/4 left-1/4 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-primary/10 rounded-full blur-3xl animate-float-slow" />
         <div className="absolute bottom-1/4 right-1/4 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-primary/5 rounded-full blur-3xl animate-float-slower" />
         
-        {/* Main content with enhanced responsive typography and spacing */}
+        {/* Main content */}
         <div className="container mx-auto text-center relative z-10">
           <div className="backdrop-blur-sm bg-white/5 p-4 sm:p-6 md:p-8 rounded-2xl border border-white/10 shadow-2xl transition-all duration-300 hover:shadow-primary/20 max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 sm:mb-6 animate-fade-in bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4 sm:mb-6 animate-fade-in 
+                         bg-gradient-to-r from-primary-light via-primary to-primary-light bg-clip-text text-transparent
+                         drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]">
               Welcome to Jungle Rent
             </h1>
+            
             <p className="text-base sm:text-lg md:text-2xl mb-6 sm:mb-8 animate-fade-in text-secondary/90">
               Rent that pays
             </p>
