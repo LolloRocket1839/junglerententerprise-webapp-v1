@@ -75,7 +75,8 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   };
 
   const calculateUnits = (amount: number) => {
-    return (amount / 100).toFixed(2);
+    const units = amount / 100;
+    return Number.isInteger(units) ? units.toString() : units.toFixed(2);
   };
 
   const calculateExpectedReturn = (amount: number) => {
