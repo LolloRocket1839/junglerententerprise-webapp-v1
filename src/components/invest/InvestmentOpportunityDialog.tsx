@@ -31,7 +31,7 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl w-full bg-gradient-to-br from-black/95 to-green-950/95 backdrop-blur-xl border border-white/10 p-0 gap-0">
+      <DialogContent className="max-w-6xl w-full bg-gradient-to-br from-black/95 to-green-950/95 backdrop-blur-xl border border-white/10 p-0 gap-0 max-h-[90vh] overflow-y-auto">
         <InvestmentHeader 
           propertyName={property.name}
           location={property.location}
