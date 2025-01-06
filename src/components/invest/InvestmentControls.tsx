@@ -75,7 +75,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   };
 
   const calculateUnits = (amount: number) => {
-    return (amount / 100).toFixed(2); // 100€ per unit
+    return (amount / 100).toFixed(2);
   };
 
   const calculateExpectedReturn = (amount: number) => {
@@ -91,10 +91,12 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
     onInvest();
   };
 
+  const progressPercentage = (amount / maxInvestment) * 100;
+
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <label className="text-base font-medium text-gray-200 tracking-wide block">
+        <label className="text-lg font-medium text-gray-200 tracking-wide block">
           Importo Investimento (€)
         </label>
         
@@ -112,30 +114,42 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
             </Alert>
           )}
           
-          <Slider
-            value={[amount]}
-            onValueChange={handleSliderChange}
-            max={maxInvestment}
-            min={minInvestment}
-            step={100}
-            className="flex-1"
-          />
+          <div className="relative pt-6 pb-2">
+            <Slider
+              value={[amount]}
+              onValueChange={handleSliderChange}
+              max={maxInvestment}
+              min={minInvestment}
+              step={100}
+              className="relative z-10"
+            />
+            <div 
+              className="absolute inset-y-0 left-0 bg-green-500/20 rounded-full transition-all duration-300 ease-out"
+              style={{ 
+                width: `${progressPercentage}%`,
+                height: '2px',
+                top: '24px'
+              }}
+            />
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-black/20 rounded-lg">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-black/20 rounded-lg backdrop-blur-sm">
             <div>
               <span className="block text-sm font-medium text-gray-400 mb-1">Unità acquistate:</span>
               <span className="text-xl font-semibold text-white tracking-tight">{calculateUnits(amount)} unità</span>
             </div>
             <div>
               <span className="block text-sm font-medium text-gray-400 mb-1">Rendimento annuo stimato:</span>
-              <span className="text-xl font-semibold text-green-400 tracking-tight">€{calculateExpectedReturn(amount)}</span>
+              <span className="text-xl font-semibold text-green-500 tracking-tight">€{calculateExpectedReturn(amount)}</span>
             </div>
           </div>
 
           <Button 
             onClick={handleInvestClick}
             disabled={!!error || amount < minInvestment}
-            className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary transition-all duration-300 hover:scale-[1.02]"
+            className="w-full py-6 text-lg font-semibold bg-green-500 hover:bg-green-600 
+                     transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 
+                     disabled:hover:scale-100 shadow-lg shadow-green-500/20"
           >
             Investi Ora
           </Button>

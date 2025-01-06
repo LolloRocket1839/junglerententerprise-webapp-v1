@@ -23,18 +23,20 @@ const InvestmentInput: React.FC<InvestmentInputProps> = ({
           type="number"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="pr-20"
+          className="pr-20 rounded-lg shadow-sm border-gray-200 
+                     focus:border-green-500 focus:ring-2 focus:ring-green-500/20 
+                     transition-all duration-200"
           placeholder="Min: €100"
           disabled={disabled}
         />
         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-          <span className="text-sm text-gray-400">EUR</span>
+          <span className="text-sm text-gray-400 font-medium">EUR</span>
         </div>
       </div>
       <Button 
         onClick={onConfirm}
-        className="whitespace-nowrap"
-        variant="secondary"
+        className="whitespace-nowrap bg-green-500 hover:bg-green-600 
+                   transition-colors duration-200 text-white font-medium"
         disabled={disabled}
       >
         <Check className="w-4 h-4 mr-2" />
