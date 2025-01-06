@@ -50,9 +50,9 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
   onInvest
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [investmentAmount, setInvestmentAmount] = useState(1000);
-  const minInvestment = 100;
-  const maxInvestment = 10000;
+  const [investmentAmount, setInvestmentAmount] = useState(5000);
+  const minInvestment = 1000; // Starting with a lower minimum for accessibility
+  const maxInvestment = property.investment_goal || 140000; // Using property's goal or max value
 
   const toggleImage = () => {
     setCurrentImageIndex((prev) => (prev === 0 ? 1 : 0));
@@ -67,7 +67,8 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
   };
 
   const calculateUnits = (amount: number) => {
-    return Math.floor(amount / 100); // Example: 1 unit per 100€
+    // 1 unit represents 0.1% of the property value
+    return Math.floor((amount / property.investment_goal) * 1000);
   };
 
   const getEstimatedPaymentDate = () => {

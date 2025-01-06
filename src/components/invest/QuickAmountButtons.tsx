@@ -4,22 +4,33 @@ import { Button } from "@/components/ui/button";
 interface QuickAmountButtonsProps {
   onSelect: (amount: number) => void;
   selectedAmount: number;
+  maxAmount: number;
 }
 
-const QuickAmountButtons: React.FC<QuickAmountButtonsProps> = ({ onSelect, selectedAmount }) => {
-  const amounts = [100, 500, 1000, 5000];
+const QuickAmountButtons: React.FC<QuickAmountButtonsProps> = ({
+  onSelect,
+  selectedAmount,
+  maxAmount
+}) => {
+  // Calculate suggested amounts based on property value
+  const suggestedAmounts = [
+    5000,
+    10000,
+    Math.min(25000, maxAmount),
+    Math.min(50000, maxAmount)
+  ].filter(amount => amount <= maxAmount);
 
   return (
     <div className="flex flex-wrap gap-2 mt-2">
-      {amounts.map((amount) => (
+      {suggestedAmounts.map((amount) => (
         <Button
           key={amount}
           variant={selectedAmount === amount ? "default" : "outline"}
           size="sm"
           onClick={() => onSelect(amount)}
-          className="bg-white/5 hover:bg-white/10 border-white/10"
+          className="flex-1 min-w-[80px]"
         >
-          €{amount}
+          €{amount.toLocaleString()}
         </Button>
       ))}
     </div>

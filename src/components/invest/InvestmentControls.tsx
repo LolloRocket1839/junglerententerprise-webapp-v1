@@ -27,16 +27,17 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
             onValueChange={(value) => onAmountChange(value[0])}
             max={maxInvestment}
             min={minInvestment}
-            step={100}
+            step={1000}
             className="flex-1"
           />
           <span className="text-white font-mono w-24 text-right">
-            €{amount}
+            €{amount.toLocaleString()}
           </span>
         </div>
         <QuickAmountButtons
           onSelect={onAmountChange}
           selectedAmount={amount}
+          maxAmount={maxInvestment}
         />
       </div>
     </div>
