@@ -6,8 +6,10 @@ import DashboardSidebar from './DashboardSidebar';
 import DashboardContent from './DashboardContent';
 import { useNavigate } from 'react-router-dom';
 
+type View = "overview" | "schedule" | "messages" | "newsfeed" | "swap" | "roommate" | "marketplace" | "hub" | "settings";
+
 const DashboardLayout = () => {
-  const [activeView, setActiveView] = useState("overview");
+  const [activeView, setActiveView] = useState<View>("overview");
   const navigate = useNavigate();
   const { toast } = useToast();
 

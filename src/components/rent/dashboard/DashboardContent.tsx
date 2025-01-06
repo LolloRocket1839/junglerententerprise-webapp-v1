@@ -8,6 +8,7 @@ import ProcessSteps from '../ProcessSteps';
 import StudentSchedule from '../StudentSchedule';
 import StudentSwap from '../StudentSwap';
 import RoommateFinder from '../roommate/RoommateFinder';
+import MarketplaceGrid from '../../marketplace/MarketplaceGrid';
 
 interface DashboardContentProps {
   isEmailVerified: boolean;
@@ -102,6 +103,10 @@ const DashboardContent = ({ isEmailVerified, activeView }: DashboardContentProps
         return <RoommateFinder />;
       case 'swap':
         return <StudentSwap />;
+      case 'marketplace':
+        return <MarketplaceGrid />;
+      case 'schedule':
+        return <StudentSchedule />;
       case 'overview':
       default:
         return (
