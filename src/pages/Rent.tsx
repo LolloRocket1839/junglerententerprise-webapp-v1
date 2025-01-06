@@ -4,13 +4,14 @@ import StudentDashboard from '@/components/rent/StudentDashboard';
 import { useToast } from "@/components/ui/use-toast";
 import SearchSection from '@/components/rent/SearchSection';
 import ProcessSteps from '@/components/rent/ProcessSteps';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
 const Rent = () => {
   const { toast } = useToast();
   const location = useLocation();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('search');
 
   const { data: session } = useQuery({
@@ -22,10 +23,12 @@ const Rent = () => {
   });
 
   useEffect(() => {
-    if (location.state?.activeTab) {
-      setActiveTab(location.state.activeTab);
+    const searchParams = new URLSearchParams(location.search);
+    const tab = searchParams.get('tab');
+    if (tab) {
+      setActiveTab(tab);
     }
-  }, [location.state]);
+  }, [location.search]);
 
   useEffect(() => {
     const {
@@ -33,11 +36,12 @@ const Rent = () => {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!session) {
         setActiveTab('search');
+        navigate('/rent?tab=search');
       }
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const handleTabChange = (value: string) => {
     if (value === 'profile' && !session) {
@@ -49,6 +53,7 @@ const Rent = () => {
       return;
     }
     setActiveTab(value);
+    navigate(`/rent?tab=${value}`);
   };
 
   return (
