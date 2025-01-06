@@ -41,7 +41,7 @@ const InvestmentSummary: React.FC<InvestmentSummaryProps> = ({
       <SummaryItem
         icon={Building2}
         label="Unità acquistate"
-        value={`${units} unità`}
+        value={`${units.toFixed(2)} unità`}
       />
       <SummaryItem
         icon={Calendar}
