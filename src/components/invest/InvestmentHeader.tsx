@@ -24,23 +24,25 @@ const InvestmentHeader: React.FC<InvestmentHeaderProps> = ({
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/invest">Dashboard Investimenti</BreadcrumbLink>
+              <BreadcrumbLink href="/invest" className="text-sm font-medium text-white/70 hover:text-white">
+                Dashboard Investimenti
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
               <ChevronRight className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbPage>{propertyName}</BreadcrumbPage>
+              <BreadcrumbPage className="text-sm font-medium">{propertyName}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </div>
 
       <div className="p-6 border-b border-white/10">
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-2">
+        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-2 tracking-tight">
           {propertyName}
         </h2>
-        <p className="text-lg text-gray-300 text-center">
+        <p className="text-lg font-light text-gray-300 text-center tracking-wide">
           {location}
         </p>
       </div>

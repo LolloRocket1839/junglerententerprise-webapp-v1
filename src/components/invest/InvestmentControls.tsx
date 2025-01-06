@@ -94,7 +94,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <label className="text-sm text-gray-300 mb-2 block">
+        <label className="text-base font-medium text-gray-200 tracking-wide block">
           Importo Investimento (€)
         </label>
         
@@ -108,7 +108,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription>{error}</AlertDescription>
+              <AlertDescription className="text-sm font-medium">{error}</AlertDescription>
             </Alert>
           )}
           
@@ -123,19 +123,19 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-black/20 rounded-lg">
             <div>
-              <span className="block text-sm text-gray-400">Unità acquistate:</span>
-              <span className="text-lg font-medium text-white">{calculateUnits(amount)} unità</span>
+              <span className="block text-sm font-medium text-gray-400 mb-1">Unità acquistate:</span>
+              <span className="text-xl font-semibold text-white tracking-tight">{calculateUnits(amount)} unità</span>
             </div>
             <div>
-              <span className="block text-sm text-gray-400">Rendimento annuo stimato:</span>
-              <span className="text-lg font-medium text-green-400">€{calculateExpectedReturn(amount)}</span>
+              <span className="block text-sm font-medium text-gray-400 mb-1">Rendimento annuo stimato:</span>
+              <span className="text-xl font-semibold text-green-400 tracking-tight">€{calculateExpectedReturn(amount)}</span>
             </div>
           </div>
 
           <Button 
             onClick={handleInvestClick}
             disabled={!!error || amount < minInvestment}
-            className="w-full py-6 text-lg bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary transition-all duration-300 hover:scale-[1.02]"
+            className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary transition-all duration-300 hover:scale-[1.02]"
           >
             Investi Ora
           </Button>
