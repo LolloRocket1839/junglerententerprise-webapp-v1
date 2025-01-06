@@ -21,6 +21,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import InvestmentSuccessNotification from './InvestmentSuccessNotification';
 
 interface InvestmentDialogProps {
   property: Property;
@@ -41,6 +42,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
 }) => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
   
   const estimatedDate = new Date();
@@ -84,6 +86,13 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
         throw new Error("No checkout URL received");
       }
 
+      // Send confirmation email
+      await supabase.functions.invoke('send-investment-confirmation', {
+        body: { investmentId: response.data.investmentId }
+      });
+
+      setIsSuccess(true);
+      
       // Redirect to Stripe Checkout
       window.location.href = response.data.url;
     } catch (error) {
@@ -97,6 +106,15 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
       setIsProcessing(false);
     }
   };
+
+  if (isSuccess) {
+    return (
+      <InvestmentSuccessNotification
+        amount={investmentAmount}
+        propertyName={property.name}
+      />
+    );
+  }
 
   return (
     <DialogContent className="sm:max-w-[425px] bg-background">
