@@ -33,21 +33,22 @@ serve(async (req) => {
       apiVersion: '2023-10-16',
     });
 
-    // Create investment record
+    // Create investment record with proper UUID handling
     const { data: investment, error: investmentError } = await supabaseClient
       .from('investments')
       .insert({
-        profile_id: user.id,
-        hub_id,
-        amount,
-        tokens: Math.floor(amount / 1000), // 1 token per €1000
+        profile_id: user.id, // This is already a UUID from auth
+        hub_id: hub_id, // This should be a UUID from the frontend
+        amount: parseFloat(amount),
+        tokens: Math.floor(parseFloat(amount) / 1000), // 1 token per €1000
         status: 'pending',
         payment_status: 'pending'
       })
-      .select()
+      .select('*')
       .single();
 
     if (investmentError) {
+      console.error('Investment creation error:', investmentError);
       throw new Error('Failed to create investment');
     }
 
@@ -62,7 +63,7 @@ serve(async (req) => {
               name: 'Investment in Property',
               description: `Investment of €${amount}`,
             },
-            unit_amount: amount * 100, // Convert to cents
+            unit_amount: Math.round(parseFloat(amount) * 100), // Convert to cents and ensure it's an integer
           },
           quantity: 1,
         },
