@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Loader2 } from 'lucide-react';
+import { Loader2, FileText, Info, ShieldCheck } from 'lucide-react';
 import {
   DialogContent,
   DialogDescription,
@@ -12,6 +12,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Property } from './types';
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 interface InvestmentDialogProps {
   property: Property;
@@ -30,13 +37,28 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
   isSubmitting,
   error
 }) => {
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const estimatedDate = new Date();
+  estimatedDate.setMonth(estimatedDate.getMonth() + 3);
+  const formattedDate = estimatedDate.toLocaleDateString('it-IT', { 
+    month: 'long', 
+    year: 'numeric' 
+  });
+
+  const handleSubmit = () => {
+    if (!termsAccepted) {
+      return;
+    }
+    onSubmit();
+  };
+
   return (
     <DialogContent className="sm:max-w-[425px] bg-background">
       <DialogHeader>
-        <DialogTitle>Invest in {property.name}</DialogTitle>
+        <DialogTitle>Investi in {property.name}</DialogTitle>
         <DialogDescription>
-          Enter the amount you'd like to invest in this property.
-          Minimum investment is $100.
+          Inserisci l'importo che desideri investire in questa proprietà.
+          Investimento minimo €1.000.
         </DialogDescription>
       </DialogHeader>
 
@@ -48,33 +70,95 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
 
       <div className="grid gap-4 py-4">
         <div className="space-y-2">
-          <Label htmlFor="amount">Investment Amount ($)</Label>
+          <Label htmlFor="amount">Importo Investimento (€)</Label>
           <Input
             id="amount"
             type="number"
-            min="100"
-            step="100"
+            min="1000"
+            step="1000"
             value={investmentAmount}
             onChange={(e) => setInvestmentAmount(e.target.value)}
-            placeholder="Enter amount..."
+            placeholder="Inserisci importo..."
             disabled={isSubmitting}
           />
           <p className="text-sm text-muted-foreground">
-            You will receive {investmentAmount ? Math.floor(parseFloat(investmentAmount) / 100) : 0} tokens
+            Riceverai {investmentAmount ? Math.floor(parseFloat(investmentAmount) / 1000) : 0} token
           </p>
+        </div>
+
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="terms">
+            <AccordionTrigger className="text-sm">
+              <FileText className="w-4 h-4 mr-2" />
+              Termini e Condizioni
+            </AccordionTrigger>
+            <AccordionContent className="text-sm text-muted-foreground">
+              <p className="mb-2">
+                Investendo in questa proprietà, accetti i nostri termini e condizioni completi. Punti chiave:
+              </p>
+              <ul className="list-disc pl-4 space-y-1">
+                <li>Periodo minimo di investimento: 24 mesi</li>
+                <li>Commissioni di gestione: 2% annuo</li>
+                <li>Distribuzione dei rendimenti: trimestrale</li>
+              </ul>
+              <a 
+                href="#" 
+                className="text-primary hover:underline mt-2 inline-block"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Leggi i termini completi
+              </a>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <div className="space-y-4 bg-muted/50 p-4 rounded-lg">
+          <h4 className="font-medium flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-primary" />
+            Riepilogo Investimento
+          </h4>
+          <ul className="space-y-2 text-sm">
+            <li className="flex justify-between">
+              <span className="text-muted-foreground">Importo:</span>
+              <span className="font-medium">€{parseFloat(investmentAmount || "0").toLocaleString()}</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="text-muted-foreground">ROI Previsto:</span>
+              <span className="font-medium text-primary">{property.rating}%</span>
+            </li>
+            <li className="flex justify-between">
+              <span className="text-muted-foreground">Prima Distribuzione:</span>
+              <span className="font-medium">{formattedDate}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox 
+            id="terms" 
+            checked={termsAccepted}
+            onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+          />
+          <label
+            htmlFor="terms"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            Accetto i termini e le condizioni
+          </label>
         </div>
       </div>
 
       <DialogFooter>
         <Button
-          onClick={onSubmit}
-          disabled={isSubmitting}
-          className="relative"
+          onClick={handleSubmit}
+          disabled={isSubmitting || !termsAccepted}
+          className="relative w-full"
         >
           {isSubmitting && (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           )}
-          {isSubmitting ? 'Processing...' : 'Confirm Investment'}
+          {isSubmitting ? 'Elaborazione...' : 'Conferma Investimento'}
         </Button>
       </DialogFooter>
     </DialogContent>
