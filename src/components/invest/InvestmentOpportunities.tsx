@@ -32,69 +32,69 @@ const InvestmentOpportunities = () => {
         return [
           {
             id: '1',
-            name: 'Luxury Villa Bali',
-            location: 'Ubud, Bali, Indonesia',
-            description: 'Stunning villa with private pool and jungle views',
-            price_per_night: 250,
-            amenities: ['Private Pool', 'Spa', 'Gym', 'Garden'],
-            images: ['https://images.unsplash.com/photo-1518005020951-eccb494ad742'],
-            rating: 8.5,
-            reviews_count: 24
+            name: 'Palazzo Madama Suite',
+            location: 'Via Roma 18, Torino',
+            description: 'Elegante appartamento storico nel cuore di Torino',
+            price_per_night: 180,
+            amenities: ['Terrazza', 'Vista Palazzo', 'Ascensore', 'Aria Condizionata'],
+            images: ['https://images.unsplash.com/photo-1577975882846-431adc8c2009'],
+            rating: 8.9,
+            reviews_count: 28
           },
           {
             id: '2',
-            name: 'Oceanfront Paradise',
-            location: 'Maafushi, Maldives',
-            description: 'Beachfront property with panoramic ocean views',
-            price_per_night: 350,
-            amenities: ['Private Beach', 'Pool', 'Butler', 'Water Sports'],
-            images: ['https://images.unsplash.com/photo-1499793983690-e29da59ef1c2'],
-            rating: 9.0,
-            reviews_count: 32
+            name: 'Residenza Po',
+            location: 'Corso Vittorio Emanuele II 76, Torino',
+            description: 'Lussuoso appartamento con vista sul fiume Po',
+            price_per_night: 220,
+            amenities: ['Vista Fiume', 'Garage', 'Palestra', 'Concierge'],
+            images: ['https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd'],
+            rating: 9.2,
+            reviews_count: 35
           },
           {
             id: '3',
-            name: 'Alpine Lodge',
-            location: 'Zermatt, Swiss Alps',
-            description: 'Luxury mountain retreat with Matterhorn views',
-            price_per_night: 200,
-            amenities: ['Fireplace', 'Sauna', 'Ski Storage', 'Mountain Views'],
-            images: ['https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1'],
-            rating: 8.8,
-            reviews_count: 18
+            name: 'Villa della Mole',
+            location: 'Via Montebello 20, Torino',
+            description: 'Esclusiva villa con vista sulla Mole Antonelliana',
+            price_per_night: 300,
+            amenities: ['Giardino Privato', 'Vista Mole', 'Piscina', 'Sauna'],
+            images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9'],
+            rating: 9.5,
+            reviews_count: 42
           },
           {
             id: '4',
-            name: 'Urban Penthouse',
-            location: 'Manhattan, New York',
-            description: 'Luxurious penthouse with city skyline views',
-            price_per_night: 500,
-            amenities: ['Terrace', 'Gym', 'Concierge', 'City Views'],
-            images: ['https://images.unsplash.com/photo-1496307653780-42ee777d4833'],
-            rating: 9.2,
-            reviews_count: 45
+            name: 'Attico San Carlo',
+            location: 'Piazza San Carlo 197, Torino',
+            description: 'Prestigioso attico nel salotto di Torino',
+            price_per_night: 250,
+            amenities: ['Terrazza Panoramica', 'Spa', 'Servizio in Camera', 'Wine Cellar'],
+            images: ['https://images.unsplash.com/photo-1600607687939-ce8a6c25118c'],
+            rating: 9.0,
+            reviews_count: 31
           },
           {
             id: '5',
-            name: 'Tuscan Villa',
-            location: 'Florence, Italy',
-            description: 'Historic villa with vineyard and olive grove',
-            price_per_night: 300,
-            amenities: ['Wine Cellar', 'Pool', 'Garden', 'Vineyard'],
-            images: ['https://images.unsplash.com/photo-1533387520709-752d83de3630'],
-            rating: 8.9,
-            reviews_count: 29
+            name: 'Residenza Quadrilatero',
+            location: 'Via Maria Vittoria 35, Torino',
+            description: 'Elegante appartamento nel quartiere romano',
+            price_per_night: 190,
+            amenities: ['Design Storico', 'Biblioteca', 'Cortile Interno', 'Biciclette'],
+            images: ['https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b'],
+            rating: 8.7,
+            reviews_count: 24
           },
           {
             id: '6',
-            name: 'Santorini Haven',
-            location: 'Oia, Santorini',
-            description: 'Traditional cave house with caldera views',
-            price_per_night: 400,
-            amenities: ['Private Pool', 'Terrace', 'Butler', 'Sunset Views'],
-            images: ['https://images.unsplash.com/photo-1469796466635-455ede028aca'],
-            rating: 9.5,
-            reviews_count: 52
+            name: 'Suite Valentino',
+            location: 'Corso Vittorio Emanuele II 127, Torino',
+            description: 'Lussuoso appartamento vicino al Parco del Valentino',
+            price_per_night: 210,
+            amenities: ['Vista Parco', 'Balcone', 'Smart Home', 'Colazione Inclusa'],
+            images: ['https://images.unsplash.com/photo-1600585154526-990dced4db0d'],
+            rating: 9.3,
+            reviews_count: 39
           }
         ] as Property[];
       }
