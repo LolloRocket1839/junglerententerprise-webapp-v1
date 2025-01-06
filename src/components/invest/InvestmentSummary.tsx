@@ -26,6 +26,9 @@ const InvestmentSummary: React.FC<InvestmentSummaryProps> = ({
   units,
   estimatedDate,
 }) => {
+  // Format units to remove decimal places if it's a whole number
+  const formattedUnits = Number.isInteger(units) ? units.toString() : units.toFixed(2);
+
   return (
     <div className="grid grid-cols-1 gap-4">
       <SummaryItem
@@ -41,7 +44,7 @@ const InvestmentSummary: React.FC<InvestmentSummaryProps> = ({
       <SummaryItem
         icon={Building2}
         label="Unità acquistate"
-        value={`${units.toFixed(2)} unità`}
+        value={`${formattedUnits} unità`}
       />
       <SummaryItem
         icon={Calendar}
