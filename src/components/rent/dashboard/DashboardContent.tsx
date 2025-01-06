@@ -17,16 +17,25 @@ interface DashboardContentProps {
 const DashboardContent = ({ isEmailVerified, activeView }: DashboardContentProps) => {
   const { toast } = useToast();
 
-  const { data: profile, isLoading } = useQuery({
-    queryKey: ['user-profile'],
+  // First check if we have a session
+  const { data: session } = useQuery({
+    queryKey: ['auth-session'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('No user found');
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (error) throw error;
+      return session;
+    },
+  });
 
+  // Only fetch profile if we have a session
+  const { data: profile, isLoading } = useQuery({
+    queryKey: ['user-profile', session?.user?.id],
+    enabled: !!session?.user?.id, // Only run query if we have a user ID
+    queryFn: async () => {
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
-        .eq('id', user.id)
+        .eq('id', session.user.id)
         .single();
 
       if (error) {
@@ -42,6 +51,8 @@ const DashboardContent = ({ isEmailVerified, activeView }: DashboardContentProps
   });
 
   useEffect(() => {
+    if (!session?.user?.id) return; // Don't set up listener if no session
+
     const channel = supabase
       .channel('profile-changes')
       .on(
@@ -60,7 +71,7 @@ const DashboardContent = ({ isEmailVerified, activeView }: DashboardContentProps
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [session?.user?.id]);
 
   if (!isEmailVerified) {
     return (

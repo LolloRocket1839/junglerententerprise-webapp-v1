@@ -6,10 +6,8 @@ import DashboardSidebar from './DashboardSidebar';
 import DashboardContent from './DashboardContent';
 import { useNavigate } from 'react-router-dom';
 
-type View = "overview" | "schedule" | "messages" | "newsfeed" | "swap" | "roommate" | "marketplace" | "hub" | "settings";
-
 const DashboardLayout = () => {
-  const [activeView, setActiveView] = useState<View>("overview");
+  const [activeView, setActiveView] = useState("overview");
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -18,16 +16,24 @@ const DashboardLayout = () => {
     queryFn: async () => {
       const { data: { session }, error } = await supabase.auth.getSession();
       if (error) {
-        toast({
-          title: "Authentication Error",
-          description: "Please sign in to access your dashboard.",
-          variant: "destructive"
-        });
-        throw error;
+        console.error('Session error:', error);
+        return null;
       }
       return session;
     },
   });
+
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        navigate('/rent?tab=search');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
 
   useEffect(() => {
     if (!isSessionLoading && !session) {
