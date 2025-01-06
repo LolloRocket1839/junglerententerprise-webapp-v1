@@ -86,6 +86,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
                 minInvestment={100}
                 maxInvestment={property.investment_goal}
                 roi={property.rating || 8}
+                onInvest={onInvest}
               />
 
               <InvestmentSummary
@@ -94,15 +95,6 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
                 units={calculateUnits(investmentAmount)}
                 estimatedDate={getEstimatedPaymentDate()}
               />
-
-              <Button 
-                onClick={onInvest}
-                disabled={investmentAmount < 100 || investmentAmount > property.investment_goal}
-                className="w-full py-6 text-lg bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary transition-all duration-300 hover:scale-[1.02] group"
-              >
-                Investi Ora
-                <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
-              </Button>
             </div>
           </TabsContent>
 
