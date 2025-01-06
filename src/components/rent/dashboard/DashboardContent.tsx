@@ -8,6 +8,9 @@ import RoommateFinder from '../roommate/RoommateFinder';
 import MarketplaceGrid from '../../marketplace/MarketplaceGrid';
 import { AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/components/ui/use-toast';
 
 type View = "overview" | "schedule" | "messages" | "newsfeed" | "swap" | "roommate" | "marketplace" | "hub" | "settings";
 
@@ -18,6 +21,24 @@ interface DashboardContentProps {
 const DashboardContent = ({ isEmailVerified }: DashboardContentProps) => {
   const [activeTab, setActiveTab] = useState<View>("overview");
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  // Verify user session
+  const { data: session } = useQuery({
+    queryKey: ['auth-session'],
+    queryFn: async () => {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      if (error) {
+        toast({
+          title: "Authentication Error",
+          description: "Please sign in to access all features.",
+          variant: "destructive"
+        });
+        throw error;
+      }
+      return session;
+    }
+  });
 
   if (!isEmailVerified) {
     return (
@@ -35,6 +56,27 @@ const DashboardContent = ({ isEmailVerified }: DashboardContentProps) => {
             className="bg-white/5 hover:bg-white/10"
           >
             Back to Authentication
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="lg:col-span-9">
+        <div className="glass-card p-8 text-center">
+          <AlertCircle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-white mb-2">Authentication Required</h3>
+          <p className="text-white/60 mb-6">
+            Please sign in to access the student dashboard features.
+          </p>
+          <Button 
+            variant="outline" 
+            onClick={() => navigate('/auth')}
+            className="bg-white/5 hover:bg-white/10"
+          >
+            Sign In
           </Button>
         </div>
       </div>

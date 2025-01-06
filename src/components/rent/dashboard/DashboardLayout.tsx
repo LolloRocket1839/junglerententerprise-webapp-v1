@@ -1,78 +1,33 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AlertCircle } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import StudentHeader from '../StudentHeader';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import DashboardSidebar from './DashboardSidebar';
 import DashboardContent from './DashboardContent';
 
+type View = "overview" | "schedule" | "messages" | "newsfeed" | "swap" | "roommate" | "marketplace" | "hub" | "settings";
+
 const DashboardLayout = () => {
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  const [isEmailVerified, setIsEmailVerified] = useState<boolean>(false);
+  const [activeView, setActiveView] = useState<View>("overview");
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      
-      if (error || !session) {
-        toast({
-          title: "Authentication required",
-          description: "Please sign in to access the dashboard.",
-          variant: "destructive"
-        });
-        navigate('/auth');
-        return;
-      }
+  const { data: session } = useQuery({
+    queryKey: ['auth-session'],
+    queryFn: async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      return session;
+    },
+  });
 
-      if (!session.user.email_confirmed_at) {
-        setIsEmailVerified(false);
-        toast({
-          title: "Email verification required",
-          description: "Please verify your email to access all features.",
-          variant: "destructive"
-        });
-      } else {
-        setIsEmailVerified(true);
-      }
-    };
-
-    checkAuth();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        navigate('/auth');
-      } else {
-        setIsEmailVerified(!!session.user.email_confirmed_at);
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [navigate, toast]);
+  const isEmailVerified = session?.user?.email_confirmed_at != null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#111111] to-[#222222]">
-      <StudentHeader />
-
-      <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
-        {!isEmailVerified && (
-          <Alert className="mb-6 border-yellow-500/50 bg-yellow-500/10">
-            <AlertCircle className="h-4 w-4 text-yellow-500" />
-            <AlertTitle className="text-yellow-500">Email Verification Required</AlertTitle>
-            <AlertDescription className="text-yellow-500/90">
-              Please verify your email address to access all features. Check your inbox for a verification link.
-            </AlertDescription>
-          </Alert>
-        )}
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-          <DashboardSidebar isEmailVerified={isEmailVerified} />
-          <DashboardContent isEmailVerified={isEmailVerified} />
-        </div>
+    <div className="container mx-auto px-4 py-8">
+      <div className="grid lg:grid-cols-12 gap-6">
+        <DashboardSidebar 
+          isEmailVerified={isEmailVerified} 
+          onViewChange={setActiveView}
+          activeView={activeView}
+        />
+        <DashboardContent isEmailVerified={isEmailVerified} />
       </div>
     </div>
   );

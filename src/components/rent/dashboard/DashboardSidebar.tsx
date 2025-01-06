@@ -15,22 +15,23 @@ type View = "overview" | "schedule" | "messages" | "newsfeed" | "swap" | "roomma
 
 interface DashboardSidebarProps {
   isEmailVerified: boolean;
+  onViewChange: (view: View) => void;
+  activeView: View;
 }
 
-const DashboardSidebar = ({ isEmailVerified }: DashboardSidebarProps) => {
-  const [activeTab, setActiveTab] = useState<View>("overview");
+const DashboardSidebar = ({ isEmailVerified, onViewChange, activeView }: DashboardSidebarProps) => {
   const { toast } = useToast();
 
   const navigationItems = [
-    { icon: Home, label: 'Overview', id: 'overview', tooltip: 'View your dashboard summary' },
-    { icon: Calendar, label: 'Schedule', id: 'schedule', tooltip: 'Manage your appointments and deadlines' },
-    { icon: MessageCircle, label: 'Messages', id: 'messages', requiresVerification: true, tooltip: 'Chat with other students' },
-    { icon: Newspaper, label: 'Newsfeed', id: 'newsfeed', tooltip: 'Stay updated with latest news' },
-    { icon: ArrowLeftRight, label: 'Swap', id: 'swap', requiresVerification: true, tooltip: 'Exchange your room with others' },
-    { icon: UserSearch, label: 'Find Roommate', id: 'roommate', requiresVerification: true, tooltip: 'Find your perfect roommate match' },
-    { icon: ShoppingBag, label: 'Marketplace', id: 'marketplace', requiresVerification: true, tooltip: 'Buy and sell items' },
-    { icon: LayoutGrid, label: 'Hub', id: 'hub', tooltip: 'Access community features' },
-    { icon: Settings, label: 'Settings', id: 'settings', tooltip: 'Manage your preferences' },
+    { icon: Home, label: 'Overview', id: 'overview' as View, tooltip: 'View your dashboard summary' },
+    { icon: Calendar, label: 'Schedule', id: 'schedule' as View, tooltip: 'Manage your appointments and deadlines' },
+    { icon: MessageCircle, label: 'Messages', id: 'messages' as View, requiresVerification: true, tooltip: 'Chat with other students' },
+    { icon: Newspaper, label: 'Newsfeed', id: 'newsfeed' as View, tooltip: 'Stay updated with latest news' },
+    { icon: ArrowLeftRight, label: 'Swap', id: 'swap' as View, requiresVerification: true, tooltip: 'Exchange your room with others' },
+    { icon: UserSearch, label: 'Find Roommate', id: 'roommate' as View, requiresVerification: true, tooltip: 'Find your perfect roommate match' },
+    { icon: ShoppingBag, label: 'Marketplace', id: 'marketplace' as View, requiresVerification: true, tooltip: 'Buy and sell items' },
+    { icon: LayoutGrid, label: 'Hub', id: 'hub' as View, tooltip: 'Access community features' },
+    { icon: Settings, label: 'Settings', id: 'settings' as View, tooltip: 'Manage your preferences' },
   ];
 
   const handleTabChange = (item: typeof navigationItems[0]) => {
@@ -42,7 +43,7 @@ const DashboardSidebar = ({ isEmailVerified }: DashboardSidebarProps) => {
       });
       return;
     }
-    setActiveTab(item.id as View);
+    onViewChange(item.id);
   };
 
   return (
@@ -56,7 +57,7 @@ const DashboardSidebar = ({ isEmailVerified }: DashboardSidebarProps) => {
                   <button
                     onClick={() => handleTabChange(item)}
                     className={`w-full flex items-center gap-3 px-3 sm:px-4 py-2 sm:py-3 rounded-lg transition-all duration-300 ${
-                      activeTab === item.id
+                      activeView === item.id
                         ? 'bg-primary text-white shadow-lg shadow-primary/20'
                         : 'text-white/60 hover:bg-white/10 hover:text-white hover:shadow-md'
                     } ${item.requiresVerification && !isEmailVerified ? 'opacity-50 cursor-not-allowed' : ''}`}
