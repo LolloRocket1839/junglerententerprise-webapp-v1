@@ -23,8 +23,11 @@ const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardCon
   // Only fetch profile if we have a valid session and user ID
   const { data: profile, isLoading } = useQuery({
     queryKey: ['user-profile', session?.user?.id],
-    enabled: !!session?.user?.id,
     queryFn: async () => {
+      if (!session?.user?.id) {
+        throw new Error('No user ID available');
+      }
+
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -41,9 +44,10 @@ const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardCon
       }
       return data;
     },
+    enabled: !!session?.user?.id, // Only run query if we have a user ID
   });
 
-  // Set up real-time subscription only if we have a session
+  // Set up real-time subscription for profile changes
   useEffect(() => {
     if (!session?.user?.id) return;
 
