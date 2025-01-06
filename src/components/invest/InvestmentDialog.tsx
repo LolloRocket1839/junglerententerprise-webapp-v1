@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Loader2, FileText, Info, ShieldCheck } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import {
   DialogContent,
   DialogDescription,
@@ -15,12 +15,8 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import InvestmentTerms from './InvestmentTerms';
+import InvestmentSummaryBox from './InvestmentSummaryBox';
 import InvestmentSuccessNotification from './InvestmentSuccessNotification';
 
 interface InvestmentDialogProps {
@@ -65,7 +61,6 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
     try {
       setIsProcessing(true);
       
-      // Ensure property.id is a valid UUID
       if (!property.id) {
         throw new Error("Invalid property ID");
       }
@@ -73,7 +68,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
       const response = await supabase.functions.invoke('create-checkout', {
         body: {
           amount: parseFloat(investmentAmount),
-          hub_id: property.id // Ensure this is a valid UUID
+          hub_id: property.id
         }
       });
 
@@ -150,53 +145,13 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
           </p>
         </div>
 
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="terms">
-            <AccordionTrigger className="text-sm">
-              <FileText className="w-4 h-4 mr-2" />
-              Termini e Condizioni
-            </AccordionTrigger>
-            <AccordionContent className="text-sm text-muted-foreground">
-              <p className="mb-2">
-                Investendo in questa proprietà, accetti i nostri termini e condizioni completi. Punti chiave:
-              </p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Periodo minimo di investimento: 24 mesi</li>
-                <li>Commissioni di gestione: 2% annuo</li>
-                <li>Distribuzione dei rendimenti: trimestrale</li>
-              </ul>
-              <a 
-                href="#" 
-                className="text-primary hover:underline mt-2 inline-block"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Leggi i termini completi
-              </a>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+        <InvestmentTerms />
 
-        <div className="space-y-4 bg-muted/50 p-4 rounded-lg">
-          <h4 className="font-medium flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-primary" />
-            Riepilogo Investimento
-          </h4>
-          <ul className="space-y-2 text-sm">
-            <li className="flex justify-between">
-              <span className="text-muted-foreground">Importo:</span>
-              <span className="font-medium">€{parseFloat(investmentAmount || "0").toLocaleString()}</span>
-            </li>
-            <li className="flex justify-between">
-              <span className="text-muted-foreground">ROI Previsto:</span>
-              <span className="font-medium text-primary">{property.rating}%</span>
-            </li>
-            <li className="flex justify-between">
-              <span className="text-muted-foreground">Prima Distribuzione:</span>
-              <span className="font-medium">{formattedDate}</span>
-            </li>
-          </ul>
-        </div>
+        <InvestmentSummaryBox
+          amount={investmentAmount}
+          roi={property.rating?.toString() || "0"}
+          estimatedDate={formattedDate}
+        />
 
         <div className="flex items-center space-x-2">
           <Checkbox 
