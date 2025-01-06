@@ -4,20 +4,19 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import DashboardLayout from './dashboard/DashboardLayout';
 import { useToast } from "@/components/ui/use-toast";
+import { Loader2 } from "lucide-react";
 
 const StudentDashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
   // Fetch current session
-  const { data: session, isLoading: isSessionLoading } = useQuery({
+  const { data: session, isLoading: isSessionLoading, error: sessionError } = useQuery({
     queryKey: ['auth-session'],
     queryFn: async () => {
       const { data: { session }, error } = await supabase.auth.getSession();
-      if (error) {
-        console.error('Session error:', error);
-        return null;
-      }
+      if (error) throw error;
+      if (!session) throw new Error('No session found');
       return session;
     },
   });
@@ -38,23 +37,22 @@ const StudentDashboard = () => {
     return () => subscription.unsubscribe();
   }, [navigate, toast]);
 
-  // Redirect if no session
-  useEffect(() => {
-    if (!isSessionLoading && !session) {
-      toast({
-        title: "Authentication Required",
-        description: "Please sign in to access your dashboard.",
-        variant: "destructive"
-      });
-      navigate('/auth');
-    }
-  }, [session, isSessionLoading, navigate, toast]);
-
+  // Handle session loading and errors
   if (isSessionLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
   }
 
-  if (!session) {
+  if (sessionError || !session) {
+    toast({
+      title: "Authentication Required",
+      description: "Please sign in to access your dashboard.",
+      variant: "destructive"
+    });
+    navigate('/auth');
     return null;
   }
 

@@ -9,6 +9,7 @@ import StudentSchedule from '../StudentSchedule';
 import RoommateFinder from '../roommate/RoommateFinder';
 import type { Session } from '@supabase/supabase-js';
 import type { View } from './DashboardSidebar';
+import { Loader2 } from "lucide-react";
 
 interface DashboardContentProps {
   isEmailVerified: boolean;
@@ -20,7 +21,7 @@ const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardCon
   const { toast } = useToast();
 
   // Only fetch profile if we have a valid session and user ID
-  const { data: profile, isLoading } = useQuery({
+  const { data: profile, isLoading, error } = useQuery({
     queryKey: ['user-profile', session?.user?.id],
     queryFn: async () => {
       if (!session?.user?.id) {
@@ -31,19 +32,13 @@ const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardCon
         .from('profiles')
         .select('*')
         .eq('id', session.user.id)
-        .single();
+        .maybeSingle();
 
-      if (error) {
-        toast({
-          title: "Error loading profile",
-          description: error.message,
-          variant: "destructive"
-        });
-        throw error;
-      }
+      if (error) throw error;
       return data;
     },
-    enabled: !!session?.user?.id, // Only run query if we have a user ID
+    enabled: !!session?.user?.id && isEmailVerified,
+    retry: false,
   });
 
   // Set up real-time subscription for profile changes
@@ -87,8 +82,19 @@ const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardCon
   if (isLoading) {
     return (
       <div className="lg:col-span-9">
-        <div className="glass-card p-6">
-          <p className="text-white">Loading your dashboard...</p>
+        <div className="glass-card p-6 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="lg:col-span-9">
+        <div className="glass-card p-6 text-red-400">
+          <h2 className="text-xl font-semibold mb-4">Error Loading Profile</h2>
+          <p>{error.message}</p>
         </div>
       </div>
     );
