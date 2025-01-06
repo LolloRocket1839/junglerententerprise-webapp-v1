@@ -26,7 +26,7 @@ const DashboardLayout = () => {
     },
   });
 
-  // Redirect if not authenticated
+  // Handle auth state changes
   useEffect(() => {
     const {
       data: { subscription },
@@ -35,7 +35,7 @@ const DashboardLayout = () => {
         navigate('/rent?tab=search');
         toast({
           title: "Session Expired",
-          description: "Please sign in again to continue.",
+          description: "Please sign in to continue.",
           variant: "destructive"
         });
       }
@@ -83,6 +83,7 @@ const DashboardLayout = () => {
         <DashboardContent 
           isEmailVerified={isEmailVerified}
           activeView={activeView}
+          session={session}
         />
       </div>
     </div>

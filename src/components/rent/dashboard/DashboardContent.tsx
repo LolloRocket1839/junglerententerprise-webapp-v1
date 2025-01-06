@@ -9,29 +9,21 @@ import StudentSchedule from '../StudentSchedule';
 import StudentSwap from '../StudentSwap';
 import RoommateFinder from '../roommate/RoommateFinder';
 import MarketplaceGrid from '../../marketplace/MarketplaceGrid';
+import type { Session } from '@supabase/supabase-js';
 
 interface DashboardContentProps {
   isEmailVerified: boolean;
   activeView: string;
+  session: Session;
 }
 
-const DashboardContent = ({ isEmailVerified, activeView }: DashboardContentProps) => {
+const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardContentProps) => {
   const { toast } = useToast();
 
-  // First check if we have a session
-  const { data: session } = useQuery({
-    queryKey: ['auth-session'],
-    queryFn: async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      if (error) throw error;
-      return session;
-    },
-  });
-
-  // Only fetch profile if we have a session
+  // Only fetch profile if we have a valid session and user ID
   const { data: profile, isLoading } = useQuery({
     queryKey: ['user-profile', session?.user?.id],
-    enabled: !!session?.user?.id, // Only run query if we have a user ID
+    enabled: !!session?.user?.id,
     queryFn: async () => {
       const { data, error } = await supabase
         .from('profiles')
@@ -53,7 +45,7 @@ const DashboardContent = ({ isEmailVerified, activeView }: DashboardContentProps
 
   // Set up real-time subscription only if we have a session
   useEffect(() => {
-    if (!session?.user?.id) return; // Don't set up listener if no session
+    if (!session?.user?.id) return;
 
     const channel = supabase
       .channel('profile-changes')
