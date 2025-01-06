@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider";
 import { Property } from './types';
 import { 
   Building2, 
   Users, 
-  TrendingUp, 
+  TrendingUp,
   HelpCircle,
   ExternalLink,
   ArrowRight,
@@ -14,7 +13,9 @@ import {
   ChevronRight,
   Info,
   Star,
-  MessageCircle
+  MessageCircle,
+  DollarSign,
+  Calendar
 } from 'lucide-react';
 import {
   Tooltip,
@@ -31,6 +32,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import InvestmentControls from './InvestmentControls';
+import InvestmentSummary from './InvestmentSummary';
+import ProgressBar from './ProgressBar';
 
 interface InvestmentOpportunityDialogProps {
   property: Property;
@@ -60,6 +64,19 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
 
   const calculateROI = (amount: number) => {
     return ((property.rating || 8) / 100 * amount).toFixed(2);
+  };
+
+  const calculateUnits = (amount: number) => {
+    return Math.floor(amount / 100); // Example: 1 unit per 100€
+  };
+
+  const getEstimatedPaymentDate = () => {
+    const date = new Date();
+    date.setMonth(date.getMonth() + 3);
+    return date.toLocaleDateString('it-IT', { 
+      month: 'long', 
+      year: 'numeric' 
+    });
   };
 
   return (
@@ -139,6 +156,12 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
                 <p className="text-xl font-bold text-white">{property.rating}%</p>
               </div>
             </div>
+
+            <ProgressBar 
+              value={property.amount_raised}
+              max={property.investment_goal}
+              className="mt-4"
+            />
           </div>
 
           {/* Right Column - Investment Details */}
@@ -157,43 +180,19 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
                 </div>
 
                 <div className="space-y-4">
-                  <div>
-                    <label className="text-sm text-gray-300 mb-2 block">
-                      Importo Investimento (€)
-                    </label>
-                    <div className="flex items-center gap-4">
-                      <Slider
-                        value={[investmentAmount]}
-                        onValueChange={(value) => setInvestmentAmount(value[0])}
-                        max={maxInvestment}
-                        min={minInvestment}
-                        step={100}
-                        className="flex-1"
-                      />
-                      <span className="text-white font-mono w-24 text-right">
-                        €{investmentAmount}
-                      </span>
-                    </div>
-                  </div>
+                  <InvestmentControls
+                    amount={investmentAmount}
+                    onAmountChange={setInvestmentAmount}
+                    minInvestment={minInvestment}
+                    maxInvestment={maxInvestment}
+                  />
 
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm cursor-help">
-                          <div className="flex justify-between items-center mb-2">
-                            <span className="text-gray-300">ROI Annuale Previsto</span>
-                            <TrendingUp className="w-4 h-4 text-primary" />
-                          </div>
-                          <p className="text-2xl font-bold text-primary">
-                            €{calculateROI(investmentAmount)}
-                          </p>
-                        </div>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Basato sulle performance storiche e condizioni attuali del mercato</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <InvestmentSummary
+                    amount={investmentAmount}
+                    roi={`€${calculateROI(investmentAmount)}`}
+                    units={calculateUnits(investmentAmount)}
+                    estimatedDate={getEstimatedPaymentDate()}
+                  />
 
                   <Button 
                     onClick={handleInvest}

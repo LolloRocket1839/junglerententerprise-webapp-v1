@@ -13,7 +13,9 @@ export const mockProperties: Property[] = [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c'
     ],
     rating: 8.9,
-    reviews_count: 28
+    reviews_count: 28,
+    investment_goal: 100000,
+    amount_raised: 45000
   },
   {
     id: '2',
@@ -27,7 +29,9 @@ export const mockProperties: Property[] = [
       'https://images.unsplash.com/photo-1600121848594-d8644e57abab'
     ],
     rating: 9.2,
-    reviews_count: 35
+    reviews_count: 35,
+    investment_goal: 150000,
+    amount_raised: 82000
   },
   {
     id: '3',
@@ -41,7 +45,9 @@ export const mockProperties: Property[] = [
       'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0'
     ],
     rating: 9.5,
-    reviews_count: 42
+    reviews_count: 42,
+    investment_goal: 200000,
+    amount_raised: 120000
   },
   {
     id: '4',
@@ -55,7 +61,9 @@ export const mockProperties: Property[] = [
       'https://images.unsplash.com/photo-1600607687644-c94bf5588563'
     ],
     rating: 9.0,
-    reviews_count: 31
+    reviews_count: 31,
+    investment_goal: 180000,
+    amount_raised: 90000
   },
   {
     id: '5',
@@ -69,7 +77,9 @@ export const mockProperties: Property[] = [
       'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d'
     ],
     rating: 8.7,
-    reviews_count: 24
+    reviews_count: 24,
+    investment_goal: 120000,
+    amount_raised: 60000
   },
   {
     id: '6',
@@ -83,6 +93,8 @@ export const mockProperties: Property[] = [
       'https://images.unsplash.com/photo-1600210492493-0946911123ea'
     ],
     rating: 9.3,
-    reviews_count: 39
+    reviews_count: 39,
+    investment_goal: 160000,
+    amount_raised: 100000
   }
 ];
