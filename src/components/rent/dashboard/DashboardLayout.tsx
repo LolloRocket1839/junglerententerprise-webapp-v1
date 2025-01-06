@@ -5,13 +5,14 @@ import { useToast } from "@/components/ui/use-toast";
 import DashboardSidebar from './DashboardSidebar';
 import DashboardContent from './DashboardContent';
 import type { Session } from '@supabase/supabase-js';
+import type { View } from './DashboardSidebar'; // Import the View type
 
 interface DashboardLayoutProps {
   session: Session;
 }
 
 const DashboardLayout = ({ session }: DashboardLayoutProps) => {
-  const [activeView, setActiveView] = useState<string>("overview");
+  const [activeView, setActiveView] = useState<View>("overview");
   const navigate = useNavigate();
   const { toast } = useToast();
 
