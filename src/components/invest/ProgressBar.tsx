@@ -20,7 +20,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ value, max, className, showLa
       />
       {showLabel && (
         <div className="flex justify-between text-xs text-white/60">
-          <span>€{value.toLocaleString()} raccolti</span>
+          <span>€{value?.toLocaleString() ?? '0'} raccolti</span>
           <span>{percentage}% dell'obiettivo</span>
         </div>
       )}

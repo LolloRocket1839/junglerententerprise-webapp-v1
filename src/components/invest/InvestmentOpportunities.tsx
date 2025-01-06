@@ -32,7 +32,11 @@ const InvestmentOpportunities = () => {
         return mockProperties;
       }
 
-      return data as Property[];
+      return data.map(hub => ({
+        ...hub,
+        investment_goal: hub.investment_goal || 100000,
+        amount_raised: hub.amount_raised || 0
+      })) as Property[];
     }
   });
 
@@ -114,7 +118,9 @@ const InvestmentOpportunities = () => {
                 amenities: null,
                 images: null,
                 rating: null,
-                reviews_count: null
+                reviews_count: null,
+                investment_goal: 100000,
+                amount_raised: 0
               }}
               onInvest={handlePropertyClick}
               onInfo={handlePropertyClick}
