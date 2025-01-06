@@ -3,7 +3,7 @@ import { Property } from './types';
 export const mockProperties: Property[] = [
   {
     id: '1',
-    name: 'Palazzo Madama Suite',
+    name: 'Hub Via Roma',
     location: 'Via Roma 18, Torino',
     description: 'Elegante appartamento storico nel cuore di Torino con soffitti affrescati e pavimenti in parquet originale',
     price_per_night: 180,
@@ -17,7 +17,7 @@ export const mockProperties: Property[] = [
   },
   {
     id: '2',
-    name: 'Residenza Po',
+    name: 'Hub Corso Vittorio',
     location: 'Corso Vittorio Emanuele II 76, Torino',
     description: 'Lussuoso appartamento con vista sul fiume Po e interni di design contemporaneo',
     price_per_night: 220,
@@ -31,7 +31,7 @@ export const mockProperties: Property[] = [
   },
   {
     id: '3',
-    name: 'Villa della Mole',
+    name: 'Hub Via Montebello',
     location: 'Via Montebello 20, Torino',
     description: 'Esclusiva villa con vista sulla Mole Antonelliana e salotto doppio con camino d\'epoca',
     price_per_night: 300,
@@ -45,7 +45,7 @@ export const mockProperties: Property[] = [
   },
   {
     id: '4',
-    name: 'Attico San Carlo',
+    name: 'Hub San Carlo',
     location: 'Piazza San Carlo 197, Torino',
     description: 'Prestigioso attico nel salotto di Torino con ampio soggiorno e terrazza panoramica',
     price_per_night: 250,
@@ -59,7 +59,7 @@ export const mockProperties: Property[] = [
   },
   {
     id: '5',
-    name: 'Residenza Quadrilatero',
+    name: 'Hub Maria Vittoria',
     location: 'Via Maria Vittoria 35, Torino',
     description: 'Elegante appartamento nel quartiere romano con soffitti alti e finestre ad arco',
     price_per_night: 190,
@@ -73,7 +73,7 @@ export const mockProperties: Property[] = [
   },
   {
     id: '6',
-    name: 'Suite Valentino',
+    name: 'Hub Corso Vittorio II',
     location: 'Corso Vittorio Emanuele II 127, Torino',
     description: 'Lussuoso appartamento vicino al Parco del Valentino con ampio soggiorno e vista sul parco',
     price_per_night: 210,
