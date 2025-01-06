@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import QuickAmountButtons from './QuickAmountButtons';
-import { toast } from "sonner";
 import { Check, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { toast } from "sonner";
 
 interface InvestmentControlsProps {
   amount: number;
@@ -139,12 +138,6 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
               <span className="text-green-400">€{calculateExpectedReturn(amount)}</span>
             </div>
           </div>
-
-          <QuickAmountButtons
-            onSelect={onAmountChange}
-            selectedAmount={amount}
-            maxAmount={maxInvestment}
-          />
         </div>
       </div>
     </div>
