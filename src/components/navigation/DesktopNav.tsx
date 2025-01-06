@@ -16,14 +16,17 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
       <Link to="/rent" className="text-sm text-white/80 hover:text-white transition-colors">
         Rent
       </Link>
+      <Link to="/marketplace" className="text-sm text-white/80 hover:text-white transition-colors">
+        Marketplace
+      </Link>
       <Link to="/stay" className="text-sm text-white/80 hover:text-white transition-colors">
         Stay
       </Link>
-      <Link to="/referral" className="text-sm text-white/80 hover:text-white transition-colors">
-        Referral
-      </Link>
       <Link to="/student" className="text-sm text-white/80 hover:text-white transition-colors">
         Student
+      </Link>
+      <Link to="/referral" className="text-sm text-white/80 hover:text-white transition-colors">
+        Referral
       </Link>
       
       {session ? (

@@ -60,22 +60,28 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
             Rent
           </button>
           <button
+            onClick={() => handleNavigation("/marketplace")}
+            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
+          >
+            Marketplace
+          </button>
+          <button
             onClick={() => handleNavigation("/stay")}
             className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
             Stay
           </button>
           <button
-            onClick={() => handleNavigation("/referral")}
-            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
-          >
-            Referral
-          </button>
-          <button
             onClick={() => handleNavigation("/student")}
             className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
             Student
+          </button>
+          <button
+            onClick={() => handleNavigation("/referral")}
+            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
+          >
+            Referral
           </button>
 
           <div className="pt-6 border-t border-white/20">

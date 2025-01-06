@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/tooltip";
 import { useToast } from "@/components/ui/use-toast";
 
-export type View = "overview" | "schedule" | "messages" | "newsfeed" | "swap" | "roommate" | "marketplace" | "hub" | "settings";
+export type View = "overview" | "schedule" | "messages" | "newsfeed" | "roommate" | "settings";
 
 interface DashboardSidebarProps {
   isEmailVerified: boolean;
@@ -26,10 +26,7 @@ const DashboardSidebar = ({ isEmailVerified, onViewChange, activeView }: Dashboa
     { icon: Calendar, label: 'Schedule', id: 'schedule' as View, tooltip: 'Manage your appointments and deadlines' },
     { icon: MessageCircle, label: 'Messages', id: 'messages' as View, requiresVerification: true, tooltip: 'Chat with other students' },
     { icon: Newspaper, label: 'Newsfeed', id: 'newsfeed' as View, tooltip: 'Stay updated with latest news' },
-    { icon: ArrowLeftRight, label: 'Swap', id: 'swap' as View, requiresVerification: true, tooltip: 'Exchange your room with others' },
     { icon: UserSearch, label: 'Find Roommate', id: 'roommate' as View, requiresVerification: true, tooltip: 'Find your perfect roommate match' },
-    { icon: ShoppingBag, label: 'Marketplace', id: 'marketplace' as View, requiresVerification: true, tooltip: 'Buy and sell items' },
-    { icon: LayoutGrid, label: 'Hub', id: 'hub' as View, tooltip: 'Access community features' },
     { icon: Settings, label: 'Settings', id: 'settings' as View, tooltip: 'Manage your preferences' },
   ];
 
