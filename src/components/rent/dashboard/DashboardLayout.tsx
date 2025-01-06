@@ -13,6 +13,7 @@ const DashboardLayout = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // First check if we have a session
   const { data: session, isLoading: isSessionLoading } = useQuery({
     queryKey: ['auth-session'],
     queryFn: async () => {
@@ -25,18 +26,25 @@ const DashboardLayout = () => {
     },
   });
 
+  // Redirect if not authenticated
   useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!session) {
         navigate('/rent?tab=search');
+        toast({
+          title: "Session Expired",
+          description: "Please sign in again to continue.",
+          variant: "destructive"
+        });
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, toast]);
 
+  // Redirect if no session and not loading
   useEffect(() => {
     if (!isSessionLoading && !session) {
       navigate('/rent?tab=search');
@@ -47,8 +55,6 @@ const DashboardLayout = () => {
       });
     }
   }, [session, isSessionLoading, navigate, toast]);
-
-  const isEmailVerified = session?.user?.email_confirmed_at != null;
 
   if (isSessionLoading) {
     return (
@@ -63,6 +69,8 @@ const DashboardLayout = () => {
   if (!session) {
     return null;
   }
+
+  const isEmailVerified = session?.user?.email_confirmed_at != null;
 
   return (
     <div className="container mx-auto px-4 py-8">

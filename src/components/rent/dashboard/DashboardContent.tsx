@@ -51,6 +51,7 @@ const DashboardContent = ({ isEmailVerified, activeView }: DashboardContentProps
     },
   });
 
+  // Set up real-time subscription only if we have a session
   useEffect(() => {
     if (!session?.user?.id) return; // Don't set up listener if no session
 
@@ -61,7 +62,8 @@ const DashboardContent = ({ isEmailVerified, activeView }: DashboardContentProps
         {
           event: '*',
           schema: 'public',
-          table: 'profiles'
+          table: 'profiles',
+          filter: `id=eq.${session.user.id}`
         },
         (payload) => {
           console.log('Profile change received:', payload);
