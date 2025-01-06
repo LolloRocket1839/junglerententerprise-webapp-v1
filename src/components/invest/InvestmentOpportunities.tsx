@@ -35,7 +35,11 @@ const InvestmentOpportunities = () => {
       return data.map(hub => ({
         ...hub,
         investment_goal: hub.investment_goal || 100000,
-        amount_raised: hub.amount_raised || 0
+        amount_raised: hub.amount_raised || 0,
+        amenities: hub.amenities || [],
+        images: hub.images || [],
+        rating: hub.rating || null,
+        reviews_count: hub.reviews_count || 0
       })) as Property[];
     }
   });
