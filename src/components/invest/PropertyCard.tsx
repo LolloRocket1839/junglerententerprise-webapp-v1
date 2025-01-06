@@ -14,12 +14,20 @@ interface PropertyCardProps {
 const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo, className }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const toggleImage = () => {
+  const toggleImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setCurrentImageIndex((prev) => (prev === 0 ? 1 : 0));
   };
 
+  const handleCardClick = () => {
+    onInfo(property);
+  };
+
   return (
-    <Card className={className}>
+    <Card 
+      className={`${className} cursor-pointer transition-transform duration-200 hover:scale-[1.02]`}
+      onClick={handleCardClick}
+    >
       <div className="aspect-video relative group">
         {property.images?.[currentImageIndex] ? (
           <>
@@ -33,10 +41,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
               variant="secondary"
               size="icon"
               className="absolute bottom-2 right-2 bg-black/50 hover:bg-black/70 transition-colors"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleImage();
-              }}
+              onClick={toggleImage}
             >
               <ImageIcon className="w-4 h-4 text-white" />
             </Button>
@@ -71,7 +76,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
         <div className="flex gap-3">
           <Button 
             className="flex-1 py-5 text-sm group"
-            onClick={() => onInvest(property)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onInvest(property);
+            }}
           >
             Investi Ora
             <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -80,7 +88,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
             variant="outline" 
             size="icon" 
             className="h-[42px] w-[42px] bg-white/5 border-white/10"
-            onClick={() => onInfo(property)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onInfo(property);
+            }}
           >
             <Info className="w-4 h-4" />
           </Button>

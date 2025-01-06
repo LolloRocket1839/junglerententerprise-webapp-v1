@@ -5,7 +5,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Property } from './types';
 import PropertyCard from './PropertyCard';
-import InvestmentDialog from './InvestmentDialog';
 import InvestmentOpportunityDialog from './InvestmentOpportunityDialog';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { mockProperties } from './mockData';
@@ -13,8 +12,6 @@ import { mockProperties } from './mockData';
 const InvestmentOpportunities = () => {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [showDetails, setShowDetails] = useState(false);
-  const [investmentAmount, setInvestmentAmount] = useState<string>('');
-  const [error, setError] = useState<string>('');
   const queryClient = useQueryClient();
 
   const { data: properties, isLoading, error: queryError } = useQuery({
@@ -69,36 +66,24 @@ const InvestmentOpportunities = () => {
     onSuccess: () => {
       toast.success("Investment submitted successfully!");
       setSelectedProperty(null);
-      setInvestmentAmount('');
-      setError('');
+      setShowDetails(false);
       queryClient.invalidateQueries({ queryKey: ['investment-properties'] });
     },
     onError: (error: Error) => {
-      setError(error.message);
       toast.error("Investment failed. Please try again.");
     }
   });
 
-  const handleInvest = (property: Property) => {
-    setError('');
-    setSelectedProperty(property);
-  };
-
-  const handleSubmitInvestment = async (amount: number) => {
+  const handleInvest = (amount: number) => {
     if (!selectedProperty) return;
-
-    if (isNaN(amount) || amount < 100) {
-      setError("Please enter a valid investment amount (minimum €100)");
-      return;
-    }
-
     createInvestment.mutate({
       hubId: selectedProperty.id,
       amount: amount
     });
   };
 
-  const handleInfo = (property: Property) => {
+  const handlePropertyClick = (property: Property) => {
+    console.log("Property clicked:", property);
     setSelectedProperty(property);
     setShowDetails(true);
   };
@@ -131,8 +116,8 @@ const InvestmentOpportunities = () => {
                 rating: null,
                 reviews_count: null
               }}
-              onInvest={() => {}}
-              onInfo={() => {}}
+              onInvest={handlePropertyClick}
+              onInfo={handlePropertyClick}
               className="glass-card backdrop-blur-md bg-black/40 border-white/10 animate-pulse"
             />
           ))
@@ -141,36 +126,20 @@ const InvestmentOpportunities = () => {
             <PropertyCard
               key={property.id}
               property={property}
-              onInvest={handleInvest}
-              onInfo={() => handleInfo(property)}
+              onInvest={handlePropertyClick}
+              onInfo={handlePropertyClick}
               className="glass-card backdrop-blur-md bg-black/40 border-white/10"
             />
           ))
         )}
       </div>
 
-      <Dialog 
-        open={!!selectedProperty && !showDetails} 
-        onOpenChange={(open) => !open && setSelectedProperty(null)}
-      >
-        {selectedProperty && (
-          <InvestmentDialog
-            property={selectedProperty}
-            investmentAmount={investmentAmount}
-            setInvestmentAmount={setInvestmentAmount}
-            onSubmit={() => handleSubmitInvestment(parseFloat(investmentAmount))}
-            isSubmitting={createInvestment.isPending}
-            error={error}
-          />
-        )}
-      </Dialog>
-
       {selectedProperty && (
         <InvestmentOpportunityDialog
           property={selectedProperty}
           open={showDetails}
           onOpenChange={setShowDetails}
-          onInvest={handleSubmitInvestment}
+          onInvest={handleInvest}
         />
       )}
     </div>
