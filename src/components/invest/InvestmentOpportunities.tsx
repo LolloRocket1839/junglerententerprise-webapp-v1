@@ -6,11 +6,13 @@ import { toast } from "sonner";
 import { Property } from './types';
 import PropertyCard from './PropertyCard';
 import InvestmentDialog from './InvestmentDialog';
+import InvestmentOpportunityDialog from './InvestmentOpportunityDialog';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { mockProperties } from './mockData';
 
 const InvestmentOpportunities = () => {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
   const [investmentAmount, setInvestmentAmount] = useState<string>('');
   const [error, setError] = useState<string>('');
   const queryClient = useQueryClient();
@@ -82,12 +84,11 @@ const InvestmentOpportunities = () => {
     setSelectedProperty(property);
   };
 
-  const handleSubmitInvestment = async () => {
-    if (!selectedProperty || !investmentAmount) return;
+  const handleSubmitInvestment = async (amount: number) => {
+    if (!selectedProperty) return;
 
-    const amount = parseFloat(investmentAmount);
     if (isNaN(amount) || amount < 100) {
-      setError("Please enter a valid investment amount (minimum $100)");
+      setError("Please enter a valid investment amount (minimum €100)");
       return;
     }
 
@@ -97,8 +98,9 @@ const InvestmentOpportunities = () => {
     });
   };
 
-  const handleInfo = (propertyId: string) => {
-    toast.info("Detailed property information coming in Phase 2");
+  const handleInfo = (property: Property) => {
+    setSelectedProperty(property);
+    setShowDetails(true);
   };
 
   if (queryError) {
@@ -140,7 +142,7 @@ const InvestmentOpportunities = () => {
               key={property.id}
               property={property}
               onInvest={handleInvest}
-              onInfo={handleInfo}
+              onInfo={() => handleInfo(property)}
               className="glass-card backdrop-blur-md bg-black/40 border-white/10"
             />
           ))
@@ -148,7 +150,7 @@ const InvestmentOpportunities = () => {
       </div>
 
       <Dialog 
-        open={!!selectedProperty} 
+        open={!!selectedProperty && !showDetails} 
         onOpenChange={(open) => !open && setSelectedProperty(null)}
       >
         {selectedProperty && (
@@ -156,12 +158,21 @@ const InvestmentOpportunities = () => {
             property={selectedProperty}
             investmentAmount={investmentAmount}
             setInvestmentAmount={setInvestmentAmount}
-            onSubmit={handleSubmitInvestment}
+            onSubmit={() => handleSubmitInvestment(parseFloat(investmentAmount))}
             isSubmitting={createInvestment.isPending}
             error={error}
           />
         )}
       </Dialog>
+
+      {selectedProperty && (
+        <InvestmentOpportunityDialog
+          property={selectedProperty}
+          open={showDetails}
+          onOpenChange={setShowDetails}
+          onInvest={handleSubmitInvestment}
+        />
+      )}
     </div>
   );
 };

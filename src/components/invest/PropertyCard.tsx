@@ -7,7 +7,7 @@ import { Property } from './types';
 interface PropertyCardProps {
   property: Property;
   onInvest: (property: Property) => void;
-  onInfo: (propertyId: string) => void;
+  onInfo: (property: Property) => void;
   className?: string;
 }
 
@@ -70,17 +70,17 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
         </div>
         <div className="flex gap-3">
           <Button 
-            className="flex-1 py-5 text-sm"
+            className="flex-1 py-5 text-sm group"
             onClick={() => onInvest(property)}
           >
             Investi Ora
-            <ArrowRight className="w-4 h-4 ml-2" />
+            <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
           </Button>
           <Button 
             variant="outline" 
             size="icon" 
             className="h-[42px] w-[42px] bg-white/5 border-white/10"
-            onClick={() => onInfo(property.id)}
+            onClick={() => onInfo(property)}
           >
             <Info className="w-4 h-4" />
           </Button>
