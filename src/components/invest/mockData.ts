@@ -10,7 +10,7 @@ export const mockProperties: Property[] = [
     amenities: ['Terrazza', 'Vista Palazzo', 'Ascensore', 'Aria Condizionata'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
-      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b'
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c'
     ],
     rating: 8.9,
     reviews_count: 28
@@ -24,7 +24,7 @@ export const mockProperties: Property[] = [
     amenities: ['Vista Fiume', 'Garage', 'Palestra', 'Concierge'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
-      'https://images.unsplash.com/photo-1600585154526-990dced4db0d'
+      'https://images.unsplash.com/photo-1600121848594-d8644e57abab'
     ],
     rating: 9.2,
     reviews_count: 35
@@ -38,7 +38,7 @@ export const mockProperties: Property[] = [
     amenities: ['Giardino Privato', 'Vista Mole', 'Piscina', 'Sauna'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
-      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b'
+      'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0'
     ],
     rating: 9.5,
     reviews_count: 42
@@ -52,7 +52,7 @@ export const mockProperties: Property[] = [
     amenities: ['Terrazza Panoramica', 'Spa', 'Servizio in Camera', 'Wine Cellar'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
-      'https://images.unsplash.com/photo-1600585154526-990dced4db0d'
+      'https://images.unsplash.com/photo-1600607687644-c94bf5588563'
     ],
     rating: 9.0,
     reviews_count: 31
@@ -66,7 +66,7 @@ export const mockProperties: Property[] = [
     amenities: ['Design Storico', 'Biblioteca', 'Cortile Interno', 'Biciclette'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
-      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b'
+      'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d'
     ],
     rating: 8.7,
     reviews_count: 24
@@ -80,7 +80,7 @@ export const mockProperties: Property[] = [
     amenities: ['Vista Parco', 'Balcone', 'Smart Home', 'Colazione Inclusa'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
-      'https://images.unsplash.com/photo-1600585154526-990dced4db0d'
+      'https://images.unsplash.com/photo-1600210492493-0946911123ea'
     ],
     rating: 9.3,
     reviews_count: 39
