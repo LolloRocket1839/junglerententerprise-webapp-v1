@@ -3,26 +3,12 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Property } from './types';
 import { 
-  Building2, 
-  Users, 
-  TrendingUp,
-  HelpCircle,
   ExternalLink,
   ArrowRight,
-  ImageIcon,
   ChevronRight,
-  Info,
-  Star,
   MessageCircle,
-  DollarSign,
-  Calendar
+  HelpCircle
 } from 'lucide-react';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -35,6 +21,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import InvestmentControls from './InvestmentControls';
 import InvestmentSummary from './InvestmentSummary';
 import ProgressBar from './ProgressBar';
+import PropertyStats from './PropertyStats';
+import PropertyGallery from './PropertyGallery';
+import PropertyDetailsTab from './PropertyDetailsTab';
+import LegalDocumentsTab from './LegalDocumentsTab';
 
 interface InvestmentOpportunityDialogProps {
   property: Property;
@@ -112,52 +102,18 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
 
         {/* Main Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-          {/* Left Column - Image */}
+          {/* Left Column - Image and Stats */}
           <div className="space-y-4">
-            <div className="relative aspect-video rounded-lg overflow-hidden group">
-              <img
-                src={property.images?.[currentImageIndex]}
-                alt={property.name}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <Button
-                variant="secondary"
-                size="icon"
-                className="absolute bottom-2 right-2 bg-black/50 hover:bg-black/70"
-                onClick={toggleImage}
-              >
-                <ImageIcon className="w-4 h-4" />
-              </Button>
-              <div className="absolute top-2 left-2 bg-black/50 px-2 py-1 rounded text-xs text-white">
-                {currentImageIndex === 0 ? 'Esterno' : 'Interno'}
-              </div>
-            </div>
-
-            {/* Property Stats */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm">
-                <div className="flex items-center gap-2 text-primary mb-2">
-                  <Building2 className="w-4 h-4" />
-                  <span className="text-sm">Unità</span>
-                </div>
-                <p className="text-xl font-bold text-white">12</p>
-              </div>
-              <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm">
-                <div className="flex items-center gap-2 text-primary mb-2">
-                  <Users className="w-4 h-4" />
-                  <span className="text-sm">Investitori</span>
-                </div>
-                <p className="text-xl font-bold text-white">{property.reviews_count}</p>
-              </div>
-              <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm">
-                <div className="flex items-center gap-2 text-primary mb-2">
-                  <TrendingUp className="w-4 h-4" />
-                  <span className="text-sm">ROI</span>
-                </div>
-                <p className="text-xl font-bold text-white">{property.rating}%</p>
-              </div>
-            </div>
-
+            <PropertyGallery
+              images={property.images || []}
+              currentImageIndex={currentImageIndex}
+              onToggleImage={toggleImage}
+            />
+            <PropertyStats
+              units={12}
+              reviewsCount={property.reviews_count || 0}
+              rating={property.rating || 8}
+            />
             <ProgressBar 
               value={property.amount_raised}
               max={property.investment_goal}
@@ -205,44 +161,12 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
                 </div>
               </TabsContent>
 
-              <TabsContent value="details" className="space-y-4 text-gray-300">
-                <div className="bg-white/5 rounded-lg p-4">
-                  <h4 className="font-semibold text-white mb-2">Dettagli Proprietà</h4>
-                  <ul className="space-y-2">
-                    <li className="flex items-center gap-2">
-                      <Info className="w-4 h-4 text-primary" />
-                      Tipo: Appartamento Residenziale
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Users className="w-4 h-4 text-primary" />
-                      Capacità: 4-6 persone
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Star className="w-4 h-4 text-primary" />
-                      Rating: {property.rating}/10
-                    </li>
-                  </ul>
-                </div>
+              <TabsContent value="details">
+                <PropertyDetailsTab />
               </TabsContent>
-
-              <TabsContent value="legal" className="space-y-4 text-gray-300">
-                <div className="bg-white/5 rounded-lg p-4">
-                  <h4 className="font-semibold text-white mb-2">Documenti Legali</h4>
-                  <ul className="space-y-2">
-                    <li>
-                      <a href="#" className="flex items-center gap-2 hover:text-primary transition-colors">
-                        <ExternalLink className="w-4 h-4" />
-                        Contratto di Investimento
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#" className="flex items-center gap-2 hover:text-primary transition-colors">
-                        <ExternalLink className="w-4 h-4" />
-                        Termini e Condizioni
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+              
+              <TabsContent value="legal">
+                <LegalDocumentsTab />
               </TabsContent>
             </Tabs>
           </div>
