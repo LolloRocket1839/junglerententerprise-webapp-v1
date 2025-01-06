@@ -4,6 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Check, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { toast } from "sonner";
 
 interface InvestmentControlsProps {
@@ -12,6 +19,7 @@ interface InvestmentControlsProps {
   minInvestment: number;
   maxInvestment: number;
   roi: number;
+  onInvest: () => void;
 }
 
 const InvestmentControls: React.FC<InvestmentControlsProps> = ({
@@ -20,9 +28,11 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   minInvestment,
   maxInvestment,
   roi,
+  onInvest
 }) => {
   const [inputValue, setInputValue] = useState(amount.toString());
   const [error, setError] = useState<string | null>(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
     setInputValue(amount.toString());
@@ -78,8 +88,17 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
     return ((roi / 100) * amount).toFixed(2);
   };
 
+  const handleInvestClick = () => {
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmInvestment = () => {
+    setShowConfirmation(false);
+    onInvest();
+  };
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="space-y-4">
         <label className="text-sm text-gray-300 mb-2 block">
           Importo Investimento (€)
@@ -128,18 +147,60 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
             className="flex-1"
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-300">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-black/20 rounded-lg">
             <div>
-              <span className="block font-medium">Unità acquistate:</span>
-              <span className="text-white">{calculateUnits(amount)} unità</span>
+              <span className="block text-sm text-gray-400">Unità acquistate:</span>
+              <span className="text-lg font-medium text-white">{calculateUnits(amount)} unità</span>
             </div>
             <div>
-              <span className="block font-medium">Rendimento annuo stimato:</span>
-              <span className="text-green-400">€{calculateExpectedReturn(amount)}</span>
+              <span className="block text-sm text-gray-400">Rendimento annuo stimato:</span>
+              <span className="text-lg font-medium text-green-400">€{calculateExpectedReturn(amount)}</span>
             </div>
           </div>
+
+          <Button 
+            onClick={handleInvestClick}
+            disabled={!!error || amount < minInvestment}
+            className="w-full py-6 text-lg bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary transition-all duration-300 hover:scale-[1.02]"
+          >
+            Investi Ora
+          </Button>
         </div>
       </div>
+
+      <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Conferma Investimento</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div className="grid gap-2">
+              <div className="flex justify-between">
+                <span className="text-gray-400">Importo:</span>
+                <span className="font-medium">€{amount.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-400">Unità:</span>
+                <span className="font-medium">{calculateUnits(amount)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-400">ROI Stimato:</span>
+                <span className="font-medium text-green-400">€{calculateExpectedReturn(amount)}/anno</span>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowConfirmation(false)}>
+              Annulla
+            </Button>
+            <Button onClick={handleConfirmInvestment}>
+              Conferma e Procedi al Pagamento
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
