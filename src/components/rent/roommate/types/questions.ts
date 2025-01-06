@@ -1,17 +1,30 @@
-export type QuestionIcon = "flame" | "snowflake" | "heart" | "star" | "user" | "badge" | "trophy";
+export type QuestionType = 'text' | 'select' | 'multiselect' | 'slider';
 
-export type QuestionCategory = "Lifestyle" | "Adventure" | "Creativity" | "Hypothetical" | "Relationships" | "Humor" | "Mystery" | "Social" | "Creative";
-
-export interface Question {
-  id: number;
-  text: string;
-  category: QuestionCategory;
-  isMystery?: boolean;
-  coinReward: number;
-  options: {
+export interface DynamicQuestion {
+  id: string;
+  question: string;
+  type: QuestionType;
+  category_id: string;
+  options?: {
     text: string;
-    icon: QuestionIcon;
-    trait: string;
+    value: string;
   }[];
+  follow_up_logic?: {
+    if: string;
+    then: string[];
+  };
+  is_premium: boolean;
   weight: number;
+}
+
+export interface QuestionCategory {
+  id: string;
+  name: string;
+  description?: string;
+  is_premium: boolean;
+}
+
+export interface UserAnswer {
+  question_id: string;
+  answer: any;
 }

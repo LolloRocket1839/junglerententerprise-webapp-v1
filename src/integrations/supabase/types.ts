@@ -115,6 +115,50 @@ export type Database = {
           },
         ]
       }
+      dynamic_questions: {
+        Row: {
+          category_id: string | null
+          created_at: string
+          follow_up_logic: Json | null
+          id: string
+          is_premium: boolean | null
+          options: Json | null
+          question: string
+          type: string
+          weight: number | null
+        }
+        Insert: {
+          category_id?: string | null
+          created_at?: string
+          follow_up_logic?: Json | null
+          id?: string
+          is_premium?: boolean | null
+          options?: Json | null
+          question: string
+          type: string
+          weight?: number | null
+        }
+        Update: {
+          category_id?: string | null
+          created_at?: string
+          follow_up_logic?: Json | null
+          id?: string
+          is_premium?: boolean | null
+          options?: Json | null
+          question?: string
+          type?: string
+          weight?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dynamic_questions_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "question_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hubs: {
         Row: {
           amenities: string[] | null
@@ -429,6 +473,7 @@ export type Database = {
           first_name: string | null
           future_city: string | null
           id: string
+          is_premium: boolean | null
           last_name: string | null
           move_in_date: string | null
           preferences: Json | null
@@ -445,6 +490,7 @@ export type Database = {
           first_name?: string | null
           future_city?: string | null
           id: string
+          is_premium?: boolean | null
           last_name?: string | null
           move_in_date?: string | null
           preferences?: Json | null
@@ -461,10 +507,35 @@ export type Database = {
           first_name?: string | null
           future_city?: string | null
           id?: string
+          is_premium?: boolean | null
           last_name?: string | null
           move_in_date?: string | null
           preferences?: Json | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      question_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_premium: boolean | null
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_premium?: boolean | null
+          name: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_premium?: boolean | null
+          name?: string
         }
         Relationships: []
       }
@@ -883,6 +954,45 @@ export type Database = {
             columns: ["id"]
             isOneToOne: true
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_answers: {
+        Row: {
+          answer: Json
+          created_at: string
+          id: string
+          profile_id: string | null
+          question_id: string | null
+        }
+        Insert: {
+          answer: Json
+          created_at?: string
+          id?: string
+          profile_id?: string | null
+          question_id?: string | null
+        }
+        Update: {
+          answer?: Json
+          created_at?: string
+          id?: string
+          profile_id?: string | null
+          question_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_answers_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "dynamic_questions"
             referencedColumns: ["id"]
           },
         ]
