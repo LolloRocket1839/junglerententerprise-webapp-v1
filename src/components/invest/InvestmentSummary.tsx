@@ -9,13 +9,13 @@ interface InvestmentSummaryProps {
 }
 
 const SummaryItem = ({ icon: Icon, label, value }: { icon: any, label: string, value: string }) => (
-  <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+  <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl backdrop-blur-sm">
     <div className="p-2 rounded-full bg-primary/20">
-      <Icon className="w-4 h-4 text-primary" />
+      <Icon className="w-5 h-5 text-primary" />
     </div>
     <div>
-      <p className="text-sm text-white/60">{label}</p>
-      <p className="text-base font-semibold text-white">{value}</p>
+      <p className="text-sm font-medium text-gray-300">{label}</p>
+      <p className="text-2xl font-semibold text-white tracking-tight">{value}</p>
     </div>
   </div>
 );
@@ -27,7 +27,7 @@ const InvestmentSummary: React.FC<InvestmentSummaryProps> = ({
   estimatedDate,
 }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+    <div className="grid grid-cols-1 gap-4">
       <SummaryItem
         icon={DollarSign}
         label="Importo selezionato"

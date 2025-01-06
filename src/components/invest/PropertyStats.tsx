@@ -14,26 +14,26 @@ const PropertyStats: React.FC<PropertyStatsProps> = ({
 }) => {
   return (
     <div className="grid grid-cols-3 gap-4">
-      <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm">
+      <div className="bg-white/5 rounded-xl p-4 backdrop-blur-sm">
         <div className="flex items-center gap-2 text-primary mb-2">
-          <Building2 className="w-4 h-4" />
-          <span className="text-sm">Unità</span>
+          <Building2 className="w-5 h-5" />
+          <span className="text-sm font-medium">Unità</span>
         </div>
-        <p className="text-xl font-bold text-white">{units}</p>
+        <p className="text-2xl font-semibold text-white tracking-tight">{units}</p>
       </div>
-      <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm">
+      <div className="bg-white/5 rounded-xl p-4 backdrop-blur-sm">
         <div className="flex items-center gap-2 text-primary mb-2">
-          <Users className="w-4 h-4" />
-          <span className="text-sm">Investitori</span>
+          <Users className="w-5 h-5" />
+          <span className="text-sm font-medium">Investitori</span>
         </div>
-        <p className="text-xl font-bold text-white">{reviewsCount}</p>
+        <p className="text-2xl font-semibold text-white tracking-tight">{reviewsCount}</p>
       </div>
-      <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm">
+      <div className="bg-white/5 rounded-xl p-4 backdrop-blur-sm">
         <div className="flex items-center gap-2 text-primary mb-2">
-          <TrendingUp className="w-4 h-4" />
-          <span className="text-sm">ROI</span>
+          <TrendingUp className="w-5 h-5" />
+          <span className="text-sm font-medium">ROI</span>
         </div>
-        <p className="text-xl font-bold text-white">{rating}%</p>
+        <p className="text-2xl font-semibold text-green-500 tracking-tight">{rating}%</p>
       </div>
     </div>
   );

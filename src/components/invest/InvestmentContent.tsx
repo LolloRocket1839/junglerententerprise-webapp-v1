@@ -8,8 +8,6 @@ import InvestmentControls from './InvestmentControls';
 import InvestmentSummary from './InvestmentSummary';
 import PropertyDetailsTab from './PropertyDetailsTab';
 import LegalDocumentsTab from './LegalDocumentsTab';
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from 'lucide-react';
 
 interface InvestmentContentProps {
   property: Property;
@@ -33,7 +31,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
   };
 
   const calculateUnits = (amount: number) => {
-    return amount / 100; // 1 unit = 100€
+    return amount / 100;
   };
 
   const getEstimatedPaymentDate = () => {
@@ -46,26 +44,31 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-      <div className="space-y-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
+      <div className="space-y-8">
         <PropertyGallery
           images={property.images || []}
           currentImageIndex={currentImageIndex}
           onToggleImage={onToggleImage}
         />
-        <PropertyStats
-          units={12}
-          reviewsCount={property.reviews_count || 0}
-          rating={property.rating || 8}
-        />
-        <ProgressBar 
-          value={property.amount_raised}
-          max={property.investment_goal}
-          className="mt-4"
-        />
+        <div className="bg-black/20 rounded-xl p-6 backdrop-blur-sm border border-white/10">
+          <h3 className="text-3xl font-bold text-white tracking-tight mb-6">{property.name}</h3>
+          <p className="text-lg font-light text-gray-300 mb-6 leading-relaxed">{property.description}</p>
+          <PropertyStats
+            units={12}
+            reviewsCount={property.reviews_count || 0}
+            rating={property.rating || 8}
+          />
+          <div className="mt-6">
+            <ProgressBar 
+              value={property.amount_raised}
+              max={property.investment_goal}
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-8">
         <Tabs defaultValue="overview" className="w-full">
           <TabsList className="grid w-full grid-cols-3 bg-white/5">
             <TabsTrigger value="overview">Overview</TabsTrigger>
@@ -73,13 +76,8 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
             <TabsTrigger value="legal">Legale</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="overview" className="space-y-4">
-            <div>
-              <h3 className="text-xl font-semibold text-white mb-2">{property.name}</h3>
-              <p className="text-gray-300">{property.description}</p>
-            </div>
-
-            <div className="space-y-4">
+          <TabsContent value="overview" className="space-y-6 pt-6">
+            <div className="bg-black/20 rounded-xl p-6 backdrop-blur-sm border border-white/10">
               <InvestmentControls
                 amount={investmentAmount}
                 onAmountChange={setInvestmentAmount}
@@ -89,12 +87,14 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
                 onInvest={onInvest}
               />
 
-              <InvestmentSummary
-                amount={investmentAmount}
-                roi={`€${calculateROI(investmentAmount)}`}
-                units={calculateUnits(investmentAmount)}
-                estimatedDate={getEstimatedPaymentDate()}
-              />
+              <div className="mt-8">
+                <InvestmentSummary
+                  amount={investmentAmount}
+                  roi={`€${calculateROI(investmentAmount)}`}
+                  units={calculateUnits(investmentAmount)}
+                  estimatedDate={getEstimatedPaymentDate()}
+                />
+              </div>
             </div>
           </TabsContent>
 
