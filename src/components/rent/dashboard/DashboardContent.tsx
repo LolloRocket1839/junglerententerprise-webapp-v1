@@ -10,10 +10,11 @@ import StudentSwap from '../StudentSwap';
 import RoommateFinder from '../roommate/RoommateFinder';
 import MarketplaceGrid from '../../marketplace/MarketplaceGrid';
 import type { Session } from '@supabase/supabase-js';
+import type { View } from './DashboardSidebar';
 
 interface DashboardContentProps {
   isEmailVerified: boolean;
-  activeView: string;
+  activeView: View;
   session: Session;
 }
 

@@ -22,6 +22,22 @@ const StudentDashboard = () => {
     },
   });
 
+  // Set up auth state change listener
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        toast({
+          title: "Session Expired",
+          description: "Please sign in to continue.",
+          variant: "destructive"
+        });
+        navigate('/auth');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate, toast]);
+
   // Redirect if no session
   useEffect(() => {
     if (!isSessionLoading && !session) {
