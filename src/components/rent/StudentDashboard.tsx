@@ -19,6 +19,7 @@ const StudentDashboard = () => {
       if (!session) throw new Error('No session found');
       return session;
     },
+    retry: false, // Don't retry on failure
   });
 
   // Set up auth state change listener
