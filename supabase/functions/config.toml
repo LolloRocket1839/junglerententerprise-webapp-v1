@@ -1,0 +1,4 @@
+project_id = "jqvkodddhilbrbusyvzx"
+
+[global.env]
+STRIPE_SECRET_KEY = "STRIPE_SECRET_KEY"

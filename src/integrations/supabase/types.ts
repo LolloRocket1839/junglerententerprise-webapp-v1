@@ -213,6 +213,8 @@ export type Database = {
           created_at: string
           hub_id: string | null
           id: string
+          payment_id: string | null
+          payment_status: string
           profile_id: string | null
           status: string
           tokens: number
@@ -223,6 +225,8 @@ export type Database = {
           created_at?: string
           hub_id?: string | null
           id?: string
+          payment_id?: string | null
+          payment_status?: string
           profile_id?: string | null
           status?: string
           tokens: number
@@ -233,6 +237,8 @@ export type Database = {
           created_at?: string
           hub_id?: string | null
           id?: string
+          payment_id?: string | null
+          payment_status?: string
           profile_id?: string | null
           status?: string
           tokens?: number

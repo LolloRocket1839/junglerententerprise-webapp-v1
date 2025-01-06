@@ -13,6 +13,8 @@ import { Label } from "@/components/ui/label";
 import { Property } from './types';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 import {
   Accordion,
   AccordionContent,
@@ -24,7 +26,7 @@ interface InvestmentDialogProps {
   property: Property;
   investmentAmount: string;
   setInvestmentAmount: (amount: string) => void;
-  onSubmit: () => void;
+  onClose: () => void;
   isSubmitting: boolean;
   error?: string;
 }
@@ -33,11 +35,14 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
   property,
   investmentAmount,
   setInvestmentAmount,
-  onSubmit,
+  onClose,
   isSubmitting,
   error
 }) => {
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { toast } = useToast();
+  
   const estimatedDate = new Date();
   estimatedDate.setMonth(estimatedDate.getMonth() + 3);
   const formattedDate = estimatedDate.toLocaleDateString('it-IT', { 
@@ -45,11 +50,42 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
     year: 'numeric' 
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!termsAccepted) {
+      toast({
+        title: "Errore",
+        description: "Devi accettare i termini e le condizioni per procedere",
+        variant: "destructive"
+      });
       return;
     }
-    onSubmit();
+
+    try {
+      setIsProcessing(true);
+      
+      const response = await supabase.functions.invoke('create-checkout', {
+        body: {
+          amount: parseFloat(investmentAmount),
+          hub_id: property.id
+        }
+      });
+
+      if (response.error) {
+        throw new Error(response.error.message);
+      }
+
+      // Redirect to Stripe Checkout
+      window.location.href = response.data.url;
+    } catch (error) {
+      toast({
+        title: "Errore",
+        description: "Si è verificato un errore durante l'elaborazione del pagamento. Riprova più tardi.",
+        variant: "destructive"
+      });
+      console.error('Payment error:', error);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -79,7 +115,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
             value={investmentAmount}
             onChange={(e) => setInvestmentAmount(e.target.value)}
             placeholder="Inserisci importo..."
-            disabled={isSubmitting}
+            disabled={isProcessing}
           />
           <p className="text-sm text-muted-foreground">
             Riceverai {investmentAmount ? Math.floor(parseFloat(investmentAmount) / 1000) : 0} token
@@ -139,6 +175,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
             id="terms" 
             checked={termsAccepted}
             onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+            disabled={isProcessing}
           />
           <label
             htmlFor="terms"
@@ -152,13 +189,13 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
       <DialogFooter>
         <Button
           onClick={handleSubmit}
-          disabled={isSubmitting || !termsAccepted}
+          disabled={isProcessing || !termsAccepted}
           className="relative w-full"
         >
-          {isSubmitting && (
+          {isProcessing && (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           )}
-          {isSubmitting ? 'Elaborazione...' : 'Conferma Investimento'}
+          {isProcessing ? 'Elaborazione...' : 'Conferma Investimento'}
         </Button>
       </DialogFooter>
     </DialogContent>
