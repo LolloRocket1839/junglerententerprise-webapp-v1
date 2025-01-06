@@ -14,26 +14,28 @@ const PropertyStats: React.FC<PropertyStatsProps> = ({
 }) => {
   return (
     <div className="grid grid-cols-3 gap-4">
-      <div className="bg-white/5 rounded-xl p-4 backdrop-blur-sm">
+      <div className="glass-card p-4 flex flex-col">
         <div className="flex items-center gap-2 text-primary mb-2">
-          <Building2 className="w-5 h-5" />
+          <Building2 className="w-4 h-4" />
           <span className="text-sm font-medium">Unità</span>
         </div>
-        <p className="text-2xl font-semibold text-white tracking-tight">{units}</p>
+        <p className="text-2xl font-bold text-white tracking-tight">{units}</p>
       </div>
-      <div className="bg-white/5 rounded-xl p-4 backdrop-blur-sm">
+      
+      <div className="glass-card p-4 flex flex-col">
         <div className="flex items-center gap-2 text-primary mb-2">
-          <Users className="w-5 h-5" />
+          <Users className="w-4 h-4" />
           <span className="text-sm font-medium">Investitori</span>
         </div>
-        <p className="text-2xl font-semibold text-white tracking-tight">{reviewsCount}</p>
+        <p className="text-2xl font-bold text-white tracking-tight">{reviewsCount}</p>
       </div>
-      <div className="bg-white/5 rounded-xl p-4 backdrop-blur-sm">
+      
+      <div className="glass-card p-4 flex flex-col">
         <div className="flex items-center gap-2 text-primary mb-2">
-          <TrendingUp className="w-5 h-5" />
+          <TrendingUp className="w-4 h-4" />
           <span className="text-sm font-medium">ROI</span>
         </div>
-        <p className="text-2xl font-semibold text-green-500 tracking-tight">{rating}%</p>
+        <p className="text-2xl font-bold text-green-500 tracking-tight">{rating}%</p>
       </div>
     </div>
   );

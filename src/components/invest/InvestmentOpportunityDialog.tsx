@@ -32,21 +32,25 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-6xl w-full bg-gradient-to-br from-black/95 to-green-950/95 backdrop-blur-xl border border-white/10 p-0 gap-0 max-h-[90vh] overflow-y-auto">
-        <InvestmentHeader 
-          propertyName={property.name}
-          location={property.location}
-        />
-        
-        <InvestmentContent
-          property={property}
-          currentImageIndex={currentImageIndex}
-          onToggleImage={toggleImage}
-          investmentAmount={investmentAmount}
-          setInvestmentAmount={setInvestmentAmount}
-          onInvest={handleInvest}
-        />
+        <div className="flex flex-col min-h-[90vh]">
+          <InvestmentHeader 
+            propertyName={property.name}
+            location={property.location}
+          />
+          
+          <div className="flex-1 overflow-y-auto">
+            <InvestmentContent
+              property={property}
+              currentImageIndex={currentImageIndex}
+              onToggleImage={toggleImage}
+              investmentAmount={investmentAmount}
+              setInvestmentAmount={setInvestmentAmount}
+              onInvest={handleInvest}
+            />
+          </div>
 
-        <InvestmentFooter />
+          <InvestmentFooter />
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, MapPin } from 'lucide-react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,12 +19,12 @@ const InvestmentHeader: React.FC<InvestmentHeaderProps> = ({
   location
 }) => {
   return (
-    <>
-      <div className="p-4 border-b border-white/10">
+    <div className="sticky top-0 z-10 backdrop-blur-xl bg-black/40 border-b border-white/10">
+      <div className="p-4">
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/invest" className="text-sm font-medium text-white hover:text-white/90">
+              <BreadcrumbLink href="/invest" className="text-sm font-medium text-white/80 hover:text-white">
                 Dashboard Investimenti
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -38,15 +38,16 @@ const InvestmentHeader: React.FC<InvestmentHeaderProps> = ({
         </Breadcrumb>
       </div>
 
-      <div className="p-6 border-b border-white/10">
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-2 tracking-tight">
+      <div className="px-6 py-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-2">
           {propertyName}
         </h2>
-        <p className="text-lg font-light text-gray-300 text-center tracking-wide">
-          {location}
-        </p>
+        <div className="flex items-center gap-2 text-gray-300">
+          <MapPin className="w-4 h-4" />
+          <span className="text-lg font-light tracking-wide">{location}</span>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

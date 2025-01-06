@@ -44,22 +44,32 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
-      <div className="space-y-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 md:p-8">
+      <div className="space-y-6">
         <PropertyGallery
           images={property.images || []}
           currentImageIndex={currentImageIndex}
           onToggleImage={onToggleImage}
         />
-        <div className="bg-black/20 rounded-xl p-6 backdrop-blur-sm border border-white/10">
-          <h3 className="text-3xl font-bold text-white tracking-tight mb-6">{property.name}</h3>
-          <p className="text-lg font-light text-gray-300 mb-6 leading-relaxed">{property.description}</p>
+        <div className="glass-card p-6 space-y-6">
+          <div className="space-y-4">
+            <h3 className="text-3xl font-bold text-white tracking-tight">{property.name}</h3>
+            <p className="text-lg font-light text-gray-300 leading-relaxed">{property.description}</p>
+          </div>
+          
           <PropertyStats
             units={12}
             reviewsCount={property.reviews_count || 0}
             rating={property.rating || 8}
           />
-          <div className="mt-6">
+          
+          <div className="pt-4">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-medium text-gray-300">Progresso Raccolta Fondi</span>
+              <span className="text-sm font-semibold text-white">
+                €{property.amount_raised.toLocaleString()} / €{property.investment_goal.toLocaleString()}
+              </span>
+            </div>
             <ProgressBar 
               value={property.amount_raised}
               max={property.investment_goal}
@@ -68,16 +78,31 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
         </div>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-6">
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-white/5">
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="details">Dettagli</TabsTrigger>
-            <TabsTrigger value="legal">Legale</TabsTrigger>
+          <TabsList className="w-full grid grid-cols-3 bg-black/40 backdrop-blur-xl border border-white/10 rounded-xl p-1">
+            <TabsTrigger 
+              value="overview"
+              className="data-[state=active]:bg-white/10 data-[state=active]:text-white rounded-lg transition-all"
+            >
+              Overview
+            </TabsTrigger>
+            <TabsTrigger 
+              value="details"
+              className="data-[state=active]:bg-white/10 data-[state=active]:text-white rounded-lg transition-all"
+            >
+              Dettagli
+            </TabsTrigger>
+            <TabsTrigger 
+              value="legal"
+              className="data-[state=active]:bg-white/10 data-[state=active]:text-white rounded-lg transition-all"
+            >
+              Legale
+            </TabsTrigger>
           </TabsList>
           
           <TabsContent value="overview" className="space-y-6 pt-6">
-            <div className="bg-black/20 rounded-xl p-6 backdrop-blur-sm border border-white/10">
+            <div className="glass-card p-6 space-y-8">
               <InvestmentControls
                 amount={investmentAmount}
                 onAmountChange={setInvestmentAmount}
@@ -87,7 +112,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
                 onInvest={onInvest}
               />
 
-              <div className="mt-8">
+              <div className="pt-4 border-t border-white/10">
                 <InvestmentSummary
                   amount={investmentAmount}
                   roi={`€${calculateROI(investmentAmount)}`}
@@ -98,12 +123,16 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
             </div>
           </TabsContent>
 
-          <TabsContent value="details">
-            <PropertyDetailsTab />
+          <TabsContent value="details" className="pt-6">
+            <div className="glass-card p-6">
+              <PropertyDetailsTab />
+            </div>
           </TabsContent>
           
-          <TabsContent value="legal">
-            <LegalDocumentsTab />
+          <TabsContent value="legal" className="pt-6">
+            <div className="glass-card p-6">
+              <LegalDocumentsTab />
+            </div>
           </TabsContent>
         </Tabs>
       </div>
