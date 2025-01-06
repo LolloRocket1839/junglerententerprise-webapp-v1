@@ -2,7 +2,7 @@ export interface Property {
   id: string;
   name: string;
   location: string;
-  description: string | null;
+  description: string;
   price_per_night: number;
   amenities: string[] | null;
   images: string[] | null;

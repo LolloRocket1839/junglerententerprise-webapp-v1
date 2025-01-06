@@ -32,14 +32,18 @@ const InvestmentOpportunities = () => {
         return mockProperties;
       }
 
-      return data.map(hub => ({
-        ...hub,
-        investment_goal: hub.investment_goal || 100000,
-        amount_raised: hub.amount_raised || 0,
+      return data.map((hub: any) => ({
+        id: hub.id,
+        name: hub.name,
+        location: hub.location,
+        description: hub.description || '',
+        price_per_night: hub.price_per_night,
         amenities: hub.amenities || [],
         images: hub.images || [],
         rating: hub.rating || null,
-        reviews_count: hub.reviews_count || 0
+        reviews_count: hub.reviews_count || 0,
+        investment_goal: hub.investment_goal || 100000,
+        amount_raised: hub.amount_raised || 0
       })) as Property[];
     }
   });
@@ -117,12 +121,12 @@ const InvestmentOpportunities = () => {
                 id: i.toString(),
                 name: '',
                 location: '',
-                description: null,
+                description: '',
                 price_per_night: 0,
-                amenities: null,
-                images: null,
+                amenities: [],
+                images: [],
                 rating: null,
-                reviews_count: null,
+                reviews_count: 0,
                 investment_goal: 100000,
                 amount_raised: 0
               }}
