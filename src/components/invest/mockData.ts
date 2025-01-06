@@ -38,7 +38,7 @@ export const mockProperties: Property[] = [
     amenities: ['Giardino Privato', 'Vista Mole', 'Piscina', 'Sauna'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c'
+      'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b'
     ],
     rating: 9.5,
     reviews_count: 42
@@ -52,7 +52,7 @@ export const mockProperties: Property[] = [
     amenities: ['Terrazza Panoramica', 'Spa', 'Servizio in Camera', 'Wine Cellar'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c'
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d'
     ],
     rating: 9.0,
     reviews_count: 31
