@@ -5,11 +5,21 @@ import { useToast } from "@/components/ui/use-toast";
 import SearchSection from '@/components/rent/SearchSection';
 import ProcessSteps from '@/components/rent/ProcessSteps';
 import { useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 const Rent = () => {
   const { toast } = useToast();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('search');
+
+  const { data: session } = useQuery({
+    queryKey: ['auth-session'],
+    queryFn: async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      return session;
+    },
+  });
 
   useEffect(() => {
     if (location.state?.activeTab) {
@@ -17,7 +27,27 @@ const Rent = () => {
     }
   }, [location.state]);
 
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        setActiveTab('search');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   const handleTabChange = (value: string) => {
+    if (value === 'profile' && !session) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to access your profile.",
+        variant: "destructive"
+      });
+      return;
+    }
     setActiveTab(value);
   };
 

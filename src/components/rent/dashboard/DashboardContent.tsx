@@ -1,5 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import StudentSchedule from '../StudentSchedule';
 import StudentSwap from '../StudentSwap';
 import DashboardStats from '../DashboardStats';
@@ -7,10 +11,6 @@ import ActivityFeed from '../ActivityFeed';
 import RoommateFinder from '../roommate/RoommateFinder';
 import MarketplaceGrid from '../../marketplace/MarketplaceGrid';
 import { AlertCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from '@/components/ui/use-toast';
 
 type View = "overview" | "schedule" | "messages" | "newsfeed" | "swap" | "roommate" | "marketplace" | "hub" | "settings";
 
@@ -24,7 +24,7 @@ const DashboardContent = ({ isEmailVerified }: DashboardContentProps) => {
   const { toast } = useToast();
 
   // Verify user session
-  const { data: session } = useQuery({
+  const { data: session, isLoading: sessionLoading } = useQuery({
     queryKey: ['auth-session'],
     queryFn: async () => {
       const { data: { session }, error } = await supabase.auth.getSession();
@@ -40,23 +40,59 @@ const DashboardContent = ({ isEmailVerified }: DashboardContentProps) => {
     }
   });
 
-  if (!isEmailVerified) {
+  // Check if user has a profile
+  const { data: profile, isLoading: profileLoading } = useQuery({
+    queryKey: ['user-profile', session?.user?.id],
+    enabled: !!session?.user?.id,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', session?.user?.id)
+        .single();
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return null;
+      }
+      return data;
+    }
+  });
+
+  // Listen for real-time updates
+  useEffect(() => {
+    if (!session?.user?.id) return;
+
+    const channel = supabase
+      .channel('dashboard-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'notifications'
+        },
+        (payload) => {
+          console.log('Notification update:', payload);
+          // Refresh notifications
+          toast({
+            title: "New Update",
+            description: "You have a new notification",
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [session?.user?.id, toast]);
+
+  if (sessionLoading || profileLoading) {
     return (
       <div className="lg:col-span-9">
         <div className="glass-card p-8 text-center">
-          <AlertCircle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-white mb-2">Email Verification Required</h3>
-          <p className="text-white/60 mb-6">
-            To access all features of the student dashboard, please verify your email address.
-            Check your inbox for a verification link.
-          </p>
-          <Button 
-            variant="outline" 
-            onClick={() => navigate('/auth')}
-            className="bg-white/5 hover:bg-white/10"
-          >
-            Back to Authentication
-          </Button>
+          <div className="animate-pulse">Loading...</div>
         </div>
       </div>
     );
@@ -77,6 +113,28 @@ const DashboardContent = ({ isEmailVerified }: DashboardContentProps) => {
             className="bg-white/5 hover:bg-white/10"
           >
             Sign In
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isEmailVerified) {
+    return (
+      <div className="lg:col-span-9">
+        <div className="glass-card p-8 text-center">
+          <AlertCircle className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-white mb-2">Email Verification Required</h3>
+          <p className="text-white/60 mb-6">
+            To access all features of the student dashboard, please verify your email address.
+            Check your inbox for a verification link.
+          </p>
+          <Button 
+            variant="outline" 
+            onClick={() => navigate('/auth')}
+            className="bg-white/5 hover:bg-white/10"
+          >
+            Back to Authentication
           </Button>
         </div>
       </div>
