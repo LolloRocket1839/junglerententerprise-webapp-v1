@@ -48,6 +48,11 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
     year: 'numeric' 
   });
 
+  const isValidUUID = (uuid: string) => {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(uuid);
+  };
+
   const handleSubmit = async () => {
     if (!termsAccepted) {
       toast({
@@ -58,12 +63,18 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
       return;
     }
 
+    if (!property.id || !isValidUUID(property.id)) {
+      toast({
+        title: "Errore",
+        description: "ID proprietà non valido",
+        variant: "destructive"
+      });
+      return;
+    }
+
     try {
       setIsProcessing(true);
-      
-      if (!property.id) {
-        throw new Error("Invalid property ID");
-      }
+      console.log('Creating checkout for property:', property.id, 'amount:', investmentAmount);
 
       const response = await supabase.functions.invoke('create-checkout', {
         body: {
@@ -80,11 +91,6 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
       if (!response.data?.url) {
         throw new Error("No checkout URL received");
       }
-
-      // Send confirmation email
-      await supabase.functions.invoke('send-investment-confirmation', {
-        body: { investmentId: response.data.investmentId }
-      });
 
       setIsSuccess(true);
       
