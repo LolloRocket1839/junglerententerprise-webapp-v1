@@ -63,26 +63,36 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
     try {
       setIsProcessing(true);
       
+      // Ensure property.id is a valid UUID
+      if (!property.id) {
+        throw new Error("Invalid property ID");
+      }
+
       const response = await supabase.functions.invoke('create-checkout', {
         body: {
           amount: parseFloat(investmentAmount),
-          hub_id: property.id
+          hub_id: property.id // Ensure this is a valid UUID
         }
       });
 
       if (response.error) {
+        console.error('Checkout error:', response.error);
         throw new Error(response.error.message);
+      }
+
+      if (!response.data?.url) {
+        throw new Error("No checkout URL received");
       }
 
       // Redirect to Stripe Checkout
       window.location.href = response.data.url;
     } catch (error) {
+      console.error('Payment error:', error);
       toast({
         title: "Errore",
         description: "Si è verificato un errore durante l'elaborazione del pagamento. Riprova più tardi.",
         variant: "destructive"
       });
-      console.error('Payment error:', error);
     } finally {
       setIsProcessing(false);
     }

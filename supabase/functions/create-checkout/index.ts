@@ -33,12 +33,17 @@ serve(async (req) => {
       apiVersion: '2023-10-16',
     });
 
+    // Validate hub_id is a valid UUID
+    if (!hub_id || typeof hub_id !== 'string' || !hub_id.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
+      throw new Error('Invalid hub ID format');
+    }
+
     // Create investment record with proper UUID handling
     const { data: investment, error: investmentError } = await supabaseClient
       .from('investments')
       .insert({
         profile_id: user.id, // This is already a UUID from auth
-        hub_id: hub_id, // This should be a UUID from the frontend
+        hub_id: hub_id, // Validated UUID from the frontend
         amount: parseFloat(amount),
         tokens: Math.floor(parseFloat(amount) / 1000), // 1 token per €1000
         status: 'pending',
