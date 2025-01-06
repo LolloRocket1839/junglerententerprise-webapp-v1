@@ -29,31 +29,33 @@ const InvestmentConfirmationDialog: React.FC<InvestmentConfirmationDialogProps> 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold tracking-tight">Conferma Investimento</DialogTitle>
+          <DialogTitle className="text-2xl font-bold tracking-tight text-white">
+            Conferma Investimento
+          </DialogTitle>
         </DialogHeader>
         
         <div className="space-y-4 py-4">
           <div className="grid gap-3">
             <div className="flex justify-between items-center">
-              <span className="text-base font-medium text-gray-400">Importo:</span>
-              <span className="text-lg font-semibold">€{amount.toLocaleString()}</span>
+              <span className="text-base font-medium text-gray-300">Importo:</span>
+              <span className="text-lg font-semibold text-white">€{amount.toLocaleString()}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-base font-medium text-gray-400">Unità:</span>
-              <span className="text-lg font-semibold">{units}</span>
+              <span className="text-base font-medium text-gray-300">Unità:</span>
+              <span className="text-lg font-semibold text-white">{units}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-base font-medium text-gray-400">ROI Stimato:</span>
-              <span className="text-lg font-semibold text-green-400">{expectedReturn}/anno</span>
+              <span className="text-base font-medium text-gray-300">ROI Stimato:</span>
+              <span className="text-lg font-semibold text-green-500">{expectedReturn}/anno</span>
             </div>
           </div>
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)} className="font-medium">
+          <Button variant="outline" onClick={() => onOpenChange(false)} className="font-semibold">
             Annulla
           </Button>
-          <Button onClick={onConfirm} className="font-semibold">
+          <Button onClick={onConfirm} className="font-bold bg-green-500 hover:bg-green-600">
             Conferma e Procedi al Pagamento
           </Button>
         </DialogFooter>

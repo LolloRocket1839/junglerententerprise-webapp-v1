@@ -29,13 +29,11 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border antialiased;
   }
   body {
-    @apply bg-gradient-to-br from-[#000000] via-[#111111] to-[#222222] min-h-screen text-foreground;
+    @apply bg-gradient-to-br from-[#000000] via-[#111111] to-[#222222] min-h-screen text-white;
     font-feature-settings: "rlig" 1, "calt" 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -49,7 +47,7 @@
   }
 
   .glass-button {
-    @apply glass rounded-full px-6 py-3 text-sm font-medium 
+    @apply glass rounded-full px-6 py-3 text-sm font-semibold 
            text-white transition-all duration-300 hover:bg-white/20 
            active:scale-95 disabled:opacity-50;
   }
@@ -66,19 +64,5 @@
 
   .glass-dialog {
     @apply glass rounded-2xl shadow-2xl;
-  }
-}
-
-@layer utilities {
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-  
-  .animate-float-slow {
-    animation: float 8s ease-in-out infinite;
-  }
-  
-  .animate-float-slower {
-    animation: float 10s ease-in-out infinite;
   }
 }

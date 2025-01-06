@@ -96,7 +96,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <label className="text-lg font-medium text-gray-200 tracking-wide block">
+        <label className="text-xl font-bold text-white tracking-wide block">
           Importo Investimento (€)
         </label>
         
@@ -110,7 +110,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
-              <AlertDescription className="text-sm font-medium">{error}</AlertDescription>
+              <AlertDescription className="text-sm font-semibold">{error}</AlertDescription>
             </Alert>
           )}
           
@@ -124,7 +124,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
               className="relative z-10"
             />
             <div 
-              className="absolute inset-y-0 left-0 bg-green-500/20 rounded-full transition-all duration-300 ease-out"
+              className="absolute inset-y-0 left-0 bg-green-500/30 rounded-full transition-all duration-300 ease-out"
               style={{ 
                 width: `${progressPercentage}%`,
                 height: '2px',
@@ -135,19 +135,19 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-black/20 rounded-lg backdrop-blur-sm">
             <div>
-              <span className="block text-sm font-medium text-gray-400 mb-1">Unità acquistate:</span>
-              <span className="text-xl font-semibold text-white tracking-tight">{calculateUnits(amount)} unità</span>
+              <span className="block text-sm font-medium text-gray-300 mb-1">Unità acquistate:</span>
+              <span className="text-2xl font-semibold text-white tracking-tight">{calculateUnits(amount)} unità</span>
             </div>
             <div>
-              <span className="block text-sm font-medium text-gray-400 mb-1">Rendimento annuo stimato:</span>
-              <span className="text-xl font-semibold text-green-500 tracking-tight">€{calculateExpectedReturn(amount)}</span>
+              <span className="block text-sm font-medium text-gray-300 mb-1">Rendimento annuo stimato:</span>
+              <span className="text-2xl font-semibold text-green-500 tracking-tight">€{calculateExpectedReturn(amount)}</span>
             </div>
           </div>
 
           <Button 
             onClick={handleInvestClick}
             disabled={!!error || amount < minInvestment}
-            className="w-full py-6 text-lg font-semibold bg-green-500 hover:bg-green-600 
+            className="w-full py-6 text-lg font-bold bg-green-500 hover:bg-green-600 
                      transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 
                      disabled:hover:scale-100 shadow-lg shadow-green-500/20"
           >

@@ -24,7 +24,7 @@ const InvestmentHeader: React.FC<InvestmentHeaderProps> = ({
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/invest" className="text-sm font-medium text-white/70 hover:text-white">
+              <BreadcrumbLink href="/invest" className="text-sm font-medium text-white hover:text-white/90">
                 Dashboard Investimenti
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -32,7 +32,7 @@ const InvestmentHeader: React.FC<InvestmentHeaderProps> = ({
               <ChevronRight className="h-4 w-4" />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbPage className="text-sm font-medium">{propertyName}</BreadcrumbPage>
+              <BreadcrumbPage className="text-sm font-semibold text-white">{propertyName}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
