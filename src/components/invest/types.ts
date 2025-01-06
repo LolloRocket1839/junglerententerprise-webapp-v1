@@ -8,4 +8,6 @@ export interface Property {
   images: string[] | null;
   rating: number | null;
   reviews_count: number | null;
+  investment_goal: number;
+  amount_raised: number;
 }

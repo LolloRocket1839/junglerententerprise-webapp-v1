@@ -118,10 +118,12 @@ export type Database = {
       hubs: {
         Row: {
           amenities: string[] | null
+          amount_raised: number
           created_at: string
           description: string | null
           id: string
           images: string[] | null
+          investment_goal: number
           location: string
           name: string
           price_per_night: number
@@ -131,10 +133,12 @@ export type Database = {
         }
         Insert: {
           amenities?: string[] | null
+          amount_raised?: number
           created_at?: string
           description?: string | null
           id?: string
           images?: string[] | null
+          investment_goal?: number
           location: string
           name: string
           price_per_night: number
@@ -144,10 +148,12 @@ export type Database = {
         }
         Update: {
           amenities?: string[] | null
+          amount_raised?: number
           created_at?: string
           description?: string | null
           id?: string
           images?: string[] | null
+          investment_goal?: number
           location?: string
           name?: string
           price_per_night?: number

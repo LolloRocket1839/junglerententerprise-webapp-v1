@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Info, ImageIcon } from 'lucide-react';
 import { Property } from './types';
+import ProgressBar from './ProgressBar';
 
 interface PropertyCardProps {
   property: Property;
@@ -59,19 +60,27 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
           <p className="text-sm text-white/60">{property.location}</p>
         </div>
         <p className="text-sm text-white/80 line-clamp-2">{property.description}</p>
-        <div className="flex justify-between items-center">
-          <div>
-            <p className="text-xs text-white/60">Prezzo per notte</p>
-            <p className="text-base font-semibold text-white">
-              €{property.price_per_night}
-            </p>
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-xs text-white/60">Prezzo per notte</p>
+              <p className="text-base font-semibold text-white">
+                €{property.price_per_night}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-white/60">ROI Previsto</p>
+              <p className="text-base font-semibold text-primary">
+                {property.rating ? `${property.rating}%` : 'TBD'}
+              </p>
+            </div>
           </div>
-          <div className="text-right">
-            <p className="text-xs text-white/60">ROI Previsto</p>
-            <p className="text-base font-semibold text-primary">
-              {property.rating ? `${property.rating}%` : 'TBD'}
-            </p>
-          </div>
+          <ProgressBar 
+            value={property.amount_raised || 0}
+            max={property.investment_goal || 100000}
+            showLabel={false}
+            className="mt-2"
+          />
         </div>
         <div className="flex gap-3">
           <Button 
