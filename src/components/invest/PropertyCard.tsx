@@ -61,13 +61,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
         </div>
         <p className="text-sm text-white/80 line-clamp-2">{property.description}</p>
         <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-xs text-white/60">Prezzo per notte</p>
-              <p className="text-base font-semibold text-white">
-                €{property.price_per_night}
-              </p>
-            </div>
+          <div className="flex justify-end items-center">
             <div className="text-right">
               <p className="text-xs text-white/60">ROI Previsto</p>
               <p className="text-base font-semibold text-primary">
