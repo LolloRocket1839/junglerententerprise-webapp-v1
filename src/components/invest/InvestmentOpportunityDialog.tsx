@@ -72,7 +72,6 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-6xl w-full bg-gradient-to-br from-black/95 to-green-950/95 backdrop-blur-xl border border-white/10 p-0 gap-0">
-        {/* Breadcrumb Navigation */}
         <div className="p-4 border-b border-white/10">
           <Breadcrumb>
             <BreadcrumbList>
@@ -99,9 +98,7 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
           </p>
         </div>
 
-        {/* Main Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-          {/* Left Column - Image and Stats */}
           <div className="space-y-4">
             <PropertyGallery
               images={property.images || []}
@@ -120,7 +117,6 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
             />
           </div>
 
-          {/* Right Column - Investment Details */}
           <div className="space-y-6">
             <Tabs defaultValue="overview" className="w-full">
               <TabsList className="grid w-full grid-cols-3 bg-white/5">
@@ -141,6 +137,7 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
                     onAmountChange={setInvestmentAmount}
                     minInvestment={minInvestment}
                     maxInvestment={maxInvestment}
+                    roi={property.rating || 8}
                   />
 
                   <InvestmentSummary
