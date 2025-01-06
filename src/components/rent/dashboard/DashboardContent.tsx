@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from '@/integrations/supabase/client';
@@ -11,13 +11,13 @@ import RoommateFinder from '../roommate/RoommateFinder';
 
 interface DashboardContentProps {
   isEmailVerified: boolean;
+  activeView: string;
 }
 
-const DashboardContent = ({ isEmailVerified }: DashboardContentProps) => {
+const DashboardContent = ({ isEmailVerified, activeView }: DashboardContentProps) => {
   const { toast } = useToast();
-  const [activeView, setActiveView] = useState('overview');
 
-  const { data: profile } = useQuery({
+  const { data: profile, isLoading } = useQuery({
     queryKey: ['user-profile'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -29,7 +29,14 @@ const DashboardContent = ({ isEmailVerified }: DashboardContentProps) => {
         .eq('id', user.id)
         .single();
 
-      if (error) throw error;
+      if (error) {
+        toast({
+          title: "Error loading profile",
+          description: error.message,
+          variant: "destructive"
+        });
+        throw error;
+      }
       return data;
     },
   });
@@ -46,8 +53,6 @@ const DashboardContent = ({ isEmailVerified }: DashboardContentProps) => {
         },
         (payload) => {
           console.log('Profile change received:', payload);
-          // Invalidate the profile query to trigger a refetch
-          // queryClient.invalidateQueries(['user-profile']);
         }
       )
       .subscribe();
@@ -70,6 +75,37 @@ const DashboardContent = ({ isEmailVerified }: DashboardContentProps) => {
     );
   }
 
+  if (isLoading) {
+    return (
+      <div className="lg:col-span-9">
+        <div className="glass-card p-6">
+          <p className="text-white">Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const renderContent = () => {
+    switch (activeView) {
+      case 'roommate':
+        return <RoommateFinder />;
+      case 'swap':
+        return <StudentSwap />;
+      case 'overview':
+      default:
+        return (
+          <div className="grid gap-6">
+            <DashboardStats />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <ActivityFeed />
+              <StudentSchedule />
+            </div>
+            <ProcessSteps />
+          </div>
+        );
+    }
+  };
+
   return (
     <div className="lg:col-span-9 space-y-6">
       {!profile && (
@@ -81,14 +117,7 @@ const DashboardContent = ({ isEmailVerified }: DashboardContentProps) => {
         </div>
       )}
 
-      <div className="grid gap-6">
-        <DashboardStats />
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <ActivityFeed />
-          <StudentSchedule />
-        </div>
-        <ProcessSteps />
-      </div>
+      {renderContent()}
     </div>
   );
 };

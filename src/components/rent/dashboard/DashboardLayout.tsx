@@ -38,7 +38,7 @@ const DashboardLayout = () => {
         variant: "destructive"
       });
     }
-  }, [session, isSessionLoading, navigate]);
+  }, [session, isSessionLoading, navigate, toast]);
 
   const isEmailVerified = session?.user?.email_confirmed_at != null;
 
@@ -53,7 +53,7 @@ const DashboardLayout = () => {
   }
 
   if (!session) {
-    return null; // Navigation will handle redirect
+    return null;
   }
 
   return (
@@ -64,7 +64,10 @@ const DashboardLayout = () => {
           onViewChange={setActiveView}
           activeView={activeView}
         />
-        <DashboardContent isEmailVerified={isEmailVerified} />
+        <DashboardContent 
+          isEmailVerified={isEmailVerified}
+          activeView={activeView}
+        />
       </div>
     </div>
   );
