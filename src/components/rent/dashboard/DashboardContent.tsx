@@ -6,9 +6,7 @@ import DashboardStats from '../DashboardStats';
 import ActivityFeed from '../ActivityFeed';
 import ProcessSteps from '../ProcessSteps';
 import StudentSchedule from '../StudentSchedule';
-import StudentSwap from '../StudentSwap';
 import RoommateFinder from '../roommate/RoommateFinder';
-import MarketplaceGrid from '../../marketplace/MarketplaceGrid';
 import type { Session } from '@supabase/supabase-js';
 import type { View } from './DashboardSidebar';
 
@@ -100,10 +98,6 @@ const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardCon
     switch (activeView) {
       case 'roommate':
         return <RoommateFinder />;
-      case 'swap':
-        return <StudentSwap />;
-      case 'marketplace':
-        return <MarketplaceGrid />;
       case 'schedule':
         return <StudentSchedule />;
       case 'overview':
