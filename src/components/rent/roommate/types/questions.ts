@@ -32,7 +32,6 @@ export interface RoommateQuestion {
   isMystery?: boolean;
   options: {
     text: string;
-    icon: string;
     trait: string;
   }[];
   weight: number;
