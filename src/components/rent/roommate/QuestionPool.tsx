@@ -46,7 +46,7 @@ const QuestionPool = () => {
     }
 
     const { error } = await supabase
-      .from('user_answers')
+      .from('roommate_answers')
       .upsert({
         profile_id: user.id,
         question_id: questionId,

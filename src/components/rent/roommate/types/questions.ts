@@ -24,4 +24,18 @@ export interface QuestionCategory {
   created_at: string;
 }
 
+export interface RoommateQuestion {
+  id: string;
+  text: string;
+  category: string;
+  coinReward: number;
+  isMystery?: boolean;
+  options: {
+    text: string;
+    icon: string;
+    trait: string;
+  }[];
+  weight: number;
+}
+
 export type QuestionType = 'text' | 'select' | 'multiselect' | 'slider';

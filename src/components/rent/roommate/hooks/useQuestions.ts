@@ -7,7 +7,7 @@ export const useQuestions = (categoryId: string | null) => {
     queryKey: ['dynamic-questions', categoryId],
     queryFn: async () => {
       let query = supabase
-        .from('dynamic_questions')
+        .from('roommate_questions')
         .select('*');
       
       if (categoryId) {
@@ -16,7 +16,7 @@ export const useQuestions = (categoryId: string | null) => {
 
       const { data, error } = await query;
       if (error) throw error;
-      return data as DynamicQuestion[];
+      return data as unknown as DynamicQuestion[];
     },
     enabled: true
   });
@@ -31,7 +31,7 @@ export const useCategories = () => {
         .select('*');
       
       if (error) throw error;
-      return data as QuestionCategory[];
+      return data as unknown as QuestionCategory[];
     }
   });
 };

@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowRight, Trophy, Star, Brain, Coins, Sparkles } from 'lucide-react';
-import { Question } from './types/questions';
+import { RoommateQuestion } from './types/questions';
 import { useToast } from "@/components/ui/use-toast";
 import { motion } from "framer-motion";
 
 interface QuestionDisplayProps {
-  question: Question;
+  question: RoommateQuestion;
   onAnswer: (answer: string, trait: string) => void;
   progress: number;
   streak: number;
