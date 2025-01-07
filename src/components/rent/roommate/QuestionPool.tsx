@@ -22,7 +22,7 @@ const QuestionPool = () => {
 
       const { data, error } = await supabase
         .from('profiles')
-        .select('is_premium')
+        .select('*')
         .eq('id', user.id)
         .single();
 

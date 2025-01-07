@@ -1,22 +1,8 @@
-export interface Question {
-  id: string;
-  text: string;
-  category: string;
-  coinReward: number;
-  isMystery?: boolean;
-  options: {
-    text: string;
-    icon: string;
-    trait: string;
-  }[];
-  weight: number;
-}
-
 export interface DynamicQuestion {
   id: string;
+  category_id: string | null;
   question: string;
-  type: QuestionType;
-  category_id: string;
+  type: string;
   options?: {
     text: string;
     value: string;
@@ -27,6 +13,7 @@ export interface DynamicQuestion {
   };
   is_premium: boolean;
   weight: number;
+  created_at: string;
 }
 
 export interface QuestionCategory {
@@ -34,6 +21,7 @@ export interface QuestionCategory {
   name: string;
   description?: string;
   is_premium: boolean;
+  created_at: string;
 }
 
 export type QuestionType = 'text' | 'select' | 'multiselect' | 'slider';
