@@ -6,12 +6,11 @@ import { useToast } from "@/components/ui/use-toast";
 import { CategorySelector } from "./components/CategorySelector";
 import { QuestionDisplay } from "./components/QuestionDisplay";
 import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types/database";
-import type { RoommateQuestion } from "./types/questions";
 import { Progress } from "@/components/ui/progress";
 import { Loader2 } from "lucide-react";
 
-type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
+type Profile = {
+  id: string;
   is_premium?: boolean;
 };
 
@@ -39,6 +38,24 @@ const QuestionPool = () => {
     }
   });
 
+  const { data: categories, isLoading: loadingCategories } = useQuery({
+    queryKey: ['roommate_categories'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('roommate_questions')
+        .select('category')
+        .distinct();
+
+      if (error) throw error;
+      
+      return data.map(row => ({
+        id: row.category,
+        name: row.category,
+        is_premium: false
+      }));
+    }
+  });
+
   const { data: questions, isLoading: loadingQuestions } = useQuery({
     queryKey: ['roommate_questions', selectedCategory],
     queryFn: async () => {
@@ -62,9 +79,9 @@ const QuestionPool = () => {
         })) : [],
         weight: 1,
         isMystery: Math.random() > 0.8 // 20% chance of being a mystery question
-      })) as RoommateQuestion[];
+      }));
     },
-    enabled: !!selectedCategory,
+    enabled: !!selectedCategory
   });
 
   const handleAnswer = async (answer: string, trait: string) => {
@@ -110,7 +127,7 @@ const QuestionPool = () => {
     }
   };
 
-  if (loadingQuestions) {
+  if (loadingCategories || loadingQuestions) {
     return (
       <Card className="p-6 glass-card flex items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -124,6 +141,7 @@ const QuestionPool = () => {
     <div className="space-y-6">
       {!selectedCategory ? (
         <CategorySelector
+          categories={categories || []}
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
           isPremiumUser={profile?.is_premium ?? false}

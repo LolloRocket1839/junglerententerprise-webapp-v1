@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { QuestionCategory } from "../types/questions";
 import { Lock } from "lucide-react";
 
 interface CategorySelectorProps {
-  categories: QuestionCategory[];
+  categories: Array<{
+    id: string;
+    name: string;
+    is_premium: boolean;
+  }>;
   selectedCategory: string | null;
   onSelectCategory: (categoryId: string) => void;
   isPremiumUser: boolean;
