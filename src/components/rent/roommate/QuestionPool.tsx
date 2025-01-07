@@ -9,14 +9,24 @@ import { useQuestions, useCategories } from "./hooks/useQuestions";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-interface UserPreferences {
-  is_premium?: boolean;
-  [key: string]: any;
-}
-
 interface UserProfile {
   id: string;
-  preferences: UserPreferences;
+  first_name: string | null;
+  last_name: string | null;
+  avatar_url: string | null;
+  current_city: string | null;
+  future_city: string | null;
+  date_of_birth: string | null;
+  created_at: string;
+  updated_at: string;
+  bio: string | null;
+  budget_min: number | null;
+  budget_max: number | null;
+  move_in_date: string | null;
+  preferences: {
+    is_premium?: boolean;
+    [key: string]: any;
+  };
   is_premium: boolean;
 }
 
@@ -33,17 +43,15 @@ const QuestionPool = () => {
 
       const { data, error } = await supabase
         .from('profiles')
-        .select('*, preferences')
+        .select('*')
         .eq('id', user.id)
         .single();
 
       if (error) throw error;
       
-      // Safely handle preferences and is_premium
-      const preferences = data.preferences as UserPreferences || {};
       return {
         ...data,
-        is_premium: data.is_premium || preferences?.is_premium || false
+        is_premium: data.is_premium || data.preferences?.is_premium || false
       } as UserProfile;
     }
   });
