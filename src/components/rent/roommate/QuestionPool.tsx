@@ -7,9 +7,6 @@ import { CategorySelector } from "./components/CategorySelector";
 import { QuestionCard } from "./components/QuestionCard";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types/database";
-import { Loader2 } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import { useCategories, useQuestions } from "./hooks/useQuestions";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
   is_premium?: boolean;
@@ -36,80 +33,65 @@ const QuestionPool = () => {
     }
   });
 
-  const { data: categories, isLoading: loadingCategories } = useCategories();
-  const { data: questions, isLoading: loadingQuestions } = useQuestions(selectedCategory);
+  const { data: questions, isLoading: loadingQuestions } = useQuery({
+    queryKey: ['roommate-questions', selectedCategory],
+    queryFn: async () => {
+      if (!selectedCategory) return [];
+      const { data, error } = await supabase
+        .from('roommate_questions')
+        .select('*')
+        .eq('category', selectedCategory);
 
-  const handleAnswer = async (questionId: string, answer: any) => {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      toast({
-        title: "Error",
-        description: "You must be logged in to answer questions",
-        variant: "destructive"
-      });
-      return;
-    }
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!selectedCategory,
+  });
 
+  const handleAnswerQuestion = async (questionId: string, answer: string) => {
     const { error } = await supabase
       .from('roommate_answers')
-      .upsert({
-        profile_id: user.id,
-        question_id: questionId,
-        answer
+      .insert({ 
+        question_id: questionId, 
+        answer,
+        profile_id: profile?.id 
       });
 
     if (error) {
       toast({
         title: "Error",
-        description: "Failed to save your answer",
-        variant: "destructive"
+        description: "Failed to submit your answer. Please try again.",
+        variant: "destructive",
       });
-      return;
+    } else {
+      toast({
+        title: "Success",
+        description: "Your answer has been submitted!",
+      });
     }
-
-    toast({
-      title: "Success",
-      description: "Your answer has been saved"
-    });
   };
-
-  if (loadingCategories || loadingQuestions) {
-    return (
-      <Card className="p-6 glass-card flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </Card>
-    );
-  }
 
   return (
     <div className="space-y-6">
-      {categories && (
-        <CategorySelector
-          categories={categories}
-          selectedCategory={selectedCategory}
-          onSelectCategory={setSelectedCategory}
-          isPremiumUser={profile?.is_premium ?? false}
-        />
-      )}
-
-      <div className="space-y-4">
-        {questions?.map((question) => (
+      <CategorySelector 
+        categories={[]}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        isPremiumUser={profile?.is_premium ?? false}
+      />
+      {loadingQuestions ? (
+        <Card className="p-6 glass-card flex items-center justify-center">
+          <p>Loading questions...</p>
+        </Card>
+      ) : (
+        questions?.map((question) => (
           <QuestionCard
             key={question.id}
             question={question}
-            onAnswer={(answer) => handleAnswer(question.id, answer)}
+            onAnswer={(answer) => handleAnswerQuestion(question.id, answer)}
             isPremiumUser={profile?.is_premium ?? false}
           />
-        ))}
-      </div>
-
-      {questions && questions.length > 0 && (
-        <div className="mt-4">
-          <Progress value={(questions.length / (categories?.length ?? 1)) * 100} />
-          <p className="text-sm text-white/60 text-right mt-2">
-            {questions.length} questions completed
-          </p>
-        </div>
+        ))
       )}
     </div>
   );
