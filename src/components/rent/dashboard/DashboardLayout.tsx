@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from "@/components/ui/use-toast";
 import DashboardSidebar from './DashboardSidebar';
 import DashboardContent from './DashboardContent';
 import type { View } from './DashboardSidebar';
 import type { Session } from '@supabase/supabase-js';
+import { supabase } from "@/integrations/supabase/client";
 
 interface DashboardLayoutProps {
   session: Session;
@@ -37,13 +38,13 @@ const DashboardLayout = ({ session, isEmailVerified }: DashboardLayoutProps) => 
     <div className="flex min-h-screen bg-background">
       <DashboardSidebar 
         activeView={activeView} 
-        setActiveView={setActiveView}
+        onViewChange={setActiveView}
         isEmailVerified={isEmailVerified}
       />
       <div className="flex-1 p-8">
         <DashboardContent 
-          isEmailVerified={isEmailVerified}
           activeView={activeView}
+          isEmailVerified={isEmailVerified}
         />
       </div>
     </div>

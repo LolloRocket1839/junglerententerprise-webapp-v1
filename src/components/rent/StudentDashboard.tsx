@@ -10,7 +10,6 @@ const StudentDashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Fetch current session
   const { data: session, isLoading: isSessionLoading } = useQuery({
     queryKey: ['auth-session'],
     queryFn: async () => {
@@ -47,7 +46,10 @@ const StudentDashboard = () => {
     return null;
   }
 
-  return <DashboardLayout session={session} />;
+  // Check if email is verified (you might want to implement this based on your requirements)
+  const isEmailVerified = session.user?.email_verified ?? false;
+
+  return <DashboardLayout session={session} isEmailVerified={isEmailVerified} />;
 };
 
 export default StudentDashboard;
