@@ -1037,6 +1037,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_jungle_coins: {
+        Args: {
+          amount: number
+          reason: string
+        }
+        Returns: undefined
+      }
       create_notification: {
         Args: {
           profile_id: string
