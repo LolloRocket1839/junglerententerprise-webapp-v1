@@ -9,6 +9,17 @@ import { useQuestions, useCategories } from "./hooks/useQuestions";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
+interface UserPreferences {
+  is_premium?: boolean;
+  [key: string]: any;
+}
+
+interface UserProfile {
+  id: string;
+  preferences: UserPreferences;
+  is_premium: boolean;
+}
+
 const QuestionPool = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { toast } = useToast();
@@ -29,11 +40,11 @@ const QuestionPool = () => {
       if (error) throw error;
       
       // Safely handle preferences and is_premium
-      const preferences = typeof data.preferences === 'object' ? data.preferences : {};
+      const preferences = data.preferences as UserPreferences || {};
       return {
         ...data,
-        is_premium: preferences?.is_premium || false
-      };
+        is_premium: data.is_premium || preferences?.is_premium || false
+      } as UserProfile;
     }
   });
 
