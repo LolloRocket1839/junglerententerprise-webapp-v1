@@ -13,26 +13,19 @@ interface DashboardLayoutProps {
 }
 
 const DashboardLayout = ({ session, isEmailVerified }: DashboardLayoutProps) => {
-  const [activeView, setActiveView] = useState<View>("overview");
+  const [activeView, setActiveView] = useState<View>('roommate');
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        navigate('/');
-        toast({
-          title: "Session expired",
-          description: "Please sign in again to continue.",
-          variant: "destructive",
-        });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT') {
+        navigate('/auth');
       }
     });
 
     return () => subscription.unsubscribe();
-  }, [navigate, toast]);
+  }, [navigate]);
 
   return (
     <div className="flex min-h-screen bg-background">

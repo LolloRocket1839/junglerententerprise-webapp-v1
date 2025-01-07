@@ -20,7 +20,6 @@ const StudentDashboard = () => {
     staleTime: 1000 * 60 * 5, // Consider session data fresh for 5 minutes
   });
 
-  // Set up auth state change listener
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_OUT' || !session) {
@@ -31,7 +30,6 @@ const StudentDashboard = () => {
     return () => subscription.unsubscribe();
   }, [navigate]);
 
-  // Handle session loading state
   if (isSessionLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -40,14 +38,13 @@ const StudentDashboard = () => {
     );
   }
 
-  // If no session, redirect to auth
   if (!session) {
     navigate('/auth');
     return null;
   }
 
-  // Check if email is verified (you might want to implement this based on your requirements)
-  const isEmailVerified = session.user?.email_verified ?? false;
+  // Check if email is verified from the user metadata
+  const isEmailVerified = session.user?.user_metadata?.email_verified ?? false;
 
   return <DashboardLayout session={session} isEmailVerified={isEmailVerified} />;
 };
