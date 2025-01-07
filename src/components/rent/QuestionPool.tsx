@@ -10,7 +10,9 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types/database";
 
-type Profile = Database['public']['Tables']['profiles']['Row'];
+type Profile = Database['public']['Tables']['profiles']['Row'] & {
+  is_premium?: boolean;
+};
 
 const QuestionPool = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);

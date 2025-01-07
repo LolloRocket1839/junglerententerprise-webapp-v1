@@ -100,14 +100,6 @@ const DashboardContent = ({ activeView, isEmailVerified }: DashboardContentProps
     );
   }
 
-  if (activeView === "roommate") {
-    return (
-      <div>
-        {/* Roommate content goes here */}
-      </div>
-    );
-  }
-
   if (activeView === "settings") {
     return (
       <div>

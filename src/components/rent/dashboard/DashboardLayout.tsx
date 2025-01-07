@@ -4,8 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from "@/components/ui/use-toast";
 import DashboardSidebar from './DashboardSidebar';
 import DashboardContent from './DashboardContent';
-import type { Session } from '@supabase/supabase-js';
-import type { View } from './DashboardSidebar'; // Import the View type
+import type { View } from './DashboardSidebar';
 
 interface DashboardLayoutProps {
   session: Session;
@@ -16,7 +15,6 @@ const DashboardLayout = ({ session }: DashboardLayoutProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Handle auth state changes
   useEffect(() => {
     const {
       data: { subscription },
@@ -47,7 +45,6 @@ const DashboardLayout = ({ session }: DashboardLayoutProps) => {
         <DashboardContent 
           isEmailVerified={isEmailVerified}
           activeView={activeView}
-          session={session}
         />
       </div>
     </div>
