@@ -2,23 +2,22 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import QuestionPool from "./QuestionPool";
 import RoommateProfileGrid from "./RoommateProfileGrid";
-import { Button } from "@/components/ui/button";
-import { ClipboardCheck, Users } from "lucide-react";
+import WelcomeScreen from "./WelcomeScreen";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
-type View = "questions" | "matches";
+type View = "welcome" | "questions" | "matches";
 
 const RoommateFinder = () => {
-  const [currentView, setCurrentView] = useState<View>("matches");
+  const [currentView, setCurrentView] = useState<View>("welcome");
   const { toast } = useToast();
 
-  // Verify database connection and auth status
   const { data: session } = useQuery({
     queryKey: ['auth-session'],
     queryFn: async () => {
       const { data: { session }, error } = await supabase.auth.getSession();
       if (error) {
+        console.error('Session error:', error);
         toast({
           title: "Authentication Error",
           description: "Please sign in to access all features.",
@@ -30,7 +29,6 @@ const RoommateFinder = () => {
     }
   });
 
-  // Check if user has a profile
   const { data: profile } = useQuery({
     queryKey: ['user-profile', session?.user?.id],
     enabled: !!session?.user?.id,
@@ -42,6 +40,7 @@ const RoommateFinder = () => {
         .single();
 
       if (error) {
+        console.error('Profile error:', error);
         toast({
           title: "Profile Error",
           description: "Unable to load your profile. Please try again.",
@@ -53,34 +52,32 @@ const RoommateFinder = () => {
     }
   });
 
+  const handleStart = () => {
+    if (!session) {
+      toast({
+        title: "Sign in Required",
+        description: "Please sign in to start the questionnaire.",
+        variant: "destructive"
+      });
+      return;
+    }
+    setCurrentView("questions");
+  };
+
+  const handleViewMatches = () => {
+    if (!session) {
+      toast({
+        title: "Sign in Required",
+        description: "Please sign in to view your matches.",
+        variant: "destructive"
+      });
+      return;
+    }
+    setCurrentView("matches");
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h2 className="text-2xl font-bold text-white mb-2">Find Your Perfect Roommate</h2>
-          <p className="text-white/60">Answer questions and match with compatible roommates</p>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant={currentView === "questions" ? "default" : "outline"}
-            onClick={() => setCurrentView("questions")}
-            className="gap-2"
-          >
-            <ClipboardCheck className="w-4 h-4" />
-            Questionnaire
-          </Button>
-          <Button
-            variant={currentView === "matches" ? "default" : "outline"}
-            onClick={() => setCurrentView("matches")}
-            className="gap-2"
-          >
-            <Users className="w-4 h-4" />
-            View Matches
-          </Button>
-        </div>
-      </div>
-
       {!session && (
         <div className="p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-lg">
           <p className="text-yellow-500">Please sign in to access all roommate matching features.</p>
@@ -95,6 +92,12 @@ const RoommateFinder = () => {
 
       {session && profile && (
         <>
+          {currentView === "welcome" && (
+            <WelcomeScreen 
+              onStart={handleStart} 
+              onViewMatches={handleViewMatches} 
+            />
+          )}
           {currentView === "questions" && <QuestionPool />}
           {currentView === "matches" && <RoommateProfileGrid />}
         </>

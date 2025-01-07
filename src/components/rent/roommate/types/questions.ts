@@ -1,4 +1,16 @@
-export type QuestionType = 'text' | 'select' | 'multiselect' | 'slider';
+export interface Question {
+  id: string;
+  text: string;
+  category: string;
+  coinReward: number;
+  isMystery?: boolean;
+  options: {
+    text: string;
+    icon: string;
+    trait: string;
+  }[];
+  weight: number;
+}
 
 export interface DynamicQuestion {
   id: string;
@@ -24,7 +36,4 @@ export interface QuestionCategory {
   is_premium: boolean;
 }
 
-export interface UserAnswer {
-  question_id: string;
-  answer: any;
-}
+export type QuestionType = 'text' | 'select' | 'multiselect' | 'slider';

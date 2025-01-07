@@ -19,7 +19,7 @@ export const QuestionCard = ({ question, onAnswer, isPremiumUser }: QuestionCard
           <div className="text-center space-y-4">
             <Lock className="w-8 h-8 text-primary mx-auto" />
             <p className="text-white/80">Unlock premium questions to get better matches!</p>
-            <Button variant="premium" className="bg-gradient-to-r from-primary to-primary/80">
+            <Button variant="outline" className="bg-primary/20 hover:bg-primary/30 text-primary">
               Upgrade to Premium
             </Button>
           </div>
