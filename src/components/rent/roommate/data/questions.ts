@@ -9,12 +9,10 @@ export const questions: RoommateQuestion[] = [
     options: [
       {
         text: "Walk on lava",
-        icon: "flame",
         trait: "Risk-Taker"
       },
       {
         text: "Dive into freezing water",
-        icon: "snowflake",
         trait: "Resilient"
       }
     ],
@@ -28,12 +26,10 @@ export const questions: RoommateQuestion[] = [
     options: [
       {
         text: "Treehouse in the jungle",
-        icon: "heart",
         trait: "Nature Lover"
       },
       {
         text: "Floating house in the ocean",
-        icon: "star",
         trait: "Free Spirit"
       }
     ],
@@ -48,12 +44,10 @@ export const questions: RoommateQuestion[] = [
     options: [
       {
         text: "Master all music",
-        icon: "star",
         trait: "Artist"
       },
       {
         text: "Master all languages",
-        icon: "user",
         trait: "Communicator"
       }
     ],
@@ -67,12 +61,10 @@ export const questions: RoommateQuestion[] = [
     options: [
       {
         text: "Personal chef",
-        icon: "star",
         trait: "Foodie"
       },
       {
         text: "Personal housekeeper",
-        icon: "badge",
         trait: "Organized"
       }
     ],
@@ -86,12 +78,10 @@ export const questions: RoommateQuestion[] = [
     options: [
       {
         text: "Teleport anywhere",
-        icon: "flame",
         trait: "Explorer"
       },
       {
         text: "Read minds",
-        icon: "user",
         trait: "Empathetic"
       }
     ],
@@ -105,12 +95,10 @@ export const questions: RoommateQuestion[] = [
     options: [
       {
         text: "Amazing parties",
-        icon: "star",
         trait: "Social Butterfly"
       },
       {
         text: "Intimate dinners",
-        icon: "heart",
         trait: "Close-knit"
       }
     ],
@@ -124,12 +112,10 @@ export const questions: RoommateQuestion[] = [
     options: [
       {
         text: "Wake at sunrise",
-        icon: "star",
         trait: "Early Bird"
       },
       {
         text: "Stay up late",
-        icon: "snowflake",
         trait: "Night Owl"
       }
     ],
@@ -143,12 +129,10 @@ export const questions: RoommateQuestion[] = [
     options: [
       {
         text: "Pet dragon",
-        icon: "flame",
         trait: "Adventurous"
       },
       {
         text: "Pet unicorn",
-        icon: "heart",
         trait: "Dreamer"
       }
     ],
@@ -162,12 +146,10 @@ export const questions: RoommateQuestion[] = [
     options: [
       {
         text: "Always sing",
-        icon: "star",
         trait: "Expressive"
       },
       {
         text: "Always dance",
-        icon: "badge",
         trait: "Free-spirited"
       }
     ],
@@ -181,12 +163,10 @@ export const questions: RoommateQuestion[] = [
     options: [
       {
         text: "Game nights",
-        icon: "trophy",
         trait: "Competitive"
       },
       {
         text: "Movie marathons",
-        icon: "star",
         trait: "Relaxed"
       }
     ],
