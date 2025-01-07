@@ -3,14 +3,17 @@ import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import CategorySelector from "./roommate/components/CategorySelector";
-import QuestionCard from "./roommate/components/QuestionCard";
+import { CategorySelector } from "./roommate/components/CategorySelector";
+import { QuestionCard } from "./roommate/components/QuestionCard";
 import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types/database";
+import { Loader2 } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { useCategories, useQuestions } from "./roommate/hooks/useQuestions";
 
-interface Profile extends Database['public']['Tables']['profiles']['Row'] {
+type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
   is_premium?: boolean;
-}
+};
 
 const QuestionPool = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
