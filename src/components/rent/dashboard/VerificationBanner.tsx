@@ -5,9 +5,14 @@ import { Card } from "@/components/ui/card";
 interface VerificationBannerProps {
   isEmailVerified: boolean;
   onStartVerification?: () => void;
+  onBypassVerification?: () => void;
 }
 
-const VerificationBanner = ({ isEmailVerified, onStartVerification }: VerificationBannerProps) => {
+const VerificationBanner = ({ 
+  isEmailVerified, 
+  onStartVerification,
+  onBypassVerification 
+}: VerificationBannerProps) => {
   if (isEmailVerified) {
     return (
       <Card className="p-4 bg-green-500/10 border-green-500/20">
@@ -49,13 +54,24 @@ const VerificationBanner = ({ isEmailVerified, onStartVerification }: Verificati
             </ul>
           </div>
         </div>
-        <Button 
-          onClick={onStartVerification}
-          className="w-full sm:w-auto"
-        >
-          Start Verification
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Button 
+            onClick={onStartVerification}
+            className="w-full sm:w-auto"
+          >
+            Start Verification
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+          {process.env.NODE_ENV === 'development' && (
+            <Button
+              onClick={onBypassVerification}
+              variant="ghost"
+              className="text-sm text-yellow-500/60 hover:text-yellow-500"
+            >
+              (click to bypass)
+            </Button>
+          )}
+        </div>
       </div>
     </Card>
   );

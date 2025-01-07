@@ -2,20 +2,29 @@ import { useToast } from "@/components/ui/use-toast";
 import VerificationBanner from './VerificationBanner';
 import RoommateFinder from '../roommate/RoommateFinder';
 import type { View } from './DashboardSidebar';
+import { useState } from 'react';
 
 interface DashboardContentProps {
   activeView: View;
   isEmailVerified: boolean;
 }
 
-const DashboardContent = ({ activeView, isEmailVerified }: DashboardContentProps) => {
+const DashboardContent = ({ activeView, isEmailVerified: initialVerification }: DashboardContentProps) => {
   const { toast } = useToast();
+  const [isEmailVerified, setIsEmailVerified] = useState(initialVerification);
 
   const handleStartVerification = () => {
-    // Mock verification process - in real implementation, this would trigger email verification
     toast({
       title: "Verification Email Sent",
       description: "Please check your inbox and follow the verification link.",
+    });
+  };
+
+  const handleBypassVerification = () => {
+    setIsEmailVerified(true);
+    toast({
+      title: "Verification Bypassed",
+      description: "Development mode: Verification has been bypassed.",
     });
   };
 
@@ -25,6 +34,7 @@ const DashboardContent = ({ activeView, isEmailVerified }: DashboardContentProps
         <VerificationBanner 
           isEmailVerified={isEmailVerified}
           onStartVerification={handleStartVerification}
+          onBypassVerification={handleBypassVerification}
         />
       )}
       
