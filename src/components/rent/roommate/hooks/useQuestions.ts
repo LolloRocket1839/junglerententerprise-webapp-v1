@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { DynamicQuestion, QuestionCategory } from "../types/questions";
-import { Database } from "@/integrations/supabase/types";
 
 export const useQuestions = (categoryId: string | null) => {
   return useQuery({
@@ -12,7 +11,7 @@ export const useQuestions = (categoryId: string | null) => {
         .select('*');
       
       if (categoryId) {
-        query = query.eq('category_id', categoryId);
+        query = query.eq('category', categoryId);
       }
 
       const { data, error } = await query;
@@ -30,15 +29,20 @@ export const useCategories = () => {
       const { data, error } = await supabase
         .from('roommate_questions')
         .select('category')
-        .distinct();
+        .eq('category', 'category'); // This creates a unique list of categories
       
       if (error) throw error;
-      return data.map(row => ({
-        id: row.category,
-        name: row.category,
-        is_premium: false,
-        created_at: new Date().toISOString()
-      })) as QuestionCategory[];
+      
+      // Create unique categories from the results
+      const uniqueCategories = Array.from(new Set(data.map(row => row.category)))
+        .map(category => ({
+          id: category,
+          name: category,
+          is_premium: false,
+          created_at: new Date().toISOString()
+        }));
+      
+      return uniqueCategories as QuestionCategory[];
     }
   });
 };

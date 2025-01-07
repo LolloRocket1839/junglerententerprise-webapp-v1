@@ -22,14 +22,17 @@ const QuestionPool = () => {
 
       const { data, error } = await supabase
         .from('profiles')
-        .select('*')
+        .select('*, preferences')
         .eq('id', user.id)
         .single();
 
       if (error) throw error;
+      
+      // Safely handle preferences and is_premium
+      const preferences = typeof data.preferences === 'object' ? data.preferences : {};
       return {
         ...data,
-        is_premium: data.preferences?.is_premium || false
+        is_premium: preferences?.is_premium || false
       };
     }
   });
