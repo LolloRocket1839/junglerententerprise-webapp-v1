@@ -7,6 +7,7 @@ import { CategorySelector } from "./components/CategorySelector";
 import { QuestionCard } from "./components/QuestionCard";
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types/database";
+import type { DynamicQuestion } from "./types/questions";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
   is_premium?: boolean;
@@ -43,7 +44,19 @@ const QuestionPool = () => {
         .eq('category', selectedCategory);
 
       if (error) throw error;
-      return data;
+      
+      // Transform the database questions to match DynamicQuestion type
+      return data.map(q => ({
+        id: q.id,
+        category_id: null, // Since roommate_questions uses category string
+        question: q.question,
+        type: 'select', // Default type for roommate questions
+        options: q.options,
+        is_premium: false, // Default value
+        weight: 1, // Default weight
+        created_at: q.created_at,
+        category: q.category
+      })) as DynamicQuestion[];
     },
     enabled: !!selectedCategory,
   });
