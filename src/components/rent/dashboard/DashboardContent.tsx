@@ -25,6 +25,7 @@ const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardCon
     queryKey: ['user-profile', session?.user?.id],
     queryFn: async () => {
       if (!session?.user?.id) {
+        console.error('No user ID available for profile fetch');
         throw new Error('No user ID available');
       }
 
@@ -32,19 +33,26 @@ const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardCon
         .from('profiles')
         .select('*')
         .eq('id', session.user.id)
-        .maybeSingle();
+        .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Profile fetch error:', error);
+        throw error;
+      }
+      
+      console.log('Profile fetched:', data);
       return data;
     },
     enabled: !!session?.user?.id && isEmailVerified,
-    retry: false,
+    retry: 1,
+    staleTime: 1000 * 60 * 5, // Consider profile data fresh for 5 minutes
   });
 
   // Set up real-time subscription for profile changes
   useEffect(() => {
     if (!session?.user?.id) return;
 
+    console.log('Setting up profile changes subscription for user:', session.user.id);
     const channel = supabase
       .channel('profile-changes')
       .on(
@@ -62,6 +70,7 @@ const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardCon
       .subscribe();
 
     return () => {
+      console.log('Cleaning up profile changes subscription');
       supabase.removeChannel(channel);
     };
   }, [session?.user?.id]);
@@ -90,6 +99,7 @@ const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardCon
   }
 
   if (error) {
+    console.error('Profile error:', error);
     return (
       <div className="lg:col-span-9">
         <div className="glass-card p-6 text-red-400">

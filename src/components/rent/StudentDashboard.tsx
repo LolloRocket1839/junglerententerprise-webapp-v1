@@ -15,17 +15,25 @@ const StudentDashboard = () => {
     queryKey: ['auth-session'],
     queryFn: async () => {
       const { data: { session }, error } = await supabase.auth.getSession();
-      if (error) throw error;
-      if (!session) throw new Error('No session found');
+      if (error) {
+        console.error('Session error:', error);
+        throw error;
+      }
+      if (!session) {
+        console.log('No session found, redirecting to auth');
+        throw new Error('No session found');
+      }
       return session;
     },
-    retry: false, // Don't retry on failure
+    retry: false,
+    staleTime: 1000 * 60 * 5, // Consider session data fresh for 5 minutes
   });
 
   // Set up auth state change listener
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('Auth state changed:', event, session?.user?.id);
+      if (event === 'SIGNED_OUT' || !session) {
         toast({
           title: "Session Expired",
           description: "Please sign in to continue.",
@@ -48,6 +56,7 @@ const StudentDashboard = () => {
   }
 
   if (sessionError || !session) {
+    console.error('Session error or no session:', sessionError);
     toast({
       title: "Authentication Required",
       description: "Please sign in to access your dashboard.",
