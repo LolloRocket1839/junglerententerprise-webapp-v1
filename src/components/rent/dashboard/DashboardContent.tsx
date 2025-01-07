@@ -1,150 +1,122 @@
-import { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useToast } from "@/components/ui/use-toast";
-import { supabase } from '@/integrations/supabase/client';
-import DashboardStats from '../DashboardStats';
-import ActivityFeed from '../ActivityFeed';
-import ProcessSteps from '../ProcessSteps';
-import StudentSchedule from '../StudentSchedule';
-import RoommateFinder from '../roommate/RoommateFinder';
-import type { Session } from '@supabase/supabase-js';
-import type { View } from './DashboardSidebar';
-import { Loader2 } from "lucide-react";
+import { View } from "./DashboardSidebar";
+import RoommateFinder from "../roommate/RoommateFinder";
+import { MixAndMatch } from "../roommate/MixAndMatch";
+import QuestionPool from "../QuestionPool";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Users, Brain, UserPlus } from "lucide-react";
 
 interface DashboardContentProps {
-  isEmailVerified: boolean;
   activeView: View;
-  session: Session;
+  isEmailVerified: boolean;
 }
 
-const DashboardContent = ({ isEmailVerified, activeView, session }: DashboardContentProps) => {
-  const { toast } = useToast();
-
-  // Only fetch profile if we have a valid session and user ID
-  const { data: profile, isLoading, error } = useQuery({
-    queryKey: ['user-profile', session?.user?.id],
-    queryFn: async () => {
-      if (!session?.user?.id) {
-        console.error('No user ID available for profile fetch');
-        throw new Error('No user ID available');
-      }
-
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', session.user.id)
-        .single();
-
-      if (error) {
-        console.error('Profile fetch error:', error);
-        throw error;
-      }
-      
-      console.log('Profile fetched:', data);
-      return data;
-    },
-    enabled: !!session?.user?.id && isEmailVerified,
-    retry: 1,
-    staleTime: 1000 * 60 * 5, // Consider profile data fresh for 5 minutes
-  });
-
-  // Set up real-time subscription for profile changes
-  useEffect(() => {
-    if (!session?.user?.id) return;
-
-    console.log('Setting up profile changes subscription for user:', session.user.id);
-    const channel = supabase
-      .channel('profile-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'profiles',
-          filter: `id=eq.${session.user.id}`
-        },
-        (payload) => {
-          console.log('Profile change received:', payload);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      console.log('Cleaning up profile changes subscription');
-      supabase.removeChannel(channel);
-    };
-  }, [session?.user?.id]);
-
-  if (!isEmailVerified) {
+const DashboardContent = ({ activeView, isEmailVerified }: DashboardContentProps) => {
+  if (activeView === "roommate") {
     return (
-      <div className="lg:col-span-9">
-        <div className="glass-card p-6">
-          <h2 className="text-xl font-semibold text-white mb-4">Email Verification Required</h2>
-          <p className="text-white/70">
-            Please verify your email address to access all features. Check your inbox for the verification link.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <div className="lg:col-span-9">
-        <div className="glass-card p-6 flex items-center justify-center">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    console.error('Profile error:', error);
-    return (
-      <div className="lg:col-span-9">
-        <div className="glass-card p-6 text-red-400">
-          <h2 className="text-xl font-semibold mb-4">Error Loading Profile</h2>
-          <p>{error.message}</p>
-        </div>
-      </div>
-    );
-  }
-
-  const renderContent = () => {
-    switch (activeView) {
-      case 'roommate':
-        return <RoommateFinder />;
-      case 'schedule':
-        return <StudentSchedule />;
-      case 'overview':
-      default:
-        return (
-          <div className="grid gap-6">
-            <DashboardStats />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <ActivityFeed />
-              <StudentSchedule />
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card className="glass-card p-6 space-y-4">
+            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/20 text-primary">
+              <Users className="w-6 h-6" />
             </div>
-            <ProcessSteps />
-          </div>
-        );
-    }
-  };
+            <h3 className="text-lg font-semibold text-white">Find Your Match</h3>
+            <p className="text-sm text-white/60">
+              Browse through potential roommates and find your perfect match based on compatibility.
+            </p>
+            <MixAndMatch />
+          </Card>
 
-  return (
-    <div className="lg:col-span-9 space-y-6">
-      {!profile && (
-        <div className="glass-card p-6">
-          <h2 className="text-xl font-semibold text-white mb-4">Complete Your Profile</h2>
-          <p className="text-white/70">
-            Please complete your profile to access all features.
-          </p>
+          <Card className="glass-card p-6 space-y-4">
+            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/20 text-primary">
+              <Brain className="w-6 h-6" />
+            </div>
+            <h3 className="text-lg font-semibold text-white">Personality Quiz</h3>
+            <p className="text-sm text-white/60">
+              Take our personality quiz to help us find your ideal roommate match.
+            </p>
+            <Button 
+              className="w-full bg-gradient-to-r from-primary to-primary-light hover:from-primary-light hover:to-primary transition-all duration-300"
+              onClick={() => document.getElementById('question-pool')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Start Quiz
+            </Button>
+          </Card>
+
+          <Card className="glass-card p-6 space-y-4">
+            <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/20 text-primary">
+              <UserPlus className="w-6 h-6" />
+            </div>
+            <h3 className="text-lg font-semibold text-white">Your Profile</h3>
+            <p className="text-sm text-white/60">
+              Complete your profile to increase your chances of finding the perfect roommate.
+            </p>
+            <Button variant="outline" className="w-full">
+              Edit Profile
+            </Button>
+          </Card>
         </div>
-      )}
 
-      {renderContent()}
-    </div>
-  );
+        <div id="question-pool" className="pt-8">
+          <QuestionPool />
+        </div>
+
+        <div className="pt-8">
+          <RoommateFinder />
+        </div>
+      </div>
+    );
+  }
+
+  if (activeView === "overview") {
+    return (
+      <div>
+        {/* Overview content goes here */}
+      </div>
+    );
+  }
+
+  if (activeView === "schedule") {
+    return (
+      <div>
+        {/* Schedule content goes here */}
+      </div>
+    );
+  }
+
+  if (activeView === "messages") {
+    return (
+      <div>
+        {/* Messages content goes here */}
+      </div>
+    );
+  }
+
+  if (activeView === "newsfeed") {
+    return (
+      <div>
+        {/* Newsfeed content goes here */}
+      </div>
+    );
+  }
+
+  if (activeView === "roommate") {
+    return (
+      <div>
+        {/* Roommate content goes here */}
+      </div>
+    );
+  }
+
+  if (activeView === "settings") {
+    return (
+      <div>
+        {/* Settings content goes here */}
+      </div>
+    );
+  }
+
+  return null;
 };
 
 export default DashboardContent;
