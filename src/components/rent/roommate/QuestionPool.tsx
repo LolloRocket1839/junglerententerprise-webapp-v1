@@ -41,16 +41,20 @@ const QuestionPool = () => {
   const { data: categories, isLoading: loadingCategories } = useQuery({
     queryKey: ['roommate_categories'],
     queryFn: async () => {
+      // Using a different approach to get distinct categories
       const { data, error } = await supabase
         .from('roommate_questions')
         .select('category')
-        .distinct();
+        .order('category');
 
       if (error) throw error;
       
-      return data.map(row => ({
-        id: row.category,
-        name: row.category,
+      // Filter unique categories manually
+      const uniqueCategories = Array.from(new Set(data.map(row => row.category)));
+      
+      return uniqueCategories.map(category => ({
+        id: category,
+        name: category,
         is_premium: false
       }));
     }
