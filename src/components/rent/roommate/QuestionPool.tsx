@@ -13,7 +13,7 @@ const QuestionPool = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Fetch user's premium status
+  // Fetch user's profile
   const { data: profile } = useQuery({
     queryKey: ['user-profile'],
     queryFn: async () => {
@@ -27,7 +27,10 @@ const QuestionPool = () => {
         .single();
 
       if (error) throw error;
-      return data;
+      return {
+        ...data,
+        is_premium: data.preferences?.is_premium || false
+      };
     }
   });
 
