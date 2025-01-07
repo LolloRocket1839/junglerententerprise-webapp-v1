@@ -1,26 +1,23 @@
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import { Card } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Loader2 } from "lucide-react";
-import { QuestionCard } from "./roommate/components/QuestionCard";
-import { CategorySelector } from "./roommate/components/CategorySelector";
-import { useQuestions, useCategories } from "./roommate/hooks/useQuestions";
 import { useQuery } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
+import CategorySelector from "./roommate/components/CategorySelector";
+import QuestionCard from "./roommate/components/QuestionCard";
 import { supabase } from "@/integrations/supabase/client";
 import { Database } from "@/integrations/supabase/types/database";
 
-type Profile = Database['public']['Tables']['profiles']['Row'] & {
+interface Profile extends Database['public']['Tables']['profiles']['Row'] {
   is_premium?: boolean;
-};
+}
 
 const QuestionPool = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { toast } = useToast();
 
-  // Fetch user's profile
   const { data: profile } = useQuery({
-    queryKey: ['user-profile'],
+    queryKey: ['profile'],
     queryFn: async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('No user found');
@@ -32,11 +29,7 @@ const QuestionPool = () => {
         .single();
 
       if (error) throw error;
-      
-      return {
-        ...data,
-        is_premium: Boolean(data.is_premium || (data.preferences as any)?.is_premium)
-      } as Profile;
+      return data as Profile;
     }
   });
 
