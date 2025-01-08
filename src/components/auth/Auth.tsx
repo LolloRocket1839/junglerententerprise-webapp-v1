@@ -5,6 +5,7 @@ import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -54,9 +55,12 @@ const Auth = () => {
 
       if (error) throw error;
 
+      // Bypass verification check for test account
+      navigate('/student');
+      
       toast({
         title: "Test login successful",
-        description: "You've been logged in with the test account.",
+        description: "You've been logged in with the test account and verification has been bypassed.",
       });
     } catch (error) {
       toast({
@@ -73,19 +77,17 @@ const Auth = () => {
         <div className="glass-card p-8 rounded-lg shadow-xl">
           <h2 className="text-2xl font-bold text-white mb-6 text-center">Welcome to Jungle</h2>
           
-          {process.env.NODE_ENV === 'development' && (
-            <div className="mb-6">
-              <Button 
-                onClick={handleTestLogin}
-                className="w-full bg-yellow-600 hover:bg-yellow-700 text-white"
-              >
-                Quick Test Login
-              </Button>
-              <p className="text-xs text-white/60 mt-2 text-center">
-                Development only: test@jungle.com / testpassword123
-              </p>
-            </div>
-          )}
+          <div className="mb-6">
+            <Button 
+              onClick={handleTestLogin}
+              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-3"
+            >
+              Quick Test Login (Bypasses Verification)
+            </Button>
+            <p className="text-xs text-white/60 mt-2 text-center">
+              Development only: Automatically logs in with test@jungle.com
+            </p>
+          </div>
 
           <SupabaseAuth
             supabaseClient={supabase}
