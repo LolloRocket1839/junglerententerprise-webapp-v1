@@ -39,10 +39,10 @@ const Navigation = () => {
       isScrolled ? 'bg-[#1A1F2C]/95 backdrop-blur-sm border-b border-white/10' : 'bg-transparent'
     }`}>
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           <Link 
             to="/" 
-            className="text-xl sm:text-2xl font-medium bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent"
+            className="text-xl sm:text-2xl font-medium bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent pt-2"
           >
             Jungle Rent
           </Link>
