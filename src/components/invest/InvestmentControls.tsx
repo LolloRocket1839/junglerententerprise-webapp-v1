@@ -27,6 +27,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   const [inputValue, setInputValue] = useState(amount.toString());
   const [error, setError] = useState<string | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     setInputValue(amount.toString());
@@ -72,6 +73,8 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   const handleSliderChange = (value: number[]) => {
     setError(null);
     onAmountChange(value[0]);
+    setShowTooltip(true);
+    setTimeout(() => setShowTooltip(false), 1000);
   };
 
   const calculateUnits = (amount: number) => {
@@ -95,9 +98,9 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   const progressPercentage = (amount / maxInvestment) * 100;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       <div className="space-y-4">
-        <label className="text-xl font-bold text-white tracking-wide block">
+        <label className="text-2xl font-bold text-white tracking-tight antialiased block">
           Importo Investimento (€)
         </label>
         
@@ -109,13 +112,18 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
           />
 
           {error && (
-            <Alert variant="destructive">
+            <Alert variant="destructive" className="animate-scale-in">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription className="text-sm font-semibold">{error}</AlertDescription>
             </Alert>
           )}
           
           <div className="relative pt-6 pb-2">
+            {showTooltip && (
+              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-sm">
+                €{amount.toLocaleString()}
+              </div>
+            )}
             <Slider
               value={[amount]}
               onValueChange={handleSliderChange}
@@ -125,7 +133,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
               className="relative z-10"
             />
             <div 
-              className="absolute inset-y-0 left-0 bg-green-500/30 rounded-full transition-all duration-300 ease-out"
+              className="absolute inset-y-0 left-0 bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-300 ease-out"
               style={{ 
                 width: `${progressPercentage}%`,
                 height: '2px',
@@ -134,23 +142,23 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-black/20 rounded-lg backdrop-blur-sm">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6 glass-card backdrop-blur-xl">
             <div>
-              <span className="block text-sm font-medium text-gray-300 mb-1">Unità acquistate:</span>
-              <span className="text-2xl font-semibold text-white tracking-tight">{calculateUnits(amount)} unità</span>
+              <span className="block text-sm font-medium text-gray-300 mb-2">Unità acquistate:</span>
+              <span className="text-xl font-semibold text-white tracking-tight">{calculateUnits(amount)} unità</span>
             </div>
             <div>
-              <span className="block text-sm font-medium text-gray-300 mb-1">Rendimento annuo stimato:</span>
-              <span className="text-2xl font-semibold text-green-500 tracking-tight">€{calculateExpectedReturn(amount)}</span>
+              <span className="block text-sm font-medium text-gray-300 mb-2">Rendimento annuo stimato:</span>
+              <span className="text-xl font-semibold text-green-500 tracking-tight shadow-sm">€{calculateExpectedReturn(amount)}</span>
             </div>
           </div>
 
           <Button 
             onClick={handleInvestClick}
             disabled={!!error || amount < minInvestment}
-            className="w-full py-6 text-lg font-bold bg-green-500 hover:bg-green-600 
-                     transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 
-                     disabled:hover:scale-100 shadow-lg shadow-green-500/20"
+            className="w-full py-6 text-lg font-bold bg-gradient-to-r from-green-500 to-green-600 
+                     hover:scale-105 hover:shadow-lg transition-all duration-300 
+                     disabled:opacity-50 disabled:hover:scale-100 shadow-xl px-8"
           >
             Investi Ora
           </Button>

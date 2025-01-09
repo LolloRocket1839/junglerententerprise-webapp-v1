@@ -23,9 +23,10 @@ const InvestmentInput: React.FC<InvestmentInputProps> = ({
           type="number"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="pr-20 rounded-lg shadow-sm border-gray-200 
-                     focus:border-green-500 focus:ring-2 focus:ring-green-500/20 
-                     transition-all duration-200"
+          className="pr-20 rounded-lg shadow-sm border-gray-200/20 
+                     focus:ring-2 focus:ring-green-500/20 focus:border-green-500
+                     transition-all duration-200 text-lg font-medium
+                     bg-black/20 backdrop-blur-xl"
           placeholder="Min: €100"
           disabled={disabled}
         />
@@ -35,8 +36,9 @@ const InvestmentInput: React.FC<InvestmentInputProps> = ({
       </div>
       <Button 
         onClick={onConfirm}
-        className="whitespace-nowrap bg-green-500 hover:bg-green-600 
-                   transition-colors duration-200 text-white font-medium"
+        className="whitespace-nowrap bg-gradient-to-r from-green-500 to-green-600
+                   hover:scale-105 transition-all duration-200 text-white font-medium
+                   shadow-lg hover:shadow-xl px-6"
         disabled={disabled}
       >
         <Check className="w-4 h-4 mr-2" />
