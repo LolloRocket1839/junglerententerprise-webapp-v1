@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronRight, MapPin } from 'lucide-react';
+import { ChevronRight, MapPin, X } from 'lucide-react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,6 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { DialogClose } from "@/components/ui/dialog";
 
 interface InvestmentHeaderProps {
   propertyName: string;
@@ -20,7 +21,11 @@ const InvestmentHeader: React.FC<InvestmentHeaderProps> = ({
 }) => {
   return (
     <div className="sticky top-0 z-10 backdrop-blur-xl bg-black/40 border-b border-white/10">
-      <div className="p-4">
+      <div className="relative p-4">
+        <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+          <X className="h-4 w-4 text-white" />
+          <span className="sr-only">Close</span>
+        </DialogClose>
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
