@@ -67,14 +67,22 @@ const Rent = () => {
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Tabs value={activeTab} className="w-full" onValueChange={handleTabChange}>
-          <TabsList className="grid w-full grid-cols-2 mb-8 bg-white/10 backdrop-blur-md border border-white/20">
-            <TabsTrigger value="search" className="data-[state=active]:bg-green-500 data-[state=active]:text-white">
-              Find Accommodation
-            </TabsTrigger>
-            <TabsTrigger value="profile" className="data-[state=active]:bg-green-500 data-[state=active]:text-white">
-              Student Profile
-            </TabsTrigger>
-          </TabsList>
+          <div className="sticky top-20 z-50 py-4 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-md">
+            <TabsList className="grid w-full grid-cols-2 gap-2 p-1 bg-black/60 backdrop-blur-lg border border-white/20 rounded-lg">
+              <TabsTrigger 
+                value="search" 
+                className="data-[state=active]:bg-green-500 data-[state=active]:text-white"
+              >
+                Find Accommodation
+              </TabsTrigger>
+              <TabsTrigger 
+                value="profile" 
+                className="data-[state=active]:bg-green-500 data-[state=active]:text-white"
+              >
+                Student Profile
+              </TabsTrigger>
+            </TabsList>
+          </div>
           
           <TabsContent value="search">
             <SearchSection />
