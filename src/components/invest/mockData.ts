@@ -14,7 +14,7 @@ export const mockProperties: Property[] = [
     ],
     rating: 8.9,
     reviews_count: 28,
-    investment_goal: 100000,
+    investment_goal: 110000,
     amount_raised: 45000
   },
   {
@@ -30,7 +30,7 @@ export const mockProperties: Property[] = [
     ],
     rating: 9.2,
     reviews_count: 35,
-    investment_goal: 150000,
+    investment_goal: 140000,
     amount_raised: 82000
   },
   {
@@ -46,7 +46,7 @@ export const mockProperties: Property[] = [
     ],
     rating: 9.5,
     reviews_count: 42,
-    investment_goal: 200000,
+    investment_goal: 135000,
     amount_raised: 120000
   },
   {
@@ -62,7 +62,7 @@ export const mockProperties: Property[] = [
     ],
     rating: 9.0,
     reviews_count: 31,
-    investment_goal: 180000,
+    investment_goal: 125000,
     amount_raised: 90000
   },
   {
@@ -78,7 +78,7 @@ export const mockProperties: Property[] = [
     ],
     rating: 8.7,
     reviews_count: 24,
-    investment_goal: 120000,
+    investment_goal: 115000,
     amount_raised: 60000
   },
   {
@@ -94,7 +94,7 @@ export const mockProperties: Property[] = [
     ],
     rating: 9.3,
     reviews_count: 39,
-    investment_goal: 160000,
+    investment_goal: 130000,
     amount_raised: 100000
   }
 ];
