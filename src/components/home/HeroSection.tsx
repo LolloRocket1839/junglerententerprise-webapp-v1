@@ -34,7 +34,7 @@ export const HeroSection = () => {
           </h1>
           
           <p className="text-base sm:text-lg md:text-2xl mb-6 sm:mb-8 animate-fade-in text-secondary/90">
-            Rent that pays
+            Pay less earn more
           </p>
           
           <Button
