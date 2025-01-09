@@ -51,10 +51,14 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
           currentImageIndex={currentImageIndex}
           onToggleImage={onToggleImage}
         />
-        <div className="glass-card p-6 space-y-6">
+        <div className="glass-card p-6 space-y-6 shadow-xl backdrop-blur-2xl">
           <div className="space-y-4">
-            <h3 className="text-3xl font-bold text-white tracking-tight">{property.name}</h3>
-            <p className="text-lg text-gray-100 leading-relaxed font-medium">{property.description}</p>
+            <h3 className="text-3xl font-bold text-white tracking-tight antialiased">
+              {property.name}
+            </h3>
+            <p className="text-lg text-white/90 leading-relaxed font-medium antialiased">
+              {property.description}
+            </p>
           </div>
           
           <PropertyStats
@@ -65,8 +69,10 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
           
           <div className="pt-4">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-semibold text-gray-100">Progresso Raccolta Fondi</span>
-              <span className="text-sm font-bold text-white">
+              <span className="text-sm font-semibold text-white/90 antialiased">
+                Progresso Raccolta Fondi
+              </span>
+              <span className="text-sm font-bold text-white antialiased">
                 €{property.amount_raised.toLocaleString()} / €{property.investment_goal.toLocaleString()}
               </span>
             </div>
@@ -80,29 +86,29 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
 
       <div className="space-y-6">
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="w-full grid grid-cols-3 bg-black/40 backdrop-blur-xl border border-white/10 rounded-xl p-1">
+          <TabsList className="w-full grid grid-cols-3 bg-black/60 backdrop-blur-2xl border border-white/20 rounded-xl p-1">
             <TabsTrigger 
               value="overview"
-              className="data-[state=active]:bg-white/10 data-[state=active]:text-white text-gray-100 font-medium rounded-lg transition-all"
+              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased"
             >
               Overview
             </TabsTrigger>
             <TabsTrigger 
               value="details"
-              className="data-[state=active]:bg-white/10 data-[state=active]:text-white text-gray-100 font-medium rounded-lg transition-all"
+              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased"
             >
               Dettagli
             </TabsTrigger>
             <TabsTrigger 
               value="legal"
-              className="data-[state=active]:bg-white/10 data-[state=active]:text-white text-gray-100 font-medium rounded-lg transition-all"
+              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased"
             >
               Legale
             </TabsTrigger>
           </TabsList>
           
           <TabsContent value="overview" className="space-y-6 pt-6">
-            <div className="glass-card p-6 space-y-8">
+            <div className="glass-card p-6 space-y-8 shadow-xl backdrop-blur-2xl">
               <InvestmentControls
                 amount={investmentAmount}
                 onAmountChange={setInvestmentAmount}
@@ -112,7 +118,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
                 onInvest={onInvest}
               />
 
-              <div className="pt-4 border-t border-white/10">
+              <div className="pt-4 border-t border-white/20">
                 <InvestmentSummary
                   amount={investmentAmount}
                   roi={`€${calculateROI(investmentAmount)}`}
@@ -124,13 +130,13 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
           </TabsContent>
 
           <TabsContent value="details" className="pt-6">
-            <div className="glass-card p-6">
+            <div className="glass-card p-6 shadow-xl backdrop-blur-2xl">
               <PropertyDetailsTab />
             </div>
           </TabsContent>
           
           <TabsContent value="legal" className="pt-6">
-            <div className="glass-card p-6">
+            <div className="glass-card p-6 shadow-xl backdrop-blur-2xl">
               <LegalDocumentsTab />
             </div>
           </TabsContent>
