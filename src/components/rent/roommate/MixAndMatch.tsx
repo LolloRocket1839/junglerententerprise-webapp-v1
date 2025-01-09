@@ -1,33 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X, Heart, Ban, Loader2 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-
-interface Profile {
-  id: string;
-  first_name: string;
-  last_name: string;
-  avatar_url: string | null;
-  bio: string | null;
-  preferences: any;
-  budget_min: number | null;
-  budget_max: number | null;
-}
-
-interface RoommateMatch {
-  id: string;
-  profile_id: string;
-  target_profile_id: string;
-  liked: boolean;
-  created_at: string;
-}
+import { AnimatePresence } from "framer-motion";
+import MatchDialog from './match/MatchDialog';
+import ProfileCard from './match/ProfileCard';
+import LoadingState from './match/LoadingState';
+import NoMoreProfiles from './match/NoMoreProfiles';
 
 export function MixAndMatch() {
   const [isOpen, setIsOpen] = useState(false);
-  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [profiles, setProfiles] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
@@ -43,8 +26,8 @@ export function MixAndMatch() {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) {
         toast({
-          title: "Authentication required",
-          description: "Please log in to use the Mix & Match feature.",
+          title: "Autenticazione richiesta",
+          description: "Accedi per utilizzare la funzione Mix & Match.",
           variant: "destructive",
         });
         setIsOpen(false);
@@ -64,10 +47,10 @@ export function MixAndMatch() {
         setIsLoading(false);
       }
     } catch (error) {
-      console.error('Error loading profiles:', error);
+      console.error('Errore nel caricamento dei profili:', error);
       toast({
-        title: "Error",
-        description: "Failed to load profiles. Please try again.",
+        title: "Errore",
+        description: "Impossibile caricare i profili. Riprova più tardi.",
         variant: "destructive",
       });
     }
@@ -79,8 +62,8 @@ export function MixAndMatch() {
     const { data: userData } = await supabase.auth.getUser();
     if (!userData.user) {
       toast({
-        title: "Authentication required",
-        description: "Please log in to use this feature.",
+        title: "Autenticazione richiesta",
+        description: "Accedi per utilizzare questa funzione.",
         variant: "destructive",
       });
       return;
@@ -89,7 +72,6 @@ export function MixAndMatch() {
     const targetProfile = profiles[currentIndex];
 
     try {
-      // Check if there's a match
       const { data: existingMatch, error: matchError } = await supabase
         .from('roommate_matches')
         .select('*')
@@ -100,7 +82,6 @@ export function MixAndMatch() {
 
       if (matchError) throw matchError;
 
-      // Record the swipe
       const { error: swipeError } = await supabase
         .from('roommate_matches')
         .insert({
@@ -113,17 +94,17 @@ export function MixAndMatch() {
 
       if (liked && existingMatch) {
         toast({
-          title: "It's a match! 🎉",
-          description: `You matched with ${targetProfile.first_name}!`,
+          title: "È un match! 🎉",
+          description: `Hai fatto match con ${targetProfile.first_name}!`,
         });
       }
 
       setCurrentIndex(prev => prev + 1);
     } catch (error) {
-      console.error('Error recording swipe:', error);
+      console.error('Errore nel registrare la scelta:', error);
       toast({
-        title: "Error",
-        description: "Failed to record your choice. Please try again.",
+        title: "Errore",
+        description: "Impossibile registrare la tua scelta. Riprova.",
         variant: "destructive",
       });
     }
@@ -140,90 +121,25 @@ export function MixAndMatch() {
         Mix & Match
       </Button>
 
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-[500px] p-0">
-          <DialogTitle className="sr-only">Mix & Match</DialogTitle>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute right-4 top-4 z-10"
-            onClick={() => setIsOpen(false)}
-          >
-            <X className="h-4 w-4" />
-          </Button>
-
-          <div className="h-[600px] relative overflow-hidden">
-            {isLoading ? (
-              <div className="flex items-center justify-center h-full">
-                <Loader2 className="h-8 w-8 animate-spin" />
-              </div>
-            ) : currentIndex >= profiles.length ? (
-              <div className="flex flex-col items-center justify-center h-full p-6 text-center">
-                <h3 className="text-xl font-semibold mb-2">No more profiles!</h3>
-                <p className="text-muted-foreground">Check back later for more potential matches.</p>
-                <Button 
-                  className="mt-4"
-                  onClick={() => {
-                    setCurrentIndex(0);
-                    loadProfiles();
-                  }}
-                >
-                  Start Over
-                </Button>
-              </div>
-            ) : (
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentProfile.id}
-                  initial={{ x: 300, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: -300, opacity: 0 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  className="h-full"
-                >
-                  <div className="relative h-full glass-card rounded-none">
-                    {currentProfile.avatar_url && (
-                      <div 
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{ backgroundImage: `url(${currentProfile.avatar_url})` }}
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-                    
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                      <h3 className="text-2xl font-bold mb-2">
-                        {currentProfile.first_name}, {currentProfile.bio}
-                      </h3>
-                      <p className="text-sm opacity-90 mb-4">
-                        Budget: €{currentProfile.budget_min} - €{currentProfile.budget_max}
-                      </p>
-                      
-                      <div className="flex justify-center gap-4">
-                        <Button
-                          size="lg"
-                          variant="outline"
-                          className="rounded-full w-12 h-12 p-0 border-2 hover:bg-red-500/20"
-                          onClick={() => handleSwipe(false)}
-                        >
-                          <Ban className="h-6 w-6 text-red-500" />
-                        </Button>
-                        <Button
-                          size="lg"
-                          variant="outline"
-                          className="rounded-full w-12 h-12 p-0 border-2 hover:bg-green-500/20"
-                          onClick={() => handleSwipe(true)}
-                        >
-                          <Heart className="h-6 w-6 text-green-500" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
+      <MatchDialog isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        {isLoading ? (
+          <LoadingState />
+        ) : currentIndex >= profiles.length ? (
+          <NoMoreProfiles 
+            onRestart={() => {
+              setCurrentIndex(0);
+              loadProfiles();
+            }}
+          />
+        ) : (
+          <AnimatePresence mode="wait">
+            <ProfileCard
+              profile={currentProfile}
+              onSwipe={handleSwipe}
+            />
+          </AnimatePresence>
+        )}
+      </MatchDialog>
     </>
   );
 }
