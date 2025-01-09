@@ -10,6 +10,7 @@ import { useState } from "react";
 
 const Invest = () => {
   const [selectedTab, setSelectedTab] = useState("opportunities");
+  
   const { data: stats, isLoading: statsLoading } = useQuery({
     queryKey: ['investment-stats'],
     queryFn: async () => {
