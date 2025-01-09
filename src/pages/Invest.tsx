@@ -41,7 +41,7 @@ const Invest = () => {
         <div className="absolute bottom-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-xl" />
       </div>
 
-      <div className="relative container mx-auto px-4 py-6 md:py-8 space-y-6">
+      <div className="relative container mx-auto px-4 pt-28 md:pt-32 pb-6 md:pb-8 space-y-6">
         <h1 className="text-2xl md:text-4xl font-bold text-white mb-6 text-left">
           Dashboard Investimenti
         </h1>
