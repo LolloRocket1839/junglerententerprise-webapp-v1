@@ -81,32 +81,34 @@ const Invest = () => {
             }
           }}
         >
-          <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-black/60 backdrop-blur-lg border border-white/10 rounded-lg sticky top-16 z-10">
-            <TabsTrigger 
-              value="opportunities" 
-              className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-            >
-              Opportunità
-            </TabsTrigger>
-            <TabsTrigger 
-              value="my-investments" 
-              className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-            >
-              I Miei Investimenti
-            </TabsTrigger>
-            <TabsTrigger 
-              value="tokenization" 
-              className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-            >
-              Tokenizzazione
-            </TabsTrigger>
-            <TabsTrigger 
-              value="analytics" 
-              className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-            >
-              Analisi
-            </TabsTrigger>
-          </TabsList>
+          <div className="sticky top-20 z-50 py-4 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-md">
+            <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-black/60 backdrop-blur-lg border border-white/10 rounded-lg">
+              <TabsTrigger 
+                value="opportunities" 
+                className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+              >
+                Opportunità
+              </TabsTrigger>
+              <TabsTrigger 
+                value="my-investments" 
+                className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+              >
+                I Miei Investimenti
+              </TabsTrigger>
+              <TabsTrigger 
+                value="tokenization" 
+                className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+              >
+                Tokenizzazione
+              </TabsTrigger>
+              <TabsTrigger 
+                value="analytics" 
+                className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
+              >
+                Analisi
+              </TabsTrigger>
+            </TabsList>
+          </div>
           
           <TabsContent value="opportunities" className="focus:outline-none">
             <InvestmentOpportunities />
