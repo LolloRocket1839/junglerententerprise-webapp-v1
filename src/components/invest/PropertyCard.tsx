@@ -24,6 +24,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
     onInfo(property);
   };
 
+  const calculatePercentage = () => {
+    return Math.round((property.amount_raised / property.investment_goal) * 100);
+  };
+
   return (
     <Card 
       className={`${className} cursor-pointer transition-transform duration-200 hover:scale-[1.02]`}
@@ -54,7 +58,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
           <div className="w-full h-full bg-white/5" />
         )}
       </div>
-      <div className="p-6 space-y-4">
+      <div className="p-6 space-y-6">
         <div>
           <h3 className="text-lg font-semibold text-white">{property.name}</h3>
           <p className="text-sm text-white/60">{property.location}</p>
@@ -76,12 +80,22 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
           </div>
         </div>
 
-        <ProgressBar 
-          value={property.amount_raised || 0}
-          max={property.investment_goal || 100000}
-          showLabel={false}
-          className="mt-2"
-        />
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <span className="text-sm text-white/60">Sottoscrizione</span>
+            <span className="text-sm font-semibold text-white">{calculatePercentage()}%</span>
+          </div>
+          <ProgressBar 
+            value={property.amount_raised || 0}
+            max={property.investment_goal || 100000}
+            showLabel={false}
+            className="mt-2"
+          />
+          <div className="flex justify-between text-xs text-white/60">
+            <span>€{property.amount_raised.toLocaleString()}</span>
+            <span>€{property.investment_goal.toLocaleString()}</span>
+          </div>
+        </div>
         
         <div className="flex gap-3">
           <Button 
