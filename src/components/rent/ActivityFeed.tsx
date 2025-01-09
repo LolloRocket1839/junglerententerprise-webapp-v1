@@ -4,27 +4,27 @@ const ActivityFeed = () => {
   const activities = [
     {
       icon: AlertCircle,
-      title: 'Utility Bill Due',
-      message: "Please confirm your portion of this month's utilities",
-      time: '2 days',
+      title: 'Bolletta da Pagare',
+      message: "Conferma la tua parte delle utenze di questo mese",
+      time: '2 giorni',
     },
     {
       icon: Calendar,
-      title: 'House Meeting',
-      message: "Vote for next weekend's cleaning schedule",
-      time: '5 hours',
+      title: 'Riunione Casa',
+      message: "Vota per il programma delle pulizie del prossimo weekend",
+      time: '5 ore',
     },
     {
       icon: Home,
-      title: 'Room Check',
-      message: 'Monthly room inspection scheduled',
-      time: 'Tomorrow',
+      title: 'Controllo Stanza',
+      message: 'Ispezione mensile della stanza programmata',
+      time: 'Domani',
     }
   ];
 
   return (
     <div className="glass-card p-4 sm:p-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
-      <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Recent Activity</h3>
+      <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Attività Recenti</h3>
       <div className="space-y-3 sm:space-y-4">
         {activities.map((activity, index) => {
           const Icon = activity.icon;

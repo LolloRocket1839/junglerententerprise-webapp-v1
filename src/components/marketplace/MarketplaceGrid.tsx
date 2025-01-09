@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import MarketplaceItem from './MarketplaceItem';
 import MarketplaceHeader from './MarketplaceHeader';
+import ActivityFeed from '../rent/ActivityFeed';
 import { MarketplaceCategory } from './types';
 import { mockItems } from './mockData';
 
@@ -19,8 +20,8 @@ const MarketplaceGrid = () => {
 
   const handleWishlist = (itemId: string) => {
     toast({
-      title: "Added to Wishlist",
-      description: "We'll notify you about similar items!",
+      title: "Aggiunto ai Preferiti",
+      description: "Ti notificheremo per articoli simili!",
     });
   };
 
@@ -33,15 +34,20 @@ const MarketplaceGrid = () => {
         setSelectedCategory={setSelectedCategory}
       />
 
-      <div className="p-4 max-w-7xl mx-auto">
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {filteredItems.map((item) => (
-            <MarketplaceItem 
-              key={item.id}
-              item={item}
-              onWishlist={() => handleWishlist(item.id)}
-            />
-          ))}
+      <div className="p-4 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredItems.map((item) => (
+              <MarketplaceItem 
+                key={item.id}
+                item={item}
+                onWishlist={() => handleWishlist(item.id)}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="lg:col-span-1">
+          <ActivityFeed />
         </div>
       </div>
     </div>
