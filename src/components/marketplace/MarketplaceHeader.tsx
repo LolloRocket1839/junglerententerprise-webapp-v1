@@ -16,12 +16,20 @@ const MarketplaceHeader = ({
   selectedCategory,
   setSelectedCategory
 }: MarketplaceHeaderProps) => {
+  const categories: Record<MarketplaceCategory, string> = {
+    'all': 'Tutti gli articoli',
+    'furniture': 'Arredamento',
+    'electronics': 'Elettronica',
+    'textbooks': 'Libri',
+    'services': 'Servizi'
+  };
+
   return (
     <div className="sticky top-16 z-10 bg-black/50 backdrop-blur-xl border-b border-white/10 px-4 py-3 space-y-3">
       <div className="relative max-w-2xl mx-auto">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 h-4 w-4" />
         <Input
-          placeholder="Search marketplace..."
+          placeholder="Cerca nel marketplace..."
           className="pl-10 pr-4 h-12 w-full glass-input bg-white/5 border-white/10 text-white placeholder:text-white/40"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -37,7 +45,7 @@ const MarketplaceHeader = ({
       </div>
 
       <div className="flex flex-wrap gap-2 justify-center max-w-2xl mx-auto">
-        {(['all', 'furniture', 'electronics', 'textbooks', 'services'] as const).map((category) => (
+        {(Object.keys(categories) as MarketplaceCategory[]).map((category) => (
           <Badge
             key={category}
             variant={selectedCategory === category ? "default" : "outline"}
@@ -48,7 +56,7 @@ const MarketplaceHeader = ({
             }`}
             onClick={() => setSelectedCategory(category)}
           >
-            {category === 'all' ? 'All Items' : category.charAt(0).toUpperCase() + category.slice(1)}
+            {categories[category]}
           </Badge>
         ))}
       </div>

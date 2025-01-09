@@ -70,33 +70,5 @@ export const mockItems: MarketplaceItemType[] = [
       rating: 4.7
     },
     createdAt: '2024-02-16'
-  },
-  {
-    id: '6',
-    name: 'Scambio Linguistico',
-    description: 'Sessioni di scambio spagnolo-italiano. 1 ora ciascuno.',
-    price: 0,
-    category: 'services',
-    imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f',
-    seller: {
-      id: '6',
-      name: 'Carlo P.',
-      rating: 4.6
-    },
-    createdAt: '2024-02-15'
-  },
-  {
-    id: '7',
-    name: 'Revisione CV',
-    description: 'Revisione professionale del curriculum per candidature di lavoro.',
-    price: 30,
-    category: 'services',
-    imageUrl: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4',
-    seller: {
-      id: '7',
-      name: 'Emma L.',
-      rating: 4.8
-    },
-    createdAt: '2024-02-14'
   }
 ];

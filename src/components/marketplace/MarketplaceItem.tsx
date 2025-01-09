@@ -11,7 +11,6 @@ const MarketplaceItem = ({ item, onWishlist }: MarketplaceItemProps) => {
   return (
     <Card className="glass-card overflow-hidden group hover:scale-[1.02] transition-all duration-300">
       <div className="relative">
-        {/* Image Container with Fixed Aspect Ratio */}
         <div className="relative pt-[100%]">
           <img 
             src={item.imageUrl} 
@@ -20,7 +19,6 @@ const MarketplaceItem = ({ item, onWishlist }: MarketplaceItemProps) => {
           />
         </div>
         
-        {/* Wishlist Button */}
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -33,13 +31,11 @@ const MarketplaceItem = ({ item, onWishlist }: MarketplaceItemProps) => {
           <Heart className="h-4 w-4 text-white" />
         </button>
 
-        {/* Price Tag */}
         <div className="absolute bottom-2 left-2 px-3 py-1 rounded-full bg-primary text-black font-medium text-sm">
           €{item.price}
         </div>
       </div>
       
-      {/* Content */}
       <div className="p-3 space-y-2 bg-black/50">
         <h3 className="font-medium text-sm text-white line-clamp-1">
           {item.name}
