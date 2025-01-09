@@ -11,19 +11,19 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
   return (
     <div className="hidden md:flex items-center space-x-8">
       <Link to="/invest" className="text-sm text-white/80 hover:text-white transition-colors">
-        Invest
+        Investi
       </Link>
       <Link to="/rent" className="text-sm text-white/80 hover:text-white transition-colors">
-        Rent
+        Affitta
       </Link>
       <Link to="/marketplace" className="text-sm text-white/80 hover:text-white transition-colors">
         Marketplace
       </Link>
       <Link to="/stay" className="text-sm text-white/80 hover:text-white transition-colors">
-        Stay
+        Soggiorna
       </Link>
       <Link to="/student" className="text-sm text-white/80 hover:text-white transition-colors">
-        Student
+        Studenti
       </Link>
       <Link to="/referral" className="text-sm text-white/80 hover:text-white transition-colors">
         Referral
@@ -37,7 +37,7 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
           className="flex items-center gap-2"
         >
           <LogOut className="w-4 h-4" />
-          Sign Out
+          Esci
         </Button>
       ) : (
         <div className="flex items-center gap-2">
@@ -49,7 +49,7 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
           >
             <Link to="/auth">
               <LogIn className="w-4 h-4" />
-              Sign In
+              Accedi
             </Link>
           </Button>
           <Button 
@@ -60,7 +60,7 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
           >
             <Link to="/auth">
               <UserPlus className="w-4 h-4" />
-              Sign Up
+              Registrati
             </Link>
           </Button>
         </div>

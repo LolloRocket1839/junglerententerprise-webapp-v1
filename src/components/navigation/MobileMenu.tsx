@@ -26,13 +26,13 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
       await supabase.auth.signOut();
       handleNavigation('/');
       toast({
-        title: "Signed out successfully",
-        description: "Come back soon!",
+        title: "Disconnessione effettuata",
+        description: "Torna presto!",
       });
     } catch (error) {
       toast({
-        title: "Error signing out",
-        description: "Please try again",
+        title: "Errore durante la disconnessione",
+        description: "Riprova più tardi",
         variant: "destructive",
       });
     }
@@ -51,13 +51,13 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
             onClick={() => handleNavigation("/invest")}
             className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
-            Invest
+            Investi
           </button>
           <button
             onClick={() => handleNavigation("/rent")}
             className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
-            Rent
+            Affitta
           </button>
           <button
             onClick={() => handleNavigation("/marketplace")}
@@ -69,13 +69,13 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
             onClick={() => handleNavigation("/stay")}
             className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
-            Stay
+            Soggiorna
           </button>
           <button
             onClick={() => handleNavigation("/student")}
             className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
           >
-            Student
+            Studenti
           </button>
           <button
             onClick={() => handleNavigation("/referral")}
@@ -92,7 +92,7 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
                 className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20"
               >
                 <LogOut className="w-4 h-4" />
-                Sign Out
+                Esci
               </Button>
             ) : (
               <div className="space-y-4">
@@ -102,7 +102,7 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
                   className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20"
                 >
                   <LogIn className="w-4 h-4" />
-                  Sign In
+                  Accedi
                 </Button>
                 <Button
                   variant="default"
@@ -110,7 +110,7 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
                   className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-background"
                 >
                   <UserPlus className="w-4 h-4" />
-                  Sign Up
+                  Registrati
                 </Button>
               </div>
             )}

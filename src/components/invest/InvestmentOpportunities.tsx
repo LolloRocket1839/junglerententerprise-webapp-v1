@@ -25,7 +25,7 @@ const InvestmentOpportunities = () => {
 
       if (error) {
         console.error('Error fetching properties:', error);
-        throw new Error('Failed to load investment opportunities');
+        throw new Error('Impossibile caricare le opportunità di investimento');
       }
 
       if (!data || data.length === 0) {
@@ -52,7 +52,7 @@ const InvestmentOpportunities = () => {
     mutationFn: async ({ hubId, amount }: { hubId: string, amount: number }) => {
       const { data: session } = await supabase.auth.getSession();
       if (!session?.session?.user) {
-        throw new Error('You must be logged in to invest');
+        throw new Error('Devi essere loggato per investire');
       }
 
       const { data, error } = await supabase
@@ -76,13 +76,13 @@ const InvestmentOpportunities = () => {
       return data;
     },
     onSuccess: () => {
-      toast.success("Investment submitted successfully!");
+      toast.success("Investimento inviato con successo!");
       setSelectedProperty(null);
       setShowDetails(false);
       queryClient.invalidateQueries({ queryKey: ['investment-properties'] });
     },
     onError: (error: Error) => {
-      toast.error("Investment failed. Please try again.");
+      toast.error("Investimento fallito. Riprova più tardi.");
     }
   });
 
@@ -104,7 +104,7 @@ const InvestmentOpportunities = () => {
     return (
       <Alert variant="destructive" className="mb-8">
         <AlertDescription>
-          Failed to load investment opportunities. Please try again later.
+          Impossibile caricare le opportunità di investimento. Riprova più tardi.
         </AlertDescription>
       </Alert>
     );

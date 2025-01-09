@@ -71,7 +71,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
           <div className="text-right">
             <p className="text-xs text-white/60">ROI Previsto</p>
             <p className="text-base font-semibold text-primary">
-              {property.rating ? `${property.rating}%` : 'TBD'}
+              {property.rating ? `${property.rating}%` : 'Da definire'}
             </p>
           </div>
         </div>
