@@ -1,6 +1,6 @@
 import { MarketplaceItemType } from './types';
 
-export const mockItems: MarketplaceItemType[] = [
+export const marketplaceItems: MarketplaceItemType[] = [
   {
     id: '1',
     name: 'MacBook Pro 2021',

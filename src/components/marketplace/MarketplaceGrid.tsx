@@ -1,15 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useToast } from "@/components/ui/use-toast";
 import MarketplaceHeader from './MarketplaceHeader';
 import MarketplaceItem from './MarketplaceItem';
 import { marketplaceItems } from './mockData';
+import { MarketplaceCategory } from './types';
 
 const MarketplaceGrid = () => {
+  const [selectedCategory, setSelectedCategory] = useState<MarketplaceCategory>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const { toast } = useToast();
+
+  const filteredItems = marketplaceItems.filter(item => {
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         item.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const handleWishlist = () => {
+    toast({
+      title: "Aggiunto ai Preferiti",
+      description: "Ti notificheremo per articoli simili!",
+    });
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <MarketplaceHeader />
+      <MarketplaceHeader
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-        {marketplaceItems.map((item) => (
-          <MarketplaceItem key={item.id} item={item} />
+        {filteredItems.map((item) => (
+          <MarketplaceItem 
+            key={item.id} 
+            item={item} 
+            onWishlist={handleWishlist}
+          />
         ))}
       </div>
     </div>
