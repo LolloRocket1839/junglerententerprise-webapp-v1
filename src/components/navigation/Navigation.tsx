@@ -52,7 +52,7 @@ const Navigation = () => {
           <button 
             className="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
             onClick={() => setIsMenuOpen(true)}
-            aria-label="Toggle menu"
+            aria-label="Menu di navigazione"
           >
             {isMenuOpen ? (
               <X size={24} className="text-white" />

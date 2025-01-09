@@ -24,7 +24,7 @@ const InvestmentOpportunities = () => {
         .limit(6);
 
       if (error) {
-        console.error('Error fetching properties:', error);
+        console.error('Errore nel caricamento delle proprietà:', error);
         throw new Error('Impossibile caricare le opportunità di investimento');
       }
 
@@ -70,7 +70,7 @@ const InvestmentOpportunities = () => {
         .single();
 
       if (error) {
-        console.error('Investment error:', error);
+        console.error('Errore di investimento:', error);
         throw new Error(error.message);
       }
       return data;
@@ -95,7 +95,7 @@ const InvestmentOpportunities = () => {
   };
 
   const handlePropertyClick = (property: Property) => {
-    console.log("Property clicked:", property);
+    console.log("Proprietà selezionata:", property);
     setSelectedProperty(property);
     setShowDetails(true);
   };
