@@ -5,7 +5,6 @@ import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -15,17 +14,27 @@ const Auth = () => {
     // Handle email verification
     const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === 'SIGNED_IN') {
+        // For test account, bypass verification
+        if (session?.user?.email === 'test@jungle.com') {
+          toast({
+            title: "Benvenuto!",
+            description: "Accesso effettuato con successo.",
+          });
+          navigate('/student');
+          return;
+        }
+
         // Check if email is verified
         if (session?.user?.email_confirmed_at) {
           toast({
-            title: "Welcome back!",
-            description: "You've successfully signed in.",
+            title: "Bentornato!",
+            description: "Accesso effettuato con successo.",
           });
           navigate('/student');
         } else {
           toast({
-            title: "Please verify your email",
-            description: "Check your inbox for a verification link.",
+            title: "Verifica la tua email",
+            description: "Controlla la tua casella di posta per il link di verifica.",
           });
         }
       }
@@ -33,8 +42,8 @@ const Auth = () => {
       if (event === 'USER_UPDATED') {
         if (session?.user?.email_confirmed_at) {
           toast({
-            title: "Email verified!",
-            description: "Your email has been successfully verified.",
+            title: "Email verificata!",
+            description: "La tua email è stata verificata con successo.",
           });
           navigate('/student');
         }
@@ -55,17 +64,16 @@ const Auth = () => {
 
       if (error) throw error;
 
-      // Bypass verification check for test account
-      navigate('/student');
-      
       toast({
-        title: "Test login successful",
-        description: "You've been logged in with the test account and verification has been bypassed.",
+        title: "Accesso test effettuato",
+        description: "Sei stato autenticato con l'account di test.",
       });
+      
+      // Navigate will happen through the auth state change listener
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to login with test account. Make sure it exists in Supabase.",
+        title: "Errore",
+        description: "Impossibile accedere con l'account di test. Assicurati che esista in Supabase.",
         variant: "destructive",
       });
     }
@@ -75,17 +83,17 @@ const Auth = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#111111] to-[#222222] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="glass-card p-8 rounded-lg shadow-xl">
-          <h2 className="text-2xl font-bold text-white mb-6 text-center">Welcome to Jungle</h2>
+          <h2 className="text-2xl font-bold text-white mb-6 text-center">Benvenuto su Jungle</h2>
           
           <div className="mb-6">
             <Button 
               onClick={handleTestLogin}
               className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-3"
             >
-              Quick Test Login (Bypasses Verification)
+              Accesso Test Rapido (Salta Verifica)
             </Button>
             <p className="text-xs text-white/60 mt-2 text-center">
-              Development only: Automatically logs in with test@jungle.com
+              Solo per sviluppo: Accede automaticamente con test@jungle.com
             </p>
           </div>
 

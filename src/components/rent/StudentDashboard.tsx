@@ -43,8 +43,9 @@ const StudentDashboard = () => {
     return null;
   }
 
-  // Check if email is verified from the user metadata
-  const isEmailVerified = session.user?.user_metadata?.email_verified ?? false;
+  // Bypass verification for test account
+  const isEmailVerified = session.user.email === 'test@jungle.com' ? true : 
+    (session.user?.user_metadata?.email_verified ?? false);
 
   return <DashboardLayout session={session} isEmailVerified={isEmailVerified} />;
 };
