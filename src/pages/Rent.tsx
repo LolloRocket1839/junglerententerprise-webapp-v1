@@ -65,34 +65,38 @@ const Rent = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <Tabs value={activeTab} className="w-full" onValueChange={handleTabChange}>
-          <div className="sticky top-20 z-50 py-4 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-md">
-            <TabsList className="grid w-full grid-cols-2 gap-2 p-1 bg-black/60 backdrop-blur-lg border border-white/20 rounded-lg">
+      <div className="relative">
+        <div className="sticky top-20 z-50 bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-sm border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <TabsList className="grid w-full grid-cols-2 gap-2 p-1 bg-black/40 backdrop-blur-lg border border-white/10 rounded-lg">
               <TabsTrigger 
                 value="search" 
-                className="data-[state=active]:bg-green-500 data-[state=active]:text-white"
+                className="data-[state=active]:bg-primary data-[state=active]:text-white py-3 text-white/80 hover:text-white transition-colors"
               >
                 Find Accommodation
               </TabsTrigger>
               <TabsTrigger 
                 value="profile" 
-                className="data-[state=active]:bg-green-500 data-[state=active]:text-white"
+                className="data-[state=active]:bg-primary data-[state=active]:text-white py-3 text-white/80 hover:text-white transition-colors"
               >
                 Student Profile
               </TabsTrigger>
             </TabsList>
           </div>
-          
-          <TabsContent value="search">
-            <SearchSection />
-            <ProcessSteps />
-          </TabsContent>
+        </div>
 
-          <TabsContent value="profile">
-            <StudentDashboard />
-          </TabsContent>
-        </Tabs>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Tabs value={activeTab} className="w-full" onValueChange={handleTabChange}>
+            <TabsContent value="search" className="mt-0">
+              <SearchSection />
+              <ProcessSteps />
+            </TabsContent>
+
+            <TabsContent value="profile" className="mt-0">
+              <StudentDashboard />
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </div>
   );
