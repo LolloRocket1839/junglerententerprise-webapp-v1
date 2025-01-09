@@ -54,7 +54,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
         <div className="glass-card p-6 space-y-6">
           <div className="space-y-4">
             <h3 className="text-3xl font-bold text-white tracking-tight">{property.name}</h3>
-            <p className="text-lg font-light text-gray-300 leading-relaxed">{property.description}</p>
+            <p className="text-lg text-gray-100 leading-relaxed font-medium">{property.description}</p>
           </div>
           
           <PropertyStats
@@ -65,8 +65,8 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
           
           <div className="pt-4">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-medium text-gray-300">Progresso Raccolta Fondi</span>
-              <span className="text-sm font-semibold text-white">
+              <span className="text-sm font-semibold text-gray-100">Progresso Raccolta Fondi</span>
+              <span className="text-sm font-bold text-white">
                 €{property.amount_raised.toLocaleString()} / €{property.investment_goal.toLocaleString()}
               </span>
             </div>
@@ -83,19 +83,19 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
           <TabsList className="w-full grid grid-cols-3 bg-black/40 backdrop-blur-xl border border-white/10 rounded-xl p-1">
             <TabsTrigger 
               value="overview"
-              className="data-[state=active]:bg-white/10 data-[state=active]:text-white rounded-lg transition-all"
+              className="data-[state=active]:bg-white/10 data-[state=active]:text-white text-gray-100 font-medium rounded-lg transition-all"
             >
               Overview
             </TabsTrigger>
             <TabsTrigger 
               value="details"
-              className="data-[state=active]:bg-white/10 data-[state=active]:text-white rounded-lg transition-all"
+              className="data-[state=active]:bg-white/10 data-[state=active]:text-white text-gray-100 font-medium rounded-lg transition-all"
             >
               Dettagli
             </TabsTrigger>
             <TabsTrigger 
               value="legal"
-              className="data-[state=active]:bg-white/10 data-[state=active]:text-white rounded-lg transition-all"
+              className="data-[state=active]:bg-white/10 data-[state=active]:text-white text-gray-100 font-medium rounded-lg transition-all"
             >
               Legale
             </TabsTrigger>
