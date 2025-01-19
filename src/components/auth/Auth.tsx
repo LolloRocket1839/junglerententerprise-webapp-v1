@@ -11,42 +11,40 @@ const Auth = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Handle email verification
-    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN') {
-        // For test account, bypass verification
-        if (session?.user?.email === 'test@jungle.com') {
-          toast({
-            title: "Benvenuto!",
-            description: "Accesso effettuato con successo.",
-          });
-          navigate('/student');
-          return;
-        }
-
-        // Check if email is verified
-        if (session?.user?.email_confirmed_at) {
-          toast({
-            title: "Bentornato!",
-            description: "Accesso effettuato con successo.",
-          });
-          navigate('/student');
-        } else {
-          toast({
-            title: "Verifica la tua email",
-            description: "Controlla la tua casella di posta per il link di verifica.",
-          });
-        }
+    // Check for existing session on mount
+    const checkSession = async () => {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (error) {
+        console.error('Session check error:', error);
+        return;
       }
 
-      if (event === 'USER_UPDATED') {
-        if (session?.user?.email_confirmed_at) {
-          toast({
-            title: "Email verificata!",
-            description: "La tua email è stata verificata con successo.",
-          });
-          navigate('/student');
-        }
+      if (session?.user) {
+        handleAuthSuccess(session);
+      }
+    };
+
+    checkSession();
+
+    // Handle auth state changes
+    const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state change:', event, session);
+
+      if (event === 'SIGNED_IN') {
+        handleAuthSuccess(session);
+      }
+
+      if (event === 'SIGNED_OUT') {
+        toast({
+          title: "Disconnesso",
+          description: "Hai effettuato il logout con successo.",
+        });
+        navigate('/auth');
+      }
+
+      if (event === 'TOKEN_REFRESHED') {
+        console.log('Token refreshed successfully');
       }
     });
 
@@ -55,6 +53,34 @@ const Auth = () => {
     };
   }, [navigate, toast]);
 
+  const handleAuthSuccess = (session: any) => {
+    if (!session?.user) return;
+
+    // For test account, bypass verification
+    if (session.user.email === 'test@jungle.com') {
+      toast({
+        title: "Benvenuto!",
+        description: "Accesso effettuato con successo.",
+      });
+      navigate('/student');
+      return;
+    }
+
+    // Check if email is verified
+    if (session.user.email_confirmed_at) {
+      toast({
+        title: "Bentornato!",
+        description: "Accesso effettuato con successo.",
+      });
+      navigate('/student');
+    } else {
+      toast({
+        title: "Verifica la tua email",
+        description: "Controlla la tua casella di posta per il link di verifica.",
+      });
+    }
+  };
+
   const handleTestLogin = async () => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -62,15 +88,19 @@ const Auth = () => {
         password: 'testpassword123',
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Test login error:', error);
+        toast({
+          title: "Errore",
+          description: "Impossibile accedere con l'account di test. Assicurati che esista in Supabase.",
+          variant: "destructive",
+        });
+        return;
+      }
 
-      toast({
-        title: "Accesso test effettuato",
-        description: "Sei stato autenticato con l'account di test.",
-      });
-      
-      // Navigate will happen through the auth state change listener
+      // Auth state change listener will handle the navigation
     } catch (error) {
+      console.error('Test login error:', error);
       toast({
         title: "Errore",
         description: "Impossibile accedere con l'account di test. Assicurati che esista in Supabase.",
