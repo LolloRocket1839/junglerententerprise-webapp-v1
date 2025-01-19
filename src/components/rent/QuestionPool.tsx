@@ -15,6 +15,22 @@ type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
   is_premium?: boolean;
 };
 
+interface Category {
+  id: string;
+  name: string;
+  description: string;
+  is_premium: boolean;
+}
+
+interface Question {
+  id: string;
+  text: string;
+  category: string;
+  options: { text: string; trait: string }[];
+  weight: number;
+  isMystery?: boolean;
+}
+
 const QuestionPool = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { toast } = useToast();
@@ -36,8 +52,50 @@ const QuestionPool = () => {
     }
   });
 
-  const { data: categories, isLoading: loadingCategories } = useCategories();
-  const { data: questions, isLoading: loadingQuestions } = useQuestions(selectedCategory);
+  const { data: categories, isLoading: loadingCategories } = useQuery({
+    queryKey: ['question-categories'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('question_categories')
+        .select('*');
+
+      if (error) throw error;
+      
+      return data.map(cat => ({
+        id: cat.id,
+        name: cat.name,
+        description: cat.description || 'No description available',
+        is_premium: cat.is_premium || false
+      })) as Category[];
+    }
+  });
+
+  const { data: questions, isLoading: loadingQuestions } = useQuery({
+    queryKey: ['questions', selectedCategory],
+    queryFn: async () => {
+      if (!selectedCategory) return [];
+
+      const { data, error } = await supabase
+        .from('roommate_questions')
+        .select('*')
+        .eq('category', selectedCategory);
+
+      if (error) throw error;
+
+      return data.map(q => ({
+        id: q.id,
+        text: q.question,
+        category: q.category,
+        options: Array.isArray(q.options) ? q.options.map((opt: any) => ({
+          text: opt.text || '',
+          trait: opt.trait || ''
+        })) : [],
+        weight: 1,
+        isMystery: Math.random() > 0.8
+      })) as Question[];
+    },
+    enabled: !!selectedCategory
+  });
 
   const handleAnswer = async (questionId: string, answer: any) => {
     const { data: { user } } = await supabase.auth.getUser();

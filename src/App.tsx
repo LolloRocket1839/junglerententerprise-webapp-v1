@@ -26,18 +26,20 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/invest" element={<Invest />} />
-          <Route path="/rent" element={<Rent />} />
-          <Route path="/stay" element={<Stay />} />
-          <Route path="/student" element={<Student />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/list-room" element={<ListRoom />} />
-          <Route path="/referral" element={<Referral />} />
-        </Routes>
-        <Toaster />
+        <div className="app-container">
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/invest" element={<Invest />} />
+            <Route path="/rent" element={<Rent />} />
+            <Route path="/stay" element={<Stay />} />
+            <Route path="/student" element={<Student />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/list-room" element={<ListRoom />} />
+            <Route path="/referral" element={<Referral />} />
+          </Routes>
+          <Toaster />
+        </div>
       </Router>
     </QueryClientProvider>
   );
