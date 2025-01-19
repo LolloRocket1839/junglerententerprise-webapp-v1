@@ -1,67 +1,66 @@
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Lock } from "lucide-react";
-import { DynamicQuestion } from "../types/questions";
+
+interface Question {
+  id: string;
+  question: string;
+  options: {
+    [key: string]: string;
+  };
+  coin_reward?: number;
+}
 
 interface QuestionCardProps {
-  question: DynamicQuestion;
-  onAnswer: (answer: any) => void;
+  question: Question;
+  onAnswer: (answer: string) => void;
   isPremiumUser: boolean;
 }
 
 export const QuestionCard = ({ question, onAnswer, isPremiumUser }: QuestionCardProps) => {
-  if (question.is_premium && !isPremiumUser) {
-    return (
-      <Card className="p-6 glass-card relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
-          <div className="text-center space-y-4">
-            <Lock className="w-8 h-8 text-primary mx-auto" />
-            <p className="text-white/80">Unlock premium questions to get better matches!</p>
-            <Button variant="outline" className="bg-primary/20 hover:bg-primary/30 text-primary">
-              Upgrade to Premium
-            </Button>
-          </div>
-        </div>
-        <h3 className="text-xl font-semibold text-white mb-4">{question.question}</h3>
-      </Card>
-    );
-  }
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
-  const renderInput = () => {
-    switch (question.type) {
-      case 'select':
-        return (
-          <Select onValueChange={onAnswer}>
-            <SelectTrigger className="glass-input">
-              <SelectValue placeholder="Select an option" />
-            </SelectTrigger>
-            <SelectContent>
-              {question.options?.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.text}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        );
-      case 'text':
-      default:
-        return (
-          <Input
-            className="glass-input"
-            placeholder="Type your answer"
-            onChange={(e) => onAnswer(e.target.value)}
-          />
-        );
+  const handleSubmit = () => {
+    if (selectedAnswer) {
+      onAnswer(selectedAnswer);
+      setSelectedAnswer(null);
     }
   };
 
   return (
-    <Card className="p-6 glass-card">
-      <h3 className="text-xl font-semibold text-white mb-4">{question.question}</h3>
-      {renderInput()}
+    <Card className="p-6 glass-card space-y-4">
+      <div className="flex justify-between items-start">
+        <h3 className="text-lg font-semibold text-white">{question.question}</h3>
+        {question.coin_reward && (
+          <span className="text-sm text-primary">+{question.coin_reward} monete</span>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {Object.entries(question.options).map(([key, value]) => (
+          <Button
+            key={key}
+            variant={selectedAnswer === key ? "default" : "outline"}
+            className={`w-full justify-start text-left ${
+              selectedAnswer === key ? "bg-primary text-white" : "hover:bg-primary/20"
+            }`}
+            onClick={() => setSelectedAnswer(key)}
+          >
+            {value}
+          </Button>
+        ))}
+      </div>
+
+      <div className="flex justify-end">
+        <Button
+          onClick={handleSubmit}
+          disabled={!selectedAnswer}
+          className="bg-primary hover:bg-primary/90"
+        >
+          Conferma
+        </Button>
+      </div>
     </Card>
   );
 };

@@ -10,9 +10,9 @@ interface WelcomeScreenProps {
 
 const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
   const steps = [
-    { icon: <ClipboardCheck className="w-5 h-5" />, text: "Quick Questionnaire" },
-    { icon: <Users className="w-5 h-5" />, text: "View Matches" },
-    { icon: <MessageSquare className="w-5 h-5" />, text: "Connect" }
+    { icon: <ClipboardCheck className="w-5 h-5" />, text: "Breve Questionario" },
+    { icon: <Users className="w-5 h-5" />, text: "Vedi Match" },
+    { icon: <MessageSquare className="w-5 h-5" />, text: "Connettiti" }
   ];
 
   return (
@@ -28,7 +28,7 @@ const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
           transition={{ delay: 0.2 }}
           className="text-4xl font-bold text-white"
         >
-          Find Your Perfect Roommate
+          Trova il tuo Coinquilino Ideale
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0 }}
@@ -36,7 +36,7 @@ const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
           transition={{ delay: 0.4 }}
           className="text-lg text-white/80"
         >
-          Answer a few quick questions, see your matches, and connect with potential roommates!
+          Rispondi a poche domande, trova i tuoi match e connettiti con potenziali coinquilini!
         </motion.p>
       </div>
 
@@ -51,7 +51,7 @@ const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
           className="glass-button bg-primary hover:bg-primary/90 text-primary-foreground"
           size="lg"
         >
-          Start Questionnaire
+          Inizia Questionario
         </Button>
         <Button 
           onClick={onViewMatches}
@@ -59,7 +59,7 @@ const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
           size="lg"
           className="glass-button"
         >
-          View Past Matches
+          Vedi Match Precedenti
         </Button>
       </motion.div>
 
@@ -69,7 +69,7 @@ const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
         transition={{ delay: 0.8 }}
         className="space-y-6"
       >
-        <h3 className="text-lg font-semibold text-white">3 Steps to Your Perfect Match</h3>
+        <h3 className="text-lg font-semibold text-white">3 Passi per il tuo Match Perfetto</h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {steps.map((step, index) => (
             <motion.div
