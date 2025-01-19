@@ -14,6 +14,13 @@ type Profile = {
   is_premium?: boolean;
 };
 
+interface Category {
+  id: string;
+  name: string;
+  description: string;  // Added this required field
+  is_premium: boolean;
+}
+
 const QuestionPool = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -41,7 +48,6 @@ const QuestionPool = () => {
   const { data: categories, isLoading: loadingCategories } = useQuery({
     queryKey: ['roommate_categories'],
     queryFn: async () => {
-      // Using a different approach to get distinct categories
       const { data, error } = await supabase
         .from('roommate_questions')
         .select('category')
@@ -49,14 +55,15 @@ const QuestionPool = () => {
 
       if (error) throw error;
       
-      // Filter unique categories manually
+      // Filter unique categories and add required description field
       const uniqueCategories = Array.from(new Set(data.map(row => row.category)));
       
       return uniqueCategories.map(category => ({
         id: category,
         name: category,
+        description: `Questions about ${category.toLowerCase()}`,  // Added description field
         is_premium: false
-      }));
+      })) as Category[];
     }
   });
 

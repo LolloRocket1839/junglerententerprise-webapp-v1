@@ -23,6 +23,7 @@ interface Category {
 
 interface Question {
   id: string;
+  question: string;  // Added this to match the required type
   text: string;
   category: string;
   options: { text: string; trait: string }[];
@@ -61,13 +62,13 @@ const QuestionPool = () => {
 
       if (error) throw error;
       
-      // Filter unique categories manually
+      // Filter unique categories and add required description field
       const uniqueCategories = Array.from(new Set(data.map(row => row.category)));
       
       return uniqueCategories.map(category => ({
         id: category,
         name: category,
-        description: 'Category description', // Default description
+        description: `Questions about ${category.toLowerCase()}`,  // Added description
         is_premium: false
       })) as Category[];
     }
@@ -87,6 +88,7 @@ const QuestionPool = () => {
 
       return data.map(q => ({
         id: q.id,
+        question: q.question,  // Added this to match the required type
         text: q.question,
         category: q.category,
         options: Array.isArray(q.options) ? q.options.map((opt: any) => ({
