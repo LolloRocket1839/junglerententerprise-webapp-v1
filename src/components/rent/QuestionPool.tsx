@@ -9,7 +9,6 @@ import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types/database";
 import { Loader2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-import { useCategories, useQuestions } from "./roommate/hooks/useQuestions";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
   is_premium?: boolean;
@@ -53,25 +52,29 @@ const QuestionPool = () => {
   });
 
   const { data: categories, isLoading: loadingCategories } = useQuery({
-    queryKey: ['question-categories'],
+    queryKey: ['roommate_categories'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('question_categories')
-        .select('*');
+        .from('roommate_questions')
+        .select('category')
+        .order('category');
 
       if (error) throw error;
       
-      return data.map(cat => ({
-        id: cat.id,
-        name: cat.name,
-        description: cat.description || 'No description available',
-        is_premium: cat.is_premium || false
+      // Filter unique categories manually
+      const uniqueCategories = Array.from(new Set(data.map(row => row.category)));
+      
+      return uniqueCategories.map(category => ({
+        id: category,
+        name: category,
+        description: 'Category description', // Default description
+        is_premium: false
       })) as Category[];
     }
   });
 
   const { data: questions, isLoading: loadingQuestions } = useQuery({
-    queryKey: ['questions', selectedCategory],
+    queryKey: ['roommate_questions', selectedCategory],
     queryFn: async () => {
       if (!selectedCategory) return [];
 
