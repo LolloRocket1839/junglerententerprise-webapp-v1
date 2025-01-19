@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StudentDashboard from '@/components/rent/StudentDashboard';
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import SearchSection from '@/components/rent/SearchSection';
 import ProcessSteps from '@/components/rent/ProcessSteps';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -68,25 +68,27 @@ const Rent = () => {
       <div className="relative">
         <div className="sticky top-20 z-50 bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-sm border-b border-white/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <TabsList className="grid w-full grid-cols-2 gap-2 p-1 bg-black/40 backdrop-blur-lg border border-white/10 rounded-lg">
-              <TabsTrigger 
-                value="search" 
-                className="data-[state=active]:bg-primary data-[state=active]:text-white py-3 text-white/80 hover:text-white transition-colors"
-              >
-                Find Accommodation
-              </TabsTrigger>
-              <TabsTrigger 
-                value="profile" 
-                className="data-[state=active]:bg-primary data-[state=active]:text-white py-3 text-white/80 hover:text-white transition-colors"
-              >
-                Student Profile
-              </TabsTrigger>
-            </TabsList>
+            <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
+              <TabsList className="grid w-full grid-cols-2 gap-2 p-1 bg-black/40 backdrop-blur-lg border border-white/10 rounded-lg">
+                <TabsTrigger 
+                  value="search" 
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-3 text-white/80 hover:text-white transition-colors"
+                >
+                  Find Accommodation
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="profile" 
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-3 text-white/80 hover:text-white transition-colors"
+                >
+                  Student Profile
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Tabs value={activeTab} className="w-full" onValueChange={handleTabChange}>
+          <Tabs value={activeTab} onValueChange={handleTabChange}>
             <TabsContent value="search" className="mt-0">
               <SearchSection />
               <ProcessSteps />
