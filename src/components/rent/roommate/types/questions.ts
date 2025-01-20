@@ -37,4 +37,13 @@ export interface RoommateQuestion {
   weight: number;
 }
 
+export interface Question {
+  id: string;
+  question: string;
+  options: {
+    [key: string]: string;
+  };
+  coin_reward?: number;
+}
+
 export type QuestionType = 'text' | 'select' | 'multiselect' | 'slider';
