@@ -21,14 +21,14 @@ interface Category {
   is_premium: boolean;
 }
 
+// Updated Question interface to match QuestionCard's expected shape
 interface Question {
   id: string;
-  question: string;  // Added this to match the required type
-  text: string;
-  category: string;
-  options: { text: string; trait: string }[];
-  weight: number;
-  isMystery?: boolean;
+  question: string;
+  options: {
+    [key: string]: string;
+  };
+  coin_reward?: number;
 }
 
 const QuestionPool = () => {
@@ -62,13 +62,12 @@ const QuestionPool = () => {
 
       if (error) throw error;
       
-      // Filter unique categories and add required description field
       const uniqueCategories = Array.from(new Set(data.map(row => row.category)));
       
       return uniqueCategories.map(category => ({
         id: category,
         name: category,
-        description: `Questions about ${category.toLowerCase()}`,  // Added description
+        description: `Questions about ${category.toLowerCase()}`,
         is_premium: false
       })) as Category[];
     }
@@ -88,21 +87,18 @@ const QuestionPool = () => {
 
       return data.map(q => ({
         id: q.id,
-        question: q.question,  // Added this to match the required type
-        text: q.question,
-        category: q.category,
-        options: Array.isArray(q.options) ? q.options.map((opt: any) => ({
-          text: opt.text || '',
-          trait: opt.trait || ''
-        })) : [],
-        weight: 1,
-        isMystery: Math.random() > 0.8
+        question: q.question,
+        options: Array.isArray(q.options) ? q.options.reduce((acc, opt: any) => ({
+          ...acc,
+          [opt.text]: opt.trait
+        }), {}) : {},
+        coin_reward: q.coin_reward
       })) as Question[];
     },
     enabled: !!selectedCategory
   });
 
-  const handleAnswer = async (questionId: string, answer: any) => {
+  const handleAnswer = async (questionId: string, answer: string) => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       toast({
