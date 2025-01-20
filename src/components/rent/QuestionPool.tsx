@@ -1,16 +1,15 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { CategorySelector } from "./roommate/components/CategorySelector";
-import { QuestionCard } from "./roommate/components/QuestionCard";
+import { QuestionList } from "./roommate/components/QuestionList";
+import { QuestionStats } from "./roommate/components/QuestionStats";
 import { supabase } from "@/integrations/supabase/client";
-import type { Database } from "@/integrations/supabase/types/database";
 import { Loader2 } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
 
-type Profile = Database["public"]["Tables"]["profiles"]["Row"] & {
+type Profile = {
+  id: string;
   is_premium?: boolean;
 };
 
@@ -156,24 +155,18 @@ const QuestionPool = () => {
         />
       )}
 
-      <div className="space-y-4">
-        {questions?.map((question) => (
-          <QuestionCard
-            key={question.id}
-            question={question}
-            onAnswer={(answer) => handleAnswer(question.id, answer)}
+      {questions && questions.length > 0 && (
+        <>
+          <QuestionList
+            questions={questions}
+            onAnswer={handleAnswer}
             isPremiumUser={profile?.is_premium ?? false}
           />
-        ))}
-      </div>
-
-      {questions && questions.length > 0 && (
-        <div className="mt-4">
-          <Progress value={(questions.length / (categories?.length ?? 1)) * 100} />
-          <p className="text-sm text-white/60 text-right mt-2">
-            {questions.length} questions completed
-          </p>
-        </div>
+          <QuestionStats
+            questionsLength={questions.length}
+            categoriesLength={categories?.length ?? 0}
+          />
+        </>
       )}
     </div>
   );
