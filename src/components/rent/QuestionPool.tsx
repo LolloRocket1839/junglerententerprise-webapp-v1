@@ -21,7 +21,6 @@ interface Category {
   is_premium: boolean;
 }
 
-// Updated Question interface to match QuestionCard's expected shape
 interface Question {
   id: string;
   question: string;
@@ -85,15 +84,21 @@ const QuestionPool = () => {
 
       if (error) throw error;
 
-      return data.map(q => ({
-        id: q.id,
-        question: q.question,
-        options: Array.isArray(q.options) ? q.options.reduce((acc, opt: any) => ({
-          ...acc,
-          [opt.text]: opt.trait
-        }), {}) : {},
-        coin_reward: q.coin_reward
-      })) as Question[];
+      return data.map(q => {
+        const optionsObj: { [key: string]: string } = {};
+        if (Array.isArray(q.options)) {
+          q.options.forEach((opt: { text: string; trait: string }) => {
+            optionsObj[opt.text] = opt.trait;
+          });
+        }
+        
+        return {
+          id: q.id,
+          question: q.question,
+          options: optionsObj,
+          coin_reward: q.coin_reward
+        };
+      }) as Question[];
     },
     enabled: !!selectedCategory
   });
