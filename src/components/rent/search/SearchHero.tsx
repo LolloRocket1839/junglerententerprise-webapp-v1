@@ -17,8 +17,8 @@ const SearchHero = ({
   onSearch 
 }: SearchHeroProps) => {
   return (
-    <div className="text-center mb-20 animate-fade-in">
-      <div className="mb-12">
+    <div className="relative z-10 text-center mb-20 animate-fade-in">
+      <div className="mb-12 relative z-20">
         <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
           Trova la Tua Casa
           <span className="block text-primary animate-pulse">Studentesca</span>
@@ -28,9 +28,9 @@ const SearchHero = ({
         </p>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 mb-16">
-        <div className="glass-card p-4">
-          <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
+      <div className="max-w-4xl mx-auto px-4 mb-16 relative z-30">
+        <div className="glass-card p-6 backdrop-blur-lg">
+          <div className="grid grid-cols-1 md:grid-cols-7 gap-6">
             <div className="md:col-span-3 relative">
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60">
                 <MapPin className="w-5 h-5" />
@@ -69,7 +69,7 @@ const SearchHero = ({
             </div>
 
             <button 
-              className="glass-button flex items-center justify-center gap-3 w-full"
+              className="glass-button flex items-center justify-center gap-3 w-full hover:bg-primary/20"
               onClick={onSearch}
               aria-label="Cerca"
             >
