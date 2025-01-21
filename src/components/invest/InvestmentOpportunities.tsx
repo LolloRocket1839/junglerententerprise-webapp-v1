@@ -24,8 +24,8 @@ const InvestmentOpportunities = () => {
         .limit(6);
 
       if (error) {
-        console.error('Errore nel caricamento delle proprietà:', error);
-        throw new Error('Impossibile caricare le opportunità di investimento');
+        console.error('Error loading properties:', error);
+        throw new Error('Unable to load investment opportunities');
       }
 
       if (!data || data.length === 0) {
@@ -50,16 +50,10 @@ const InvestmentOpportunities = () => {
 
   const createInvestment = useMutation({
     mutationFn: async ({ hubId, amount }: { hubId: string, amount: number }) => {
-      const { data: session } = await supabase.auth.getSession();
-      if (!session?.session?.user) {
-        throw new Error('Devi essere loggato per investire');
-      }
-
       const { data, error } = await supabase
         .from('investments')
         .insert([
           {
-            profile_id: session.session.user.id,
             hub_id: hubId,
             amount: amount,
             tokens: Math.floor(amount / 100),
@@ -70,19 +64,19 @@ const InvestmentOpportunities = () => {
         .single();
 
       if (error) {
-        console.error('Errore di investimento:', error);
+        console.error('Investment error:', error);
         throw new Error(error.message);
       }
       return data;
     },
     onSuccess: () => {
-      toast.success("Investimento inviato con successo!");
+      toast.success("Investment submitted successfully!");
       setSelectedProperty(null);
       setShowDetails(false);
       queryClient.invalidateQueries({ queryKey: ['investment-properties'] });
     },
     onError: (error: Error) => {
-      toast.error("Investimento fallito. Riprova più tardi.");
+      toast.error("Investment failed. Please try again later.");
     }
   });
 
@@ -95,7 +89,7 @@ const InvestmentOpportunities = () => {
   };
 
   const handlePropertyClick = (property: Property) => {
-    console.log("Proprietà selezionata:", property);
+    console.log("Selected property:", property);
     setSelectedProperty(property);
     setShowDetails(true);
   };
@@ -104,7 +98,7 @@ const InvestmentOpportunities = () => {
     return (
       <Alert variant="destructive" className="mb-8">
         <AlertDescription>
-          Impossibile caricare le opportunità di investimento. Riprova più tardi.
+          Unable to load investment opportunities. Please try again later.
         </AlertDescription>
       </Alert>
     );

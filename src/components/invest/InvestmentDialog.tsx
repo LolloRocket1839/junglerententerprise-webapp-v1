@@ -56,8 +56,8 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
   const handleSubmit = async () => {
     if (!termsAccepted) {
       toast({
-        title: "Errore",
-        description: "Devi accettare i termini e le condizioni per procedere",
+        title: "Error",
+        description: "You must accept the terms and conditions to proceed",
         variant: "destructive"
       });
       return;
@@ -65,8 +65,8 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
 
     if (!property.id || !isValidUUID(property.id)) {
       toast({
-        title: "Errore",
-        description: "ID proprietà non valido",
+        title: "Error",
+        description: "Invalid property ID",
         variant: "destructive"
       });
       return;
@@ -99,8 +99,8 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
     } catch (error) {
       console.error('Payment error:', error);
       toast({
-        title: "Errore",
-        description: "Si è verificato un errore durante l'elaborazione del pagamento. Riprova più tardi.",
+        title: "Error",
+        description: "An error occurred while processing the payment. Please try again later.",
         variant: "destructive"
       });
     } finally {
