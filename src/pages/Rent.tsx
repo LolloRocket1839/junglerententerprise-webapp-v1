@@ -5,8 +5,6 @@ import { useToast } from "@/hooks/use-toast";
 import SearchSection from '@/components/rent/SearchSection';
 import ProcessSteps from '@/components/rent/ProcessSteps';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import { Home, User } from 'lucide-react';
 
 const Rent = () => {
@@ -14,14 +12,6 @@ const Rent = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('search');
-
-  const { data: session } = useQuery({
-    queryKey: ['auth-session'],
-    queryFn: async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      return session;
-    },
-  });
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -31,28 +21,7 @@ const Rent = () => {
     }
   }, [location.search]);
 
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        setActiveTab('search');
-        navigate('/rent?tab=search');
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [navigate]);
-
   const handleTabChange = (value: string) => {
-    if (value === 'profile' && !session) {
-      toast({
-        title: "Authentication Required",
-        description: "Please sign in to access your profile.",
-        variant: "destructive"
-      });
-      return;
-    }
     setActiveTab(value);
     navigate(`/rent?tab=${value}`);
   };
