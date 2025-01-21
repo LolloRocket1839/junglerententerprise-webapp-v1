@@ -1,7 +1,6 @@
 import { MarketplaceItemType } from './types';
 
 export const marketplaceItems: MarketplaceItemType[] = [
-  // Original items
   {
     id: '1',
     name: 'MacBook Pro 2021',
@@ -30,7 +29,6 @@ export const marketplaceItems: MarketplaceItemType[] = [
     },
     createdAt: '2024-02-19'
   },
-  // Additional Electronics
   {
     id: '7',
     name: 'iPad Air 2022',
@@ -59,7 +57,6 @@ export const marketplaceItems: MarketplaceItemType[] = [
     },
     createdAt: '2024-02-14'
   },
-  // Language Courses
   {
     id: '9',
     name: 'Corso Intensivo di Francese',
@@ -88,7 +85,6 @@ export const marketplaceItems: MarketplaceItemType[] = [
     },
     createdAt: '2024-02-12'
   },
-  // Rooms
   {
     id: '11',
     name: 'Camera Singola Centro',
@@ -117,14 +113,13 @@ export const marketplaceItems: MarketplaceItemType[] = [
     },
     createdAt: '2024-02-10'
   },
-  // Clothing Swaps
   {
     id: '13',
     name: 'Giacca Invernale North Face',
     description: 'Giacca invernale taglia L, usata solo una stagione',
     price: 0,
     category: 'swap',
-    imageUrl: 'https://images.unsplash.com/photo-1578932750294-f5075e85f44a',
+    imageUrl: 'https://images.unsplash.com/photo-1578932750294-f5075e85f44d',
     seller: {
       id: '13',
       name: 'Chiara B.',
@@ -148,7 +143,6 @@ export const marketplaceItems: MarketplaceItemType[] = [
     createdAt: '2024-02-08',
     lookingFor: 'Altre sneakers numero 42 o abbigliamento sportivo taglia L'
   },
-  // More Electronics
   {
     id: '15',
     name: 'Cuffie Sony WH-1000XM4',
@@ -176,5 +170,125 @@ export const marketplaceItems: MarketplaceItemType[] = [
       rating: 4.5
     },
     createdAt: '2024-02-06'
+  },
+  {
+    id: '17',
+    name: 'Scambio Camera Singola Trastevere',
+    description: 'Camera singola in Trastevere, cerco scambio con zona San Giovanni o Prati. Disponibile da Marzo.',
+    price: 0,
+    category: 'swap',
+    imageUrl: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af',
+    seller: {
+      id: '17',
+      name: 'Marco B.',
+      rating: 4.8
+    },
+    createdAt: '2024-02-05',
+    lookingFor: 'Camera singola in San Giovanni o Prati'
+  },
+  {
+    id: '18',
+    name: 'Scambio Biglietto Treno Roma-Milano',
+    description: 'Biglietto Frecciarossa Roma-Milano 15 Marzo ore 9:00, cerco stesso treno il 16 o 17 Marzo',
+    price: 0,
+    category: 'swap',
+    imageUrl: 'https://images.unsplash.com/photo-1474487548417-781cb71495f3',
+    seller: {
+      id: '18',
+      name: 'Laura M.',
+      rating: 4.7
+    },
+    createdAt: '2024-02-04',
+    lookingFor: 'Biglietto stesso tratto 16-17 Marzo'
+  },
+  {
+    id: '19',
+    name: 'Scambio Italo Roma-Firenze',
+    description: 'Biglietto Italo Roma-Firenze 20 Marzo mattina, cerco scambio con 21 o 22 Marzo',
+    price: 0,
+    category: 'swap',
+    imageUrl: 'https://images.unsplash.com/photo-1532105956626-9569c03602f6',
+    seller: {
+      id: '19',
+      name: 'Paolo R.',
+      rating: 4.6
+    },
+    createdAt: '2024-02-03',
+    lookingFor: 'Biglietto stesso tratto 21-22 Marzo'
+  },
+  {
+    id: '20',
+    name: 'Scambio 2 Biglietti Cinema Dune 2',
+    description: '2 biglietti per Dune 2 al The Space Cinema EUR, Sabato 16 Marzo ore 21:00',
+    price: 0,
+    category: 'swap',
+    imageUrl: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba',
+    seller: {
+      id: '20',
+      name: 'Sofia G.',
+      rating: 4.9
+    },
+    createdAt: '2024-02-02',
+    lookingFor: 'Biglietti per lo stesso film in altro giorno/orario'
+  },
+  {
+    id: '21',
+    name: 'Scambio Biglietti Teatro',
+    description: 'Due biglietti per "Romeo e Giulietta" al Teatro Argentina, 25 Marzo',
+    price: 0,
+    category: 'swap',
+    imageUrl: 'https://images.unsplash.com/photo-1503095396549-807759245b35',
+    seller: {
+      id: '21',
+      name: 'Chiara T.',
+      rating: 4.7
+    },
+    createdAt: '2024-01-31',
+    lookingFor: 'Biglietti per altro spettacolo teatrale'
+  },
+  {
+    id: '22',
+    name: 'Scambio Libri Universitari Economia',
+    description: 'Libri di Microeconomia e Macroeconomia, ottime condizioni',
+    price: 0,
+    category: 'swap',
+    imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d',
+    seller: {
+      id: '22',
+      name: 'Andrea F.',
+      rating: 4.8
+    },
+    createdAt: '2024-01-30',
+    lookingFor: 'Libri di Statistica o Marketing'
+  },
+  {
+    id: '23',
+    name: 'Scambio Biglietto Concerto',
+    description: 'Biglietto per concerto dei Coldplay, Stadio Olimpico 16 Luglio',
+    price: 0,
+    category: 'swap',
+    imageUrl: 'https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec',
+    seller: {
+      id: '23',
+      name: 'Matteo N.',
+      rating: 4.7
+    },
+    createdAt: '2024-01-29',
+    lookingFor: 'Biglietto per la data del 17 Luglio'
+  },
+  {
+    id: '24',
+    name: 'Scambio Posto Auto',
+    description: 'Posto auto coperto zona Prati, disponibile per scambio mensile',
+    price: 0,
+    category: 'swap',
+    imageUrl: 'https://images.unsplash.com/photo-1506521781263-d8422e82f27a',
+    seller: {
+      id: '24',
+      name: 'Roberto M.',
+      rating: 4.6
+    },
+    createdAt: '2024-01-28',
+    lookingFor: 'Posto auto zona Flaminio o Centro'
   }
 ];
