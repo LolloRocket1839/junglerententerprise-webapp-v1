@@ -25,7 +25,7 @@ const Rent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 animate-gradient-slow">
+    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900">
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float-slow" />
@@ -33,28 +33,25 @@ const Rent = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative pt-24 md:pt-32">
-        <div className="sticky top-0 z-50 bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-sm py-6">
+      <div className="relative pt-24">
+        <div className="sticky top-[88px] z-50">
           <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-              <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 gap-4 p-2 bg-black/40 backdrop-blur-lg border 
-                                border-white/10 rounded-xl shadow-xl">
+              <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 bg-black/20 backdrop-blur-sm rounded-full p-1 border border-white/10">
                 <TabsTrigger 
                   value="search" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-6 py-3 text-white/80 
-                           hover:text-white transition-all duration-300 flex items-center justify-center gap-3 
-                           text-base font-medium rounded-lg shadow-lg hover:shadow-xl active:scale-95 
-                           hover:bg-white/10 h-12"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-6 py-3 
+                           text-white/80 hover:text-white transition-all duration-300 flex items-center 
+                           justify-center gap-2 text-base font-medium rounded-full h-11"
                 >
                   <Home className="w-5 h-5 flex-shrink-0" />
                   <span className="whitespace-nowrap">Find Accommodation</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="profile" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-6 py-3 text-white/80 
-                           hover:text-white transition-all duration-300 flex items-center justify-center gap-3 
-                           text-base font-medium rounded-lg shadow-lg hover:shadow-xl active:scale-95 
-                           hover:bg-white/10 h-12"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-6 py-3 
+                           text-white/80 hover:text-white transition-all duration-300 flex items-center 
+                           justify-center gap-2 text-base font-medium rounded-full h-11"
                 >
                   <User className="w-5 h-5 flex-shrink-0" />
                   <span className="whitespace-nowrap">Student Profile</span>
