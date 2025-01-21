@@ -12,9 +12,11 @@ export const supabase = createClient<Database>(
       persistSession: true,
       autoRefreshToken: true,
     },
-    headers: {
-      'Content-Type': 'application/json',
-      'apikey': supabaseKey
+    global: {
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': supabaseKey
+      }
     }
   }
 );
