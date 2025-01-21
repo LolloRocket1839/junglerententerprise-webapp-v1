@@ -17,35 +17,43 @@ const InvestmentOpportunities = () => {
   const { data: properties, isLoading, error: queryError } = useQuery({
     queryKey: ['investment-properties'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('hubs')
-        .select('*')
-        .order('created_at', { ascending: false })
-        .limit(6);
+      try {
+        const { data, error } = await supabase
+          .from('hubs')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(6);
 
-      if (error) {
-        console.error('Error loading properties:', error);
-        throw new Error('Unable to load investment opportunities');
+        if (error) {
+          console.error('Error loading properties:', error);
+          throw new Error('Unable to load investment opportunities');
+        }
+
+        if (!data || data.length === 0) {
+          console.log('No properties found, using mock data');
+          return mockProperties;
+        }
+
+        return data.map((hub: any) => ({
+          id: hub.id,
+          name: hub.name,
+          location: hub.location,
+          description: hub.description || '',
+          price_per_night: hub.price_per_night,
+          amenities: hub.amenities || [],
+          images: hub.images || [],
+          rating: hub.rating || null,
+          reviews_count: hub.reviews_count || 0,
+          investment_goal: hub.investment_goal || 100000,
+          amount_raised: hub.amount_raised || 0
+        })) as Property[];
+      } catch (error) {
+        console.error('Error in queryFn:', error);
+        throw error;
       }
-
-      if (!data || data.length === 0) {
-        return mockProperties;
-      }
-
-      return data.map((hub: any) => ({
-        id: hub.id,
-        name: hub.name,
-        location: hub.location,
-        description: hub.description || '',
-        price_per_night: hub.price_per_night,
-        amenities: hub.amenities || [],
-        images: hub.images || [],
-        rating: hub.rating || null,
-        reviews_count: hub.reviews_count || 0,
-        investment_goal: hub.investment_goal || 100000,
-        amount_raised: hub.amount_raised || 0
-      })) as Property[];
-    }
+    },
+    retry: 1,
+    retryDelay: 1000
   });
 
   const createInvestment = useMutation({
@@ -95,10 +103,14 @@ const InvestmentOpportunities = () => {
   };
 
   if (queryError) {
+    console.error('Query error:', queryError);
     return (
       <Alert variant="destructive" className="mb-8">
         <AlertDescription>
           Unable to load investment opportunities. Please try again later.
+          {process.env.NODE_ENV === 'development' && (
+            <pre className="mt-2 text-xs">{JSON.stringify(queryError, null, 2)}</pre>
+          )}
         </AlertDescription>
       </Alert>
     );
