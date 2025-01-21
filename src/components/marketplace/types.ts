@@ -1,4 +1,4 @@
-export type MarketplaceCategory = 'furniture' | 'electronics' | 'textbooks' | 'services' | 'all';
+export type MarketplaceCategory = 'furniture' | 'electronics' | 'textbooks' | 'services' | 'all' | 'swap';
 
 export interface MarketplaceItemType {
   id: string;
@@ -13,4 +13,5 @@ export interface MarketplaceItemType {
     rating: number;
   };
   createdAt: string;
+  lookingFor?: string;
 }

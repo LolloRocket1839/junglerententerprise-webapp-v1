@@ -59,16 +59,32 @@ export const marketplaceItems: MarketplaceItemType[] = [
   },
   {
     id: '5',
-    name: 'Servizio Fotografico',
-    description: 'Foto professionali e portfolio per studenti.',
-    price: 50,
-    category: 'services',
-    imageUrl: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e',
+    name: 'Designer Winter Coat',
+    description: 'Cappotto invernale di design, taglia M, indossato pochissimo',
+    price: 0,
+    category: 'swap',
+    imageUrl: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3',
     seller: {
       id: '5',
-      name: 'Michele R.',
+      name: 'Emma S.',
       rating: 4.7
     },
-    createdAt: '2024-02-16'
+    createdAt: '2024-02-16',
+    lookingFor: 'Vestiti estivi o accessori'
+  },
+  {
+    id: '6',
+    name: 'Giacca in Pelle Vintage',
+    description: 'Stile classico, ottime condizioni, taglia L',
+    price: 0,
+    category: 'swap',
+    imageUrl: 'https://images.unsplash.com/photo-1551028719-00167b16eac5',
+    seller: {
+      id: '6',
+      name: 'Marco R.',
+      rating: 4.6
+    },
+    createdAt: '2024-02-15',
+    lookingFor: 'Abbigliamento streetwear moderno'
   }
 ];

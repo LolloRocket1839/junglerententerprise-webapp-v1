@@ -1,4 +1,4 @@
-import { Search, X } from 'lucide-react';
+import { Search, X, ArrowLeftRight } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { MarketplaceCategory } from './types';
@@ -21,7 +21,8 @@ const MarketplaceHeader = ({
     'furniture': 'Arredamento',
     'electronics': 'Elettronica',
     'textbooks': 'Libri',
-    'services': 'Servizi'
+    'services': 'Servizi',
+    'swap': 'Scambia'
   };
 
   return (
@@ -49,13 +50,14 @@ const MarketplaceHeader = ({
           <Badge
             key={category}
             variant={selectedCategory === category ? "default" : "outline"}
-            className={`px-4 py-1.5 rounded-full cursor-pointer transition-all duration-300 ${
+            className={`px-4 py-1.5 rounded-full cursor-pointer transition-all duration-300 flex items-center gap-2 ${
               selectedCategory === category 
                 ? 'bg-primary text-black font-medium' 
                 : 'bg-white/5 text-white/80 border border-white/10 hover:bg-white/10'
             }`}
             onClick={() => setSelectedCategory(category)}
           >
+            {category === 'swap' && <ArrowLeftRight className="h-4 w-4" />}
             {categories[category]}
           </Badge>
         ))}
