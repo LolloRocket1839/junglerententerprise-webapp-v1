@@ -27,30 +27,36 @@ const Rent = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900">
       <div className="relative pt-16">
-        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-green-700/20 rounded-2xl p-1.5 gap-2">
-              <TabsTrigger 
-                value="search" 
-                className="data-[state=active]:bg-green-500 data-[state=active]:text-white 
-                         px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
-                         flex items-center justify-center gap-3 text-lg font-medium rounded-xl
-                         min-h-[4rem] hover:bg-green-600/20"
-              >
-                <Home className="w-6 h-6 flex-shrink-0" />
-                <span className="whitespace-nowrap">Find Accommodation</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="profile" 
-                className="data-[state=active]:bg-green-500 data-[state=active]:text-white 
-                         px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
-                         flex items-center justify-center gap-3 text-lg font-medium rounded-xl
-                         min-h-[4rem] hover:bg-green-600/20"
-              >
-                <User className="w-6 h-6 flex-shrink-0" />
-                <span className="whitespace-nowrap">Student Profile</span>
-              </TabsTrigger>
-            </TabsList>
+            <div className="p-2 rounded-2xl bg-gradient-to-br from-green-800/40 via-green-700/40 to-emerald-800/40 backdrop-blur-sm shadow-xl">
+              <TabsList className="grid w-full grid-cols-2 rounded-xl p-1 gap-2 bg-black/20">
+                <TabsTrigger 
+                  value="search" 
+                  className="data-[state=active]:bg-green-500 data-[state=active]:text-white 
+                           data-[state=active]:shadow-lg data-[state=active]:scale-[1.02]
+                           px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
+                           flex items-center justify-center gap-3 text-lg font-medium rounded-lg
+                           min-h-[4rem] hover:bg-green-600/20 relative overflow-hidden
+                           hover:shadow-md active:scale-95"
+                >
+                  <Home className="w-6 h-6 flex-shrink-0" />
+                  <span className="whitespace-nowrap">Find Accommodation</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="profile" 
+                  className="data-[state=active]:bg-green-500 data-[state=active]:text-white 
+                           data-[state=active]:shadow-lg data-[state=active]:scale-[1.02]
+                           px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
+                           flex items-center justify-center gap-3 text-lg font-medium rounded-lg
+                           min-h-[4rem] hover:bg-green-600/20 relative overflow-hidden
+                           hover:shadow-md active:scale-95"
+                >
+                  <User className="w-6 h-6 flex-shrink-0" />
+                  <span className="whitespace-nowrap">Student Profile</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
             <div className="mt-8">
               <TabsContent value="search" className="animate-fade-in">
