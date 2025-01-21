@@ -26,51 +26,42 @@ const Rent = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900">
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float-slow" />
-        <div className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float-slower" />
-      </div>
+      <div className="relative pt-16">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
+            <TabsList className="grid w-full grid-cols-2 bg-green-700/20 rounded-2xl p-1.5 gap-2">
+              <TabsTrigger 
+                value="search" 
+                className="data-[state=active]:bg-green-500 data-[state=active]:text-white 
+                         px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
+                         flex items-center justify-center gap-3 text-lg font-medium rounded-xl
+                         min-h-[4rem] hover:bg-green-600/20"
+              >
+                <Home className="w-6 h-6 flex-shrink-0" />
+                <span className="whitespace-nowrap">Find Accommodation</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="profile" 
+                className="data-[state=active]:bg-green-500 data-[state=active]:text-white 
+                         px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
+                         flex items-center justify-center gap-3 text-lg font-medium rounded-xl
+                         min-h-[4rem] hover:bg-green-600/20"
+              >
+                <User className="w-6 h-6 flex-shrink-0" />
+                <span className="whitespace-nowrap">Student Profile</span>
+              </TabsTrigger>
+            </TabsList>
 
-      {/* Main Content */}
-      <div className="relative pt-24">
-        <div className="sticky top-[88px] z-50">
-          <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-              <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-2 bg-black/20 backdrop-blur-sm rounded-2xl p-2 border border-white/10">
-                <TabsTrigger 
-                  value="search" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-8 py-4 
-                           text-white/80 hover:text-white transition-all duration-300 flex items-center 
-                           justify-center gap-3 text-lg font-medium rounded-xl h-16"
-                >
-                  <Home className="w-6 h-6 flex-shrink-0" />
-                  <span className="whitespace-nowrap">Find Accommodation</span>
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="profile" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-8 py-4 
-                           text-white/80 hover:text-white transition-all duration-300 flex items-center 
-                           justify-center gap-3 text-lg font-medium rounded-xl h-16"
-                >
-                  <User className="w-6 h-6 flex-shrink-0" />
-                  <span className="whitespace-nowrap">Student Profile</span>
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
-        </div>
+            <div className="mt-8">
+              <TabsContent value="search" className="animate-fade-in">
+                <SearchSection />
+                <ProcessSteps />
+              </TabsContent>
 
-        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <Tabs value={activeTab} onValueChange={handleTabChange}>
-            <TabsContent value="search" className="mt-0 animate-fade-in">
-              <SearchSection />
-              <ProcessSteps />
-            </TabsContent>
-
-            <TabsContent value="profile" className="mt-0 animate-fade-in">
-              <StudentDashboard />
-            </TabsContent>
+              <TabsContent value="profile" className="animate-fade-in">
+                <StudentDashboard />
+              </TabsContent>
+            </div>
           </Tabs>
         </div>
       </div>
