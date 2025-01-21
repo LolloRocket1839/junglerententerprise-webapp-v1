@@ -70,25 +70,27 @@ const Rent = () => {
         <div className="sticky top-20 z-50 bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 gap-4 p-2 bg-black/40 backdrop-blur-lg border border-white/10 
+              <TabsList className="grid w-full grid-cols-2 gap-4 p-4 bg-black/40 backdrop-blur-lg border border-white/10 
                                 rounded-xl shadow-xl">
                 <TabsTrigger 
                   value="search" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-4 text-white/80 
-                           hover:text-white transition-all duration-300 flex items-center gap-3 text-base font-medium 
-                           rounded-lg shadow-lg hover:shadow-xl active:scale-95 hover:bg-white/10"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-4 py-3 text-white/80 
+                           hover:text-white transition-all duration-300 flex items-center justify-center gap-3 
+                           text-base font-medium rounded-lg shadow-lg hover:shadow-xl active:scale-95 
+                           hover:bg-white/10 h-full"
                 >
-                  <Home className="w-5 h-5" />
-                  Find Accommodation
+                  <Home className="w-5 h-5 flex-shrink-0" />
+                  <span className="whitespace-nowrap">Find Accommodation</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="profile" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-4 text-white/80 
-                           hover:text-white transition-all duration-300 flex items-center gap-3 text-base font-medium 
-                           rounded-lg shadow-lg hover:shadow-xl active:scale-95 hover:bg-white/10"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-4 py-3 text-white/80 
+                           hover:text-white transition-all duration-300 flex items-center justify-center gap-3 
+                           text-base font-medium rounded-lg shadow-lg hover:shadow-xl active:scale-95 
+                           hover:bg-white/10 h-full"
                 >
-                  <User className="w-5 h-5" />
-                  Student Profile
+                  <User className="w-5 h-5 flex-shrink-0" />
+                  <span className="whitespace-nowrap">Student Profile</span>
                 </TabsTrigger>
               </TabsList>
             </Tabs>
