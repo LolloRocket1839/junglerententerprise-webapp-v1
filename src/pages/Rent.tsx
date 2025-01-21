@@ -25,7 +25,7 @@ const Rent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 animate-gradient-slow pt-24 md:pt-32">
+    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 animate-gradient-slow">
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float-slow" />
@@ -33,11 +33,11 @@ const Rent = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative">
-        <div className="sticky top-20 z-50 bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="relative pt-24 md:pt-32">
+        <div className="sticky top-0 z-50 bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-sm py-6">
+          <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-              <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-2 gap-4 p-2 bg-black/40 backdrop-blur-lg border 
+              <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 gap-4 p-2 bg-black/40 backdrop-blur-lg border 
                                 border-white/10 rounded-xl shadow-xl">
                 <TabsTrigger 
                   value="search" 
@@ -64,7 +64,7 @@ const Rent = () => {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Tabs value={activeTab} onValueChange={handleTabChange}>
             <TabsContent value="search" className="mt-0 animate-fade-in">
               <SearchSection />
