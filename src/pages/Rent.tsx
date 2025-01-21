@@ -29,24 +29,24 @@ const Rent = () => {
       <div className="relative pt-16">
         <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <div className="p-2 rounded-2xl bg-gradient-to-br from-green-800/40 via-green-700/40 to-emerald-800/40 backdrop-blur-sm shadow-xl">
-              <TabsList className="grid w-full grid-cols-2 rounded-xl p-1 gap-2 bg-black/20">
+            <div className="p-2 rounded-2xl bg-gradient-to-br from-[#1a472a]/40 via-[#2d5a3f]/40 to-[#3d6b52]/40 backdrop-blur-sm">
+              <TabsList className="grid w-full grid-cols-2 rounded-xl bg-black/20 p-1 gap-2">
                 <TabsTrigger 
                   value="search" 
-                  className="data-[state=active]:bg-green-500 data-[state=active]:text-white 
+                  className="data-[state=active]:bg-[#3C9D6F] data-[state=active]:text-white 
                            px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
                            flex items-center justify-center gap-3 text-lg font-medium rounded-lg
-                           min-h-[4rem] hover:bg-green-600/20 relative"
+                           min-h-[4rem] hover:bg-[#3C9D6F]/20"
                 >
                   <Home className="w-6 h-6 flex-shrink-0" />
                   <span className="whitespace-nowrap">Find Accommodation</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="profile" 
-                  className="data-[state=active]:bg-green-500 data-[state=active]:text-white 
+                  className="data-[state=active]:bg-[#2E7D32] data-[state=active]:text-white 
                            px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
                            flex items-center justify-center gap-3 text-lg font-medium rounded-lg
-                           min-h-[4rem] hover:bg-green-600/20 relative"
+                           min-h-[4rem] hover:bg-[#2E7D32]/20"
                 >
                   <User className="w-6 h-6 flex-shrink-0" />
                   <span className="whitespace-nowrap">Student Profile</span>
