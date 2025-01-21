@@ -31,25 +31,27 @@ const Rent = () => {
 
   // Memoize the tab triggers to prevent unnecessary re-renders
   const tabTriggers = useMemo(() => (
-    <TabsList className="grid w-full grid-cols-2 rounded-xl bg-black/20 p-1 gap-2">
+    <TabsList className="grid w-full grid-cols-2 bg-black/10 backdrop-blur-sm p-1.5 gap-1.5 rounded-2xl">
       <TabsTrigger 
         value="search" 
-        className="data-[state=active]:bg-[#3C9D6F] data-[state=active]:text-white 
-                 px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
-                 flex items-center justify-center gap-3 text-lg font-medium rounded-lg
-                 min-h-[4rem] hover:bg-[#3C9D6F]/20"
+        className="data-[state=active]:bg-[#3C9D6F]/90 data-[state=active]:text-white/90 
+                 px-6 py-3 text-white/80 hover:text-white transition-all duration-300 
+                 flex items-center justify-center gap-3 text-base font-medium rounded-xl
+                 min-h-[3.5rem] hover:bg-[#3C9D6F]/20 backdrop-blur-sm
+                 data-[state=active]:shadow-lg data-[state=active]:backdrop-blur-md"
       >
-        <Home className="w-6 h-6 flex-shrink-0" />
+        <Home className="w-5 h-5 flex-shrink-0" />
         <span className="whitespace-nowrap">Find Accommodation</span>
       </TabsTrigger>
       <TabsTrigger 
         value="profile" 
-        className="data-[state=active]:bg-[#2E7D32] data-[state=active]:text-white 
-                 px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
-                 flex items-center justify-center gap-3 text-lg font-medium rounded-lg
-                 min-h-[4rem] hover:bg-[#2E7D32]/20"
+        className="data-[state=active]:bg-[#2E7D32]/90 data-[state=active]:text-white/90 
+                 px-6 py-3 text-white/80 hover:text-white transition-all duration-300 
+                 flex items-center justify-center gap-3 text-base font-medium rounded-xl
+                 min-h-[3.5rem] hover:bg-[#2E7D32]/20 backdrop-blur-sm
+                 data-[state=active]:shadow-lg data-[state=active]:backdrop-blur-md"
       >
-        <User className="w-6 h-6 flex-shrink-0" />
+        <User className="w-5 h-5 flex-shrink-0" />
         <span className="whitespace-nowrap">Student Profile</span>
       </TabsTrigger>
     </TabsList>
@@ -61,10 +63,10 @@ const Rent = () => {
       <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900">
         <div className="relative pt-16">
           <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="p-2 rounded-2xl bg-gradient-to-br from-[#1a472a]/40 via-[#2d5a3f]/40 to-[#3d6b52]/40 backdrop-blur-sm">
-              <div className="grid grid-cols-2 gap-2">
-                <Skeleton className="h-16 bg-white/10" />
-                <Skeleton className="h-16 bg-white/10" />
+            <div className="p-1.5 rounded-2xl bg-gradient-to-br from-[#1a472a]/40 via-[#2d5a3f]/40 to-[#3d6b52]/40 backdrop-blur-sm">
+              <div className="grid grid-cols-2 gap-1.5">
+                <Skeleton className="h-14 bg-white/10" />
+                <Skeleton className="h-14 bg-white/10" />
               </div>
             </div>
             <div className="mt-8">
@@ -81,7 +83,7 @@ const Rent = () => {
       <div className="relative pt-16">
         <div className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-            <div className="p-2 rounded-2xl bg-gradient-to-br from-[#1a472a]/40 via-[#2d5a3f]/40 to-[#3d6b52]/40 backdrop-blur-sm">
+            <div className="p-1.5 rounded-2xl bg-gradient-to-br from-[#1a472a]/40 via-[#2d5a3f]/40 to-[#3d6b52]/40 backdrop-blur-sm">
               {tabTriggers}
             </div>
 
