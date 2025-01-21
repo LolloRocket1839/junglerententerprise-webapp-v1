@@ -58,24 +58,25 @@ const Rent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 animate-gradient-slow">
+    <div className="min-h-screen bg-gradient-to-br from-green-900 via-green-800 to-emerald-900 animate-gradient-slow pt-24 md:pt-32">
       {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-float-slow" />
         <div className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-float-slower" />
       </div>
 
       {/* Main Content */}
       <div className="relative">
-        <div className="sticky top-20 z-50 bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-sm border-b border-white/10">
+        <div className="sticky top-20 z-50 bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 gap-4 p-2 bg-black/40 backdrop-blur-lg border border-white/10 rounded-lg shadow-xl">
+              <TabsList className="grid w-full grid-cols-2 gap-4 p-2 bg-black/40 backdrop-blur-lg border border-white/10 
+                                rounded-lg shadow-xl">
                 <TabsTrigger 
                   value="search" 
                   className="data-[state=active]:bg-primary data-[state=active]:text-white py-4 text-white/80 hover:text-white 
                            transition-all duration-300 flex items-center gap-2 text-base font-medium rounded-lg
-                           shadow-lg hover:shadow-xl"
+                           shadow-lg hover:shadow-xl active:scale-95"
                 >
                   <Home className="w-5 h-5" />
                   Find Accommodation
@@ -84,7 +85,7 @@ const Rent = () => {
                   value="profile" 
                   className="data-[state=active]:bg-primary data-[state=active]:text-white py-4 text-white/80 hover:text-white 
                            transition-all duration-300 flex items-center gap-2 text-base font-medium rounded-lg
-                           shadow-lg hover:shadow-xl"
+                           shadow-lg hover:shadow-xl active:scale-95"
                 >
                   <User className="w-5 h-5" />
                   Student Profile

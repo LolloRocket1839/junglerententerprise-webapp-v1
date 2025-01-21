@@ -17,20 +17,20 @@ const SearchHero = ({
   onSearch 
 }: SearchHeroProps) => {
   return (
-    <div className="relative z-10 text-center mb-20 animate-fade-in">
+    <div className="relative z-10 text-center mt-8 md:mt-16 mb-20 animate-fade-in">
       <div className="mb-12 relative z-20">
-        <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
           Trova la Tua Casa
-          <span className="block text-primary animate-pulse">Studentesca</span>
+          <span className="block text-primary animate-pulse mt-2">Studentesca</span>
         </h1>
-        <p className="text-xl text-white/80 max-w-2xl mx-auto">
+        <p className="text-lg sm:text-xl text-white/80 max-w-2xl mx-auto mt-4">
           Affitti a lungo termine verificati e gestiti da Jungle Rent
         </p>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 mb-16 relative z-30">
-        <div className="glass-card p-6 backdrop-blur-lg">
-          <div className="grid grid-cols-1 md:grid-cols-7 gap-6">
+        <div className="glass-card p-6 backdrop-blur-lg transform transition-all duration-300 hover:scale-[1.02]">
+          <div className="grid grid-cols-1 md:grid-cols-7 gap-4 md:gap-6">
             <div className="md:col-span-3 relative">
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/60">
                 <MapPin className="w-5 h-5" />
@@ -69,7 +69,8 @@ const SearchHero = ({
             </div>
 
             <button 
-              className="glass-button flex items-center justify-center gap-3 w-full hover:bg-primary/20"
+              className="glass-button flex items-center justify-center gap-3 w-full hover:bg-primary/20
+                       transform transition-all duration-300 hover:scale-105 active:scale-95"
               onClick={onSearch}
               aria-label="Cerca"
             >
