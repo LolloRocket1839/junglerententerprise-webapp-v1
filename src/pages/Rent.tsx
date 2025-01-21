@@ -37,23 +37,23 @@ const Rent = () => {
         <div className="sticky top-[88px] z-50">
           <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-              <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 bg-black/20 backdrop-blur-sm rounded-full p-1 border border-white/10">
+              <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-2 bg-black/20 backdrop-blur-sm rounded-2xl p-2 border border-white/10">
                 <TabsTrigger 
                   value="search" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-6 py-3 
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-8 py-4 
                            text-white/80 hover:text-white transition-all duration-300 flex items-center 
-                           justify-center gap-2 text-base font-medium rounded-full h-11"
+                           justify-center gap-3 text-lg font-medium rounded-xl h-16"
                 >
-                  <Home className="w-5 h-5 flex-shrink-0" />
+                  <Home className="w-6 h-6 flex-shrink-0" />
                   <span className="whitespace-nowrap">Find Accommodation</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="profile" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-6 py-3 
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-8 py-4 
                            text-white/80 hover:text-white transition-all duration-300 flex items-center 
-                           justify-center gap-2 text-base font-medium rounded-full h-11"
+                           justify-center gap-3 text-lg font-medium rounded-xl h-16"
                 >
-                  <User className="w-5 h-5 flex-shrink-0" />
+                  <User className="w-6 h-6 flex-shrink-0" />
                   <span className="whitespace-nowrap">Student Profile</span>
                 </TabsTrigger>
               </TabsList>
