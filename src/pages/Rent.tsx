@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Home, User } from 'lucide-react';
 
 const Rent = () => {
-  const { toast } = useToast();
   const location = useLocation();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('search');
