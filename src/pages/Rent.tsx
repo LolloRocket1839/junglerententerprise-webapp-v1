@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StudentDashboard from '@/components/rent/StudentDashboard';
-import { useToast } from "@/hooks/use-toast";
 import SearchSection from '@/components/rent/SearchSection';
 import ProcessSteps from '@/components/rent/ProcessSteps';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -39,24 +38,24 @@ const Rent = () => {
         <div className="sticky top-20 z-50 bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-              <TabsList className="grid w-full grid-cols-2 gap-4 p-4 bg-black/40 backdrop-blur-lg border border-white/10 
-                                rounded-xl shadow-xl">
+              <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-2 gap-4 p-2 bg-black/40 backdrop-blur-lg border 
+                                border-white/10 rounded-xl shadow-xl">
                 <TabsTrigger 
                   value="search" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-4 py-3 text-white/80 
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-6 py-3 text-white/80 
                            hover:text-white transition-all duration-300 flex items-center justify-center gap-3 
                            text-base font-medium rounded-lg shadow-lg hover:shadow-xl active:scale-95 
-                           hover:bg-white/10 h-full"
+                           hover:bg-white/10 h-12"
                 >
                   <Home className="w-5 h-5 flex-shrink-0" />
                   <span className="whitespace-nowrap">Find Accommodation</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="profile" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-4 py-3 text-white/80 
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white px-6 py-3 text-white/80 
                            hover:text-white transition-all duration-300 flex items-center justify-center gap-3 
                            text-base font-medium rounded-lg shadow-lg hover:shadow-xl active:scale-95 
-                           hover:bg-white/10 h-full"
+                           hover:bg-white/10 h-12"
                 >
                   <User className="w-5 h-5 flex-shrink-0" />
                   <span className="whitespace-nowrap">Student Profile</span>
