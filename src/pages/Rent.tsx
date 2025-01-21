@@ -68,24 +68,24 @@ const Rent = () => {
       {/* Main Content */}
       <div className="relative">
         <div className="sticky top-20 z-50 bg-gradient-to-b from-black/90 via-black/50 to-transparent backdrop-blur-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
               <TabsList className="grid w-full grid-cols-2 gap-4 p-2 bg-black/40 backdrop-blur-lg border border-white/10 
-                                rounded-lg shadow-xl">
+                                rounded-xl shadow-xl">
                 <TabsTrigger 
                   value="search" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-4 text-white/80 hover:text-white 
-                           transition-all duration-300 flex items-center gap-2 text-base font-medium rounded-lg
-                           shadow-lg hover:shadow-xl active:scale-95"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-4 text-white/80 
+                           hover:text-white transition-all duration-300 flex items-center gap-3 text-base font-medium 
+                           rounded-lg shadow-lg hover:shadow-xl active:scale-95 hover:bg-white/10"
                 >
                   <Home className="w-5 h-5" />
                   Find Accommodation
                 </TabsTrigger>
                 <TabsTrigger 
                   value="profile" 
-                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-4 text-white/80 hover:text-white 
-                           transition-all duration-300 flex items-center gap-2 text-base font-medium rounded-lg
-                           shadow-lg hover:shadow-xl active:scale-95"
+                  className="data-[state=active]:bg-primary data-[state=active]:text-white py-4 text-white/80 
+                           hover:text-white transition-all duration-300 flex items-center gap-3 text-base font-medium 
+                           rounded-lg shadow-lg hover:shadow-xl active:scale-95 hover:bg-white/10"
                 >
                   <User className="w-5 h-5" />
                   Student Profile
