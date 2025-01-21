@@ -26,7 +26,7 @@ const MarketplaceHeader = ({
   };
 
   return (
-    <div className="sticky top-16 z-10 bg-black/50 backdrop-blur-xl border-b border-white/10 px-4 py-3 space-y-3">
+    <div className="sticky top-16 z-10 bg-gradient-to-br from-[#1a472a]/80 via-[#2d5a3f]/80 to-[#3d6b52]/80 backdrop-blur-xl border-b border-white/10 px-4 py-3 space-y-3">
       <div className="relative max-w-2xl mx-auto">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 h-4 w-4" />
         <Input
