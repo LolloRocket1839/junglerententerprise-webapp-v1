@@ -34,11 +34,9 @@ const Rent = () => {
                 <TabsTrigger 
                   value="search" 
                   className="data-[state=active]:bg-green-500 data-[state=active]:text-white 
-                           data-[state=active]:shadow-lg data-[state=active]:scale-[1.02]
                            px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
                            flex items-center justify-center gap-3 text-lg font-medium rounded-lg
-                           min-h-[4rem] hover:bg-green-600/20 relative overflow-hidden
-                           hover:shadow-md active:scale-95"
+                           min-h-[4rem] hover:bg-green-600/20 relative"
                 >
                   <Home className="w-6 h-6 flex-shrink-0" />
                   <span className="whitespace-nowrap">Find Accommodation</span>
@@ -46,11 +44,9 @@ const Rent = () => {
                 <TabsTrigger 
                   value="profile" 
                   className="data-[state=active]:bg-green-500 data-[state=active]:text-white 
-                           data-[state=active]:shadow-lg data-[state=active]:scale-[1.02]
                            px-8 py-4 text-white/90 hover:text-white transition-all duration-300 
                            flex items-center justify-center gap-3 text-lg font-medium rounded-lg
-                           min-h-[4rem] hover:bg-green-600/20 relative overflow-hidden
-                           hover:shadow-md active:scale-95"
+                           min-h-[4rem] hover:bg-green-600/20 relative"
                 >
                   <User className="w-6 h-6 flex-shrink-0" />
                   <span className="whitespace-nowrap">Student Profile</span>
