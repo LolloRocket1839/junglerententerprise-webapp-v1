@@ -1,22 +1,19 @@
-import { createClient } from '@supabase/supabase-js';
-import type { Database } from './types/database';
+import { createClient } from '@supabase/supabase-js'
+import type { Database } from './types/database'
 
-const supabaseUrl = "https://jqvkodddhilbrbusyvzx.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxdmtvZGRkaGlsYnJidXN5dnp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzIzMjY3NzcsImV4cCI6MjA0NzkwMjc3N30.Wl8bAISOJZUek6dsNgqKdh918YNG-g_3Cq0svZS_2FM";
+const supabaseUrl = 'https://jqvkodddhilbrbusyvzx.supabase.co'
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpxdmtvZGRkaGlsYnJidXN5dnp4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDU2ODk5NDcsImV4cCI6MjAyMTI2NTk0N30.JQCH6Vp4bycxHnUYn7Y4_WP8_FnNOm_Q9Gl1k0uuXhw'
 
-export const supabase = createClient<Database>(
-  supabaseUrl,
-  supabaseKey,
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-    },
-    global: {
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': supabaseKey
-      }
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true
+  },
+  global: {
+    headers: {
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal'
     }
   }
-);
+})
