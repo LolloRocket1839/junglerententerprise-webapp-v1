@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Dialog } from "@/components/ui/dialog";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Property } from './types';
 import PropertyCard from './PropertyCard';
@@ -12,109 +11,23 @@ import { mockProperties } from './mockData';
 const InvestmentOpportunities = () => {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [showDetails, setShowDetails] = useState(false);
-  const queryClient = useQueryClient();
 
-  const { data: properties, isLoading, error: queryError } = useQuery({
+  // Using mock data directly instead of Supabase query
+  const { data: properties, isLoading } = useQuery({
     queryKey: ['investment-properties'],
     queryFn: async () => {
-      try {
-        const { data, error } = await supabase
-          .from('hubs')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .limit(6);
-
-        if (error) {
-          console.error('Error loading properties:', error);
-          throw new Error('Unable to load investment opportunities');
-        }
-
-        if (!data || data.length === 0) {
-          console.log('No properties found, using mock data');
-          return mockProperties;
-        }
-
-        return data.map((hub: any) => ({
-          id: hub.id,
-          name: hub.name,
-          location: hub.location,
-          description: hub.description || '',
-          price_per_night: hub.price_per_night,
-          amenities: hub.amenities || [],
-          images: hub.images || [],
-          rating: hub.rating || null,
-          reviews_count: hub.reviews_count || 0,
-          investment_goal: hub.investment_goal || 100000,
-          amount_raised: hub.amount_raised || 0
-        })) as Property[];
-      } catch (error) {
-        console.error('Error in queryFn:', error);
-        throw error;
-      }
+      // Return mock data
+      return mockProperties;
     },
     retry: 1,
     retryDelay: 1000
   });
-
-  const createInvestment = useMutation({
-    mutationFn: async ({ hubId, amount }: { hubId: string, amount: number }) => {
-      const { data, error } = await supabase
-        .from('investments')
-        .insert([
-          {
-            hub_id: hubId,
-            amount: amount,
-            tokens: Math.floor(amount / 100),
-            status: 'pending'
-          }
-        ])
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Investment error:', error);
-        throw new Error(error.message);
-      }
-      return data;
-    },
-    onSuccess: () => {
-      toast.success("Investment submitted successfully!");
-      setSelectedProperty(null);
-      setShowDetails(false);
-      queryClient.invalidateQueries({ queryKey: ['investment-properties'] });
-    },
-    onError: (error: Error) => {
-      toast.error("Investment failed. Please try again later.");
-    }
-  });
-
-  const handleInvest = (amount: number) => {
-    if (!selectedProperty) return;
-    createInvestment.mutate({
-      hubId: selectedProperty.id,
-      amount: amount
-    });
-  };
 
   const handlePropertyClick = (property: Property) => {
     console.log("Selected property:", property);
     setSelectedProperty(property);
     setShowDetails(true);
   };
-
-  if (queryError) {
-    console.error('Query error:', queryError);
-    return (
-      <Alert variant="destructive" className="mb-8">
-        <AlertDescription>
-          Unable to load investment opportunities. Please try again later.
-          {process.env.NODE_ENV === 'development' && (
-            <pre className="mt-2 text-xs">{JSON.stringify(queryError, null, 2)}</pre>
-          )}
-        </AlertDescription>
-      </Alert>
-    );
-  }
 
   return (
     <div className="space-y-6 p-4 md:p-6">
@@ -159,7 +72,10 @@ const InvestmentOpportunities = () => {
           property={selectedProperty}
           open={showDetails}
           onOpenChange={setShowDetails}
-          onInvest={handleInvest}
+          onInvest={(amount) => {
+            toast.success("Investment simulated successfully!");
+            setShowDetails(false);
+          }}
         />
       )}
     </div>
