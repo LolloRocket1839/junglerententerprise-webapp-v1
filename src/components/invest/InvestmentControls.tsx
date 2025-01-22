@@ -147,7 +147,9 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6 glass-card backdrop-blur-xl">
             <div>
               <span className="block text-sm font-medium text-gray-300 mb-2">Unità acquistate:</span>
-              <span className="text-xl font-semibold text-white tracking-tight">{calculateUnits(amount)} unità</span>
+              <span className="text-2xl font-bold text-white tracking-tight drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-r from-white via-white/90 to-white bg-clip-text">
+                {calculateUnits(amount)} unità
+              </span>
             </div>
             <div>
               <span className="block text-sm font-medium text-gray-300 mb-2">Rendimento annuo stimato:</span>
