@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Loader2 } from 'lucide-react';
+import { Loader2, Maximize2 } from 'lucide-react';
 import {
   DialogContent,
   DialogDescription,
@@ -117,12 +117,12 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
   }
 
   return (
-    <DialogContent className="sm:max-w-[425px] bg-gradient-to-br from-black/95 to-green-950/95 backdrop-blur-xl border border-white/10">
+    <DialogContent className="sm:max-w-[425px] bg-gradient-to-br from-[#1a2e2a] to-[#2a3f35] backdrop-blur-xl border border-white/10">
       <DialogHeader className="space-y-3">
-        <DialogTitle className="text-2xl font-bold tracking-tight text-white">
+        <DialogTitle className="text-3xl font-bold tracking-tight text-white drop-shadow-lg">
           Investi in {property.name}
         </DialogTitle>
-        <DialogDescription className="text-base text-gray-200 font-medium">
+        <DialogDescription className="text-lg text-gray-300 font-medium border-b border-white/10 pb-4">
           Inserisci l'importo che desideri investire in questa proprietà.
           Investimento minimo €1.000.
         </DialogDescription>
@@ -136,7 +136,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
 
       <div className="grid gap-6 py-4">
         <div className="space-y-3">
-          <Label htmlFor="amount" className="text-lg font-semibold text-white">
+          <Label htmlFor="amount" className="text-xl font-bold text-white drop-shadow-md">
             Importo Investimento (€)
           </Label>
           <Input
@@ -148,9 +148,11 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
             onChange={(e) => setInvestmentAmount(e.target.value)}
             placeholder="Inserisci importo..."
             disabled={isProcessing}
-            className="text-lg font-medium bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+            className="text-lg font-medium bg-black/20 border-emerald-500/30 text-white 
+                     placeholder:text-gray-400 focus:ring-emerald-500/30 focus:border-emerald-500/50
+                     shadow-lg transition-all duration-200"
           />
-          <p className="text-sm font-medium text-emerald-300">
+          <p className="text-sm font-medium text-emerald-400 drop-shadow">
             Riceverai {investmentAmount ? Math.floor(parseFloat(investmentAmount) / 1000) : 0} token
           </p>
         </div>
@@ -163,17 +165,19 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
           estimatedDate={formattedDate}
         />
 
-        <div className="flex items-center space-x-3 bg-white/5 p-4 rounded-lg">
+        <div className="flex items-center space-x-3 bg-black/20 p-4 rounded-xl border border-white/5 shadow-lg">
           <Checkbox 
             id="terms" 
             checked={termsAccepted}
             onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
             disabled={isProcessing}
-            className="border-white/20 data-[state=checked]:bg-emerald-500"
+            className="border-emerald-500/30 data-[state=checked]:bg-emerald-500 
+                     data-[state=checked]:border-emerald-600"
           />
           <label
             htmlFor="terms"
-            className="text-sm font-medium text-white leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="text-sm font-medium text-white leading-none peer-disabled:cursor-not-allowed 
+                     peer-disabled:opacity-70"
           >
             Accetto i termini e le condizioni
           </label>
@@ -184,7 +188,9 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
         <Button
           onClick={handleSubmit}
           disabled={isProcessing || !termsAccepted}
-          className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 text-lg"
+          className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white 
+                   font-bold py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300
+                   hover:scale-[1.02] disabled:hover:scale-100 disabled:opacity-50"
         >
           {isProcessing && (
             <Loader2 className="mr-2 h-5 w-5 animate-spin" />
