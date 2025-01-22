@@ -160,9 +160,12 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
           <Button 
             onClick={handleInvestClick}
             disabled={!!error || amount < minInvestment}
-            className="w-full py-6 text-lg font-bold bg-gradient-to-r from-green-500 to-green-600 
-                     hover:scale-105 hover:shadow-lg transition-all duration-300 
-                     disabled:opacity-50 disabled:hover:scale-100 shadow-xl px-8"
+            className="w-full py-8 text-xl font-extrabold bg-gradient-to-r from-green-500 to-green-600 
+                     hover:scale-105 hover:shadow-xl transition-all duration-300 
+                     disabled:opacity-50 disabled:hover:scale-100 
+                     shadow-xl px-8 tracking-wide
+                     text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]
+                     uppercase"
           >
             Investi Ora
           </Button>
