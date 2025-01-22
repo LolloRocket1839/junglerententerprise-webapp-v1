@@ -13,23 +13,23 @@ const InvestmentSummaryBox: React.FC<InvestmentSummaryBoxProps> = ({
   estimatedDate,
 }) => {
   return (
-    <div className="space-y-4 bg-muted/50 p-4 rounded-lg">
-      <h4 className="font-medium flex items-center gap-2">
-        <ShieldCheck className="w-4 h-4 text-primary" />
+    <div className="space-y-4 bg-white/5 p-5 rounded-lg border border-white/10">
+      <h4 className="font-semibold text-lg flex items-center gap-2 text-white">
+        <ShieldCheck className="w-5 h-5 text-emerald-400" />
         Riepilogo Investimento
       </h4>
-      <ul className="space-y-2 text-sm">
-        <li className="flex justify-between">
-          <span className="text-muted-foreground">Importo:</span>
-          <span className="font-medium">€{parseFloat(amount || "0").toLocaleString()}</span>
+      <ul className="space-y-3">
+        <li className="flex justify-between items-center">
+          <span className="text-gray-300 font-medium">Importo:</span>
+          <span className="text-lg font-semibold text-white">€{parseFloat(amount || "0").toLocaleString()}</span>
         </li>
-        <li className="flex justify-between">
-          <span className="text-muted-foreground">ROI Previsto:</span>
-          <span className="font-medium text-primary">{roi}%</span>
+        <li className="flex justify-between items-center">
+          <span className="text-gray-300 font-medium">ROI Previsto:</span>
+          <span className="text-lg font-semibold text-emerald-400">{roi}%</span>
         </li>
-        <li className="flex justify-between">
-          <span className="text-muted-foreground">Prima Distribuzione:</span>
-          <span className="font-medium">{estimatedDate}</span>
+        <li className="flex justify-between items-center">
+          <span className="text-gray-300 font-medium">Prima Distribuzione:</span>
+          <span className="text-lg font-semibold text-white">{estimatedDate}</span>
         </li>
       </ul>
     </div>

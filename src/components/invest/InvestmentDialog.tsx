@@ -56,8 +56,8 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
   const handleSubmit = async () => {
     if (!termsAccepted) {
       toast({
-        title: "Error",
-        description: "You must accept the terms and conditions to proceed",
+        title: "Errore",
+        description: "Devi accettare i termini e le condizioni per procedere",
         variant: "destructive"
       });
       return;
@@ -65,8 +65,8 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
 
     if (!property.id || !isValidUUID(property.id)) {
       toast({
-        title: "Error",
-        description: "Invalid property ID",
+        title: "Errore",
+        description: "ID proprietà non valido",
         variant: "destructive"
       });
       return;
@@ -74,7 +74,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
 
     try {
       setIsProcessing(true);
-      console.log('Creating checkout for property:', property.id, 'amount:', investmentAmount);
+      console.log('Creazione checkout per proprietà:', property.id, 'importo:', investmentAmount);
 
       const response = await supabase.functions.invoke('create-checkout', {
         body: {
@@ -84,23 +84,22 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
       });
 
       if (response.error) {
-        console.error('Checkout error:', response.error);
+        console.error('Errore checkout:', response.error);
         throw new Error(response.error.message);
       }
 
       if (!response.data?.url) {
-        throw new Error("No checkout URL received");
+        throw new Error("Nessun URL di checkout ricevuto");
       }
 
       setIsSuccess(true);
       
-      // Redirect to Stripe Checkout
       window.location.href = response.data.url;
     } catch (error) {
-      console.error('Payment error:', error);
+      console.error('Errore pagamento:', error);
       toast({
-        title: "Error",
-        description: "An error occurred while processing the payment. Please try again later.",
+        title: "Errore",
+        description: "Si è verificato un errore durante l'elaborazione del pagamento. Riprova più tardi.",
         variant: "destructive"
       });
     } finally {
@@ -118,24 +117,28 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
   }
 
   return (
-    <DialogContent className="sm:max-w-[425px] bg-background">
-      <DialogHeader>
-        <DialogTitle>Investi in {property.name}</DialogTitle>
-        <DialogDescription>
+    <DialogContent className="sm:max-w-[425px] bg-gradient-to-br from-black/95 to-green-950/95 backdrop-blur-xl border border-white/10">
+      <DialogHeader className="space-y-3">
+        <DialogTitle className="text-2xl font-bold tracking-tight text-white">
+          Investi in {property.name}
+        </DialogTitle>
+        <DialogDescription className="text-base text-gray-200 font-medium">
           Inserisci l'importo che desideri investire in questa proprietà.
           Investimento minimo €1.000.
         </DialogDescription>
       </DialogHeader>
 
       {error && (
-        <Alert variant="destructive" className="mb-4">
-          <AlertDescription>{error}</AlertDescription>
+        <Alert variant="destructive" className="mb-4 border-red-500/50 bg-red-950/50">
+          <AlertDescription className="text-white">{error}</AlertDescription>
         </Alert>
       )}
 
-      <div className="grid gap-4 py-4">
-        <div className="space-y-2">
-          <Label htmlFor="amount">Importo Investimento (€)</Label>
+      <div className="grid gap-6 py-4">
+        <div className="space-y-3">
+          <Label htmlFor="amount" className="text-lg font-semibold text-white">
+            Importo Investimento (€)
+          </Label>
           <Input
             id="amount"
             type="number"
@@ -145,8 +148,9 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
             onChange={(e) => setInvestmentAmount(e.target.value)}
             placeholder="Inserisci importo..."
             disabled={isProcessing}
+            className="text-lg font-medium bg-white/10 border-white/20 text-white placeholder:text-gray-400"
           />
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm font-medium text-emerald-300">
             Riceverai {investmentAmount ? Math.floor(parseFloat(investmentAmount) / 1000) : 0} token
           </p>
         </div>
@@ -159,16 +163,17 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
           estimatedDate={formattedDate}
         />
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-3 bg-white/5 p-4 rounded-lg">
           <Checkbox 
             id="terms" 
             checked={termsAccepted}
             onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
             disabled={isProcessing}
+            className="border-white/20 data-[state=checked]:bg-emerald-500"
           />
           <label
             htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="text-sm font-medium text-white leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             Accetto i termini e le condizioni
           </label>
@@ -179,10 +184,10 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
         <Button
           onClick={handleSubmit}
           disabled={isProcessing || !termsAccepted}
-          className="relative w-full"
+          className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 text-lg"
         >
           {isProcessing && (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
           )}
           {isProcessing ? 'Elaborazione...' : 'Conferma Investimento'}
         </Button>
