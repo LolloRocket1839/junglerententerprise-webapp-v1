@@ -1,13 +1,29 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { LogIn, LogOut, UserPlus, Globe } from "lucide-react";
+import { LogIn, LogOut, UserPlus, Globe, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useState } from "react";
 
 interface DesktopNavProps {
   session: any;
 }
 
 const DesktopNav = ({ session }: DesktopNavProps) => {
+  const [language, setLanguage] = useState("IT");
+
+  const languages = {
+    IT: "Italiano",
+    EN: "English",
+    FR: "Français",
+    DE: "Deutsch",
+  };
+
   return (
     <div className="hidden md:flex items-center space-x-8">
       <Link 
@@ -53,14 +69,30 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
         Referral
       </Link>
 
-      <Button
-        variant="ghost"
-        size="sm"
-        className="flex items-center gap-2 text-white/80 hover:text-white"
-      >
-        <Globe className="w-4 h-4" />
-        IT
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="flex items-center gap-2 text-white/80 hover:text-white"
+          >
+            <Globe className="w-4 h-4" />
+            {language}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-32">
+          {Object.entries(languages).map(([code, name]) => (
+            <DropdownMenuItem
+              key={code}
+              className="flex items-center justify-between"
+              onClick={() => setLanguage(code)}
+            >
+              {name}
+              {language === code && <Check className="w-4 h-4" />}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
       
       {session ? (
         <Button 
