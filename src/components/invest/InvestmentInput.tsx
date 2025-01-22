@@ -43,13 +43,16 @@ const InvestmentInput: React.FC<InvestmentInputProps> = ({
         onClick={onConfirm}
         className="whitespace-nowrap bg-gradient-to-r from-green-500 to-green-600
                    hover:from-green-600 hover:to-green-700
-                   hover:scale-105 transition-all duration-300 text-white 
-                   font-semibold shadow-lg hover:shadow-xl px-6 py-6
-                   rounded-xl border border-white/10"
+                   hover:scale-105 transition-all duration-300 
+                   text-lg font-bold tracking-wide text-white/90
+                   shadow-lg hover:shadow-xl px-8 py-6
+                   rounded-xl border border-white/10
+                   backdrop-blur-sm hover:text-white
+                   active:scale-95"
         disabled={disabled}
       >
-        <Check className="w-5 h-5 mr-2" />
-        Conferma
+        <Check className="w-5 h-5 mr-2.5 stroke-[2.5]" />
+        <span className="drop-shadow-sm">Conferma</span>
       </Button>
     </div>
   );
