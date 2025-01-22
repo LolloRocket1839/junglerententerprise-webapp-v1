@@ -13,7 +13,7 @@ export interface MarketplaceItemType {
     last_name: string;
     avatar_url?: string;
   };
-  lookingFor?: string; // For swap items
+  lookingFor?: string;
   created_at: string;
   updated_at: string;
 }
