@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from "@/integrations/supabase/client";
 import MarketplaceHeader from './MarketplaceHeader';
 import MarketplaceItem from './MarketplaceItem';
-import { MarketplaceCategory } from './types';
+import { MarketplaceCategory, MarketplaceItemType } from './types';
 
 const MarketplaceGrid = () => {
   const [selectedCategory, setSelectedCategory] = useState<MarketplaceCategory>('all');
@@ -27,7 +27,12 @@ const MarketplaceGrid = () => {
         `);
 
       if (error) throw error;
-      return data || [];
+      
+      // Cast the category to MarketplaceCategory
+      return (data || []).map(item => ({
+        ...item,
+        category: item.category as MarketplaceCategory
+      })) as MarketplaceItemType[];
     }
   });
 
