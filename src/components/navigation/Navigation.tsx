@@ -9,6 +9,7 @@ const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [session, setSession] = useState(null);
+  const [language, setLanguage] = useState("IT");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +35,10 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleLanguageChange = (lang: string) => {
+    setLanguage(lang);
+  };
+
   return (
     <nav 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -52,7 +57,10 @@ const Navigation = () => {
             Jungle Rent
           </Link>
 
-          <DesktopNav session={session} />
+          <DesktopNav 
+            session={session} 
+            onLanguageChange={handleLanguageChange}
+          />
           
           <button 
             className="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300
@@ -77,6 +85,7 @@ const Navigation = () => {
           setIsMenuOpen(false);
           navigate('/');
         }}
+        language={language}
       />
     </nav>
   );
