@@ -100,7 +100,9 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="space-y-4">
-        <label className="text-2xl font-bold text-white tracking-tight antialiased block">
+        <label className="text-3xl font-bold text-white tracking-tight antialiased block 
+                         bg-gradient-to-r from-white via-white/90 to-white bg-clip-text 
+                         drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
           Importo Investimento (€)
         </label>
         
