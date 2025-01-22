@@ -15,7 +15,7 @@ const MarketplaceItem = ({ item, onWishlist }: MarketplaceItemProps) => {
     <Card className="overflow-hidden bg-black/50 border-white/10">
       <div className="aspect-video relative overflow-hidden">
         <img
-          src={item.imageUrl}
+          src={item.image_url}
           alt={item.name}
           className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
         />
@@ -45,9 +45,9 @@ const MarketplaceItem = ({ item, onWishlist }: MarketplaceItemProps) => {
         )}
         <div className="flex items-center justify-between pt-2">
           <div className="flex items-center gap-2">
-            <span className="text-sm text-white/60">{item.seller.name}</span>
-            <span className="text-xs text-white/40">•</span>
-            <span className="text-sm text-white/60">★ {item.seller.rating}</span>
+            <span className="text-sm text-white/60">
+              {`${item.seller.first_name} ${item.seller.last_name}`}
+            </span>
           </div>
           <Button variant="outline" className="text-xs">
             Contatta

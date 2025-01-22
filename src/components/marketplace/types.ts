@@ -6,12 +6,14 @@ export interface MarketplaceItemType {
   description: string;
   price: number;
   category: MarketplaceCategory;
-  imageUrl: string;
+  image_url: string;
+  seller_id: string;
+  created_at: string;
   seller: {
     id: string;
-    name: string;
-    rating: number;
+    first_name: string;
+    last_name: string;
+    avatar_url?: string;
   };
-  createdAt: string;
   lookingFor?: string;
 }
