@@ -12,16 +12,72 @@ import { useState } from "react";
 
 interface DesktopNavProps {
   session: any;
+  onLanguageChange?: (lang: string) => void;
 }
 
-const DesktopNav = ({ session }: DesktopNavProps) => {
-  const [language, setLanguage] = useState("IT");
+const menuItems = {
+  IT: {
+    invest: "Investi",
+    rent: "Affitta",
+    marketplace: "Marketplace",
+    stay: "Soggiorna",
+    students: "Studenti",
+    referral: "Referral",
+    signOut: "Esci",
+    signIn: "Accedi",
+    register: "Registrati",
+  },
+  EN: {
+    invest: "Invest",
+    rent: "Rent",
+    marketplace: "Marketplace",
+    stay: "Stay",
+    students: "Students",
+    referral: "Referral",
+    signOut: "Sign Out",
+    signIn: "Sign In",
+    register: "Register",
+  },
+  FR: {
+    invest: "Investir",
+    rent: "Louer",
+    marketplace: "Marketplace",
+    stay: "Séjourner",
+    students: "Étudiants",
+    referral: "Parrainage",
+    signOut: "Déconnexion",
+    signIn: "Connexion",
+    register: "S'inscrire",
+  },
+  DE: {
+    invest: "Investieren",
+    rent: "Mieten",
+    marketplace: "Marktplatz",
+    stay: "Aufenthalt",
+    students: "Studenten",
+    referral: "Empfehlung",
+    signOut: "Abmelden",
+    signIn: "Anmelden",
+    register: "Registrieren",
+  },
+};
 
-  const languages = {
-    IT: "Italiano",
-    EN: "English",
-    FR: "Français",
-    DE: "Deutsch",
+const languages = {
+  IT: "Italiano",
+  EN: "English",
+  FR: "Français",
+  DE: "Deutsch",
+};
+
+const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
+  const [language, setLanguage] = useState("IT");
+  const text = menuItems[language as keyof typeof menuItems];
+
+  const handleLanguageChange = (lang: string) => {
+    setLanguage(lang);
+    if (onLanguageChange) {
+      onLanguageChange(lang);
+    }
   };
 
   return (
@@ -31,42 +87,42 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        Investi
+        {text.invest}
       </Link>
       <Link 
         to="/rent" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        Affitta
+        {text.rent}
       </Link>
       <Link 
         to="/marketplace" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        Marketplace
+        {text.marketplace}
       </Link>
       <Link 
         to="/stay" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        Soggiorna
+        {text.stay}
       </Link>
       <Link 
         to="/student" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        Studenti
+        {text.students}
       </Link>
       <Link 
         to="/referral" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        Referral
+        {text.referral}
       </Link>
 
       <DropdownMenu>
@@ -85,7 +141,7 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
             <DropdownMenuItem
               key={code}
               className="flex items-center justify-between"
-              onClick={() => setLanguage(code)}
+              onClick={() => handleLanguageChange(code)}
             >
               {name}
               {language === code && <Check className="w-4 h-4" />}
@@ -102,7 +158,7 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
           className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white"
         >
           <LogOut className="w-4 h-4" />
-          Esci
+          {text.signOut}
         </Button>
       ) : (
         <div className="flex items-center gap-3">
@@ -115,7 +171,7 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
           >
             <Link to="/auth">
               <LogIn className="w-4 h-4" />
-              Accedi
+              {text.signIn}
             </Link>
           </Button>
           <Button 
@@ -127,7 +183,7 @@ const DesktopNav = ({ session }: DesktopNavProps) => {
           >
             <Link to="/auth">
               <UserPlus className="w-4 h-4" />
-              Registrati
+              {text.register}
             </Link>
           </Button>
         </div>
