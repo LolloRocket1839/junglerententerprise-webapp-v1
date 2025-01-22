@@ -1,4 +1,4 @@
-export type MarketplaceCategory = 'furniture' | 'electronics' | 'textbooks' | 'services' | 'all' | 'swap';
+export type MarketplaceCategory = 'all' | 'furniture' | 'electronics' | 'textbooks' | 'services' | 'swap';
 
 export interface MarketplaceItemType {
   id: string;
@@ -7,13 +7,13 @@ export interface MarketplaceItemType {
   price: number;
   category: MarketplaceCategory;
   image_url: string;
-  seller_id: string;
-  created_at: string;
   seller: {
     id: string;
     first_name: string;
     last_name: string;
     avatar_url?: string;
   };
-  lookingFor?: string;
+  lookingFor?: string; // For swap items
+  created_at: string;
+  updated_at: string;
 }
