@@ -18,8 +18,18 @@ export default defineConfig(({ mode }) => ({
       target: 'es2020'
     }
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    },
+    sourcemap: true
+  },
   plugins: [
-    react(),
+    react({
+      fastRefresh: true
+    }),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
