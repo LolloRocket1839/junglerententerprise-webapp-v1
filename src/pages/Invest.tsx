@@ -81,8 +81,14 @@ const Invest = () => {
             }
           }}
         >
-          <div className="sticky top-20 z-50 py-4 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-md">
-            <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-black/60 backdrop-blur-lg border border-white/10 rounded-lg">
+          <div className="sticky top-20 z-50 py-4 
+                        bg-gradient-to-b from-black/90 via-black/70 to-transparent 
+                        backdrop-blur-lg transition-all duration-300
+                        before:absolute before:inset-0 before:bg-gradient-to-b 
+                        before:from-black/20 before:to-transparent before:-z-10">
+            <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 
+                               bg-black/60 backdrop-blur-lg border border-white/10 
+                               rounded-lg shadow-lg">
               <TabsTrigger 
                 value="opportunities" 
                 className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
