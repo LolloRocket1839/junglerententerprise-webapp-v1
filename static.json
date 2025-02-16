@@ -1,6 +1,9 @@
 
 {
   "headers": {
+    "/**": {
+      "Content-Type": "text/html"
+    },
     "/**/*.js": {
       "Content-Type": "application/javascript"
     },
@@ -9,6 +12,30 @@
     },
     "/**/*.cjs": {
       "Content-Type": "application/javascript"
+    },
+    "/**/*.css": {
+      "Content-Type": "text/css"
+    },
+    "/**/*.map": {
+      "Content-Type": "application/json"
+    },
+    "/**/*.json": {
+      "Content-Type": "application/json"
+    },
+    "/**/*.ico": {
+      "Content-Type": "image/x-icon"
+    },
+    "/**/*.png": {
+      "Content-Type": "image/png"
+    },
+    "/**/*.jpg": {
+      "Content-Type": "image/jpeg"
+    },
+    "/**/*.svg": {
+      "Content-Type": "image/svg+xml"
     }
+  },
+  "routes": {
+    "/**": "index.html"
   }
 }
