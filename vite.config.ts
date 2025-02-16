@@ -5,6 +5,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
+  base: '/',  // Necessario per GitHub Pages con dominio personalizzato
   server: {
     host: "::",
     port: 8080,
@@ -21,6 +22,8 @@ export default defineConfig(({ mode }) => ({
     }
   },
   build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
     rollupOptions: {
       output: {
         manualChunks: undefined
