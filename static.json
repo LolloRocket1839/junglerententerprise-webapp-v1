@@ -13,6 +13,12 @@
     "/**/*.cjs": {
       "Content-Type": "application/javascript"
     },
+    "/**/*.tsx": {
+      "Content-Type": "application/javascript"
+    },
+    "/**/*.ts": {
+      "Content-Type": "application/javascript"
+    },
     "/**/*.css": {
       "Content-Type": "text/css"
     },
