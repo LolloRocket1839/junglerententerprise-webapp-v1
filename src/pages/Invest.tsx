@@ -7,35 +7,32 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useState } from "react";
-
 const Invest = () => {
   const [selectedTab, setSelectedTab] = useState("opportunities");
-  
-  const { data: stats, isLoading: statsLoading } = useQuery({
+  const {
+    data: stats,
+    isLoading: statsLoading
+  } = useQuery({
     queryKey: ['investment-stats'],
     queryFn: async () => {
-      const { data: hubs, error: hubsError } = await supabase
-        .from('hubs')
-        .select('*');
-
+      const {
+        data: hubs,
+        error: hubsError
+      } = await supabase.from('hubs').select('*');
       if (hubsError) {
         toast.error("Impossibile caricare le statistiche degli investimenti");
         throw hubsError;
       }
-
       const totalProperties = hubs?.length || 0;
       const averageRoi = hubs?.reduce((acc, hub) => acc + (hub.rating || 0), 0) / totalProperties || 0;
-      
       return {
         totalProperties,
         averageRoi: `${averageRoi.toFixed(1)}%`,
-        activeInvestors: '1.2K',
+        activeInvestors: '1.2K'
       };
     }
   });
-
-  return (
-    <div className="min-h-screen relative pb-20 md:pb-0">
+  return <div className="min-h-screen relative pb-20 md:pb-0">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-72 h-72 bg-primary/10 rounded-full blur-xl" />
         <div className="absolute bottom-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-xl" />
@@ -47,70 +44,32 @@ const Invest = () => {
         </h1>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-          <StatsCard
-            title="Proprietà Totali"
-            value={statsLoading ? "Caricamento..." : stats?.totalProperties.toString() || "0"}
-            icon={Building2}
-            trend="up"
-            className="glass-card backdrop-blur-md bg-black/40 border-white/10"
-          />
-          <StatsCard
-            title="ROI Medio"
-            value={statsLoading ? "Caricamento..." : stats?.averageRoi || "0%"}
-            icon={TrendingUp}
-            trend="up"
-            className="glass-card backdrop-blur-md bg-black/40 border-white/10"
-          />
-          <StatsCard
-            title="Investitori Attivi"
-            value={statsLoading ? "Caricamento..." : stats?.activeInvestors || "0"}
-            icon={Users}
-            trend="up"
-            className="glass-card backdrop-blur-md bg-black/40 border-white/10"
-          />
+          <StatsCard title="Proprietà Totali" value={statsLoading ? "Caricamento..." : stats?.totalProperties.toString() || "0"} icon={Building2} trend="up" className="glass-card backdrop-blur-md bg-black/40 border-white/10" />
+          <StatsCard title="ROI Medio" value={statsLoading ? "Caricamento..." : stats?.averageRoi || "0%"} icon={TrendingUp} trend="up" className="glass-card backdrop-blur-md bg-black/40 border-white/10" />
+          <StatsCard title="Investitori Attivi" value={statsLoading ? "Caricamento..." : stats?.activeInvestors || "0"} icon={Users} trend="up" className="glass-card backdrop-blur-md bg-black/40 border-white/10" />
         </div>
 
-        <Tabs 
-          defaultValue="opportunities" 
-          className="w-full space-y-6"
-          value={selectedTab}
-          onValueChange={(value) => {
-            setSelectedTab(value);
-            if (window.innerWidth < 768) {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-          }}
-        >
-          <div className="sticky top-20 z-50 py-4 
-                        bg-gradient-to-b from-black/90 via-black/70 to-transparent 
-                        backdrop-blur-lg transition-all duration-300
-                        before:absolute before:inset-0 before:bg-gradient-to-b 
-                        before:from-black/20 before:to-transparent before:-z-10">
-            <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 
-                               bg-black/60 backdrop-blur-lg border border-white/10 
-                               rounded-lg shadow-lg">
-              <TabsTrigger 
-                value="opportunities" 
-                className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-              >
+        <Tabs defaultValue="opportunities" className="w-full space-y-6" value={selectedTab} onValueChange={value => {
+        setSelectedTab(value);
+        if (window.innerWidth < 768) {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }
+      }}>
+          <div className="sticky top-20 z-50 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-md mx-0 my-0 py-0 px-0 rounded-sm">
+            <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-black/60 backdrop-blur-lg border border-white/10 rounded-lg">
+              <TabsTrigger value="opportunities" className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white">
                 Opportunità
               </TabsTrigger>
-              <TabsTrigger 
-                value="my-investments" 
-                className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-              >
+              <TabsTrigger value="my-investments" className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white">
                 I Miei Investimenti
               </TabsTrigger>
-              <TabsTrigger 
-                value="tokenization" 
-                className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-              >
+              <TabsTrigger value="tokenization" className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white">
                 Tokenizzazione
               </TabsTrigger>
-              <TabsTrigger 
-                value="analytics" 
-                className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white"
-              >
+              <TabsTrigger value="analytics" className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white">
                 Analisi
               </TabsTrigger>
             </TabsList>
@@ -145,8 +104,6 @@ const Invest = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Invest;
