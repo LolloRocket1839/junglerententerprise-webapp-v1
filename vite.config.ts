@@ -7,9 +7,8 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   base: '/',  // Necessario per GitHub Pages con dominio personalizzato
   server: {
-    host: "::",
     port: 8080,
-    middlewareMode: true,
+    host: true, // Necessario per accettare connessioni da network
     strictPort: true,
     headers: {
       'Content-Type': 'application/javascript; charset=utf-8',
