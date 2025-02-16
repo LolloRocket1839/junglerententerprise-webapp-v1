@@ -10,7 +10,12 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     middlewareMode: true,
     headers: {
-      'Content-Type': 'application/javascript'
+      'Content-Type': 'application/javascript; charset=utf-8'
+    }
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'es2020'
     }
   },
   plugins: [
@@ -21,5 +26,6 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
   },
 }));

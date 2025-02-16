@@ -14,10 +14,10 @@
       "Content-Type": "application/javascript"
     },
     "/**/*.tsx": {
-      "Content-Type": "text/javascript"
+      "Content-Type": "application/javascript"
     },
     "/**/*.ts": {
-      "Content-Type": "text/javascript"
+      "Content-Type": "application/javascript"
     },
     "/**/*.css": {
       "Content-Type": "text/css"
