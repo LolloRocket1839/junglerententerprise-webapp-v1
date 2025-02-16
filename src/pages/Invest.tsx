@@ -7,10 +7,11 @@ import StatsCard from "@/components/invest/StatsCard";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Invest = () => {
   const [selectedTab, setSelectedTab] = useState("opportunities");
+  const channelRef = useRef<any>(null);
 
   const {
     data: stats,
@@ -58,7 +59,12 @@ const Invest = () => {
 
   // Imposta il listener per i cambiamenti realtime
   useEffect(() => {
-    const channel = supabase.channel('investment-stats')
+    // Cleanup any existing channel before creating a new one
+    if (channelRef.current) {
+      supabase.removeChannel(channelRef.current);
+    }
+
+    channelRef.current = supabase.channel('investment-stats')
       .on(
         'postgres_changes',
         {
@@ -70,11 +76,17 @@ const Invest = () => {
           refetchStats();
         }
       )
-      .subscribe();
+      .subscribe((status: string) => {
+        if (status === 'SUBSCRIBED') {
+          console.log('Successfully subscribed to realtime changes');
+        }
+      });
 
     return () => {
       // Cleanup: rimuovi il channel quando il componente viene smontato
-      supabase.removeChannel(channel);
+      if (channelRef.current) {
+        supabase.removeChannel(channelRef.current);
+      }
     };
   }, [refetchStats]);
 
