@@ -9,8 +9,10 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     middlewareMode: true,
+    strictPort: true,
     headers: {
-      'Content-Type': 'application/javascript; charset=utf-8'
+      'Content-Type': 'application/javascript; charset=utf-8',
+      'Access-Control-Allow-Origin': '*'
     }
   },
   optimizeDeps: {
@@ -35,5 +37,5 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
-  },
+  }
 }));
