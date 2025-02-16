@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Building2, Users, TrendingUp } from "lucide-react";
@@ -7,7 +6,7 @@ import StatsCard from "@/components/invest/StatsCard";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const Invest = () => {
   const [selectedTab, setSelectedTab] = useState("opportunities");
@@ -56,32 +55,51 @@ const Invest = () => {
     retry: 1
   });
 
-  // Imposta il listener per i cambiamenti realtime
-  useEffect(() => {
-    const channel = supabase.channel('investment-stats')
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'hubs'
-        },
-        () => {
-          console.log('Received realtime update, refetching stats...');
-          refetchStats();
-        }
-      )
-      .subscribe((status) => {
-        if (status === 'SUBSCRIBED') {
-          console.log('Successfully subscribed to realtime changes');
-        }
-      });
+  const setupRealtimeSubscription = useCallback(async () => {
+    const channel = supabase.channel('investment-stats-v2', {
+      config: {
+        broadcast: { self: true },
+        presence: { key: 'investment-stats' },
+      }
+    });
 
-    return () => {
-      console.log('Cleaning up realtime subscription...');
-      supabase.removeChannel(channel);
-    };
+    try {
+      channel
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'hubs'
+          },
+          () => {
+            console.log('Received realtime update, refetching stats...');
+            refetchStats();
+          }
+        )
+        .subscribe(async (status) => {
+          if (status === 'SUBSCRIBED') {
+            console.log('Successfully subscribed to realtime changes');
+            await channel.track({ online: true });
+          }
+        });
+
+      return () => {
+        console.log('Cleaning up realtime subscription...');
+        channel.unsubscribe();
+      };
+    } catch (error) {
+      console.error('Error setting up realtime subscription:', error);
+      return () => {};
+    }
   }, [refetchStats]);
+
+  useEffect(() => {
+    const cleanup = setupRealtimeSubscription();
+    return () => {
+      cleanup.then(cleanupFn => cleanupFn());
+    };
+  }, [setupRealtimeSubscription]);
 
   return <div className="min-h-screen relative pb-20 md:pb-0">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
