@@ -396,6 +396,53 @@ export type Database = {
           },
         ]
       }
+      market_analytics: {
+        Row: {
+          average_rent_area: number
+          competitive_index: number
+          created_at: string | null
+          id: string
+          price_sqm_area: number
+          property_id: string | null
+          seasonality_factor: number | null
+          tourist_occupancy_area: number | null
+          tourist_rate_area: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          average_rent_area: number
+          competitive_index: number
+          created_at?: string | null
+          id?: string
+          price_sqm_area: number
+          property_id?: string | null
+          seasonality_factor?: number | null
+          tourist_occupancy_area?: number | null
+          tourist_rate_area?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          average_rent_area?: number
+          competitive_index?: number
+          created_at?: string | null
+          id?: string
+          price_sqm_area?: number
+          property_id?: string | null
+          seasonality_factor?: number | null
+          tourist_occupancy_area?: number | null
+          tourist_rate_area?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "market_analytics_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "student_properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       marketplace_items: {
         Row: {
           category: string
@@ -520,6 +567,50 @@ export type Database = {
           },
         ]
       }
+      occupancy_metrics: {
+        Row: {
+          average_rate: number
+          created_at: string | null
+          id: string
+          occupancy_rate: number
+          period_end: string
+          period_start: string
+          property_id: string | null
+          revenue_source: Database["public"]["Enums"]["revenue_source"]
+          total_revenue: number
+        }
+        Insert: {
+          average_rate: number
+          created_at?: string | null
+          id?: string
+          occupancy_rate: number
+          period_end: string
+          period_start: string
+          property_id?: string | null
+          revenue_source: Database["public"]["Enums"]["revenue_source"]
+          total_revenue?: number
+        }
+        Update: {
+          average_rate?: number
+          created_at?: string | null
+          id?: string
+          occupancy_rate?: number
+          period_end?: string
+          period_start?: string
+          property_id?: string | null
+          revenue_source?: Database["public"]["Enums"]["revenue_source"]
+          total_revenue?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "occupancy_metrics_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "student_properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       points_of_interest: {
         Row: {
           created_at: string | null
@@ -608,6 +699,89 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      property_analytics: {
+        Row: {
+          acquisition_cost: number
+          break_even_occupancy: number
+          cap_rate: number
+          cash_on_cash_return: number
+          created_at: string | null
+          gross_rental_yield: number
+          id: string
+          insurance_expense: number
+          maintenance_expense: number
+          management_fees: number
+          mortgage_expense: number
+          net_operating_income: number
+          net_rental_yield: number
+          platform_fees: number
+          property_id: string | null
+          property_tax: number
+          renovation_cost: number
+          student_rental_revenue: number
+          total_investment: number
+          tourist_rental_revenue: number
+          updated_at: string | null
+          utilities_expense: number
+        }
+        Insert: {
+          acquisition_cost: number
+          break_even_occupancy?: number
+          cap_rate?: number
+          cash_on_cash_return?: number
+          created_at?: string | null
+          gross_rental_yield?: number
+          id?: string
+          insurance_expense?: number
+          maintenance_expense?: number
+          management_fees?: number
+          mortgage_expense?: number
+          net_operating_income?: number
+          net_rental_yield?: number
+          platform_fees?: number
+          property_id?: string | null
+          property_tax?: number
+          renovation_cost: number
+          student_rental_revenue?: number
+          total_investment: number
+          tourist_rental_revenue?: number
+          updated_at?: string | null
+          utilities_expense?: number
+        }
+        Update: {
+          acquisition_cost?: number
+          break_even_occupancy?: number
+          cap_rate?: number
+          cash_on_cash_return?: number
+          created_at?: string | null
+          gross_rental_yield?: number
+          id?: string
+          insurance_expense?: number
+          maintenance_expense?: number
+          management_fees?: number
+          mortgage_expense?: number
+          net_operating_income?: number
+          net_rental_yield?: number
+          platform_fees?: number
+          property_id?: string | null
+          property_tax?: number
+          renovation_cost?: number
+          student_rental_revenue?: number
+          total_investment?: number
+          tourist_rental_revenue?: number
+          updated_at?: string | null
+          utilities_expense?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_analytics_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "student_properties"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       property_university_distances: {
         Row: {
@@ -1118,6 +1292,56 @@ export type Database = {
           },
         ]
       }
+      sfp_performance: {
+        Row: {
+          created_at: string | null
+          current_yield: number
+          deposit_account_comparison: number
+          id: string
+          investor_share: number
+          jungle_rent_share: number
+          projected_yield: number
+          property_id: string | null
+          real_estate_comparison: number
+          reit_comparison: number
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          current_yield: number
+          deposit_account_comparison: number
+          id?: string
+          investor_share: number
+          jungle_rent_share: number
+          projected_yield: number
+          property_id?: string | null
+          real_estate_comparison: number
+          reit_comparison: number
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          current_yield?: number
+          deposit_account_comparison?: number
+          id?: string
+          investor_share?: number
+          jungle_rent_share?: number
+          projected_yield?: number
+          property_id?: string | null
+          real_estate_comparison?: number
+          reit_comparison?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sfp_performance_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "student_properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       student_profiles: {
         Row: {
           created_at: string
@@ -1523,6 +1747,50 @@ export type Database = {
           },
         ]
       }
+      transition_periods: {
+        Row: {
+          created_at: string | null
+          days_vacant: number
+          end_date: string
+          id: string
+          property_id: string | null
+          start_date: string
+          status: Database["public"]["Enums"]["transition_status"]
+          total_costs: number
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          days_vacant?: number
+          end_date: string
+          id?: string
+          property_id?: string | null
+          start_date: string
+          status?: Database["public"]["Enums"]["transition_status"]
+          total_costs?: number
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          days_vacant?: number
+          end_date?: string
+          id?: string
+          property_id?: string | null
+          start_date?: string
+          status?: Database["public"]["Enums"]["transition_status"]
+          total_costs?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transition_periods_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "student_properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       universities: {
         Row: {
           address: string
@@ -1685,6 +1953,8 @@ export type Database = {
       document_type: "passport" | "id_card" | "driver_license"
       payment_status: "pending" | "partial" | "complete" | "refunded"
       property_status: "available" | "reserved" | "occupied" | "maintenance"
+      revenue_source: "student" | "tourist"
+      transition_status: "planned" | "in_progress" | "completed"
       verification_status: "pending" | "verified" | "rejected"
     }
     CompositeTypes: {
