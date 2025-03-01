@@ -2,24 +2,16 @@
 import React from 'react';
 import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, MapPin, Wifi, Wind, DoorClosed, Coffee } from 'lucide-react';
+import { Star, MapPin, Wifi, Wind, DoorClosed, Coffee, Users, Bath } from 'lucide-react';
+import { TouristProperty } from './types';
 
 interface PropertyCardProps {
-  property: {
-    id: string;
-    title: string;
-    location: string;
-    price: number;
-    rating: number;
-    features: string[];
-    description: string;
-    imageUrl: string;
-  }
+  property: TouristProperty;
 }
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
-  const getAmenityIcon = (feature: string) => {
-    switch (feature.toLowerCase()) {
+  const getAmenityIcon = (amenity: string) => {
+    switch (amenity.toLowerCase()) {
       case 'wi-fi':
         return <Wifi className="h-4 w-4" />;
       case 'aria condizionata':
@@ -36,7 +28,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
     <Card className="overflow-hidden hover:shadow-lg transition-shadow">
       <div className="h-48 relative">
         <img
-          src={property.imageUrl}
+          src={property.images[0]}
           alt={property.title}
           className="w-full h-full object-cover"
         />
@@ -50,20 +42,36 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         <CardTitle className="text-lg">{property.title}</CardTitle>
         <CardDescription className="flex items-center gap-1">
           <MapPin className="h-4 w-4" />
-          {property.location}
+          {property.address}, {property.city}
         </CardDescription>
       </CardHeader>
 
       <CardContent>
-        <p className="text-gray-600 text-sm mb-4">{property.description}</p>
+        <p className="text-gray-600 text-sm mb-4">{property.short_description || property.description}</p>
+        
+        <div className="grid grid-cols-2 gap-2 mb-4">
+          <div className="flex items-center gap-1 text-sm text-gray-600">
+            <Users className="h-4 w-4" />
+            <span>Max {property.capacity} ospiti</span>
+          </div>
+          <div className="flex items-center gap-1 text-sm text-gray-600">
+            <DoorClosed className="h-4 w-4" />
+            <span>{property.bedrooms} {property.bedrooms === 1 ? 'camera' : 'camere'}</span>
+          </div>
+          <div className="flex items-center gap-1 text-sm text-gray-600">
+            <Bath className="h-4 w-4" />
+            <span>{property.bathrooms} {property.bathrooms === 1 ? 'bagno' : 'bagni'}</span>
+          </div>
+        </div>
+
         <div className="flex flex-wrap gap-2">
-          {property.features.map((feature, index) => (
+          {property.amenities.slice(0, 4).map((amenity, index) => (
             <span 
               key={index} 
               className="bg-gray-100 text-gray-700 text-sm px-2 py-1 rounded-md flex items-center gap-1"
             >
-              {getAmenityIcon(feature)}
-              {feature}
+              {getAmenityIcon(amenity)}
+              {amenity}
             </span>
           ))}
         </div>
@@ -71,7 +79,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
 
       <CardFooter className="flex justify-between items-center">
         <div>
-          <span className="text-2xl font-bold">€{property.price}</span>
+          <span className="text-2xl font-bold">€{property.price_per_night}</span>
           <span className="text-gray-500"> /notte</span>
         </div>
         <Button variant="outline">Dettagli</Button>

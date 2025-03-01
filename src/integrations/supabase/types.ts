@@ -159,6 +159,65 @@ export type Database = {
           },
         ]
       }
+      guests: {
+        Row: {
+          average_rating: number | null
+          created_at: string | null
+          document_country: string | null
+          document_expiry: string | null
+          document_number: string | null
+          document_type: Database["public"]["Enums"]["document_type"] | null
+          email: string
+          id: string
+          name: string
+          nationality: string | null
+          phone: string | null
+          previous_bookings: number | null
+          profile_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          average_rating?: number | null
+          created_at?: string | null
+          document_country?: string | null
+          document_expiry?: string | null
+          document_number?: string | null
+          document_type?: Database["public"]["Enums"]["document_type"] | null
+          email: string
+          id?: string
+          name: string
+          nationality?: string | null
+          phone?: string | null
+          previous_bookings?: number | null
+          profile_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          average_rating?: number | null
+          created_at?: string | null
+          document_country?: string | null
+          document_expiry?: string | null
+          document_number?: string | null
+          document_type?: Database["public"]["Enums"]["document_type"] | null
+          email?: string
+          id?: string
+          name?: string
+          nationality?: string | null
+          phone?: string | null
+          previous_bookings?: number | null
+          profile_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guests_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       hubs: {
         Row: {
           amenities: string[] | null
@@ -457,6 +516,41 @@ export type Database = {
             columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      points_of_interest: {
+        Row: {
+          created_at: string | null
+          distance: number
+          id: string
+          name: string
+          property_id: string | null
+          type: string
+        }
+        Insert: {
+          created_at?: string | null
+          distance: number
+          id?: string
+          name: string
+          property_id?: string | null
+          type: string
+        }
+        Update: {
+          created_at?: string | null
+          distance?: number
+          id?: string
+          name?: string
+          property_id?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "points_of_interest_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "tourist_properties"
             referencedColumns: ["id"]
           },
         ]
@@ -958,6 +1052,232 @@ export type Database = {
           },
         ]
       }
+      tourist_bookings: {
+        Row: {
+          check_in: string
+          check_out: string
+          created_at: string | null
+          guest_id: string | null
+          id: string
+          number_of_guests: number
+          payment_status: Database["public"]["Enums"]["payment_status"] | null
+          property_id: string | null
+          special_requests: string | null
+          status: Database["public"]["Enums"]["booking_status"] | null
+          total_price: number
+          updated_at: string | null
+        }
+        Insert: {
+          check_in: string
+          check_out: string
+          created_at?: string | null
+          guest_id?: string | null
+          id?: string
+          number_of_guests: number
+          payment_status?: Database["public"]["Enums"]["payment_status"] | null
+          property_id?: string | null
+          special_requests?: string | null
+          status?: Database["public"]["Enums"]["booking_status"] | null
+          total_price: number
+          updated_at?: string | null
+        }
+        Update: {
+          check_in?: string
+          check_out?: string
+          created_at?: string | null
+          guest_id?: string | null
+          id?: string
+          number_of_guests?: number
+          payment_status?: Database["public"]["Enums"]["payment_status"] | null
+          property_id?: string | null
+          special_requests?: string | null
+          status?: Database["public"]["Enums"]["booking_status"] | null
+          total_price?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tourist_bookings_guest_id_fkey"
+            columns: ["guest_id"]
+            isOneToOne: false
+            referencedRelation: "guests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tourist_bookings_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "tourist_properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tourist_properties: {
+        Row: {
+          additional_rules: string[] | null
+          address: string
+          amenities: string[] | null
+          availability_period_end: string | null
+          availability_period_start: string | null
+          bathrooms: number
+          bedrooms: number
+          capacity: number
+          check_in_time: string | null
+          check_out_time: string | null
+          city: string
+          cleaning_fee: number
+          created_at: string | null
+          description: string | null
+          id: string
+          images: string[] | null
+          latitude: number | null
+          longitude: number | null
+          parties_allowed: boolean | null
+          pets_allowed: boolean | null
+          postal_code: string | null
+          price_per_night: number
+          property_id: string | null
+          short_description: string | null
+          smoking_allowed: boolean | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          additional_rules?: string[] | null
+          address: string
+          amenities?: string[] | null
+          availability_period_end?: string | null
+          availability_period_start?: string | null
+          bathrooms: number
+          bedrooms: number
+          capacity: number
+          check_in_time?: string | null
+          check_out_time?: string | null
+          city: string
+          cleaning_fee: number
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          latitude?: number | null
+          longitude?: number | null
+          parties_allowed?: boolean | null
+          pets_allowed?: boolean | null
+          postal_code?: string | null
+          price_per_night: number
+          property_id?: string | null
+          short_description?: string | null
+          smoking_allowed?: boolean | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          additional_rules?: string[] | null
+          address?: string
+          amenities?: string[] | null
+          availability_period_end?: string | null
+          availability_period_start?: string | null
+          bathrooms?: number
+          bedrooms?: number
+          capacity?: number
+          check_in_time?: string | null
+          check_out_time?: string | null
+          city?: string
+          cleaning_fee?: number
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          latitude?: number | null
+          longitude?: number | null
+          parties_allowed?: boolean | null
+          pets_allowed?: boolean | null
+          postal_code?: string | null
+          price_per_night?: number
+          property_id?: string | null
+          short_description?: string | null
+          smoking_allowed?: boolean | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      tourist_reviews: {
+        Row: {
+          accuracy: number | null
+          booking_id: string | null
+          check_in: number | null
+          cleanliness: number | null
+          comment: string | null
+          communication: number | null
+          created_at: string | null
+          guest_id: string | null
+          id: string
+          location: number | null
+          photos: string[] | null
+          property_id: string | null
+          rating: number | null
+          response: string | null
+          value: number | null
+        }
+        Insert: {
+          accuracy?: number | null
+          booking_id?: string | null
+          check_in?: number | null
+          cleanliness?: number | null
+          comment?: string | null
+          communication?: number | null
+          created_at?: string | null
+          guest_id?: string | null
+          id?: string
+          location?: number | null
+          photos?: string[] | null
+          property_id?: string | null
+          rating?: number | null
+          response?: string | null
+          value?: number | null
+        }
+        Update: {
+          accuracy?: number | null
+          booking_id?: string | null
+          check_in?: number | null
+          cleanliness?: number | null
+          comment?: string | null
+          communication?: number | null
+          created_at?: string | null
+          guest_id?: string | null
+          id?: string
+          location?: number | null
+          photos?: string[] | null
+          property_id?: string | null
+          rating?: number | null
+          response?: string | null
+          value?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tourist_reviews_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "tourist_bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tourist_reviews_guest_id_fkey"
+            columns: ["guest_id"]
+            isOneToOne: false
+            referencedRelation: "guests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tourist_reviews_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "tourist_properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_answers: {
         Row: {
           answer: Json
@@ -1056,7 +1376,9 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      booking_status: "pending" | "confirmed" | "canceled" | "completed"
+      document_type: "passport" | "id_card" | "driver_license"
+      payment_status: "pending" | "partial" | "complete" | "refunded"
     }
     CompositeTypes: {
       [_ in never]: never
