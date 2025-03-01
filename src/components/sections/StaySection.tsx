@@ -1,47 +1,16 @@
+
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import SearchBar from '../stay/SearchBar';
 import PropertyCard from '../stay/PropertyCard';
-
-interface Property {
-  id: string;
-  title: string;
-  location: string;
-  price: number;
-  rating: number;
-  features: string[];
-  description: string;
-  imageUrl: string;
-}
+import { mockProperties } from '../stay/mockData';
+import { SearchParams, DateRange } from '../stay/types';
 
 const StaySection = () => {
   const [searchLocation, setSearchLocation] = useState('');
-  const [dateRange, setDateRange] = useState({ checkIn: '', checkOut: '' });
+  const [dateRange, setDateRange] = useState<DateRange>({ checkIn: '', checkOut: '' });
   const [guests, setGuests] = useState(1);
   const { toast } = useToast();
-
-  const mockProperties: Property[] = [
-    {
-      id: '1',
-      title: 'Appartamento nel Centro di Roma',
-      location: 'Via Sallustiana, Roma',
-      price: 95,
-      rating: 4.8,
-      features: ['Wi-Fi', 'Aria Condizionata', 'Camera Doppia', 'Terrazza'],
-      description: 'Splendido appartamento completamente ristrutturato nel cuore di Roma, a pochi passi dai principali monumenti.',
-      imageUrl: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625'
-    },
-    {
-      id: '2',
-      title: 'Appartamento Vicino Colosseo',
-      location: 'Via Capo d\'Africa, Roma',
-      price: 120,
-      rating: 4.9,
-      features: ['Wi-Fi', 'Aria Condizionata', 'Camera Singola', 'Vista Colosseo'],
-      description: 'Accogliente appartamento con vista diretta sul Colosseo, perfetto per brevi soggiorni estivi.',
-      imageUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb'
-    }
-  ];
 
   const handleSearch = () => {
     if (!dateRange.checkIn || !dateRange.checkOut) {
