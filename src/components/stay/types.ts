@@ -49,3 +49,4 @@ export interface PointOfInterest {
 export interface PropertyDetails extends TouristProperty {
   points_of_interest: PointOfInterest[];
 }
+
