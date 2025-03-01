@@ -1954,6 +1954,7 @@ export type Database = {
       payment_status: "pending" | "partial" | "complete" | "refunded"
       property_status: "available" | "reserved" | "occupied" | "maintenance"
       revenue_source: "student" | "tourist"
+      tourist_property_status: "available" | "booked" | "maintenance"
       transition_status: "planned" | "in_progress" | "completed"
       verification_status: "pending" | "verified" | "rejected"
     }
