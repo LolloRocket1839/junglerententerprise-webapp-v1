@@ -1,4 +1,3 @@
-
 export interface Location {
   address: string;
   city: string;
@@ -113,4 +112,9 @@ export interface Guest {
   };
   previous_bookings: number;
   average_rating: number;
+}
+
+export interface DateRange {
+  checkIn: string;
+  checkOut: string;
 }

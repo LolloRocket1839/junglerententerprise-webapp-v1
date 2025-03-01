@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import SearchBar from '../stay/SearchBar';
 import PropertyCard from '../stay/PropertyCard';
 import { mockProperties } from '../stay/mockData';
-import { SearchParams, DateRange } from '../stay/types';
+import { SearchParams, DateRange, TouristProperty } from '../stay/types';
 
 const StaySection = () => {
   const [searchLocation, setSearchLocation] = useState('');
