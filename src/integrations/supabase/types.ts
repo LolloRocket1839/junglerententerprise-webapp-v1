@@ -609,6 +609,51 @@ export type Database = {
         }
         Relationships: []
       }
+      property_university_distances: {
+        Row: {
+          created_at: string | null
+          distance_km: number
+          id: string
+          property_id: string | null
+          transport_type: string | null
+          travel_time_minutes: number | null
+          university_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          distance_km: number
+          id?: string
+          property_id?: string | null
+          transport_type?: string | null
+          travel_time_minutes?: number | null
+          university_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          distance_km?: number
+          id?: string
+          property_id?: string | null
+          transport_type?: string | null
+          travel_time_minutes?: number | null
+          university_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_university_distances_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "student_properties"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "property_university_distances_university_id_fkey"
+            columns: ["university_id"]
+            isOneToOne: false
+            referencedRelation: "universities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       question_categories: {
         Row: {
           created_at: string
@@ -632,6 +677,65 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      rental_contracts: {
+        Row: {
+          academic_year: string
+          contract_url: string | null
+          created_at: string | null
+          deposit_amount: number
+          end_date: string
+          id: string
+          monthly_rent: number
+          property_id: string | null
+          signed_by_jr: boolean | null
+          signed_by_student: boolean | null
+          start_date: string
+          status: Database["public"]["Enums"]["contract_status"] | null
+          student_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          academic_year: string
+          contract_url?: string | null
+          created_at?: string | null
+          deposit_amount: number
+          end_date: string
+          id?: string
+          monthly_rent: number
+          property_id?: string | null
+          signed_by_jr?: boolean | null
+          signed_by_student?: boolean | null
+          start_date: string
+          status?: Database["public"]["Enums"]["contract_status"] | null
+          student_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          academic_year?: string
+          contract_url?: string | null
+          created_at?: string | null
+          deposit_amount?: number
+          end_date?: string
+          id?: string
+          monthly_rent?: number
+          property_id?: string | null
+          signed_by_jr?: boolean | null
+          signed_by_student?: boolean | null
+          start_date?: string
+          status?: Database["public"]["Enums"]["contract_status"] | null
+          student_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rental_contracts_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "student_properties"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       reviews: {
         Row: {
@@ -1052,6 +1156,147 @@ export type Database = {
           },
         ]
       }
+      student_properties: {
+        Row: {
+          academic_year: string | null
+          address: string
+          appliances: string[] | null
+          availability_end: string | null
+          availability_start: string | null
+          bathrooms: number | null
+          city: string
+          created_at: string | null
+          current_status: Database["public"]["Enums"]["property_status"] | null
+          deposit_amount: number | null
+          description: string | null
+          discount_percentage: number | null
+          discounted_price_monthly: number
+          estimated_utilities_cost: number | null
+          floor_plan_url: string | null
+          has_balcony: boolean | null
+          has_kitchen: boolean | null
+          has_living_room: boolean | null
+          id: string
+          images: string[] | null
+          internet_available: boolean | null
+          internet_speed: number | null
+          is_furnished: boolean | null
+          latitude: number | null
+          longitude: number | null
+          market_price_monthly: number
+          postal_code: string | null
+          rooms: number | null
+          size_sqm: number | null
+          title: string
+          updated_at: string | null
+          utilities: string[] | null
+          utilities_included: boolean | null
+          virtual_tour_url: string | null
+        }
+        Insert: {
+          academic_year?: string | null
+          address: string
+          appliances?: string[] | null
+          availability_end?: string | null
+          availability_start?: string | null
+          bathrooms?: number | null
+          city: string
+          created_at?: string | null
+          current_status?: Database["public"]["Enums"]["property_status"] | null
+          deposit_amount?: number | null
+          description?: string | null
+          discount_percentage?: number | null
+          discounted_price_monthly: number
+          estimated_utilities_cost?: number | null
+          floor_plan_url?: string | null
+          has_balcony?: boolean | null
+          has_kitchen?: boolean | null
+          has_living_room?: boolean | null
+          id?: string
+          images?: string[] | null
+          internet_available?: boolean | null
+          internet_speed?: number | null
+          is_furnished?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          market_price_monthly: number
+          postal_code?: string | null
+          rooms?: number | null
+          size_sqm?: number | null
+          title: string
+          updated_at?: string | null
+          utilities?: string[] | null
+          utilities_included?: boolean | null
+          virtual_tour_url?: string | null
+        }
+        Update: {
+          academic_year?: string | null
+          address?: string
+          appliances?: string[] | null
+          availability_end?: string | null
+          availability_start?: string | null
+          bathrooms?: number | null
+          city?: string
+          created_at?: string | null
+          current_status?: Database["public"]["Enums"]["property_status"] | null
+          deposit_amount?: number | null
+          description?: string | null
+          discount_percentage?: number | null
+          discounted_price_monthly?: number
+          estimated_utilities_cost?: number | null
+          floor_plan_url?: string | null
+          has_balcony?: boolean | null
+          has_kitchen?: boolean | null
+          has_living_room?: boolean | null
+          id?: string
+          images?: string[] | null
+          internet_available?: boolean | null
+          internet_speed?: number | null
+          is_furnished?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          market_price_monthly?: number
+          postal_code?: string | null
+          rooms?: number | null
+          size_sqm?: number | null
+          title?: string
+          updated_at?: string | null
+          utilities?: string[] | null
+          utilities_included?: boolean | null
+          virtual_tour_url?: string | null
+        }
+        Relationships: []
+      }
+      student_verification_documents: {
+        Row: {
+          created_at: string | null
+          document_type: string
+          document_url: string
+          id: string
+          status: Database["public"]["Enums"]["verification_status"] | null
+          student_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          document_type: string
+          document_url: string
+          id?: string
+          status?: Database["public"]["Enums"]["verification_status"] | null
+          student_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          document_type?: string
+          document_url?: string
+          id?: string
+          status?: Database["public"]["Enums"]["verification_status"] | null
+          student_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       tourist_bookings: {
         Row: {
           check_in: string
@@ -1278,6 +1523,60 @@ export type Database = {
           },
         ]
       }
+      universities: {
+        Row: {
+          address: string
+          city: string
+          created_at: string | null
+          faculties: string[] | null
+          fall_semester_end: string | null
+          fall_semester_start: string | null
+          id: string
+          name: string
+          spring_semester_end: string | null
+          spring_semester_start: string | null
+          summer_session_end: string | null
+          summer_session_start: string | null
+          type: string | null
+          updated_at: string | null
+          verification_endpoint: string | null
+        }
+        Insert: {
+          address: string
+          city: string
+          created_at?: string | null
+          faculties?: string[] | null
+          fall_semester_end?: string | null
+          fall_semester_start?: string | null
+          id?: string
+          name: string
+          spring_semester_end?: string | null
+          spring_semester_start?: string | null
+          summer_session_end?: string | null
+          summer_session_start?: string | null
+          type?: string | null
+          updated_at?: string | null
+          verification_endpoint?: string | null
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string | null
+          faculties?: string[] | null
+          fall_semester_end?: string | null
+          fall_semester_start?: string | null
+          id?: string
+          name?: string
+          spring_semester_end?: string | null
+          spring_semester_start?: string | null
+          summer_session_end?: string | null
+          summer_session_start?: string | null
+          type?: string | null
+          updated_at?: string | null
+          verification_endpoint?: string | null
+        }
+        Relationships: []
+      }
       user_answers: {
         Row: {
           answer: Json
@@ -1377,8 +1676,16 @@ export type Database = {
     }
     Enums: {
       booking_status: "pending" | "confirmed" | "canceled" | "completed"
+      contract_status:
+        | "draft"
+        | "pending_signature"
+        | "active"
+        | "expired"
+        | "terminated"
       document_type: "passport" | "id_card" | "driver_license"
       payment_status: "pending" | "partial" | "complete" | "refunded"
+      property_status: "available" | "reserved" | "occupied" | "maintenance"
+      verification_status: "pending" | "verified" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
