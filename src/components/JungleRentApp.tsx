@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Home, User, Building, Search, Calendar, MapPin, BellRing, Banknote } from 'lucide-react';
+import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
+import { Home, User, Building, Search, BarChart3, Calendar, MapPin, BellRing, Banknote } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import InvestmentDashboard from './invest/analytics/InvestmentDashboard';
 import { useLanguage } from '@/contexts/LanguageContext';
