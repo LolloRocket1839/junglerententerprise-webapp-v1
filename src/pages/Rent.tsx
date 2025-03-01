@@ -19,8 +19,8 @@ const Rent = () => {
   });
 
   const handlePropertySelect = (property: StudentProperty) => {
-    console.log('Selected property:', property);
-    // Will implement property detail view later
+    console.log('Proprietà selezionata:', property);
+    // Implementeremo la vista dei dettagli della proprietà in seguito
   };
 
   if (isLoading) {
@@ -35,7 +35,7 @@ const Rent = () => {
 
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-8 gradient-text">Affitta per Studenti</h1>
+      <h1 className="text-4xl font-bold mb-8 gradient-text">Affitto per Studenti</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {properties?.map((property) => (
           <PropertyCard

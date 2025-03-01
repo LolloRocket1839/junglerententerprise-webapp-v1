@@ -48,7 +48,7 @@ export const PropertyCard = ({ property, onSelect }: PropertyCardProps) => {
         <div className="grid grid-cols-3 gap-2 text-sm mb-4">
           <div className="text-center p-2 glass rounded-lg">
             <p className="font-semibold">{property.rooms}</p>
-            <p className="text-gray-400">Camere</p>
+            <p className="text-gray-400">Stanze</p>
           </div>
           <div className="text-center p-2 glass rounded-lg">
             <p className="font-semibold">{property.bathrooms}</p>
@@ -56,7 +56,7 @@ export const PropertyCard = ({ property, onSelect }: PropertyCardProps) => {
           </div>
           <div className="text-center p-2 glass rounded-lg">
             <p className="font-semibold">{property.size_sqm}m²</p>
-            <p className="text-gray-400">Area</p>
+            <p className="text-gray-400">Superficie</p>
           </div>
         </div>
       </CardContent>
