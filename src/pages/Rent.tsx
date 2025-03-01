@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -23,11 +22,16 @@ const Rent = () => {
       console.log('Properties fetched:', data);
       return data as StudentProperty[];
     },
-    onError: (error) => {
-      console.error('Query error:', error);
-      toast.error('Errore nel caricamento delle proprietà');
+    meta: {
+      errorMessage: 'Errore nel caricamento delle proprietà'
     }
   });
+
+  React.useEffect(() => {
+    if (error) {
+      toast.error('Errore nel caricamento delle proprietà');
+    }
+  }, [error]);
 
   if (error) {
     return (
