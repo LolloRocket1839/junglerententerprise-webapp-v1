@@ -1,37 +1,36 @@
-
 export type StudentProperty = {
   id: string;
   title: string;
   description: string;
   images: string[];
-  floorPlan?: string;
-  virtualTour?: string;
-  size: number;
+  floor_plan_url?: string;
+  virtual_tour_url?: string;
+  size_sqm: number;
   rooms: number;
   bathrooms: number;
-  hasKitchen: boolean;
-  hasLivingRoom: boolean;
-  hasBalcony: boolean;
-  isFurnished: boolean;
+  has_kitchen: boolean;
+  has_living_room: boolean;
+  has_balcony: boolean;
+  is_furnished: boolean;
   appliances: string[];
   utilities: string[];
-  internetAvailable: boolean;
-  internetSpeed?: number;
+  internet_available: boolean;
+  internet_speed?: number;
   address: string;
   city: string;
-  postalCode: string;
+  postal_code: string;
   latitude: number;
   longitude: number;
-  marketPriceMonthly: number;
-  discountedPriceMonthly: number;
-  discountPercentage: number;
-  deposit: number;
-  utilitiesIncluded: boolean;
-  estimatedUtilitiesCost?: number;
-  availabilityStart: string;
-  availabilityEnd: string;
-  academicYear: string;
-  currentStatus: 'available' | 'reserved' | 'occupied' | 'maintenance';
+  market_price_monthly: number;
+  discounted_price_monthly: number;
+  discount_percentage: number;
+  deposit_amount: number;
+  utilities_included: boolean;
+  estimated_utilities_cost?: number;
+  availability_start: string;
+  availability_end: string;
+  academic_year: string;
+  current_status: 'available' | 'reserved' | 'occupied' | 'maintenance';
 };
 
 export type SearchFilters = {

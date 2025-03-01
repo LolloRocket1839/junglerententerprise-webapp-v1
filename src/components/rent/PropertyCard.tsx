@@ -13,7 +13,7 @@ interface PropertyCardProps {
 
 export const PropertyCard = ({ property, onSelect }: PropertyCardProps) => {
   const { t } = useLanguage();
-  const savings = property.marketPriceMonthly - property.discountedPriceMonthly;
+  const savings = property.market_price_monthly - property.discounted_price_monthly;
 
   return (
     <Card className="glass-card overflow-hidden">
@@ -28,7 +28,7 @@ export const PropertyCard = ({ property, onSelect }: PropertyCardProps) => {
             className="absolute top-2 right-2 bg-green-500"
             variant="secondary"
           >
-            {property.currentStatus === 'available' ? 'Disponibile' : 'Non disponibile'}
+            {property.current_status === 'available' ? 'Disponibile' : 'Non disponibile'}
           </Badge>
         </div>
       </CardHeader>
@@ -38,11 +38,11 @@ export const PropertyCard = ({ property, onSelect }: PropertyCardProps) => {
         <div className="flex justify-between items-center mb-4">
           <div>
             <p className="text-sm text-gray-400">Prezzo di mercato</p>
-            <p className="text-lg line-through text-gray-500">€{property.marketPriceMonthly}/mese</p>
+            <p className="text-lg line-through text-gray-500">€{property.market_price_monthly}/mese</p>
           </div>
           <div>
             <p className="text-sm text-gray-400">Prezzo scontato</p>
-            <p className="text-lg font-bold text-green-500">€{property.discountedPriceMonthly}/mese</p>
+            <p className="text-lg font-bold text-green-500">€{property.discounted_price_monthly}/mese</p>
           </div>
         </div>
         <div className="grid grid-cols-3 gap-2 text-sm mb-4">
@@ -55,7 +55,7 @@ export const PropertyCard = ({ property, onSelect }: PropertyCardProps) => {
             <p className="text-gray-400">Bagni</p>
           </div>
           <div className="text-center p-2 glass rounded-lg">
-            <p className="font-semibold">{property.size}m²</p>
+            <p className="font-semibold">{property.size_sqm}m²</p>
             <p className="text-gray-400">Area</p>
           </div>
         </div>
