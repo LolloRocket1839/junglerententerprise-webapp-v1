@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PropertyCard } from '@/components/rent/PropertyCard';
 import { StudentProperty } from '@/types/rental';
@@ -23,6 +22,7 @@ const mockRooms: StudentProperty[] = [
     internet_speed: 100,
     market_price_monthly: 450,
     discounted_price_monthly: 450,
+    discount_percentage: 0,
     deposit_amount: 900,
     utilities_included: true,
     images: ['https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af'],
@@ -53,6 +53,7 @@ const mockRooms: StudentProperty[] = [
     internet_speed: 50,
     market_price_monthly: 300,
     discounted_price_monthly: 300,
+    discount_percentage: 0,
     deposit_amount: 600,
     utilities_included: true,
     images: ['https://images.unsplash.com/photo-1513694203232-719a280e022f'],
@@ -83,6 +84,7 @@ const mockRooms: StudentProperty[] = [
     internet_speed: 100,
     market_price_monthly: 500,
     discounted_price_monthly: 500,
+    discount_percentage: 0,
     deposit_amount: 1000,
     utilities_included: true,
     images: ['https://images.unsplash.com/photo-1540518614846-7eded433c457'],
