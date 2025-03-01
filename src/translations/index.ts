@@ -1,9 +1,8 @@
-
 export const translations = {
   IT: {
     // Homepage
     welcome: "Benvenuto su",
-    payLessEarnMore: "Paga meno guadagna di più",
+    payLessEarnMore: "L'Affitto che paga",
     getStarted: "Inizia Ora",
     howItWorks: "Come Funziona Jungle Rent",
     ecosystem: "Connettiamo investitori, studenti e ospiti per creare un ecosistema abitativo studentesco sostenibile.",
@@ -12,7 +11,7 @@ export const translations = {
     forShortStays: "Per Brevi Soggiorni",
     investDescription: "Investi in proprietà studentesche verificate e guadagna rendimenti sostenendo l'istruzione.",
     studentDescription: "Trova alloggi a lungo termine a prezzi accessibili e connettiti con coinquilini compatibili.",
-    stayDescription: "Prenota alloggi temporanei per esami, tirocini o corsi brevi.",
+    stayDescription: "Prenota alloggi temporari per esami, tirocini o corsi brevi.",
     startInvesting: "Inizia a Investire",
     findHousing: "Trova Alloggio",
     bookStay: "Prenota Soggiorno",
@@ -60,7 +59,22 @@ export const translations = {
     investors: "Investitori",
     overview: "Panoramica",
     details: "Dettagli",
-    legal: "Legale"
+    legal: "Legale",
+
+    // Navigation
+    invest: "Investi",
+    rent: "Affitta",
+    marketplace: "Marketplace",
+    stay: "Soggiorna",
+    students: "Studenti",
+    referral: "Referral",
+    signOut: "Esci",
+    signIn: "Accedi",
+    register: "Registrati",
+    signOutSuccess: "Disconnessione effettuata",
+    signOutMessage: "Torna presto!",
+    signOutError: "Errore durante la disconnessione",
+    tryAgain: "Riprova più tardi"
   },
   EN: {
     // Homepage
@@ -187,4 +201,3 @@ export const translations = {
     legal: "Légal"
   }
 };
-
