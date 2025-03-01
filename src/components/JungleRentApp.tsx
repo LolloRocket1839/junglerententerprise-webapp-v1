@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Home, User, Building, Search, Calendar, MapPin, BellRing, Banknote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Home, User, Building, Search, BarChart3, Calendar, MapPin, BellRing, Banknote } from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import InvestmentDashboard from './invest/analytics/InvestmentDashboard';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const JungleRentApp = () => {
@@ -12,7 +12,7 @@ const JungleRentApp = () => {
 
   return (
     <div className="flex flex-col h-full bg-gray-50">
-      {/* Header con logo */}
+      {/* Header with logo */}
       <header className="bg-yellow-300 p-4 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <div className="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center">
@@ -30,7 +30,7 @@ const JungleRentApp = () => {
         </div>
       </header>
 
-      {/* Contenuto principale */}
+      {/* Main content */}
       <main className="flex-1 p-4 overflow-y-auto">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-4">
@@ -48,107 +48,12 @@ const JungleRentApp = () => {
             </TabsTrigger>
           </TabsList>
 
-          {/* Sezione Investi */}
+          {/* Investment Section */}
           <TabsContent value="invest">
-            <div className="space-y-4">
-              <div className="bg-green-100 p-4 rounded-lg mb-6">
-                <h2 className="font-bold text-lg mb-2">Dashboard Investimenti</h2>
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-medium">Rendimento Medio</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-2xl font-bold text-green-600">7.2%</p>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm font-medium">Immobili</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-2xl font-bold">3</p>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                <div className="h-32 bg-white rounded-lg mb-4 p-2 flex items-center justify-center">
-                  <BarChart3 className="w-full h-full text-gray-300" />
-                </div>
-                
-                <Button className="w-full bg-green-600 hover:bg-green-700">Visualizza Portafoglio</Button>
-              </div>
-
-              <h3 className="font-bold text-lg">Opportunità di Investimento</h3>
-              <div className="space-y-4">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between">
-                      <CardTitle>Immobile Via Scipio Slataper 9, Roma</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex justify-between text-sm mb-2">
-                      <span>Valore:</span>
-                      <span className="font-medium">€320.000</span>
-                    </div>
-                    <div className="flex justify-between text-sm mb-2">
-                      <span>Rendimento previsto:</span>
-                      <span className="font-medium text-green-600">6.8% annuo</span>
-                    </div>
-                    <div className="flex justify-between text-sm mb-4">
-                      <span>Quota minima:</span>
-                      <span className="font-medium">€500</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="bg-green-600 h-2.5 rounded-full w-3/4"></div>
-                    </div>
-                    <div className="flex justify-between text-sm mt-1">
-                      <span>Raccolti: 75%</span>
-                      <span>Obiettivo: €320.000</span>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full">Investi Ora</Button>
-                  </CardFooter>
-                </Card>
-
-                <Card>
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-between">
-                      <CardTitle>Immobile Via Nomentana 112, Roma</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex justify-between text-sm mb-2">
-                      <span>Valore:</span>
-                      <span className="font-medium">€280.000</span>
-                    </div>
-                    <div className="flex justify-between text-sm mb-2">
-                      <span>Rendimento previsto:</span>
-                      <span className="font-medium text-green-600">7.2% annuo</span>
-                    </div>
-                    <div className="flex justify-between text-sm mb-4">
-                      <span>Quota minima:</span>
-                      <span className="font-medium">€500</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2.5">
-                      <div className="bg-green-600 h-2.5 rounded-full w-1/2"></div>
-                    </div>
-                    <div className="flex justify-between text-sm mt-1">
-                      <span>Raccolti: 50%</span>
-                      <span>Obiettivo: €280.000</span>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full">Investi Ora</Button>
-                  </CardFooter>
-                </Card>
-              </div>
-            </div>
+            <InvestmentDashboard />
           </TabsContent>
 
-          {/* Sezione Affitta */}
+          {/* Rent Section */}
           <TabsContent value="rent">
             <div className="space-y-4">
               <div className="relative mb-4">
@@ -251,7 +156,7 @@ const JungleRentApp = () => {
             </div>
           </TabsContent>
 
-          {/* Sezione Soggiorna */}
+          {/* Stay Section */}
           <TabsContent value="stay">
             <div className="space-y-4">
               <div className="relative mb-4">
@@ -342,7 +247,7 @@ const JungleRentApp = () => {
         </Tabs>
       </main>
 
-      {/* Menu di navigazione inferiore */}
+      {/* Bottom navigation menu */}
       <footer className="bg-white border-t p-4">
         <div className="grid grid-cols-3 gap-2">
           <Button 
