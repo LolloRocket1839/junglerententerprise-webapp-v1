@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -12,7 +13,8 @@ const Rent = () => {
       console.log('Fetching student properties...');
       const { data, error } = await supabase
         .from('student_properties')
-        .select('*');
+        .select('*')
+        .eq('city', 'Torino');
       
       if (error) {
         console.error('Error fetching properties:', error);
@@ -21,9 +23,6 @@ const Rent = () => {
       
       console.log('Properties fetched:', data);
       return data as StudentProperty[];
-    },
-    meta: {
-      errorMessage: 'Errore nel caricamento delle proprietà'
     }
   });
 
@@ -46,6 +45,7 @@ const Rent = () => {
   if (isLoading) {
     return (
       <div className="container mx-auto p-8">
+        <h1 className="text-4xl font-bold mb-8 gradient-text">Affitto per Studenti a Torino</h1>
         <div className="flex items-center justify-center min-h-[400px]">
           <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-green-500"></div>
         </div>
@@ -56,9 +56,9 @@ const Rent = () => {
   if (!properties || properties.length === 0) {
     return (
       <div className="container mx-auto p-8">
-        <h1 className="text-4xl font-bold mb-8 gradient-text">Affitto per Studenti</h1>
+        <h1 className="text-4xl font-bold mb-8 gradient-text">Affitto per Studenti a Torino</h1>
         <div className="text-center text-gray-500">
-          Nessuna proprietà disponibile al momento.
+          Nessuna proprietà disponibile al momento a Torino.
         </div>
       </div>
     );
@@ -66,9 +66,9 @@ const Rent = () => {
 
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-4xl font-bold mb-8 gradient-text">Affitto per Studenti</h1>
+      <h1 className="text-4xl font-bold mb-8 gradient-text">Affitto per Studenti a Torino</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {properties?.map((property) => (
+        {properties.map((property) => (
           <PropertyCard
             key={property.id}
             property={property}
