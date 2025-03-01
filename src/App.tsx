@@ -1,6 +1,6 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { LanguageProvider } from './contexts/LanguageContext';
 import Navigation from './components/navigation/Navigation';
 import Index from './pages/Index';
 import Invest from './pages/Invest';
@@ -19,20 +19,22 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/invest" element={<Invest />} />
-          <Route path="/rent" element={<Rent />} />
-          <Route path="/stay" element={<Stay />} />
-          <Route path="/student" element={<Student />} />
-          <Route path="/referral" element={<Referral />} />
-          <Route path="/list-room" element={<ListRoom />} />
-          <Route path="/marketplace" element={<Marketplace />} />
-        </Routes>
-        <Toaster />
-      </Router>
+      <LanguageProvider>
+        <Router>
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/invest" element={<Invest />} />
+            <Route path="/rent" element={<Rent />} />
+            <Route path="/stay" element={<Stay />} />
+            <Route path="/student" element={<Student />} />
+            <Route path="/referral" element={<Referral />} />
+            <Route path="/list-room" element={<ListRoom />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+          </Routes>
+          <Toaster />
+        </Router>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }

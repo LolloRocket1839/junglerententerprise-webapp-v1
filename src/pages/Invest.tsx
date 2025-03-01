@@ -7,9 +7,11 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useState, useEffect, useCallback } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Invest = () => {
   const [selectedTab, setSelectedTab] = useState("opportunities");
+  const { t } = useLanguage();
 
   const {
     data: stats,
@@ -109,27 +111,27 @@ const Invest = () => {
 
       <div className="relative container mx-auto px-4 pt-28 md:pt-32 pb-6 md:pb-8 space-y-6">
         <h1 className="text-2xl md:text-4xl font-bold text-white mb-6 text-left">
-          Dashboard Investimenti
+          {t('investmentDashboard')}
         </h1>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           <StatsCard 
-            title="Proprietà Totali" 
-            value={statsLoading ? "Caricamento..." : stats?.totalProperties.toString() || "0"} 
+            title={t('totalProperties')} 
+            value={statsLoading ? t('loading') : stats?.totalProperties.toString() || "0"} 
             icon={Building2} 
             trend="up" 
             className="glass-card backdrop-blur-md bg-black/40 border-white/10" 
           />
           <StatsCard 
-            title="ROI Medio" 
-            value={statsLoading ? "Caricamento..." : stats?.averageRoi || "0%"} 
+            title={t('averageROI')} 
+            value={statsLoading ? t('loading') : stats?.averageRoi || "0%"} 
             icon={TrendingUp} 
             trend="up" 
             className="glass-card backdrop-blur-md bg-black/40 border-white/10" 
           />
           <StatsCard 
-            title="Investitori Attivi" 
-            value={statsLoading ? "Caricamento..." : stats?.activeInvestors || "0"} 
+            title={t('activeInvestors')} 
+            value={statsLoading ? t('loading') : stats?.activeInvestors || "0"} 
             icon={Users} 
             trend="up" 
             className="glass-card backdrop-blur-md bg-black/40 border-white/10" 
@@ -148,16 +150,16 @@ const Invest = () => {
           <div className="sticky top-20 z-50 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-md mx-0 my-0 py-0 px-0 rounded-sm">
             <TabsList className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-black/60 backdrop-blur-lg border border-white/10 rounded-lg">
               <TabsTrigger value="opportunities" className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white">
-                Opportunità
+                {t('opportunities')}
               </TabsTrigger>
               <TabsTrigger value="my-investments" className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white">
-                I Miei Investimenti
+                {t('myInvestments')}
               </TabsTrigger>
               <TabsTrigger value="tokenization" className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white">
-                Tokenizzazione
+                {t('tokenization')}
               </TabsTrigger>
               <TabsTrigger value="analytics" className="text-sm data-[state=active]:bg-primary data-[state=active]:text-white">
-                Analisi
+                {t('analytics')}
               </TabsTrigger>
             </TabsList>
           </div>
@@ -169,7 +171,7 @@ const Invest = () => {
           <TabsContent value="my-investments" className="focus:outline-none">
             <Card className="glass-card backdrop-blur-md bg-black/40 border-white/10 p-6">
               <div className="text-white/60">
-                Disponibile nella Fase 2
+                {t('availablePhase2')}
               </div>
             </Card>
           </TabsContent>
@@ -177,7 +179,7 @@ const Invest = () => {
           <TabsContent value="tokenization" className="focus:outline-none">
             <Card className="glass-card backdrop-blur-md bg-black/40 border-white/10 p-6">
               <div className="text-white/60">
-                Disponibile nella Fase 2
+                {t('availablePhase2')}
               </div>
             </Card>
           </TabsContent>
@@ -185,7 +187,7 @@ const Invest = () => {
           <TabsContent value="analytics" className="focus:outline-none">
             <Card className="glass-card backdrop-blur-md bg-black/40 border-white/10 p-6">
               <div className="text-white/60">
-                Disponibile nella Fase 2
+                {t('availablePhase2')}
               </div>
             </Card>
           </TabsContent>

@@ -1,31 +1,35 @@
+
 import React from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const PropertyDetailsTab = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="space-y-4 text-white/80">
       <div>
-        <h4 className="font-semibold mb-2">Caratteristiche dell'Investimento</h4>
+        <h4 className="font-semibold mb-2">{t('investmentFeatures')}</h4>
         <ul className="list-disc pl-4 space-y-2">
-          <li>Rendimento annuale previsto: 8-12%</li>
-          <li>Periodo minimo di investimento: 24 mesi</li>
-          <li>Gestione professionale della proprietà</li>
-          <li>Report trimestrali dettagliati</li>
+          <li>{t('annualReturn')}</li>
+          <li>{t('minPeriod')}</li>
+          <li>{t('profManagement')}</li>
+          <li>{t('quarterlyReports')}</li>
         </ul>
       </div>
       <div>
-        <h4 className="font-semibold mb-2">Vantaggi Fiscali</h4>
+        <h4 className="font-semibold mb-2">{t('taxBenefits')}</h4>
         <ul className="list-disc pl-4 space-y-2">
-          <li>Detrazioni fiscali disponibili</li>
-          <li>Consulenza fiscale inclusa</li>
-          <li>Ottimizzazione del rendimento</li>
+          <li>{t('taxDeductions')}</li>
+          <li>{t('taxAdvice')}</li>
+          <li>{t('returnOptimization')}</li>
         </ul>
       </div>
       <div>
-        <h4 className="font-semibold mb-2">Gestione Proprietà</h4>
+        <h4 className="font-semibold mb-2">{t('propertyManagement')}</h4>
         <ul className="list-disc pl-4 space-y-2">
-          <li>Manutenzione programmata</li>
-          <li>Servizio di pulizia professionale</li>
-          <li>Assicurazione completa inclusa</li>
+          <li>{t('scheduledMaintenance')}</li>
+          <li>{t('cleaningService')}</li>
+          <li>{t('insurance')}</li>
         </ul>
       </div>
     </div>
