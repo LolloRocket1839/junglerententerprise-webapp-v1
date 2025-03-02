@@ -10,8 +10,13 @@ import { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const Invest = () => {
+  console.log("Invest component mounting");
   const [selectedTab, setSelectedTab] = useState("opportunities");
   const { t } = useLanguage();
+
+  useEffect(() => {
+    console.log("Invest component mounted");
+  }, []);
 
   const {
     data: stats,
