@@ -238,7 +238,7 @@ const EnhancedRentalSection = () => {
     toast({
       title: "Domanda inviata",
       description: "La tua domanda è stata inviata con successo",
-      variant: "success",
+      variant: "default", // Changed from "success" to "default"
     });
   };
 
