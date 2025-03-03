@@ -12,7 +12,6 @@ import {
   Filter, Leaf, Heart, CheckCircle, AlertCircle
 } from 'lucide-react';
 
-// Mock data for demonstration
 const cities = [
   "Roma", "Milano", "Firenze", "Torino", "Bologna", "Napoli", "Padova", "Pisa"
 ];
@@ -31,19 +30,19 @@ const universities = {
 const mockProperties = [
   {
     id: "1",
-    title: "Appartamento Via Garibaldi",
-    address: "Via Giuseppe Garibaldi 45, Torino",
-    description: "Elegante appartamento storico nel cuore di Torino con soffitti affrescati e pavimenti in parquet originale",
+    title: "Monolocale Corso Duca degli Abruzzi",
+    address: "Corso Duca degli Abruzzi 24, Torino",
+    description: "Luminoso monolocale completamente ristrutturato a due passi dal Politecnico di Torino. Perfetto per studenti, dotato di angolo studio e tutti i comfort",
     city: "Torino",
-    discounted_price_monthly: 650,
-    market_price_monthly: 750,
-    size_sqm: 75,
-    rooms: 3,
+    discounted_price_monthly: 550,
+    market_price_monthly: 650,
+    size_sqm: 35,
+    rooms: 1,
     bathrooms: 1,
     images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"],
-    distance_to_university: "5 min from Politecnico di Torino",
-    availability_start: "2023-09-01",
-    savings_percentage: 13,
+    distance_to_university: "2 min dal Politecnico di Torino",
+    availability_start: "2024-09-01",
+    savings_percentage: 15,
     current_status: "available",
     has_balcony: true,
     has_kitchen: true,
@@ -51,39 +50,39 @@ const mockProperties = [
   },
   {
     id: "2",
-    title: "Studio Moderno Navigli",
-    address: "Via Corsico 12, Milano",
-    description: "Studio moderno nel vivace quartiere dei Navigli, recentemente ristrutturato con finiture di design",
-    city: "Milano",
-    discounted_price_monthly: 750,
-    market_price_monthly: 900,
-    size_sqm: 45,
-    rooms: 1,
+    title: "Bilocale Corso Castelfidardo",
+    address: "Corso Castelfidardo 34, Torino",
+    description: "Moderno bilocale con vista sulla Cittadella Politecnica. Zona tranquilla e ben servita, ideale per studenti del Politecnico",
+    city: "Torino",
+    discounted_price_monthly: 680,
+    market_price_monthly: 800,
+    size_sqm: 55,
+    rooms: 2,
     bathrooms: 1,
     images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c"],
-    distance_to_university: "10 min from Università Bocconi",
-    availability_start: "2023-10-01",
-    savings_percentage: 17,
+    distance_to_university: "5 min dal Politecnico di Torino",
+    availability_start: "2024-09-15",
+    savings_percentage: 15,
     current_status: "available",
-    has_balcony: false,
+    has_balcony: true,
     has_kitchen: true,
     utilities_included: false
   },
   {
     id: "3",
-    title: "Casa Trastevere Roma",
-    address: "Via della Scala 23, Roma",
-    description: "Caratteristico bilocale nel cuore di Trastevere, con travi a vista e vicino a tutti i principali monumenti",
-    city: "Roma",
+    title: "Trilocale Via San Secondo",
+    address: "Via San Secondo 29, Torino",
+    description: "Spazioso appartamento in stabile d'epoca, recentemente ristrutturato. Posizione strategica tra Politecnico e centro città",
+    city: "Torino",
     discounted_price_monthly: 850,
-    market_price_monthly: 1050,
-    size_sqm: 60,
-    rooms: 2,
+    market_price_monthly: 1000,
+    size_sqm: 85,
+    rooms: 3,
     bathrooms: 1,
     images: ["https://images.unsplash.com/photo-1600210492486-724fe5c67fb0"],
-    distance_to_university: "15 min from La Sapienza",
-    availability_start: "2023-09-15",
-    savings_percentage: 19,
+    distance_to_university: "8 min dal Politecnico di Torino",
+    availability_start: "2024-09-01",
+    savings_percentage: 15,
     current_status: "available",
     has_balcony: true,
     has_kitchen: true,
@@ -91,23 +90,63 @@ const mockProperties = [
   },
   {
     id: "4",
-    title: "Loft Centro Firenze",
-    address: "Via dei Servi 45, Firenze",
-    description: "Elegante loft a due passi dal Duomo, con vista sui tetti del centro storico e arredamento di design",
-    city: "Firenze",
-    discounted_price_monthly: 900,
-    market_price_monthly: 1100,
-    size_sqm: 70,
-    rooms: 2,
+    title: "Studio Via Principe Amedeo",
+    address: "Via Principe Amedeo 12, Torino",
+    description: "Accogliente monolocale nel cuore di Torino, a pochi passi dall'Università degli Studi. Arredamento moderno e funzionale",
+    city: "Torino",
+    discounted_price_monthly: 580,
+    market_price_monthly: 700,
+    size_sqm: 40,
+    rooms: 1,
     bathrooms: 1,
     images: ["https://images.unsplash.com/photo-1600607687644-c94bf5588563"],
-    distance_to_university: "8 min from Università degli Studi di Firenze",
-    availability_start: "2023-10-15",
+    distance_to_university: "5 min dall'Università degli Studi di Torino",
+    availability_start: "2024-09-01",
+    savings_percentage: 17,
+    current_status: "available",
+    has_balcony: false,
+    has_kitchen: true,
+    utilities_included: true
+  },
+  {
+    id: "5",
+    title: "Appartamento Via Po",
+    address: "Via Po 15, Torino",
+    description: "Prestigioso appartamento in palazzo storico sulla Via Po, vicino a Palazzo Nuovo. Soffitti alti e finiture di pregio",
+    city: "Torino",
+    discounted_price_monthly: 750,
+    market_price_monthly: 900,
+    size_sqm: 65,
+    rooms: 2,
+    bathrooms: 1,
+    images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"],
+    distance_to_university: "3 min dall'Università degli Studi di Torino",
+    availability_start: "2024-09-15",
+    savings_percentage: 16,
+    current_status: "available",
+    has_balcony: true,
+    has_kitchen: true,
+    utilities_included: false
+  },
+  {
+    id: "6",
+    title: "Loft Via Verdi",
+    address: "Via Verdi 8, Torino",
+    description: "Moderno loft con soppalco nel quartiere universitario. Design contemporaneo e spazi ottimizzati per lo studio",
+    city: "Torino",
+    discounted_price_monthly: 700,
+    market_price_monthly: 850,
+    size_sqm: 50,
+    rooms: 2,
+    bathrooms: 1,
+    images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c"],
+    distance_to_university: "4 min dall'Università degli Studi di Torino",
+    availability_start: "2024-09-01",
     savings_percentage: 18,
     current_status: "available",
     has_balcony: false,
     has_kitchen: true,
-    utilities_included: false
+    utilities_included: true
   }
 ];
 
@@ -131,12 +170,10 @@ const EnhancedRentalSection = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // Simulate loading user data
     const loadUserData = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
-          // In a real app, fetch this from the database
           setFavorites(["1"]);
           setViewedProperties(["1", "2"]);
           setApplications([{
@@ -154,7 +191,6 @@ const EnhancedRentalSection = () => {
   }, []);
 
   useEffect(() => {
-    // Filter properties whenever search params change
     if (selectedCity) {
       const filtered = mockProperties.filter(property => 
         property.city === selectedCity &&
@@ -194,7 +230,6 @@ const EnhancedRentalSection = () => {
     setSelectedProperty(property);
     setActiveTab('property');
     
-    // Add to viewed properties if not already there
     if (!viewedProperties.includes(property.id)) {
       setViewedProperties([...viewedProperties, property.id]);
     }
@@ -217,7 +252,6 @@ const EnhancedRentalSection = () => {
   };
 
   const handleApply = (property) => {
-    // Check if already applied
     if (applications.some(app => app.property_id === property.id)) {
       toast({
         title: "Hai già fatto domanda",
@@ -227,7 +261,6 @@ const EnhancedRentalSection = () => {
       return;
     }
     
-    // Add to applications
     const newApplication = {
       property_id: property.id,
       status: "pending",
@@ -238,7 +271,7 @@ const EnhancedRentalSection = () => {
     toast({
       title: "Domanda inviata",
       description: "La tua domanda è stata inviata con successo",
-      variant: "default", // Changed from "success" to "default"
+      variant: "default",
     });
   };
 
