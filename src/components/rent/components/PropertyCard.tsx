@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Heart, MapPin, School } from 'lucide-react';
+import { Heart, MapPin, School, ArrowRight } from 'lucide-react';
 import { Property } from '../types';
 
 interface PropertyCardProps {
