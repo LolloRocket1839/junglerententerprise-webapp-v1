@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Ruler, Bed } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Ruler, Bed, Phone, Key } from 'lucide-react';
 import { RoomMockup } from '../types/mockups';
 
 interface RoomDetailsDialogProps {
@@ -11,6 +11,10 @@ interface RoomDetailsDialogProps {
 }
 
 export const RoomDetailsDialog: React.FC<RoomDetailsDialogProps> = ({ room, propertyStreet }) => {
+  const handleCall = () => {
+    window.location.href = `tel:${room.contactPhone}`;
+  };
+
   return (
     <DialogContent className="sm:max-w-[900px] bg-[#1a1a1a] border-white/10">
       <DialogHeader>
@@ -76,9 +80,28 @@ export const RoomDetailsDialog: React.FC<RoomDetailsDialogProps> = ({ room, prop
             </div>
           </div>
 
-          <div className="bg-white/5 rounded-lg p-4">
+          <div className="bg-white/5 rounded-lg p-4 space-y-4">
             <div className="text-2xl font-bold text-white mb-1">€{room.price}/mese</div>
             <div className="text-white/60">{room.availability}</div>
+            
+            <div className="flex flex-col gap-3 pt-3">
+              <Button 
+                className="w-full bg-primary hover:bg-primary/90"
+                onClick={() => alert('Functionality coming soon')}
+              >
+                <Key className="mr-2 h-4 w-4" />
+                Affitta ora
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="w-full border-primary/20 hover:bg-primary/10"
+                onClick={handleCall}
+              >
+                <Phone className="mr-2 h-4 w-4" />
+                Chiama per informazioni
+              </Button>
+            </div>
           </div>
         </div>
       </div>
