@@ -22,13 +22,13 @@ export const PropertyDetail = ({
   onApply,
   applications
 }: PropertyDetailProps) => {
+  const phoneNumber = "+393319053037";
   const isApplied = applications.some(app => app.property_id === property.id);
   const applicationStatus = isApplied ? 
     applications.find(app => app.property_id === property.id)?.status : null;
 
   const handleCallClick = () => {
-    // Assuming the phone number is in the format +XX XXX XXXXXX
-    window.location.href = `tel:+39${property.phone_number}`;
+    window.location.href = `tel:${phoneNumber}`;
   };
 
   return (
@@ -170,7 +170,7 @@ export const PropertyDetail = ({
                 onClick={handleCallClick}
               >
                 <Phone className="mr-2 h-4 w-4" />
-                Chiama per informazioni
+                {phoneNumber}
               </Button>
             </div>
 

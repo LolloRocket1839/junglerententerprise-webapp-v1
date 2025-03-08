@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -11,8 +12,10 @@ interface RoomCardProps {
 }
 
 export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
+  const phoneNumber = "+393319053037";
+  
   const handleCall = () => {
-    window.location.href = `tel:${room.contactPhone}`;
+    window.location.href = `tel:${phoneNumber}`;
   };
 
   return (
@@ -102,10 +105,11 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
             onClick={handleCall}
           >
             <Phone className="mr-2 h-4 w-4" />
-            Chiama per informazioni
+            {phoneNumber}
           </Button>
         </div>
       </DialogContent>
     </Dialog>
   );
 };
+
