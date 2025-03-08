@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
@@ -25,26 +26,23 @@ const EnhancedRentalSection = () => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [viewedProperties, setViewedProperties] = useState<string[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
 
   useEffect(() => {
     const loadUserData = async () => {
       try {
-        const {
-          data: {
-            user
-          }
-        } = await supabase.auth.getUser();
+        const { data: { user } } = await supabase.auth.getUser();
         if (user) {
+          // Esempio di dati caricati: preferiti, visualizzati, domande inviate
           setFavorites(["1"]);
           setViewedProperties(["1", "2"]);
-          setApplications([{
-            property_id: "3",
-            status: "pending",
-            submitted_at: "2023-08-15"
-          }]);
+          setApplications([
+            {
+              property_id: "3",
+              status: "pending",
+              submitted_at: "2023-08-15"
+            }
+          ]);
         }
       } catch (error) {
         console.error("Error loading user data:", error);
@@ -55,7 +53,19 @@ const EnhancedRentalSection = () => {
 
   useEffect(() => {
     if (selectedCity) {
-      const filtered = mockProperties.filter(property => property.city === selectedCity && (searchParams.minPrice ? property.discounted_price_monthly >= parseInt(searchParams.minPrice) : true) && (searchParams.maxPrice ? property.discounted_price_monthly <= parseInt(searchParams.maxPrice) : true) && (searchParams.roomType ? searchParams.roomType === 'studio' && property.rooms === 1 || searchParams.roomType === 'apartment' && property.rooms > 1 : true));
+      const filtered = mockProperties.filter(property =>
+        property.city === selectedCity &&
+        (searchParams.minPrice
+          ? property.discounted_price_monthly >= parseInt(searchParams.minPrice)
+          : true) &&
+        (searchParams.maxPrice
+          ? property.discounted_price_monthly <= parseInt(searchParams.maxPrice)
+          : true) &&
+        (searchParams.roomType
+          ? (searchParams.roomType === 'studio' && property.rooms === 1) ||
+            (searchParams.roomType === 'apartment' && property.rooms > 1)
+          : true)
+      );
       setFilteredProperties(filtered);
     } else {
       setFilteredProperties(mockProperties);
@@ -125,42 +135,62 @@ const EnhancedRentalSection = () => {
     });
   };
 
-  return <div className="min-h-screen relative pb-20 md:pb-0">
+  return (
+    <div className="min-h-screen relative pb-20 md:pb-0">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-72 h-72 bg-primary/10 rounded-full blur-xl" />
         <div className="absolute bottom-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-xl" />
       </div>
 
-      {/* Main content with 12-column grid */}
-      <div className="w-full max-w-7xl mx-auto px-8 sm:px-12 lg:px-16">
+      {/* Contenitore principale centrato e largo */}
+      <div className="w-full max-w-screen-xl mx-auto px-8 sm:px-12 lg:px-16">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
+          {/* TAB: Ricerca */}
           <TabsContent value="search" className="focus:outline-none">
-            <div className="grid grid-cols-12 gap-8">
-              {/* Hero and Search area - 8 columns on large screens */}
-              <div className="col-span-12 lg:col-span-8 space-y-8">
-                <SearchForm searchParams={searchParams} setSearchParams={setSearchParams} showFilters={showFilters} setShowFilters={setShowFilters} handleSearch={handleSearch} />
+            <div className="grid grid-cols-12 gap-8 w-full justify-items-stretch">
+              {/* Colonna unica più larga, centrata orizzontalmente */}
+              <div className="col-span-12 space-y-8">
+                <SearchForm
+                  searchParams={searchParams}
+                  setSearchParams={setSearchParams}
+                  showFilters={showFilters}
+                  setShowFilters={setShowFilters}
+                  handleSearch={handleSearch}
+                />
               </div>
-              
-              {/* Value propositions - 4 columns on large screens */}
-              <aside className="col-span-12 lg:col-span-4 space-y-6">
-                <div className="sticky top-24">
-                  {/* Additional content or ads could go here */}
-                </div>
-              </aside>
             </div>
           </TabsContent>
-          
+
+          {/* TAB: Risultati */}
           <TabsContent value="results">
-            <PropertyList properties={filteredProperties} selectedCity={selectedCity} favorites={favorites} onFavoriteToggle={toggleFavorite} onPropertySelect={handlePropertySelect} onBackToSearch={() => setActiveTab('search')} />
+            <PropertyList
+              properties={filteredProperties}
+              selectedCity={selectedCity}
+              favorites={favorites}
+              onFavoriteToggle={toggleFavorite}
+              onPropertySelect={handlePropertySelect}
+              onBackToSearch={() => setActiveTab('search')}
+            />
           </TabsContent>
-          
+
+          {/* TAB: Dettaglio Proprietà */}
           <TabsContent value="property">
-            {selectedProperty && <PropertyDetail property={selectedProperty} isFavorite={favorites.includes(selectedProperty.id)} onFavoriteToggle={toggleFavorite} onBack={() => setActiveTab('results')} onApply={handleApply} applications={applications} />}
+            {selectedProperty && (
+              <PropertyDetail
+                property={selectedProperty}
+                isFavorite={favorites.includes(selectedProperty.id)}
+                onFavoriteToggle={toggleFavorite}
+                onBack={() => setActiveTab('results')}
+                onApply={handleApply}
+                applications={applications}
+              />
+            )}
           </TabsContent>
         </Tabs>
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default EnhancedRentalSection;
