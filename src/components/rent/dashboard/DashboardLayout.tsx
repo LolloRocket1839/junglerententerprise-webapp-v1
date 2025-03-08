@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from "@/components/ui/use-toast";
@@ -34,7 +35,7 @@ const DashboardLayout = ({ session, isEmailVerified }: DashboardLayoutProps) => 
         onViewChange={setActiveView}
         isEmailVerified={isEmailVerified}
       />
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-8 mt-20">
         <DashboardContent 
           activeView={activeView}
           isEmailVerified={isEmailVerified}
