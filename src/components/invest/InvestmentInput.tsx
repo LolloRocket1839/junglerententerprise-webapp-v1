@@ -1,7 +1,8 @@
+
 import React from 'react';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PriceInput } from "@/components/ui/price-input";
 
 interface InvestmentInputProps {
   value: string;
@@ -19,25 +20,15 @@ const InvestmentInput: React.FC<InvestmentInputProps> = ({
   return (
     <div className="flex items-center gap-2">
       <div className="relative flex-1">
-        <Input
-          type="number"
+        <PriceInput
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="pr-20 text-xl font-semibold tracking-wide rounded-xl 
-                     border-2 border-white/20 shadow-lg
-                     focus:ring-4 focus:ring-green-500/30 focus:border-green-500/50
-                     transition-all duration-300 ease-in-out
-                     bg-black/40 backdrop-blur-xl text-white
-                     placeholder:text-white/50 placeholder:font-normal
-                     hover:border-white/30"
+          className="text-xl font-semibold tracking-wide"
           placeholder="Min: €100"
           disabled={disabled}
           min={100}
           step={100}
         />
-        <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
-          <span className="text-base font-medium text-white/70">EUR</span>
-        </div>
       </div>
       <Button 
         onClick={onConfirm}
