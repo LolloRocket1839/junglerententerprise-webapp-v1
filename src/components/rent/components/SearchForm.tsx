@@ -4,6 +4,7 @@ import { SearchParams } from '../types';
 import { SearchHero } from './SearchHero';
 import { SearchBar } from './SearchBar';
 import { ValuePropositions } from './ValuePropositions';
+import { StreetMockups } from './StreetMockups';
 
 interface SearchFormProps {
   searchParams: SearchParams;
@@ -22,15 +23,18 @@ export const SearchForm = ({
 }: SearchFormProps) => {
   return (
     <div className="min-h-screen space-y-12 md:space-y-16">
-      <SearchHero />
-      <SearchBar
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-        showFilters={showFilters}
-        setShowFilters={setShowFilters}
-        handleSearch={handleSearch}
-      />
-      <ValuePropositions />
+      <div className="container mx-auto px-4">
+        <SearchHero />
+        <SearchBar
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+          showFilters={showFilters}
+          setShowFilters={setShowFilters}
+          handleSearch={handleSearch}
+        />
+        <ValuePropositions />
+        <StreetMockups />
+      </div>
     </div>
   );
 };
