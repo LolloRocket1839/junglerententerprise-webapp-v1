@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import { Euro, Plus, Minus } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -54,6 +55,7 @@ const PriceInput = React.forwardRef<HTMLInputElement, PriceInputProps>(
                 "hover:bg-white/10 hover:border-white/20",
                 "focus-visible:ring-0 focus-visible:border-primary/50",
                 "disabled:opacity-50 disabled:hover:bg-white/5",
+                "[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
                 error && "border-destructive/50",
                 className
               )}
