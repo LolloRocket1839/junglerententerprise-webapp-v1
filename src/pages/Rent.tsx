@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
@@ -98,14 +97,7 @@ const Rent = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="bg-gradient-to-b from-[#1a472a] to-[#2d5a3f] py-12 text-center">
-        <h1 className="text-5xl font-bold text-white">Affitta</h1>
-        <p className="text-xl text-white/80 mt-4">
-          Trova la tua stanza ideale vicino alla tua università
-        </p>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsContent value="search">
             <SearchForm
