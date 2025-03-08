@@ -7,6 +7,7 @@ import { PropertyList } from './components/PropertyList';
 import { PropertyDetail } from './components/PropertyDetail';
 import { mockProperties } from './data/mockData';
 import { SearchParams, Property, Application } from './types';
+
 const EnhancedRentalSection = () => {
   const [searchParams, setSearchParams] = useState<SearchParams>({
     city: '',
@@ -27,6 +28,7 @@ const EnhancedRentalSection = () => {
   const {
     toast
   } = useToast();
+
   useEffect(() => {
     const loadUserData = async () => {
       try {
@@ -50,6 +52,7 @@ const EnhancedRentalSection = () => {
     };
     loadUserData();
   }, []);
+
   useEffect(() => {
     if (selectedCity) {
       const filtered = mockProperties.filter(property => property.city === selectedCity && (searchParams.minPrice ? property.discounted_price_monthly >= parseInt(searchParams.minPrice) : true) && (searchParams.maxPrice ? property.discounted_price_monthly <= parseInt(searchParams.maxPrice) : true) && (searchParams.roomType ? searchParams.roomType === 'studio' && property.rooms === 1 || searchParams.roomType === 'apartment' && property.rooms > 1 : true));
@@ -58,6 +61,7 @@ const EnhancedRentalSection = () => {
       setFilteredProperties(mockProperties);
     }
   }, [selectedCity, searchParams]);
+
   const handleSearch = () => {
     if (!searchParams.city) {
       toast({
@@ -74,6 +78,7 @@ const EnhancedRentalSection = () => {
       description: `Mostrando risultati per ${searchParams.city}`
     });
   };
+
   const handlePropertySelect = (property: Property) => {
     setSelectedProperty(property);
     setActiveTab('property');
@@ -81,6 +86,7 @@ const EnhancedRentalSection = () => {
       setViewedProperties([...viewedProperties, property.id]);
     }
   };
+
   const toggleFavorite = (propertyId: string) => {
     if (favorites.includes(propertyId)) {
       setFavorites(favorites.filter(id => id !== propertyId));
@@ -96,6 +102,7 @@ const EnhancedRentalSection = () => {
       });
     }
   };
+
   const handleApply = (property: Property) => {
     if (applications.some(app => app.property_id === property.id)) {
       toast({
@@ -117,6 +124,7 @@ const EnhancedRentalSection = () => {
       variant: "default"
     });
   };
+
   return <div className="min-h-screen relative pb-20 md:pb-0">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -125,7 +133,7 @@ const EnhancedRentalSection = () => {
       </div>
 
       {/* Main content with 12-column grid */}
-      <div className="container sm:px-6 lg:px-8 mx-[24px] px-0">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsContent value="search" className="focus:outline-none">
             <div className="grid grid-cols-12 gap-8">
@@ -154,4 +162,5 @@ const EnhancedRentalSection = () => {
       </div>
     </div>;
 };
+
 export default EnhancedRentalSection;
