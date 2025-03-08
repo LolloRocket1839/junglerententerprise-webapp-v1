@@ -138,12 +138,6 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate, language = "IT" }: M
               {text.stay}
             </button>
             <button
-              onClick={() => handleNavigation("/student")}
-              className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
-            >
-              {text.students}
-            </button>
-            <button
               onClick={() => handleNavigation("/referral")}
               className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
             >

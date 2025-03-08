@@ -21,7 +21,6 @@ const menuItems = {
     rent: "Affitta",
     marketplace: "Marketplace",
     stay: "Soggiorna",
-    students: "Studenti",
     referral: "Referral",
     signOut: "Esci",
     signIn: "Accedi",
@@ -32,7 +31,6 @@ const menuItems = {
     rent: "Rent",
     marketplace: "Marketplace",
     stay: "Stay",
-    students: "Students",
     referral: "Referral",
     signOut: "Sign Out",
     signIn: "Sign In",
@@ -43,7 +41,6 @@ const menuItems = {
     rent: "Louer",
     marketplace: "Marketplace",
     stay: "Séjourner",
-    students: "Étudiants",
     referral: "Parrainage",
     signOut: "Déconnexion",
     signIn: "Connexion",
@@ -54,7 +51,6 @@ const menuItems = {
     rent: "Mieten",
     marketplace: "Marktplatz",
     stay: "Aufenthalt",
-    students: "Studenten",
     referral: "Empfehlung",
     signOut: "Abmelden",
     signIn: "Anmelden",
@@ -109,13 +105,6 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
         {text.stay}
-      </Link>
-      <Link 
-        to="/student" 
-        className="text-base text-white/80 hover:text-white transition-all duration-300 
-                   hover:border-b-2 hover:border-primary font-sans tracking-wide"
-      >
-        {text.students}
       </Link>
       <Link 
         to="/referral" 
