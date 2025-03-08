@@ -9,6 +9,10 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TouristProperty } from "@/types/tourist";
 import { useToast } from "@/components/ui/use-toast";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface BookingFormProps {
   property: TouristProperty;
@@ -62,33 +66,68 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
     <Card className="p-6 bg-white/5 border-white/10">
       <div className="space-y-6">
         <div>
-          <h3 className="text-lg font-semibold text-white mb-2">
+          <h3 className="text-lg font-semibold text-white mb-4">
             Seleziona le date
           </h3>
           <div className="grid gap-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="text-sm text-white/70 mb-1 block">Check-in</label>
-                <Input
-                  type="date"
-                  value={checkIn ? format(checkIn, 'yyyy-MM-dd') : ''}
-                  onChange={(e) => setCheckIn(new Date(e.target.value))}
-                  min={format(new Date(), 'yyyy-MM-dd')}
-                  className="bg-white/5 border-white/10 text-white"
-                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal bg-white/5 border-white/10 text-white hover:bg-white/10",
+                        !checkIn && "text-white/50"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {checkIn ? format(checkIn, "d MMMM yyyy", { locale: it }) : <span>Scegli data</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={checkIn}
+                      onSelect={setCheckIn}
+                      disabled={(date) => date < new Date()}
+                      initialFocus
+                      className={cn("p-3 pointer-events-auto bg-white")}
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
+              
               <div>
                 <label className="text-sm text-white/70 mb-1 block">Check-out</label>
-                <Input
-                  type="date"
-                  value={checkOut ? format(checkOut, 'yyyy-MM-dd') : ''}
-                  onChange={(e) => setCheckOut(new Date(e.target.value))}
-                  min={checkIn ? format(checkIn, 'yyyy-MM-dd') : ''}
-                  className="bg-white/5 border-white/10 text-white"
-                />
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal bg-white/5 border-white/10 text-white hover:bg-white/10",
+                        !checkOut && "text-white/50"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {checkOut ? format(checkOut, "d MMMM yyyy", { locale: it }) : <span>Scegli data</span>}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={checkOut}
+                      onSelect={setCheckOut}
+                      disabled={(date) => (checkIn ? date <= checkIn : date <= new Date())}
+                      initialFocus
+                      className={cn("p-3 pointer-events-auto bg-white")}
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
             </div>
-            
+
             <div>
               <label className="text-sm text-white/70 mb-1 block">Ospiti</label>
               <Input
