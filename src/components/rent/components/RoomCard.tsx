@@ -36,66 +36,68 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
         </Card>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle>{room.name} - {propertyStreet}</DialogTitle>
         </DialogHeader>
         
-        <div className="mt-4">
-          <img 
-            src={room.image} 
-            alt={room.name}
-            className="w-full h-64 object-cover rounded-lg mb-4"
-          />
-          
+        <div className="flex-1 overflow-y-auto pr-2">
           <div className="space-y-4">
-            <div>
-              <h4 className="font-semibold mb-2">Descrizione</h4>
-              <p className="text-gray-600">{room.description}</p>
-            </div>
+            <img 
+              src={room.image} 
+              alt={room.name}
+              className="w-full h-64 object-cover rounded-lg"
+            />
             
-            <div>
-              <h4 className="font-semibold mb-2">Arredamento</h4>
-              <ul className="list-disc pl-5 text-gray-600">
-                {room.furniture.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-2">Servizi</h4>
-              <ul className="list-disc pl-5 text-gray-600">
-                {room.amenities.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <div>
-              <p className="text-lg font-semibold text-primary">€{room.price}/mese</p>
-              <p className="text-gray-600">{room.availability}</p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
-              <Button 
-                className="flex-1 bg-primary hover:bg-primary/90"
-                onClick={() => alert('Funzionalità in arrivo')}
-              >
-                <Key className="mr-2 h-4 w-4" />
-                Affitta ora
-              </Button>
+            <div className="space-y-6">
+              <div>
+                <h4 className="font-semibold mb-2">Descrizione</h4>
+                <p className="text-gray-600">{room.description}</p>
+              </div>
               
-              <Button 
-                variant="outline" 
-                className="flex-1 border-primary/20 hover:bg-primary/10"
-                onClick={handleCall}
-              >
-                <Phone className="mr-2 h-4 w-4" />
-                Chiama per informazioni
-              </Button>
+              <div>
+                <h4 className="font-semibold mb-2">Arredamento</h4>
+                <ul className="list-disc pl-5 text-gray-600">
+                  {room.furniture.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold mb-2">Servizi</h4>
+                <ul className="list-disc pl-5 text-gray-600">
+                  {room.amenities.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div>
+                <p className="text-lg font-semibold text-primary">€{room.price}/mese</p>
+                <p className="text-gray-600">{room.availability}</p>
+              </div>
             </div>
           </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-3 pt-4 mt-4 border-t">
+          <Button 
+            className="flex-1 bg-primary hover:bg-primary/90"
+            onClick={() => alert('Funzionalità in arrivo')}
+          >
+            <Key className="mr-2 h-4 w-4" />
+            Affitta ora
+          </Button>
+          
+          <Button 
+            variant="outline" 
+            className="flex-1 border-primary/20 hover:bg-primary/10"
+            onClick={handleCall}
+          >
+            <Phone className="mr-2 h-4 w-4" />
+            Chiama per informazioni
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
