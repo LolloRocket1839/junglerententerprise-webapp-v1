@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import { Euro, Plus, Minus } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -14,7 +13,7 @@ export interface PriceInputProps extends React.InputHTMLAttributes<HTMLInputElem
 const PriceInput = React.forwardRef<HTMLInputElement, PriceInputProps>(
   ({ className, error, onChange, placeholder, step = 10, value, ...props }, ref) => {
     const [hasFocus, setHasFocus] = React.useState(false);
-    const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+    const numericValue = typeof value === 'string' ? parseFloat(value) : (Array.isArray(value) ? 0 : value ?? 0);
 
     const handleIncrement = () => {
       if (onChange && typeof numericValue === 'number') {
@@ -79,7 +78,7 @@ const PriceInput = React.forwardRef<HTMLInputElement, PriceInputProps>(
                       size="icon"
                       className="h-8 w-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10"
                       onClick={handleDecrement}
-                      disabled={!numericValue || numericValue < step}
+                      disabled={typeof numericValue !== 'number' || !numericValue || numericValue < step}
                     >
                       <Minus className="h-4 w-4" />
                       <span className="sr-only">Diminuisci valore</span>
