@@ -133,7 +133,7 @@ const EnhancedRentalSection = () => {
       </div>
 
       {/* Main content with 12-column grid */}
-      <div className="container mx-auto px-8 sm:px-12 lg:px-16 max-w-7xl">
+      <div className="w-full max-w-7xl mx-auto px-8 sm:px-12 lg:px-16">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsContent value="search" className="focus:outline-none">
             <div className="grid grid-cols-12 gap-8">
