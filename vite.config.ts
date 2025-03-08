@@ -36,9 +36,7 @@ export default defineConfig(({ mode }) => ({
     sourcemap: true
   },
   plugins: [
-    react({
-      fastRefresh: true
-    }),
+    react(),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
