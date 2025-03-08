@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
-import { Heart, MapPin, Home, Calendar, CheckCircle } from 'lucide-react';
+import { Heart, MapPin, Home, Calendar, CheckCircle, Phone, Key } from 'lucide-react';
 import { Property, Application } from '../types';
 
 interface PropertyDetailProps {
@@ -25,6 +25,11 @@ export const PropertyDetail = ({
   const isApplied = applications.some(app => app.property_id === property.id);
   const applicationStatus = isApplied ? 
     applications.find(app => app.property_id === property.id)?.status : null;
+
+  const handleCallClick = () => {
+    // Assuming the phone number is in the format +XX XXX XXXXXX
+    window.location.href = `tel:+39${property.phone_number}`;
+  };
 
   return (
     <div className="max-w-6xl mx-auto animate-fade-in">
@@ -149,8 +154,28 @@ export const PropertyDetail = ({
               </div>
             </div>
             
-            {isApplied ? (
-              <div className="bg-primary/20 p-4 rounded-lg mb-4 text-center">
+            <div className="space-y-4">
+              <Button 
+                className="w-full bg-primary hover:bg-primary/90"
+                onClick={() => onApply(property)}
+                disabled={isApplied}
+              >
+                <Key className="mr-2 h-4 w-4" />
+                Affitta ora
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="w-full border-primary/20 hover:bg-primary/10"
+                onClick={handleCallClick}
+              >
+                <Phone className="mr-2 h-4 w-4" />
+                Chiama per informazioni
+              </Button>
+            </div>
+
+            {isApplied && (
+              <div className="mt-4 bg-primary/20 p-4 rounded-lg text-center">
                 <CheckCircle className="mx-auto h-6 w-6 text-primary mb-2" />
                 <p className="text-white font-semibold">
                   Domanda già presentata
@@ -159,16 +184,9 @@ export const PropertyDetail = ({
                   Stato: {applicationStatus === 'pending' ? 'In attesa' : applicationStatus}
                 </p>
               </div>
-            ) : (
-              <Button 
-                className="w-full mb-4 bg-primary hover:bg-primary/90"
-                onClick={() => onApply(property)}
-              >
-                Presenta Domanda
-              </Button>
             )}
             
-            <div className="text-white/60 text-sm text-center">
+            <div className="mt-4 text-white/60 text-sm text-center">
               <p>Una volta presentata la domanda, verrai contattato dal proprietario per un colloquio.</p>
             </div>
           </Card>
