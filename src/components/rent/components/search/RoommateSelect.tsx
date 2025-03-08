@@ -30,7 +30,7 @@ export const RoommateSelect = ({ value, onChange }: RoommateSelectProps) => {
         </SelectTrigger>
         <SelectContent className="bg-[#1a1a1a] border-white/20 max-h-[300px]">
           <SelectItem value="solo" className="text-white hover:bg-white/10">
-            Da solo
+            Da soli
           </SelectItem>
           <SelectItem value="2" className="text-white hover:bg-white/10">
             Due coinquilini
