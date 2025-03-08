@@ -34,7 +34,17 @@ export function PaymentPlanTimeline() {
       return;
     }
 
-    setPayments(data);
+    // Map database fields to our frontend types
+    const mappedPayments: PaymentSchedule[] = data.map(payment => ({
+      id: payment.id,
+      dueDate: payment.due_date,
+      amount: payment.amount,
+      status: payment.status,
+      isExempt: payment.is_exempt,
+      exemptionReason: payment.exemption_reason
+    }));
+
+    setPayments(mappedPayments);
   }
 
   return (

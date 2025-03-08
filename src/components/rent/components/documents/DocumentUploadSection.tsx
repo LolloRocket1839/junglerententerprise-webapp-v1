@@ -27,12 +27,31 @@ export function DocumentUploadSection() {
       return;
     }
 
-    setDocuments(data);
+    // Map database fields to our frontend types
+    const mappedDocuments: StudentDocument[] = data.map(doc => ({
+      id: doc.id,
+      documentType: doc.document_type as DocumentType,
+      status: doc.status,
+      filePath: doc.file_path,
+      uploadedAt: doc.uploaded_at,
+      verifiedAt: doc.verified_at,
+      rejectionReason: doc.rejection_reason
+    }));
+
+    setDocuments(mappedDocuments);
   }
 
   async function handleUpload(type: DocumentType, file: File) {
-    const user = supabase.auth.user();
-    if (!user) return;
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    
+    if (!user || userError) {
+      toast({
+        title: "Errore",
+        description: "Devi essere autenticato per caricare documenti",
+        variant: "destructive"
+      });
+      return;
+    }
 
     const fileExt = file.name.split('.').pop();
     const filePath = `${user.id}/${type}_${Date.now()}.${fileExt}`;
