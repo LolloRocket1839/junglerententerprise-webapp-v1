@@ -13,14 +13,22 @@ const Invest = () => {
   }, []);
 
   return (
-    <div className="min-h-screen relative pb-20 md:pb-0">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-primary/10 rounded-full blur-xl" />
-        <div className="absolute bottom-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-xl" />
+    <div className="relative min-h-screen">
+      {/* Background decorations */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div 
+          className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl opacity-50 animate-pulse"
+          style={{ animationDuration: '4s' }}
+        />
+        <div 
+          className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl opacity-50 animate-pulse"
+          style={{ animationDuration: '5s' }}
+        />
       </div>
 
-      <div className="relative container mx-auto px-4 pt-28 md:pt-32 pb-6 md:pb-8 space-y-6">
-        <h1 className="text-2xl md:text-4xl font-bold text-white mb-6 text-left">
+      {/* Content */}
+      <div className="relative container mx-auto px-4 pt-24 pb-12 space-y-8 md:space-y-12">
+        <h1 className="text-3xl md:text-4xl font-bold text-white">
           {t('investmentDashboard')}
         </h1>
         
