@@ -3,13 +3,17 @@ import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, CheckCircle2, XCircle } from 'lucide-react';
+import { Phone, CheckCircle2, XCircle, Home, Euro } from 'lucide-react';
 import { mockProperties } from '../data/mockData';
 import { Property } from '../types';
 
 export const StreetMockups = () => {
   const handleCall = (phoneNumber: string) => {
     window.location.href = `tel:${phoneNumber}`;
+  };
+
+  const calculatePricePerRoom = (property: Property) => {
+    return Math.round(property.discounted_price_monthly / property.rooms);
   };
 
   return (
@@ -93,20 +97,46 @@ export const StreetMockups = () => {
                   </div>
                 </div>
                 
-                <div className="flex justify-between items-center pt-4 border-t border-white/10">
-                  <div>
-                    <p className="text-2xl font-bold text-primary">€{property.discounted_price_monthly}/mese</p>
-                    <p className="text-sm text-white/50 line-through">€{property.market_price_monthly}/mese</p>
+                <div className="bg-white/5 p-6 rounded-lg space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <h4 className="text-lg font-semibold text-white flex items-center gap-2">
+                        <Home className="h-5 w-5 text-primary" />
+                        Prezzo Appartamento
+                      </h4>
+                      <p className="text-2xl font-bold text-primary">€{property.discounted_price_monthly}/mese</p>
+                      <p className="text-sm text-white/50 line-through">€{property.market_price_monthly}/mese</p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <h4 className="text-lg font-semibold text-white flex items-center gap-2">
+                        <Euro className="h-5 w-5 text-primary" />
+                        Prezzo per Stanza
+                      </h4>
+                      <p className="text-2xl font-bold text-primary">€{calculatePricePerRoom(property)}/mese</p>
+                      <p className="text-sm text-white/50 line-through">
+                        €{Math.round(property.market_price_monthly / property.rooms)}/mese
+                      </p>
+                    </div>
                   </div>
                   
-                  <Button 
-                    variant="outline" 
-                    className="border-primary/20 hover:bg-primary/10"
-                    onClick={() => handleCall("+393319053037")}
-                  >
-                    <Phone className="mr-2 h-4 w-4" />
-                    Chiama per informazioni
-                  </Button>
+                  <div className="flex gap-4 pt-4 border-t border-white/10">
+                    <Button 
+                      className="flex-1 bg-primary hover:bg-primary/90"
+                      onClick={() => handleCall(property.phone_number)}
+                    >
+                      <Phone className="mr-2 h-4 w-4" />
+                      Chiama per Info
+                    </Button>
+                    
+                    <Button 
+                      variant="outline" 
+                      className="flex-1 border-primary text-primary hover:bg-primary/10"
+                      onClick={() => window.location.href = `/rent/apply/${property.id}`}
+                    >
+                      Affitta Ora
+                    </Button>
+                  </div>
                 </div>
               </div>
             </DialogContent>
@@ -116,3 +146,4 @@ export const StreetMockups = () => {
     </section>
   );
 };
+
