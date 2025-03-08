@@ -1,3 +1,4 @@
+
 export interface SearchParams {
   city: string;
   university: string;
