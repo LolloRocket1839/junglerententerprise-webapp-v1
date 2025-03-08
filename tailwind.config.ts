@@ -123,6 +123,11 @@ export default {
           "0%": { backgroundPosition: "-1000px 0" },
           "100%": { backgroundPosition: "1000px 0" }
         },
+        "shake": {
+          "0%, 100%": { transform: "translateX(0)" },
+          "25%": { transform: "translateX(-2px)" },
+          "75%": { transform: "translateX(2px)" }
+        }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -138,6 +143,7 @@ export default {
         "magnetic-hover": "magnetic-hover 0.3s ease-in-out",
         "pulse-gentle": "pulse-gentle 2s ease-in-out infinite",
         "shimmer": "shimmer 2s linear infinite",
+        "shake": "shake 0.2s ease-in-out 0s 2",
       },
       transitionTimingFunction: {
         "in-expo": "cubic-bezier(0.0, 0.0, 0.2, 1)",
