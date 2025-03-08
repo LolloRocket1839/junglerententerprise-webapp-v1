@@ -3,12 +3,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { TouristProperty } from "@/types/tourist";
 import { useToast } from "@/components/ui/use-toast";
 import { DateRangePicker } from "./DateRangePicker";
 import { PricingSummary } from "./PricingSummary";
+import { useBookingAvailability } from "@/hooks/useBookingAvailability";
 
 interface BookingFormProps {
   property: TouristProperty;
@@ -21,28 +20,11 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
   const [guests, setGuests] = useState(1);
   const { toast } = useToast();
 
-  const { data: existingBookings } = useQuery({
-    queryKey: ['bookings', property.id, checkIn, checkOut],
-    queryFn: async () => {
-      if (!checkIn || !checkOut) return [];
-      
-      const { data, error } = await supabase
-        .from('tourist_bookings')
-        .select('check_in, check_out')
-        .eq('property_id', property.id)
-        .neq('status', 'canceled')
-        .or(`check_in.overlaps.[${checkIn.toISOString()},${checkOut.toISOString()}],check_out.overlaps.[${checkIn.toISOString()},${checkOut.toISOString()}]`);
-
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!checkIn && !!checkOut && !!property.id
+  const { isAvailable, nights } = useBookingAvailability({
+    property,
+    checkIn,
+    checkOut
   });
-
-  const isAvailable = !existingBookings?.length;
-  const nights = checkIn && checkOut 
-    ? Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24))
-    : 0;
 
   const handleSubmit = () => {
     if (!isAvailable) {
