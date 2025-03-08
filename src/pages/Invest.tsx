@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { StatsSection } from "@/components/invest/StatsSection";
 import { InvestmentTabs } from "@/components/invest/InvestmentTabs";
+import BackgroundDecorations from "@/components/invest/BackgroundDecorations";
 
 const Invest = () => {
   console.log("Invest component mounting");
@@ -14,17 +15,7 @@ const Invest = () => {
 
   return (
     <div className="relative min-h-screen">
-      {/* Background decorations */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div 
-          className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl opacity-50 animate-pulse"
-          style={{ animationDuration: '4s' }}
-        />
-        <div 
-          className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl opacity-50 animate-pulse"
-          style={{ animationDuration: '5s' }}
-        />
-      </div>
+      <BackgroundDecorations />
 
       {/* Content */}
       <div className="relative container mx-auto px-4 pt-24 pb-12 space-y-8 md:space-y-12">
