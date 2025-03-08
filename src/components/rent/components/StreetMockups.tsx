@@ -38,7 +38,7 @@ const mockProperties: StreetProperty[] = [
         price: 450,
         size: "16m²",
         image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-        description: "Luminosa camera singola completamente ristrutturata con vista sul cortile interno. Perfetta per studenti, con angolo studio dedicato e ampio armadio.",
+        description: "Stanza in ottime condizioni caratterizzata da ottima luminosità grazie alle ampie finestre che si affacciano sul cortile interno. Ambiente accogliente e ben curato, recentemente ristrutturato con finiture moderne e materiali di qualità. La posizione privilegiata garantisce un'illuminazione naturale per gran parte della giornata, creando un ambiente ideale per studio e relax.",
         furniture: [
           "Letto singolo con materasso ortopedico",
           "Scrivania con sedia ergonomica",
@@ -57,7 +57,9 @@ const mockProperties: StreetProperty[] = [
         images: [
           "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
           "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
-          "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952"
+          "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
+          "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+          "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"
         ]
       },
       {
