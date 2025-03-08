@@ -26,7 +26,7 @@ export const AdvancedFilters = ({ searchParams, onParamsChange }: AdvancedFilter
           </SelectTrigger>
           <SelectContent className="bg-[#1a1a1a] border-white/20">
             <SelectItem value="solo" className="text-white hover:bg-white/10">
-              Una casa da soli
+              Casa tutta per te
             </SelectItem>
             <SelectItem value="due" className="text-white hover:bg-white/10">
               Casa in due
