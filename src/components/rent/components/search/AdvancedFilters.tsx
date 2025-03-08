@@ -25,11 +25,17 @@ export const AdvancedFilters = ({ searchParams, onParamsChange }: AdvancedFilter
             <SelectValue placeholder="Tipo di alloggio" />
           </SelectTrigger>
           <SelectContent className="bg-[#1a1a1a] border-white/20">
-            <SelectItem value="studio" className="text-white hover:bg-white/10">
-              Monolocale
+            <SelectItem value="solo" className="text-white hover:bg-white/10">
+              Una casa da soli
             </SelectItem>
-            <SelectItem value="apartment" className="text-white hover:bg-white/10">
-              Appartamento
+            <SelectItem value="due" className="text-white hover:bg-white/10">
+              Casa in due
+            </SelectItem>
+            <SelectItem value="tre" className="text-white hover:bg-white/10">
+              Casa in tre
+            </SelectItem>
+            <SelectItem value="quattro" className="text-white hover:bg-white/10">
+              Casa in quattro
             </SelectItem>
           </SelectContent>
         </Select>
