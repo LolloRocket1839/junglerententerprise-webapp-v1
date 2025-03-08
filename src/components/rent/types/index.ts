@@ -1,4 +1,3 @@
-
 export interface SearchParams {
   city: string;
   university: string;
@@ -6,6 +5,7 @@ export interface SearchParams {
   minPrice: string;
   maxPrice: string;
   moveInDate: string;
+  roommateCount?: string; // Adding the optional roommateCount property
 }
 
 export interface Property {
