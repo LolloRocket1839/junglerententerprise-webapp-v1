@@ -6,6 +6,8 @@ import { PropertyList } from '@/components/rent/components/PropertyList';
 import { PropertyDetail } from '@/components/rent/components/PropertyDetail';
 import { mockProperties } from '@/components/rent/data/mockData';
 import { SearchParams, Property, Application } from '@/components/rent/types';
+import { DocumentUploadSection } from '@/components/rent/components/documents/DocumentUploadSection';
+import { PaymentPlanTimeline } from '@/components/rent/components/payments/PaymentPlanTimeline';
 
 const Rent = () => {
   const [searchParams, setSearchParams] = React.useState<SearchParams>({
@@ -131,6 +133,13 @@ const Rent = () => {
                 applications={applications}
               />
             )}
+          </TabsContent>
+
+          <TabsContent value="documents">
+            <div className="grid gap-8 md:grid-cols-2">
+              <DocumentUploadSection />
+              <PaymentPlanTimeline />
+            </div>
           </TabsContent>
         </Tabs>
       </div>

@@ -611,6 +611,47 @@ export type Database = {
           },
         ]
       }
+      payment_schedules: {
+        Row: {
+          amount: number
+          created_at: string | null
+          due_date: string
+          exemption_reason: string | null
+          id: string
+          is_exempt: boolean | null
+          rental_contract_id: string
+          status: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          due_date: string
+          exemption_reason?: string | null
+          id?: string
+          is_exempt?: boolean | null
+          rental_contract_id: string
+          status?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          due_date?: string
+          exemption_reason?: string | null
+          id?: string
+          is_exempt?: boolean | null
+          rental_contract_id?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_schedules_rental_contract_id_fkey"
+            columns: ["rental_contract_id"]
+            isOneToOne: false
+            referencedRelation: "rental_contracts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       payment_transactions: {
         Row: {
           amount: number
@@ -1392,6 +1433,48 @@ export type Database = {
           },
         ]
       }
+      student_documents: {
+        Row: {
+          created_at: string | null
+          document_type: string
+          file_path: string
+          id: string
+          rejection_reason: string | null
+          status:
+            | Database["public"]["Enums"]["document_verification_status"]
+            | null
+          student_id: string
+          uploaded_at: string | null
+          verified_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          document_type: string
+          file_path: string
+          id?: string
+          rejection_reason?: string | null
+          status?:
+            | Database["public"]["Enums"]["document_verification_status"]
+            | null
+          student_id: string
+          uploaded_at?: string | null
+          verified_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          document_type?: string
+          file_path?: string
+          id?: string
+          rejection_reason?: string | null
+          status?:
+            | Database["public"]["Enums"]["document_verification_status"]
+            | null
+          student_id?: string
+          uploaded_at?: string | null
+          verified_at?: string | null
+        }
+        Relationships: []
+      }
       student_profiles: {
         Row: {
           created_at: string
@@ -2001,6 +2084,7 @@ export type Database = {
         | "expired"
         | "terminated"
       document_type: "passport" | "id_card" | "driver_license"
+      document_verification_status: "pending" | "approved" | "rejected"
       payment_status: "pending" | "partial" | "complete" | "refunded"
       property_status: "available" | "reserved" | "occupied" | "maintenance"
       revenue_source: "student" | "tourist"
