@@ -100,7 +100,21 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
                       onSelect={handleCheckInChange}
                       disabled={(date) => isBefore(date, today)}
                       initialFocus
-                      className={cn("p-3 pointer-events-auto bg-white")}
+                      className={cn("p-3 pointer-events-auto bg-white text-black")}
+                      classNames={{
+                        day_today: "bg-primary text-primary-foreground",
+                        day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+                        day: cn(
+                          "h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-primary/10 hover:text-black"
+                        ),
+                        day_disabled: "text-gray-400 opacity-50 hover:bg-transparent",
+                        head_cell: "text-gray-500 font-normal text-[0.8rem]",
+                        caption: "text-black font-normal",
+                        nav_button: cn(
+                          "text-gray-600 hover:bg-primary/10",
+                          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+                        )
+                      }}
                       fromDate={today}
                     />
                   </PopoverContent>
@@ -129,7 +143,21 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
                       onSelect={setCheckOut}
                       disabled={(date) => (checkIn ? isBefore(date, addDays(checkIn, 1)) : isBefore(date, addDays(today, 1)))}
                       initialFocus
-                      className={cn("p-3 pointer-events-auto bg-white")}
+                      className={cn("p-3 pointer-events-auto bg-white text-black")}
+                      classNames={{
+                        day_today: "bg-primary text-primary-foreground",
+                        day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground",
+                        day: cn(
+                          "h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-primary/10 hover:text-black"
+                        ),
+                        day_disabled: "text-gray-400 opacity-50 hover:bg-transparent",
+                        head_cell: "text-gray-500 font-normal text-[0.8rem]",
+                        caption: "text-black font-normal",
+                        nav_button: cn(
+                          "text-gray-600 hover:bg-primary/10",
+                          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+                        )
+                      }}
                       fromDate={checkIn ? addDays(checkIn, 1) : addDays(today, 1)}
                     />
                   </PopoverContent>
