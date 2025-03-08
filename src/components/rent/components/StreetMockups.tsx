@@ -3,9 +3,9 @@ import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, Key } from 'lucide-react';
-import { mockProperties } from '../data/streetMockData';
-import { RoomCard } from './RoomCard';
+import { Phone, CheckCircle2, XCircle } from 'lucide-react';
+import { mockProperties } from '../data/mockData';
+import { Property } from '../types';
 
 export const StreetMockups = () => {
   const handleCall = (phoneNumber: string) => {
@@ -20,48 +20,89 @@ export const StreetMockups = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {mockProperties.map((property) => (
-          <Dialog key={property.street}>
+          <Dialog key={property.id}>
             <DialogTrigger asChild>
               <Card className="glass-card overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
                 <div className="relative h-64">
                   <img 
-                    src={property.image} 
-                    alt={property.street}
+                    src={property.images[0]} 
+                    alt={property.title}
                     className="w-full h-full object-cover rounded-t-xl"
                   />
+                  <div className={`absolute top-2 right-2 px-3 py-1 rounded-full text-sm font-medium ${
+                    property.current_status === "available" 
+                      ? "bg-green-500/80 text-white" 
+                      : "bg-red-500/80 text-white"
+                  }`}>
+                    {property.current_status === "available" ? "Disponibile" : "Non disponibile"}
+                  </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-2xl font-semibold text-white mb-3">{property.street}</h3>
-                  <p className="text-white/70 text-lg leading-relaxed">{property.description}</p>
+                  <h3 className="text-2xl font-semibold text-white mb-3">{property.title}</h3>
+                  <p className="text-white/70 text-lg mb-2">{property.address}</p>
+                  <p className="text-white/70 text-sm">{property.distance_to_university}</p>
+                  <div className="mt-4 flex justify-between items-center">
+                    <div>
+                      <p className="text-xl font-bold text-primary">€{property.discounted_price_monthly}/mese</p>
+                      <p className="text-sm text-white/50 line-through">€{property.market_price_monthly}/mese</p>
+                    </div>
+                    <span className="text-green-400 font-semibold">-{property.savings_percentage}%</span>
+                  </div>
                 </div>
               </Card>
             </DialogTrigger>
             
             <DialogContent className="sm:max-w-[900px] bg-[#1a1a1a] border-white/10">
               <DialogHeader>
-                <DialogTitle className="text-3xl text-white">{property.street}</DialogTitle>
+                <DialogTitle className="flex items-center gap-2 text-2xl text-white">
+                  {property.title}
+                  {property.current_status === "available" ? (
+                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                  ) : (
+                    <XCircle className="h-5 w-5 text-red-500" />
+                  )}
+                </DialogTitle>
               </DialogHeader>
               
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-                  {property.rooms.map((room) => (
-                    <RoomCard key={room.id} room={room} propertyStreet={property.street} />
-                  ))}
+              <div className="space-y-6 mt-4">
+                <div className="aspect-video relative rounded-lg overflow-hidden">
+                  <img 
+                    src={property.images[0]} 
+                    alt={property.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-semibold text-lg text-white mb-2">Dettagli</h4>
+                    <ul className="space-y-2 text-white/70">
+                      <li>Superficie: {property.size_sqm} m²</li>
+                      <li>Stanze: {property.rooms}</li>
+                      <li>Bagni: {property.bathrooms}</li>
+                      <li>Balcone: {property.has_balcony ? "Sì" : "No"}</li>
+                      <li>Cucina: {property.has_kitchen ? "Sì" : "No"}</li>
+                      <li>Utenze: {property.utilities_included ? "Incluse" : "Escluse"}</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-semibold text-lg text-white mb-2">Descrizione</h4>
+                    <p className="text-white/70">{property.description}</p>
+                    <p className="text-white/70 mt-2">{property.distance_to_university}</p>
+                  </div>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row gap-3 pt-6">
-                  <Button 
-                    className="flex-1 bg-primary hover:bg-primary/90"
-                    onClick={() => alert('Functionality coming soon')}
-                  >
-                    <Key className="mr-2 h-4 w-4" />
-                    Visualizza stanze disponibili
-                  </Button>
+                <div className="flex justify-between items-center pt-4 border-t border-white/10">
+                  <div>
+                    <p className="text-2xl font-bold text-primary">€{property.discounted_price_monthly}/mese</p>
+                    <p className="text-sm text-white/50 line-through">€{property.market_price_monthly}/mese</p>
+                  </div>
                   
                   <Button 
                     variant="outline" 
-                    className="flex-1 border-primary/20 hover:bg-primary/10"
-                    onClick={() => handleCall(property.contactPhone)}
+                    className="border-primary/20 hover:bg-primary/10"
+                    onClick={() => handleCall("+393319053037")}
                   >
                     <Phone className="mr-2 h-4 w-4" />
                     Chiama per informazioni
