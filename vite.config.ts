@@ -5,11 +5,15 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: '/',  // Necessario per GitHub Pages con dominio personalizzato
+  base: '/',
   server: {
     port: 8080,
-    host: true, // Necessario per accettare connessioni da network
+    host: true,
     strictPort: true,
+    hmr: {
+      protocol: 'ws',
+      host: 'localhost',
+    },
     headers: {
       'Content-Type': 'application/javascript; charset=utf-8',
       'Access-Control-Allow-Origin': '*'
