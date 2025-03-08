@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SearchParams } from '../types';
 import { SearchBar } from './SearchBar';
@@ -24,7 +23,7 @@ export const SearchForm = ({
     <main className="flex flex-col items-center w-full min-h-screen">
       {/* Hero Section */}
       <div className="w-full flex items-center justify-center min-h-[400px] bg-gradient-to-b from-[#1a472a] to-[#2d5a3f] p-8">
-        <div className="text-center space-y-6 max-w-xl mx-auto px-4">
+        <div className="max-w-xl mx-auto text-center space-y-6">
           <h2 className="text-4xl md:text-5xl font-bold text-white bg-gradient-to-r from-white/90 via-white to-white/70 bg-clip-text">
             Affitta
           </h2>
@@ -33,7 +32,7 @@ export const SearchForm = ({
           </p>
           <button 
             onClick={handleSearch}
-            className="glass-button bg-white/10 hover:bg-white/20 text-white border border-white/20"
+            className="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-6 py-2 rounded-md transition-colors duration-300"
           >
             Scopri di più
           </button>
@@ -58,4 +57,3 @@ export const SearchForm = ({
     </main>
   );
 };
-
