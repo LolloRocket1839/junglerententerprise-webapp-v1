@@ -42,6 +42,8 @@ const Rent = () => {
           : true)
       );
       setFilteredProperties(filtered);
+    } else {
+      setFilteredProperties(mockProperties);
     }
   }, [selectedCity, searchParams]);
 
