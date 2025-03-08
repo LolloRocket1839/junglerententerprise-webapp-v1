@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
@@ -135,46 +136,62 @@ const EnhancedRentalSection = () => {
 
   return (
     <div className="min-h-screen relative pb-20 md:pb-0">
+      {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-20 w-72 h-72 bg-primary/10 rounded-full blur-xl" />
         <div className="absolute bottom-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-xl" />
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsContent value="search">
-          <SearchForm
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
-            showFilters={showFilters}
-            setShowFilters={setShowFilters}
-            handleSearch={handleSearch}
-          />
-        </TabsContent>
-        
-        <TabsContent value="results">
-          <PropertyList
-            properties={filteredProperties}
-            selectedCity={selectedCity}
-            favorites={favorites}
-            onFavoriteToggle={toggleFavorite}
-            onPropertySelect={handlePropertySelect}
-            onBackToSearch={() => setActiveTab('search')}
-          />
-        </TabsContent>
-        
-        <TabsContent value="property">
-          {selectedProperty && (
-            <PropertyDetail
-              property={selectedProperty}
-              isFavorite={favorites.includes(selectedProperty.id)}
+      {/* Main content with 12-column grid */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsContent value="search" className="focus:outline-none">
+            <div className="grid grid-cols-12 gap-8">
+              {/* Hero and Search area - 8 columns on large screens */}
+              <div className="col-span-12 lg:col-span-8 space-y-8">
+                <SearchForm
+                  searchParams={searchParams}
+                  setSearchParams={setSearchParams}
+                  showFilters={showFilters}
+                  setShowFilters={setShowFilters}
+                  handleSearch={handleSearch}
+                />
+              </div>
+              
+              {/* Value propositions - 4 columns on large screens */}
+              <aside className="col-span-12 lg:col-span-4 space-y-6">
+                <div className="sticky top-24">
+                  {/* Additional content or ads could go here */}
+                </div>
+              </aside>
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="results">
+            <PropertyList
+              properties={filteredProperties}
+              selectedCity={selectedCity}
+              favorites={favorites}
               onFavoriteToggle={toggleFavorite}
-              onBack={() => setActiveTab('results')}
-              onApply={handleApply}
-              applications={applications}
+              onPropertySelect={handlePropertySelect}
+              onBackToSearch={() => setActiveTab('search')}
             />
-          )}
-        </TabsContent>
-      </Tabs>
+          </TabsContent>
+          
+          <TabsContent value="property">
+            {selectedProperty && (
+              <PropertyDetail
+                property={selectedProperty}
+                isFavorite={favorites.includes(selectedProperty.id)}
+                onFavoriteToggle={toggleFavorite}
+                onBack={() => setActiveTab('results')}
+                onApply={handleApply}
+                applications={applications}
+              />
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 };

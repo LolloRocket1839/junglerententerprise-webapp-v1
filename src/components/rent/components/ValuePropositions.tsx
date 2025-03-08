@@ -1,11 +1,18 @@
-
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Euro, CheckCircle, School, Leaf } from 'lucide-react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
+const LazyHoverCardContent = lazy(() => import("@/components/ui/hover-card").then(mod => ({ 
+  default: mod.HoverCardContent 
+})));
+
+const LoadingFallback = () => (
+  <div className="w-80 h-24 bg-[#1a1a1a] animate-pulse rounded-lg" />
+);
+
 export const ValuePropositions = () => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       <HoverCard openDelay={200}>
         <HoverCardTrigger asChild>
           <div className="glass-card p-6 transition-all duration-300 hover:scale-105 cursor-pointer">
@@ -16,15 +23,17 @@ export const ValuePropositions = () => {
             <p className="text-white/60 text-sm">Fino al 20% sul mercato</p>
           </div>
         </HoverCardTrigger>
-        <HoverCardContent className="w-80 bg-[#1a1a1a] border-white/20 text-white">
-          <div className="space-y-2">
-            <h4 className="font-semibold">Risparmia con Jungle</h4>
-            <p className="text-sm text-white/80">
-              Offriamo prezzi competitivi attraverso contratti a lungo termine e partnership dirette con i proprietari.
-              Nessuna commissione nascosta.
-            </p>
-          </div>
-        </HoverCardContent>
+        <Suspense fallback={<LoadingFallback />}>
+          <LazyHoverCardContent className="w-80 bg-[#1a1a1a] border-white/20 text-white">
+            <div className="space-y-2">
+              <h4 className="font-semibold">Risparmia con Jungle</h4>
+              <p className="text-sm text-white/80">
+                Offriamo prezzi competitivi attraverso contratti a lungo termine e partnership dirette con i proprietari.
+                Nessuna commissione nascosta.
+              </p>
+            </div>
+          </LazyHoverCardContent>
+        </Suspense>
       </HoverCard>
 
       <HoverCard openDelay={200}>
