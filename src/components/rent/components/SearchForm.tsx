@@ -21,7 +21,7 @@ export const SearchForm = ({
   handleSearch
 }: SearchFormProps) => {
   return (
-    <div className="space-y-12">
+    <div className="min-h-screen space-y-12 md:space-y-16">
       <SearchHero />
       <SearchBar
         searchParams={searchParams}
