@@ -3,7 +3,8 @@ import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Phone, Key } from 'lucide-react';
+import { Phone, CheckCircle2, XCircle } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
 import { RoomMockup } from '../types/mockups';
 
 interface RoomCardProps {
@@ -18,6 +19,8 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
     window.location.href = `tel:${phoneNumber}`;
   };
 
+  const isAvailable = room.availability === "Disponibile";
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -28,6 +31,15 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
               alt={room.name}
               className="w-full h-full object-cover"
             />
+            <Badge 
+              className={`absolute top-2 right-2 ${
+                isAvailable 
+                  ? "bg-green-500/80 hover:bg-green-500/90" 
+                  : "bg-red-500/80 hover:bg-red-500/90"
+              }`}
+            >
+              {isAvailable ? "Disponibile" : "Non disponibile"}
+            </Badge>
           </div>
           <div className="p-6">
             <h3 className="text-2xl font-semibold mb-2">{room.name}</h3>
@@ -40,7 +52,14 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
 
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] flex flex-col">
         <DialogHeader>
-          <DialogTitle>{room.name} - {propertyStreet}</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            {room.name} - {propertyStreet}
+            {isAvailable ? (
+              <CheckCircle2 className="h-5 w-5 text-green-500" />
+            ) : (
+              <XCircle className="h-5 w-5 text-red-500" />
+            )}
+          </DialogTitle>
         </DialogHeader>
         
         <div className="flex-1 overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-2 
@@ -92,14 +111,6 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
 
         <div className="flex flex-col sm:flex-row gap-3 pt-4 mt-4 border-t">
           <Button 
-            className="flex-1 bg-primary hover:bg-primary/90"
-            onClick={() => alert('Funzionalità in arrivo')}
-          >
-            <Key className="mr-2 h-4 w-4" />
-            Affitta ora
-          </Button>
-          
-          <Button 
             variant="outline" 
             className="flex-1 border-primary/20 hover:bg-primary/10"
             onClick={handleCall}
@@ -112,4 +123,3 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
     </Dialog>
   );
 };
-
