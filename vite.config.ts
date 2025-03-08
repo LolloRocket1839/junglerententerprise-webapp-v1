@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   base: '/',
   server: {
     port: 8080,
@@ -13,37 +13,22 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       protocol: 'ws',
       host: 'localhost',
+      port: 8080,
       clientPort: 8080
-    },
-    headers: {
-      'Content-Type': 'application/javascript; charset=utf-8',
-      'Access-Control-Allow-Origin': '*'
     }
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      target: 'es2020'
-    }
-  },
-  build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    rollupOptions: {
-      output: {
-        manualChunks: undefined
-      }
-    },
-    sourcemap: true
   },
   plugins: [
     react(),
-    mode === 'development' && componentTagger(),
-  ].filter(Boolean),
+    componentTagger()
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-    },
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
+    }
+  },
+  build: {
+    sourcemap: true,
+    outDir: 'dist',
+    assetsDir: 'assets'
   }
-}));
-
+});
