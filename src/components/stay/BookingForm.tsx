@@ -1,9 +1,8 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { format } from "date-fns";
+import { format, addDays, isBefore, startOfToday } from "date-fns";
 import { it } from "date-fns/locale";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,10 +19,18 @@ interface BookingFormProps {
 }
 
 export const BookingForm = ({ property, onBook }: BookingFormProps) => {
+  const today = startOfToday();
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [guests, setGuests] = useState(1);
   const { toast } = useToast();
+
+  const handleCheckInChange = (date: Date | undefined) => {
+    setCheckIn(date);
+    if (date && checkOut && isBefore(checkOut, date)) {
+      setCheckOut(undefined);
+    }
+  };
 
   const { data: existingBookings } = useQuery({
     queryKey: ['bookings', property.id, checkIn, checkOut],
@@ -90,10 +97,11 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
                     <Calendar
                       mode="single"
                       selected={checkIn}
-                      onSelect={setCheckIn}
-                      disabled={(date) => date < new Date()}
+                      onSelect={handleCheckInChange}
+                      disabled={(date) => isBefore(date, today)}
                       initialFocus
                       className={cn("p-3 pointer-events-auto bg-white")}
+                      fromDate={today}
                     />
                   </PopoverContent>
                 </Popover>
@@ -119,9 +127,10 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
                       mode="single"
                       selected={checkOut}
                       onSelect={setCheckOut}
-                      disabled={(date) => (checkIn ? date <= checkIn : date <= new Date())}
+                      disabled={(date) => (checkIn ? isBefore(date, addDays(checkIn, 1)) : isBefore(date, addDays(today, 1)))}
                       initialFocus
                       className={cn("p-3 pointer-events-auto bg-white")}
+                      fromDate={checkIn ? addDays(checkIn, 1) : addDays(today, 1)}
                     />
                   </PopoverContent>
                 </Popover>
