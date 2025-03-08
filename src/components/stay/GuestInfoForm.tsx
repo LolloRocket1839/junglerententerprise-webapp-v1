@@ -7,9 +7,21 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { format } from 'date-fns';
 import { it } from 'date-fns/locale';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useToast } from '@/components/ui/use-toast';
+
+const guestFormSchema = z.object({
+  fullName: z.string().min(3, "Il nome deve essere di almeno 3 caratteri"),
+  email: z.string().email("Inserisci un'email valida"),
+  phone: z.string().min(8, "Inserisci un numero di telefono valido"),
+  specialRequests: z.string().optional()
+});
+
+type GuestFormData = z.infer<typeof guestFormSchema>;
 
 interface GuestInfoFormProps {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: GuestFormData) => void;
   bookingData: {
     checkIn: Date;
     checkOut: Date;
@@ -19,11 +31,26 @@ interface GuestInfoFormProps {
 }
 
 export const GuestInfoForm = ({ onSubmit, bookingData }: GuestInfoFormProps) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm<GuestFormData>({
+    resolver: zodResolver(guestFormSchema)
+  });
+  const { toast } = useToast();
+
+  const onSubmitForm = (data: GuestFormData) => {
+    try {
+      onSubmit(data);
+    } catch (error) {
+      toast({
+        title: "Errore",
+        description: "Si è verificato un errore durante l'invio del form",
+        variant: "destructive"
+      });
+    }
+  };
 
   return (
     <Card className="p-6 bg-white/5 border-white/10">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-6">
         <div>
           <h3 className="text-lg font-semibold text-white mb-4">
             Informazioni di Contatto
@@ -34,9 +61,11 @@ export const GuestInfoForm = ({ onSubmit, bookingData }: GuestInfoFormProps) => 
               <label className="text-sm text-white/70 mb-1 block">Nome completo</label>
               <Input
                 {...register('fullName')}
-                required
                 className="bg-white/5 border-white/10 text-white"
               />
+              {errors.fullName && (
+                <p className="text-sm text-red-500 mt-1">{errors.fullName.message}</p>
+              )}
             </div>
             
             <div>
@@ -44,18 +73,22 @@ export const GuestInfoForm = ({ onSubmit, bookingData }: GuestInfoFormProps) => 
               <Input
                 {...register('email')}
                 type="email"
-                required
                 className="bg-white/5 border-white/10 text-white"
               />
+              {errors.email && (
+                <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>
+              )}
             </div>
             
             <div>
               <label className="text-sm text-white/70 mb-1 block">Telefono</label>
               <Input
                 {...register('phone')}
-                required
                 className="bg-white/5 border-white/10 text-white"
               />
+              {errors.phone && (
+                <p className="text-sm text-red-500 mt-1">{errors.phone.message}</p>
+              )}
             </div>
 
             <div>
