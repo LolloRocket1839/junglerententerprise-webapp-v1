@@ -32,7 +32,8 @@ export const mockProperties = [
     current_status: "available",
     has_balcony: true,
     has_kitchen: true,
-    utilities_included: true
+    utilities_included: true,
+    phone_number: "123456789"
   },
   {
     id: "2",
@@ -52,7 +53,8 @@ export const mockProperties = [
     current_status: "available",
     has_balcony: true,
     has_kitchen: true,
-    utilities_included: false
+    utilities_included: false,
+    phone_number: "123456789"
   },
   {
     id: "3",
@@ -72,7 +74,8 @@ export const mockProperties = [
     current_status: "available",
     has_balcony: true,
     has_kitchen: true,
-    utilities_included: true
+    utilities_included: true,
+    phone_number: "123456789"
   },
   {
     id: "4",
@@ -92,7 +95,8 @@ export const mockProperties = [
     current_status: "available",
     has_balcony: false,
     has_kitchen: true,
-    utilities_included: true
+    utilities_included: true,
+    phone_number: "123456789"
   },
   {
     id: "5",
@@ -112,7 +116,8 @@ export const mockProperties = [
     current_status: "available",
     has_balcony: true,
     has_kitchen: true,
-    utilities_included: false
+    utilities_included: false,
+    phone_number: "123456789"
   },
   {
     id: "6",
@@ -132,6 +137,7 @@ export const mockProperties = [
     current_status: "available",
     has_balcony: false,
     has_kitchen: true,
-    utilities_included: true
+    utilities_included: true,
+    phone_number: "123456789"
   }
 ];

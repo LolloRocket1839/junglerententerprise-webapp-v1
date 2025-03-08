@@ -1,4 +1,3 @@
-
 export interface SearchParams {
   city: string;
   university: string;
@@ -27,6 +26,7 @@ export interface Property {
   has_balcony: boolean;
   has_kitchen: boolean;
   utilities_included: boolean;
+  phone_number: string;
 }
 
 export interface Application {
