@@ -11,6 +11,7 @@ export interface RoomMockup {
   availability: string;
   floorLevel: string;
   images: string[];
+  contactPhone: string;  // Added this property
 }
 
 export interface StreetProperty {
@@ -18,4 +19,5 @@ export interface StreetProperty {
   description: string;
   image: string;
   rooms: RoomMockup[];
+  contactPhone: string;  // Added this property
 }

@@ -5,6 +5,7 @@ export const mockProperties: StreetProperty[] = [
     street: "Via Reumberto 1",
     description: "Elegante palazzo nel centro storico",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+    contactPhone: "+39 123 456 7890",
     rooms: [
       {
         id: "1",
@@ -34,7 +35,8 @@ export const mockProperties: StreetProperty[] = [
           "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
           "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
           "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"
-        ]
+        ],
+        contactPhone: "+39 123 456 7890"
       },
       {
         id: "2",
@@ -62,7 +64,8 @@ export const mockProperties: StreetProperty[] = [
           "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
           "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
           "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-        ]
+        ],
+        contactPhone: "+39 123 456 7890"
       }
     ]
   },
@@ -70,6 +73,7 @@ export const mockProperties: StreetProperty[] = [
     street: "Via Roma 42",
     description: "Moderno complesso residenziale",
     image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334",
+    contactPhone: "+39 123 456 7891",
     rooms: [
       {
         id: "3",
@@ -97,7 +101,8 @@ export const mockProperties: StreetProperty[] = [
           "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
           "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
           "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
-        ]
+        ],
+        contactPhone: "+39 123 456 7891"
       }
     ]
   }
