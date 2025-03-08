@@ -22,17 +22,19 @@ export const SearchForm = ({
   handleSearch
 }: SearchFormProps) => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full">
       <SearchHero />
-      <SearchBar
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
-        showFilters={showFilters}
-        setShowFilters={setShowFilters}
-        handleSearch={handleSearch}
-      />
-      <ValuePropositions />
-      <StreetMockups />
+      <div className="max-w-[1920px] mx-auto w-full">
+        <SearchBar
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+          showFilters={showFilters}
+          setShowFilters={setShowFilters}
+          handleSearch={handleSearch}
+        />
+        <ValuePropositions />
+        <StreetMockups />
+      </div>
     </div>
   );
 };

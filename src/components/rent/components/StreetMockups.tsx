@@ -7,13 +7,13 @@ import { RoomCard } from './RoomCard';
 
 export const StreetMockups = () => {
   return (
-    <section className="w-full py-12">
-      <div className="container mx-auto px-4">
+    <section className="w-full py-12 px-4 md:px-6 lg:px-8">
+      <div className="max-w-[1920px] mx-auto">
         <h2 className="text-3xl font-bold text-white mb-12 text-center">
           Appartamenti Disponibili
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {mockProperties.map((property) => (
             <Dialog key={property.street}>
               <DialogTrigger asChild>
