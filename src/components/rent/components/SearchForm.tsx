@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { SearchParams } from '../types';
-import { SearchHero } from './SearchHero';
 import { SearchBar } from './SearchBar';
 import { ValuePropositions } from './ValuePropositions';
 import { StreetMockups } from './StreetMockups';
@@ -41,6 +40,7 @@ export const SearchForm = ({
         </div>
       </div>
       
+      {/* Contenuto Sottostante */}
       <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
         <div className="glass rounded-xl p-6 shadow-lg backdrop-blur-sm">
           <SearchBar
@@ -58,3 +58,4 @@ export const SearchForm = ({
     </main>
   );
 };
+
