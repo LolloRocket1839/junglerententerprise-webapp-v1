@@ -48,7 +48,7 @@ const Navigation = () => {
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex justify-between items-center h-20 md:h-24">
+        <div className="flex justify-between items-center h-16 md:h-20">
           <Link 
             to="/" 
             className="text-xl sm:text-2xl font-medium bg-gradient-to-r from-primary via-primary-light to-primary 
@@ -66,7 +66,7 @@ const Navigation = () => {
             className="md:hidden p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all duration-300
                      active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary/50"
             onClick={() => setIsMenuOpen(true)}
-            aria-label="Menu di navigazione"
+            aria-label="Toggle navigation menu"
           >
             {isMenuOpen ? (
               <X size={24} className="text-white" />

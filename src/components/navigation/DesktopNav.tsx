@@ -177,7 +177,7 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
           <Button 
             variant="default"
             size="sm"
-            className="flex items-center gap-2 bg-primary hover:bg-primary-light text-white
+            className="flex items-center gap-2 bg-[#F97316] hover:bg-[#FB923C] text-white
                      shadow-lg hover:shadow-xl transition-all duration-300"
             asChild
           >

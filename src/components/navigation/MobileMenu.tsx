@@ -111,43 +111,45 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate, language = "IT" }: M
     >
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
       <div className="absolute right-0 h-full w-3/4 max-w-sm bg-[#1A1F2C] p-6 shadow-xl">
-        <div className="flex flex-col space-y-6">
-          <button
-            onClick={() => handleNavigation("/invest")}
-            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
-          >
-            {text.invest}
-          </button>
-          <button
-            onClick={() => handleNavigation("/rent")}
-            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
-          >
-            {text.rent}
-          </button>
-          <button
-            onClick={() => handleNavigation("/marketplace")}
-            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
-          >
-            {text.marketplace}
-          </button>
-          <button
-            onClick={() => handleNavigation("/stay")}
-            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
-          >
-            {text.stay}
-          </button>
-          <button
-            onClick={() => handleNavigation("/student")}
-            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
-          >
-            {text.students}
-          </button>
-          <button
-            onClick={() => handleNavigation("/referral")}
-            className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
-          >
-            {text.referral}
-          </button>
+        <div className="flex flex-col h-full">
+          <div className="flex-grow space-y-6">
+            <button
+              onClick={() => handleNavigation("/invest")}
+              className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95 w-full"
+            >
+              {text.invest}
+            </button>
+            <button
+              onClick={() => handleNavigation("/rent")}
+              className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
+            >
+              {text.rent}
+            </button>
+            <button
+              onClick={() => handleNavigation("/marketplace")}
+              className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
+            >
+              {text.marketplace}
+            </button>
+            <button
+              onClick={() => handleNavigation("/stay")}
+              className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
+            >
+              {text.stay}
+            </button>
+            <button
+              onClick={() => handleNavigation("/student")}
+              className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
+            >
+              {text.students}
+            </button>
+            <button
+              onClick={() => handleNavigation("/referral")}
+              className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
+            >
+              {text.referral}
+            </button>
+          </div>
 
           <div className="pt-6 border-t border-white/20">
             {session ? (
@@ -172,7 +174,7 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate, language = "IT" }: M
                 <Button
                   variant="default"
                   onClick={() => handleNavigation("/auth")}
-                  className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-light text-background"
+                  className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#FB923C] text-white"
                 >
                   <UserPlus className="w-4 h-4" />
                   {text.register}
