@@ -184,3 +184,4 @@ export const mockProperties = [
     phone_number: "+393319053037"
   }
 ];
+
