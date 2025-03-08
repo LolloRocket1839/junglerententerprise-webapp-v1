@@ -1,6 +1,6 @@
 
 import { Clock, CheckCircle, XCircle, Upload } from "lucide-react";
-import { StudentDocument } from "../../types/documents";
+import { StudentDocument, DocumentType } from "../../types/documents";
 import { GlassCard } from "@/components/ui/glass-card";
 
 interface DocumentCardProps {

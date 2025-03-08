@@ -5,7 +5,7 @@ import { it } from "date-fns/locale";
 import { Euro, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { PaymentSchedule } from "../../types/documents";
+import { PaymentSchedule, PaymentStatus } from "../../types/documents";
 import { GlassCard } from "@/components/ui/glass-card";
 
 export function PaymentPlanTimeline() {
@@ -34,12 +34,12 @@ export function PaymentPlanTimeline() {
       return;
     }
 
-    // Map database fields to our frontend types
+    // Map database fields to our frontend types ensuring status is the correct type
     const mappedPayments: PaymentSchedule[] = data.map(payment => ({
       id: payment.id,
       dueDate: payment.due_date,
       amount: payment.amount,
-      status: payment.status,
+      status: payment.status as PaymentStatus, // Cast to our union type
       isExempt: payment.is_exempt,
       exemptionReason: payment.exemption_reason
     }));

@@ -1,6 +1,7 @@
 
 export type DocumentType = 'id_card' | 'income_proof' | 'student_id' | 'guarantor_form';
 export type DocumentStatus = 'pending' | 'approved' | 'rejected';
+export type PaymentStatus = 'pending' | 'paid' | 'overdue';
 
 export interface StudentDocument {
   id: string;
@@ -16,7 +17,7 @@ export interface PaymentSchedule {
   id: string;
   dueDate: string;
   amount: number;
-  status: 'pending' | 'paid' | 'overdue';
+  status: PaymentStatus;
   isExempt: boolean;
   exemptionReason?: string;
 }
