@@ -1,3 +1,4 @@
+
 export const cities = [
   "Roma", "Milano", "Firenze", "Torino", "Bologna", "Napoli", "Padova", "Pisa"
 ];
