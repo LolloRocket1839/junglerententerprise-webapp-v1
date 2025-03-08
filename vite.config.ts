@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       protocol: 'ws',
       host: 'localhost',
+      clientPort: 8080
     },
     headers: {
       'Content-Type': 'application/javascript; charset=utf-8',
@@ -35,7 +36,9 @@ export default defineConfig(({ mode }) => ({
     sourcemap: true
   },
   plugins: [
-    react(),
+    react({
+      fastRefresh: true
+    }),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
   resolve: {
@@ -45,3 +48,4 @@ export default defineConfig(({ mode }) => ({
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
   }
 }));
+
