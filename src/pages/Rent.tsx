@@ -4,8 +4,19 @@ import { SearchForm } from "@/components/rent/components/SearchForm";
 import { StreetMockups } from "@/components/rent/components/StreetMockups";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Heart } from "lucide-react";
+import { SearchParams } from "@/components/rent/types";
 
 export default function Rent() {
+  // Initialize searchParams with all required properties
+  const initialSearchParams: SearchParams = {
+    city: '',
+    university: '',
+    roomType: '',
+    minPrice: '',
+    maxPrice: '',
+    moveInDate: '',
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Tabs defaultValue="listings" className="container mx-auto py-8">
@@ -26,7 +37,7 @@ export default function Rent() {
                 Affitta vicino all'università
               </h1>
               <SearchForm 
-                searchParams={{}}
+                searchParams={initialSearchParams}
                 setSearchParams={() => {}}
                 showFilters={false}
                 setShowFilters={() => {}}
