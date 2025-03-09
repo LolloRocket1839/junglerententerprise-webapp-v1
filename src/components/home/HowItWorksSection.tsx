@@ -13,7 +13,7 @@ export const HowItWorksSection = () => {
     >
       <div className="container mx-auto text-center relative z-10">
         <GlassCard className="max-w-6xl mx-auto backdrop-blur-lg">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-secondary">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-primary">
             Come Funziona Jungle Rent
           </h2>
           <p className="text-lg sm:text-xl mb-8 sm:mb-10 max-w-2xl mx-auto text-secondary/90">
