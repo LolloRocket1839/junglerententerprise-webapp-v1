@@ -47,6 +47,7 @@ const UserTypeCard = ({
 export const UserTypeSection = () => {
   return (
     <section 
+      id="user-type-section"
       className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8"
       aria-label="Choose your role"
     >
