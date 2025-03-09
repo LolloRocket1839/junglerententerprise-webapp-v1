@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, DollarSign, GraduationCap, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -49,30 +50,30 @@ export const UserTypeSection = () => {
     <section 
       id="user-type-section"
       className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8"
-      aria-label="Choose your role"
+      aria-label="Scegli il tuo ruolo"
     >
       <div className="container mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           <UserTypeCard
             icon={DollarSign}
-            title="For Investors"
-            description="Invest in sustainable student housing and earn above-market returns while supporting affordable education."
+            title="Per Investitori"
+            description="Investi in alloggi studenteschi sostenibili e ottieni rendimenti superiori al mercato supportando l'istruzione accessibile."
             linkTo="/invest"
-            buttonText="Start Investing"
+            buttonText="Inizia a Investire"
           />
           <UserTypeCard
             icon={GraduationCap}
-            title="For Students"
-            description="Find your perfect long-term student accommodation and connect with potential roommates."
+            title="Per Studenti"
+            description="Trova il tuo alloggio studentesco perfetto a lungo termine e connettiti con potenziali coinquilini."
             linkTo="/rent"
-            buttonText="Find Housing"
+            buttonText="Trova Alloggio"
           />
           <UserTypeCard
             icon={Calendar}
-            title="Short-term Stay"
-            description="Looking for temporary accommodation for exams, internships, or short courses? Find the perfect spot."
+            title="Brevi Soggiorni"
+            description="Cerchi un alloggio temporaneo per esami, tirocini o corsi brevi? Trova il posto perfetto."
             linkTo="/stay"
-            buttonText="Book Stay"
+            buttonText="Prenota Soggiorno"
           />
         </div>
       </div>
