@@ -25,7 +25,7 @@ export const RoommateSwipe = () => {
     if (!currentProfile) return;
 
     try {
-      const { error } = await supabase.from('profiles')
+      const { error } = await supabase.from('roommate_matches')
         .insert({
           profile_id: (await supabase.auth.getUser()).data.user?.id,
           target_profile_id: currentProfile.id,
@@ -58,22 +58,22 @@ export const RoommateSwipe = () => {
     try {
       setLoading(true);
       
-      // Get current user's swipes
-      const { data: existingSwipes } = await supabase
-        .from('profiles')
+      // Get current user's matches
+      const { data: existingMatches } = await supabase
+        .from('roommate_matches')
         .select('target_profile_id')
         .eq('profile_id', (await supabase.auth.getUser()).data.user?.id);
 
-      const swipedIds = existingSwipes?.map(swipe => swipe.target_profile_id) || [];
+      const matchedIds = existingMatches?.map(match => match.target_profile_id) || [];
 
-      // Get next profile that hasn't been swiped
+      // Get next profile that hasn't been matched
       const { data: profiles, error } = await supabase
         .from('profiles')
         .select('*')
-        .not('id', 'in', `(${swipedIds.join(',')})`)
+        .not('id', 'in', `(${matchedIds.join(',')})`)
         .neq('id', (await supabase.auth.getUser()).data.user?.id)
         .limit(1)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
       setCurrentProfile(profiles);
@@ -90,7 +90,7 @@ export const RoommateSwipe = () => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     loadNextProfile();
   }, []);
 
