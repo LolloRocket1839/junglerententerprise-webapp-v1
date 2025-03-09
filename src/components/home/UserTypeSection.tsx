@@ -71,7 +71,7 @@ export const UserTypeSection = () => {
           <UserTypeCard
             icon={Calendar}
             title="Brevi Soggiorni"
-            description="Cerchi un alloggio temporaneo per esami, tirocini o corsi brevi? Trova il posto perfetto."
+            description="Cerchi un posto dove soggiornare per visitare la città d'estate? I nostri soggiorni fanno al caso tuo."
             linkTo="/stay"
             buttonText="Prenota Soggiorno"
           />
@@ -80,3 +80,4 @@ export const UserTypeSection = () => {
     </section>
   );
 };
+
