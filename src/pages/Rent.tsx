@@ -1,20 +1,41 @@
 
 import { RoommateMatching } from "@/components/rent/roommate/RoommateMatching";
 import { SearchForm } from "@/components/rent/components/SearchForm";
-import { StreetMockups } from "@/components/rent/components/StreetMockups";
+import { SearchParams } from "@/components/rent/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Heart } from "lucide-react";
-import { SearchParams } from "@/components/rent/types";
+import { useState } from "react";
+import { toast } from "@/components/ui/use-toast";
 
 export default function Rent() {
-  // Initialize searchParams with all required properties
-  const initialSearchParams: SearchParams = {
+  const [searchParams, setSearchParams] = useState<SearchParams>({
     city: '',
     university: '',
     roomType: '',
     minPrice: '',
     maxPrice: '',
     moveInDate: '',
+  });
+
+  const [showFilters, setShowFilters] = useState(false);
+
+  const handleSearch = () => {
+    if (!searchParams.city || !searchParams.university) {
+      toast({
+        title: "Inserisci i dati richiesti",
+        description: "Per favore seleziona una città e un'università per continuare la ricerca.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Ricerca in corso",
+      description: "Stiamo cercando le migliori opzioni per te...",
+    });
+    
+    // Here you would typically handle the search logic
+    console.log("Searching with params:", searchParams);
   };
 
   return (
@@ -31,23 +52,13 @@ export default function Rent() {
         </TabsList>
 
         <TabsContent value="listings" className="mt-6">
-          <div className="container mx-auto py-8">
-            <div className="max-w-7xl mx-auto">
-              <h1 className="text-2xl font-bold text-center mb-8 text-primary">
-                Affitta vicino all'università
-              </h1>
-              <SearchForm 
-                searchParams={initialSearchParams}
-                setSearchParams={() => {}}
-                showFilters={false}
-                setShowFilters={() => {}}
-                handleSearch={() => {}}
-              />
-              <div className="mt-12">
-                <StreetMockups />
-              </div>
-            </div>
-          </div>
+          <SearchForm 
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+            showFilters={showFilters}
+            setShowFilters={setShowFilters}
+            handleSearch={handleSearch}
+          />
         </TabsContent>
 
         <TabsContent value="roommate" className="mt-6">
