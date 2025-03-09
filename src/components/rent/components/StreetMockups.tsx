@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
@@ -56,7 +55,7 @@ export const StreetMockups = () => {
               </Card>
             </DialogTrigger>
             
-            <DialogContent className="sm:max-w-[900px] bg-[#1a1a1a] border-white/10">
+            <DialogContent className="sm:max-w-[900px] bg-[#1a1a1a] border-white/10 max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2 text-2xl text-white">
                   {property.title}
@@ -146,4 +145,3 @@ export const StreetMockups = () => {
     </section>
   );
 };
-
