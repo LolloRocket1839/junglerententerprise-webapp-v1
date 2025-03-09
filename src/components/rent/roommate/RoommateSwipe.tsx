@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, X } from "lucide-react";
@@ -25,11 +25,10 @@ export const RoommateSwipe = () => {
     if (!currentProfile) return;
 
     try {
-      const { error } = await supabase
-        .from('roommate_swipes')
+      const { error } = await supabase.from('profiles')
         .insert({
-          swiper_id: (await supabase.auth.getUser()).data.user?.id,
-          target_id: currentProfile.id,
+          profile_id: (await supabase.auth.getUser()).data.user?.id,
+          target_profile_id: currentProfile.id,
           liked
         });
 
@@ -61,17 +60,18 @@ export const RoommateSwipe = () => {
       
       // Get current user's swipes
       const { data: existingSwipes } = await supabase
-        .from('roommate_swipes')
-        .select('target_id')
-        .eq('swiper_id', (await supabase.auth.getUser()).data.user?.id);
+        .from('profiles')
+        .select('target_profile_id')
+        .eq('profile_id', (await supabase.auth.getUser()).data.user?.id);
 
-      const swipedIds = existingSwipes?.map(swipe => swipe.target_id) || [];
+      const swipedIds = existingSwipes?.map(swipe => swipe.target_profile_id) || [];
 
       // Get next profile that hasn't been swiped
       const { data: profiles, error } = await supabase
         .from('profiles')
         .select('*')
         .not('id', 'in', `(${swipedIds.join(',')})`)
+        .neq('id', (await supabase.auth.getUser()).data.user?.id)
         .limit(1)
         .single();
 
