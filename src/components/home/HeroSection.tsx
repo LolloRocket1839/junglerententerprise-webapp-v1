@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Leaf, TreePalm } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -24,7 +25,7 @@ export const HeroSection = () => {
       <div className="container mx-auto text-center relative z-30">
         <GlassCard className="max-w-4xl mx-auto backdrop-blur-lg">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-wider mb-6 sm:mb-8 animate-fade-in 
-                       bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent
+                       bg-gradient-to-r from-success via-success-light to-success bg-clip-text text-transparent
                        drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] leading-tight">
             <span className="tracking-widest inline-block pb-3">Jungle</span> <span className="tracking-widest">Rent</span>
           </h1>
