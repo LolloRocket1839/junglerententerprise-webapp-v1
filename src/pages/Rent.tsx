@@ -6,7 +6,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Heart, Search } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/components/ui/use-toast";
-import { GradientBackground } from "@/components/ui/gradient-background";
+import { JungleLayers } from "@/components/backgrounds/JungleLayers";
+import { LeafOverlay } from "@/components/backgrounds/LeafOverlay";
 
 export default function Rent() {
   const [searchParams, setSearchParams] = useState<SearchParams>({
@@ -39,39 +40,44 @@ export default function Rent() {
   };
 
   return (
-    <GradientBackground className="min-h-screen bg-background">
-      <Tabs defaultValue="listings" className="container mx-auto py-8">
-        <TabsList className="w-full justify-start gap-2 bg-white/5 backdrop-blur-sm border border-white/10 p-1 rounded-xl">
-          <TabsTrigger 
-            value="listings" 
-            className="data-[state=active]:bg-primary/20 data-[state=active]:backdrop-blur-xl transition-all duration-300 hover:bg-white/5"
-          >
-            <Search className="w-4 h-4 mr-2" />
-            Affitta
-          </TabsTrigger>
-          <TabsTrigger 
-            value="roommate" 
-            className="data-[state=active]:bg-primary/20 data-[state=active]:backdrop-blur-xl transition-all duration-300 hover:bg-white/5"
-          >
-            <Heart className="w-4 h-4 mr-2" />
-            Trova Coinquilino
-          </TabsTrigger>
-        </TabsList>
+    <JungleLayers>
+      <LeafOverlay />
+      <main className="container mx-auto px-4 min-h-screen">
+        <Tabs defaultValue="listings" className="py-8">
+          <TabsList className="w-full justify-start gap-2 glass-nav mb-8">
+            <TabsTrigger 
+              value="listings" 
+              className="data-[state=active]:bg-emerald-600/20 data-[state=active]:backdrop-blur-xl 
+                         transition-all duration-300 hover:bg-white/5"
+            >
+              <Search className="w-4 h-4 mr-2" />
+              Affitta
+            </TabsTrigger>
+            <TabsTrigger 
+              value="roommate" 
+              className="data-[state=active]:bg-emerald-600/20 data-[state=active]:backdrop-blur-xl 
+                         transition-all duration-300 hover:bg-white/5"
+            >
+              <Heart className="w-4 h-4 mr-2" />
+              Trova Coinquilino
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="listings" className="mt-6 animate-fade-in">
-          <SearchForm 
-            searchParams={searchParams}
-            setSearchParams={setSearchParams}
-            showFilters={showFilters}
-            setShowFilters={setShowFilters}
-            handleSearch={handleSearch}
-          />
-        </TabsContent>
+          <TabsContent value="listings" className="mt-6 animate-fade-in">
+            <SearchForm 
+              searchParams={searchParams}
+              setSearchParams={setSearchParams}
+              showFilters={showFilters}
+              setShowFilters={setShowFilters}
+              handleSearch={handleSearch}
+            />
+          </TabsContent>
 
-        <TabsContent value="roommate" className="mt-6 animate-fade-in">
-          <RoommateMatching />
-        </TabsContent>
-      </Tabs>
-    </GradientBackground>
+          <TabsContent value="roommate" className="mt-6 animate-fade-in">
+            <RoommateMatching />
+          </TabsContent>
+        </Tabs>
+      </main>
+    </JungleLayers>
   );
 }

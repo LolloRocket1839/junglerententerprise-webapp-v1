@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -33,26 +32,9 @@
     @apply border-border antialiased;
   }
   
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar {
-    @apply w-2;
-  }
-  
-  ::-webkit-scrollbar-track {
-    @apply bg-[#1a472a]/50 rounded-full;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    @apply bg-gradient-to-b from-green-500/70 to-green-600/70 
-           rounded-full transition-colors duration-200
-           hover:from-green-400/80 hover:to-green-500/80;
-  }
-
   body {
-    @apply bg-gradient-to-br from-[#1a472a] via-[#2d5a3f] to-[#3d6b52] min-h-screen text-white font-sans;
+    @apply bg-[#1a472a] text-white font-sans selection:bg-emerald-500/30;
     font-feature-settings: "rlig" 1, "calt" 1;
-    scrollbar-width: thin;
-    scrollbar-color: #4CAF50 #1a472a;
   }
 }
 
@@ -61,8 +43,16 @@
     @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg;
   }
 
+  .glass-nav {
+    @apply bg-black/20 backdrop-blur-xl border-b border-white/10 
+           shadow-lg rounded-xl transition-all duration-300 
+           hover:bg-black/30 p-1;
+  }
+
   .glass-card {
-    @apply glass rounded-2xl transition-all duration-300 hover:bg-white/10 shadow-xl hover:shadow-2xl;
+    @apply glass rounded-2xl transition-all duration-300 
+           hover:bg-white/10 shadow-xl hover:shadow-2xl 
+           hover:shadow-emerald-500/10;
   }
 
   .glass-button {
@@ -74,23 +64,15 @@
   .glass-input {
     @apply glass rounded-lg px-4 py-2 
            text-white placeholder-white/40 transition-all duration-300
-           focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-lg;
-  }
-
-  .glass-nav {
-    @apply glass sticky top-0 z-50 border-b border-white/10 shadow-lg;
-  }
-
-  .glass-dialog {
-    @apply glass rounded-2xl shadow-2xl;
-  }
-
-  .nav-link {
-    @apply text-base text-white/80 hover:text-white transition-all duration-300 
-           hover:border-b-2 hover:border-primary font-sans tracking-wide;
+           focus:outline-none focus:ring-2 focus:ring-emerald-500/50 shadow-lg;
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-white via-white/90 to-white bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-white via-white/90 to-white/70 
+           bg-clip-text text-transparent;
+  }
+
+  .jungle-shadow {
+    @apply shadow-[0_8px_32px_-8px_rgba(52,211,153,0.2)];
   }
 }
