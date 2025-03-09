@@ -2,13 +2,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Leaf, TreePalm } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GlassCard } from "@/components/ui/glass-card";
-
 export const HeroSection = () => {
-  return (
-    <section 
-      className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 py-20"
-      aria-label="Welcome section"
-    >
+  return <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 py-20" aria-label="Welcome section">
       {/* Background elements - lower z-index */}
       <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary/30 via-primary/20 to-background animate-gradient-slow" />
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_30%_30%,rgba(46,246,46,0.15)_0%,transparent_60%)]" />
@@ -33,20 +28,13 @@ export const HeroSection = () => {
             Welcome to <span className="tracking-widest inline-block pb-3 leading-[1.4]">Jungle</span> <span className="tracking-widest">Rent</span>
           </h1>
           
-          <p className="text-base sm:text-lg md:text-2xl mb-8 sm:mb-10 animate-fade-in text-secondary/90 font-light">
-            Pay less earn more
-          </p>
+          <p className="text-base sm:text-lg md:text-2xl mb-8 sm:mb-10 animate-fade-in text-secondary/90 font-light">L'affitto che paga</p>
           
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary 
+          <Button size="lg" className="bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary 
                      text-background font-semibold px-8 sm:px-10 py-4 sm:py-6 text-base sm:text-lg 
                      transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-md group
                      min-w-[200px] sm:min-w-[250px] touch-manipulation
-                     focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background focus:outline-none"
-            asChild
-            aria-label="Get started with Jungle Rent"
-          >
+                     focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background focus:outline-none" asChild aria-label="Get started with Jungle Rent">
             <Link to="/auth" className="flex items-center justify-center gap-2">
               Get Started 
               <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
@@ -54,6 +42,5 @@ export const HeroSection = () => {
           </Button>
         </GlassCard>
       </div>
-    </section>
-  );
+    </section>;
 };
