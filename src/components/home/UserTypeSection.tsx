@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight, DollarSign, GraduationCap, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -71,7 +70,7 @@ export const UserTypeSection = () => {
           <UserTypeCard
             icon={Calendar}
             title="Brevi Soggiorni"
-            description="Cerchi un posto dove soggiornare per visitare la città d'estate? I nostri soggiorni fanno al caso tuo."
+            description="Cerchi un posto dove soggiornare per visitare la città d'estate? Le nostre soluzioni fanno al caso tuo."
             linkTo="/stay"
             buttonText="Prenota Soggiorno"
           />
@@ -80,4 +79,3 @@ export const UserTypeSection = () => {
     </section>
   );
 };
-
