@@ -1,6 +1,7 @@
 
 import { RoommateMatching } from "@/components/rent/roommate/RoommateMatching";
 import { SearchForm } from "@/components/rent/components/SearchForm";
+import { StreetMockups } from "@/components/rent/components/StreetMockups";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Heart } from "lucide-react";
 
@@ -20,41 +21,19 @@ export default function Rent() {
 
         <TabsContent value="listings" className="mt-6">
           <div className="container mx-auto py-8">
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-7xl mx-auto">
               <h1 className="text-2xl font-bold text-center mb-8 text-primary">
-                Available Rentals
+                Affitta vicino all'università
               </h1>
-              {/* Mock rental listings with the site's glass card style */}
-              <div className="space-y-6">
-                <div className="glass-card p-6">
-                  <h2 className="text-xl font-semibold">Modern Studio in City Center</h2>
-                  <p className="text-gray-300">€850/month</p>
-                  <p className="text-gray-400">Available from February 1st</p>
-                  <div className="flex gap-2 mt-4">
-                    <span className="px-2 py-1 rounded-full bg-primary/20 text-sm">Furnished</span>
-                    <span className="px-2 py-1 rounded-full bg-primary/20 text-sm">Studio</span>
-                  </div>
-                </div>
-
-                <div className="glass-card p-6">
-                  <h2 className="text-xl font-semibold">Cozy Room in Shared Apartment</h2>
-                  <p className="text-gray-300">€650/month</p>
-                  <p className="text-gray-400">Available from January 15th</p>
-                  <div className="flex gap-2 mt-4">
-                    <span className="px-2 py-1 rounded-full bg-primary/20 text-sm">Shared</span>
-                    <span className="px-2 py-1 rounded-full bg-primary/20 text-sm">All Bills Included</span>
-                  </div>
-                </div>
-
-                <div className="glass-card p-6">
-                  <h2 className="text-xl font-semibold">Spacious Room near University</h2>
-                  <p className="text-gray-300">€700/month</p>
-                  <p className="text-gray-400">Available Immediately</p>
-                  <div className="flex gap-2 mt-4">
-                    <span className="px-2 py-1 rounded-full bg-primary/20 text-sm">Student Friendly</span>
-                    <span className="px-2 py-1 rounded-full bg-primary/20 text-sm">Close to Campus</span>
-                  </div>
-                </div>
+              <SearchForm 
+                searchParams={{}}
+                setSearchParams={() => {}}
+                showFilters={false}
+                setShowFilters={() => {}}
+                handleSearch={() => {}}
+              />
+              <div className="mt-12">
+                <StreetMockups />
               </div>
             </div>
           </div>
