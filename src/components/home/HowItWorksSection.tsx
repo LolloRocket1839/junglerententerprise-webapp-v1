@@ -33,7 +33,7 @@ export const HowItWorksSection = () => {
             <FeatureCard
               icon={Calendar}
               title="Per Brevi Soggiorni"
-              description="Prenota alloggi temporanei per esami, tirocini o corsi brevi."
+              description="Affitta a breve termine senza l'angoscia di essere parte di un problema, ma con la consapevolezza di sostenere la soluzione."
             />
           </div>
         </GlassCard>
