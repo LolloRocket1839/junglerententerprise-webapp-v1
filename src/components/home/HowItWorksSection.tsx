@@ -23,7 +23,7 @@ export const HowItWorksSection = () => {
             <FeatureCard
               icon={DollarSign}
               title="Per Investitori"
-              description="Investi in proprietà studentesche verificate e guadagna rendimenti sostenendo l'istruzione."
+              description="Puoi investire in proprietà affittate da studenti a partire da 50 euro e guadagnare rendimenti sostenendo l'istruzione."
             />
             <FeatureCard
               icon={GraduationCap}
