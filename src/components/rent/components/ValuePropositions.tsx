@@ -1,3 +1,4 @@
+
 import React, { lazy, Suspense } from 'react';
 import { Euro, CheckCircle, School, Leaf } from 'lucide-react';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
