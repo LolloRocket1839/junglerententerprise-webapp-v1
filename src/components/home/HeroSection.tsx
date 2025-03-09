@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Leaf, TreePalm } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GlassCard } from "@/components/ui/glass-card";
+
 export const HeroSection = () => {
   return <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8 py-20" aria-label="Welcome section">
       {/* Background elements - lower z-index */}
@@ -22,13 +23,15 @@ export const HeroSection = () => {
       {/* Main content - highest z-index */}
       <div className="container mx-auto text-center relative z-30">
         <GlassCard className="max-w-4xl mx-auto backdrop-blur-lg">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-wider mb-6 sm:mb-8 animate-fade-in 
-                       bg-gradient-to-r from-primary-light via-primary to-primary-light bg-clip-text text-transparent
-                       drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)] leading-relaxed">
-            Welcome to <span className="tracking-widest inline-block pb-3 leading-[1.4]">Jungle</span> <span className="tracking-widest">Rent</span>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-wider mb-6 sm:mb-8 animate-fade-in 
+                       bg-gradient-to-r from-white via-white to-white/90 bg-clip-text text-transparent
+                       drop-shadow-[0_2px_2px_rgba(0,0,0,0.5)] leading-tight">
+            <span className="tracking-widest inline-block pb-3">Jungle</span> <span className="tracking-widest">Rent</span>
           </h1>
           
-          <p className="text-base sm:text-lg md:text-2xl mb-8 sm:mb-10 animate-fade-in text-secondary/90 font-light">L'affitto che paga</p>
+          <p className="text-base sm:text-lg md:text-2xl mb-8 sm:mb-10 animate-fade-in text-white font-medium">
+            L'affitto che paga
+          </p>
           
           <Button size="lg" className="bg-gradient-to-r from-primary to-primary-dark hover:from-primary-dark hover:to-primary 
                      text-background font-semibold px-8 sm:px-10 py-4 sm:py-6 text-base sm:text-lg 
