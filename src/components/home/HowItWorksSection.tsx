@@ -28,7 +28,7 @@ export const HowItWorksSection = () => {
             <FeatureCard
               icon={GraduationCap}
               title="Per Studenti"
-              description="Trova alloggi a lungo termine a prezzi accessibili e connettiti con coinquilini compatibili."
+              description="Affitta per i tuoi anni universitari con un risparmio significativo, per permetterti la vita da studente con meno sacrifici."
             />
             <FeatureCard
               icon={Calendar}
