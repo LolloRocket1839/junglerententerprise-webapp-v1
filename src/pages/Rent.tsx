@@ -1,6 +1,7 @@
+
 import { RoommateMatching } from "@/components/rent/roommate/RoommateMatching";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserHeartIcon } from "lucide-react";
+import { Heart } from "lucide-react";
 
 export default function Rent() {
   return (
@@ -11,7 +12,7 @@ export default function Rent() {
             Listings
           </TabsTrigger>
           <TabsTrigger value="roommate" className="data-[state=active]:bg-primary/20">
-            <UserHeartIcon className="w-4 h-4 mr-2" />
+            <Heart className="w-4 h-4 mr-2" />
             Find a Roommate
           </TabsTrigger>
         </TabsList>
