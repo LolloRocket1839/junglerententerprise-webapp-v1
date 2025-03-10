@@ -90,7 +90,7 @@ export const StreetMockups = () => {
                         <Home className="h-5 w-5 text-primary" />
                         Prezzo Appartamento
                       </h4>
-                      <p className="text-2xl font-bold text-primary">€{property.market_price_monthly}/mese</p>
+                      <p className="text-2xl font-bold text-primary">€{property.rooms * 420}/mese</p>
                     </div>
                     
                     <div className="space-y-2">
@@ -98,7 +98,7 @@ export const StreetMockups = () => {
                         <Euro className="h-5 w-5 text-primary" />
                         Prezzo per Stanza
                       </h4>
-                      <p className="text-2xl font-bold text-primary">€{calculatePricePerRoom()}/mese</p>
+                      <p className="text-2xl font-bold text-primary">€420/mese</p>
                     </div>
                   </div>
                   
