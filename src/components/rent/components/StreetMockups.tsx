@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Phone, CheckCircle2, XCircle, Home, Euro } from 'lucide-react';
+import { Phone, Home, Euro } from 'lucide-react';
 import { mockProperties } from '../data/mockData';
 import { Property } from '../types';
 
@@ -11,8 +11,8 @@ export const StreetMockups = () => {
     window.location.href = `tel:${phoneNumber}`;
   };
 
-  const calculatePricePerRoom = (property: Property) => {
-    return Math.round(property.market_price_monthly / property.rooms);
+  const calculatePricePerRoom = () => {
+    return 420; // Fixed price per room
   };
 
   return (
@@ -32,11 +32,7 @@ export const StreetMockups = () => {
                     alt={property.title}
                     className="w-full h-full object-cover rounded-t-xl"
                   />
-                  <div className={`absolute top-2 right-2 px-3 py-1 rounded-full text-sm font-medium ${
-                    property.current_status === "available" 
-                      ? "bg-green-500/80 text-white" 
-                      : "bg-red-500/80 text-white"
-                  }`}>
+                  <div className="absolute top-2 right-2 px-3 py-1 rounded-full text-sm font-medium bg-green-500/80 text-white">
                     {property.current_status === "available" ? "Disponibile" : "Non disponibile"}
                   </div>
                 </div>
@@ -44,12 +40,8 @@ export const StreetMockups = () => {
                   <h3 className="text-2xl font-semibold text-white mb-3">{property.title}</h3>
                   <p className="text-white/70 text-lg mb-2">{property.address}</p>
                   <p className="text-white/70 text-sm">{property.distance_to_university}</p>
-                  <div className="mt-4 flex justify-between items-center">
-                    <div>
-                      <p className="text-xl font-bold text-primary">€{property.discounted_price_monthly}/mese</p>
-                      <p className="text-sm text-white/50 line-through">€{property.market_price_monthly}/mese</p>
-                    </div>
-                    <span className="text-green-400 font-semibold">-{property.savings_percentage}%</span>
+                  <div className="mt-4">
+                    <p className="text-xl font-bold text-primary">€{property.market_price_monthly}/mese</p>
                   </div>
                 </div>
               </Card>
@@ -57,13 +49,8 @@ export const StreetMockups = () => {
             
             <DialogContent className="sm:max-w-[900px] bg-[#1a1a1a] border-white/10 max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle className="flex items-center gap-2 text-2xl text-white">
+                <DialogTitle className="text-2xl text-white">
                   {property.title}
-                  {property.current_status === "available" ? (
-                    <CheckCircle2 className="h-5 w-5 text-green-500" />
-                  ) : (
-                    <XCircle className="h-5 w-5 text-red-500" />
-                  )}
                 </DialogTitle>
               </DialogHeader>
               
@@ -103,8 +90,7 @@ export const StreetMockups = () => {
                         <Home className="h-5 w-5 text-primary" />
                         Prezzo Appartamento
                       </h4>
-                      <p className="text-2xl font-bold text-primary">€{property.discounted_price_monthly}/mese</p>
-                      <p className="text-sm text-white/50 line-through">€{property.market_price_monthly}/mese</p>
+                      <p className="text-2xl font-bold text-primary">€{property.market_price_monthly}/mese</p>
                     </div>
                     
                     <div className="space-y-2">
@@ -112,7 +98,7 @@ export const StreetMockups = () => {
                         <Euro className="h-5 w-5 text-primary" />
                         Prezzo per Stanza
                       </h4>
-                      <p className="text-2xl font-bold text-primary">€{calculatePricePerRoom(property)}/mese</p>
+                      <p className="text-2xl font-bold text-primary">€{calculatePricePerRoom()}/mese</p>
                     </div>
                   </div>
                   
