@@ -12,7 +12,7 @@ export const StreetMockups = () => {
   };
 
   const calculatePricePerRoom = (property: Property) => {
-    return Math.round(property.discounted_price_monthly / property.rooms);
+    return Math.round(property.market_price_monthly / property.rooms);
   };
 
   return (
@@ -113,9 +113,6 @@ export const StreetMockups = () => {
                         Prezzo per Stanza
                       </h4>
                       <p className="text-2xl font-bold text-primary">€{calculatePricePerRoom(property)}/mese</p>
-                      <p className="text-sm text-white/50 line-through">
-                        €{Math.round(property.market_price_monthly / property.rooms)}/mese
-                      </p>
                     </div>
                   </div>
                   
