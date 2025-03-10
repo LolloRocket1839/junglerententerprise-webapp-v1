@@ -4,15 +4,10 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Phone, Home, Euro } from 'lucide-react';
 import { mockProperties } from '../data/mockData';
-import { Property } from '../types';
 
 export const StreetMockups = () => {
   const handleCall = (phoneNumber: string) => {
     window.location.href = `tel:${phoneNumber}`;
-  };
-
-  const calculatePricePerRoom = () => {
-    return 420; // Fixed price per room
   };
 
   return (
