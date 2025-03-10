@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { SearchParams } from '../types';
 import { SearchBar } from './SearchBar';
 import { ValuePropositions } from './ValuePropositions';
-import { StreetMockups } from './StreetMockups';
+
 interface SearchFormProps {
   searchParams: SearchParams;
   setSearchParams: (params: SearchParams) => void;
@@ -10,6 +11,7 @@ interface SearchFormProps {
   setShowFilters: (show: boolean) => void;
   handleSearch: () => void;
 }
+
 export const SearchForm = ({
   searchParams,
   setSearchParams,
@@ -35,14 +37,22 @@ export const SearchForm = ({
         </div>
       </section>
       
-      {/* Contenuto Sottostante */}
+      {/* Content Below */}
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
         <div className="glass rounded-xl p-6 shadow-lg backdrop-blur-sm">
           <SearchBar searchParams={searchParams} setSearchParams={setSearchParams} showFilters={showFilters} setShowFilters={setShowFilters} handleSearch={handleSearch} />
         </div>
         
         <ValuePropositions />
-        <StreetMockups />
+        
+        {/* Apartment Mockup */}
+        <div className="w-full max-w-4xl mx-auto overflow-hidden rounded-xl shadow-lg">
+          <img 
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c" 
+            alt="Apartment mockup"
+            className="w-full h-[400px] object-cover"
+          />
+        </div>
       </div>
     </main>;
 };
