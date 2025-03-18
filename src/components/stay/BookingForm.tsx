@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { TouristProperty } from "@/types/tourist";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
 import { DateRangePicker } from "./DateRangePicker";
 import { PricingSummary } from "./PricingSummary";
 import { useBookingAvailability } from "@/hooks/useBookingAvailability";
@@ -18,24 +18,32 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [guests, setGuests] = useState(1);
-  const { toast } = useToast();
-
-  const { isAvailable, nights } = useBookingAvailability({
+  
+  const { isAvailable, nights, isLoading } = useBookingAvailability({
     property,
     checkIn,
     checkOut
   });
 
   const handleSubmit = () => {
-    if (!isAvailable) {
-      toast({
-        title: "Non disponibile",
-        description: "Le date selezionate non sono disponibili",
-        variant: "destructive"
-      });
+    if (!checkIn || !checkOut) {
+      toast.error("Seleziona le date di check-in e check-out");
       return;
     }
-    onBook({ checkIn: checkIn!, checkOut: checkOut!, guests });
+    
+    if (!isAvailable) {
+      toast.error("Le date selezionate non sono disponibili");
+      return;
+    }
+    
+    onBook({ checkIn, checkOut, guests });
+  };
+
+  const handleGuestChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (value >= 1 && value <= property.capacity) {
+      setGuests(value);
+    }
   };
 
   return (
@@ -60,7 +68,7 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
                 min={1}
                 max={property.capacity}
                 value={guests}
-                onChange={(e) => setGuests(parseInt(e.target.value))}
+                onChange={handleGuestChange}
                 className="bg-white/5 border-white/10 text-white"
               />
             </div>
@@ -71,10 +79,10 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
 
         <Button
           className="w-full bg-primary hover:bg-primary/90"
-          disabled={!checkIn || !checkOut || nights < 1 || !isAvailable}
+          disabled={!checkIn || !checkOut || isLoading || !isAvailable}
           onClick={handleSubmit}
         >
-          {isAvailable ? 'Prenota ora' : 'Non disponibile'}
+          {isLoading ? 'Verificando...' : isAvailable ? 'Prenota ora' : 'Non disponibile'}
         </Button>
       </div>
     </Card>

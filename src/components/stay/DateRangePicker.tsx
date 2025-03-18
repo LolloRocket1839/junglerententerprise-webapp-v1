@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -7,6 +6,7 @@ import { CalendarIcon } from "lucide-react";
 import { format, addDays, isBefore, startOfToday } from "date-fns";
 import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
+import { memo } from "react";
 
 interface DateRangePickerProps {
   checkIn: Date | undefined;
@@ -15,7 +15,7 @@ interface DateRangePickerProps {
   onCheckOutChange: (date: Date | undefined) => void;
 }
 
-export const DateRangePicker = ({
+export const DateRangePicker = memo(({
   checkIn,
   checkOut,
   onCheckInChange,
@@ -47,7 +47,7 @@ export const DateRangePicker = ({
               {checkIn ? format(checkIn, "d MMMM yyyy", { locale: it }) : <span>Scegli data</span>}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
+          <PopoverContent className="w-auto p-0 z-50" align="start">
             <Calendar
               mode="single"
               selected={checkIn}
@@ -90,12 +90,14 @@ export const DateRangePicker = ({
               {checkOut ? format(checkOut, "d MMMM yyyy", { locale: it }) : <span>Scegli data</span>}
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
+          <PopoverContent className="w-auto p-0 z-50" align="start">
             <Calendar
               mode="single"
               selected={checkOut}
               onSelect={onCheckOutChange}
-              disabled={(date) => (checkIn ? isBefore(date, addDays(checkIn, 1)) : isBefore(date, addDays(today, 1)))}
+              disabled={(date) => 
+                (checkIn ? isBefore(date, addDays(checkIn, 1)) : isBefore(date, addDays(today, 1)))
+              }
               initialFocus
               className={cn("p-3 pointer-events-auto bg-white text-black")}
               classNames={{
@@ -119,4 +121,6 @@ export const DateRangePicker = ({
       </div>
     </div>
   );
-};
+});
+
+DateRangePicker.displayName = "DateRangePicker";

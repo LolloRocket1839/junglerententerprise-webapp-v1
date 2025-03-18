@@ -2,6 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { TouristProperty } from "@/types/tourist";
+import { differenceInDays } from "date-fns";
 
 interface UseBookingAvailabilityProps {
   property: TouristProperty;
@@ -14,32 +15,40 @@ export function useBookingAvailability({
   checkIn, 
   checkOut 
 }: UseBookingAvailabilityProps) {
-  const { data: existingBookings } = useQuery({
-    queryKey: ['bookings', property.id, checkIn, checkOut],
+  const nights = checkIn && checkOut 
+    ? Math.max(1, differenceInDays(checkOut, checkIn))
+    : 0;
+
+  const { data: existingBookings = [], isLoading } = useQuery({
+    queryKey: ['bookings', property.id, checkIn?.toISOString(), checkOut?.toISOString()],
     queryFn: async () => {
       if (!checkIn || !checkOut) return [];
       
-      const { data, error } = await supabase
-        .from('tourist_bookings')
-        .select('check_in, check_out')
-        .eq('property_id', property.id)
-        .neq('status', 'canceled')
-        .or(`check_in.overlaps.[${checkIn.toISOString()},${checkOut.toISOString()}],check_out.overlaps.[${checkIn.toISOString()},${checkOut.toISOString()}]`);
+      try {
+        const { data, error } = await supabase
+          .from('tourist_bookings')
+          .select('check_in, check_out')
+          .eq('property_id', property.id)
+          .neq('status', 'canceled')
+          .or(`check_in.overlaps.[${checkIn.toISOString()},${checkOut.toISOString()}],check_out.overlaps.[${checkIn.toISOString()},${checkOut.toISOString()}]`);
 
-      if (error) throw error;
-      return data;
+        if (error) throw error;
+        return data || [];
+      } catch (error) {
+        console.error("Error checking availability:", error);
+        return [];
+      }
     },
-    enabled: !!checkIn && !!checkOut && !!property.id
+    enabled: !!checkIn && !!checkOut && !!property.id,
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
   });
 
-  const isAvailable = !existingBookings?.length;
-  const nights = checkIn && checkOut 
-    ? Math.ceil((checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24))
-    : 0;
+  const isAvailable = !isLoading && existingBookings.length === 0;
 
   return {
     isAvailable,
     nights,
-    existingBookings
+    existingBookings,
+    isLoading
   };
 }

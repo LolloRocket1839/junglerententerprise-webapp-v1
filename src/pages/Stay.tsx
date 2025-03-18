@@ -8,23 +8,27 @@ import { BookingSteps } from '@/components/stay/BookingSteps';
 import { BookingForm } from '@/components/stay/BookingForm';
 import { GuestInfoForm } from '@/components/stay/GuestInfoForm';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from "sonner";
 
 const Stay = () => {
   const [selectedProperty, setSelectedProperty] = useState<TouristProperty | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [bookingData, setBookingData] = useState<any>(null);
-  const { toast } = useToast();
 
   const { data: properties, isLoading } = useQuery({
     queryKey: ['tourist-properties'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('tourist_properties')
-        .select('*');
-      
-      if (error) throw error;
-      return data as TouristProperty[];
+      try {
+        const { data, error } = await supabase
+          .from('tourist_properties')
+          .select('*');
+        
+        if (error) throw error;
+        return data as TouristProperty[];
+      } catch (error) {
+        console.error("Error fetching properties:", error);
+        return [];
+      }
     },
   });
 
@@ -33,12 +37,12 @@ const Stay = () => {
     setCurrentStep(2);
   };
 
-  const handleDateSelection = async (dates: { checkIn: Date; checkOut: Date, guests: number }) => {
+  const handleDateSelection = (dates: { checkIn: Date; checkOut: Date, guests: number }) => {
     setBookingData({
       ...dates,
       propertyId: selectedProperty?.id,
       totalPrice: selectedProperty ? 
-        (dates.guests * selectedProperty.price_per_night + selectedProperty.cleaning_fee) : 0
+        (dates.guests * selectedProperty.price_per_night * Math.max(1, Math.floor((dates.checkOut.getTime() - dates.checkIn.getTime()) / (1000 * 60 * 60 * 24))) + selectedProperty.cleaning_fee) : 0
     });
     setCurrentStep(3);
   };
@@ -49,10 +53,13 @@ const Stay = () => {
         .from('tourist_bookings')
         .insert({
           property_id: selectedProperty?.id,
-          check_in: bookingData.checkIn,
-          check_out: bookingData.checkOut,
+          check_in: bookingData.checkIn.toISOString(),
+          check_out: bookingData.checkOut.toISOString(),
           number_of_guests: bookingData.guests,
           total_price: bookingData.totalPrice,
+          guest_name: guestInfo.fullName,
+          guest_email: guestInfo.email,
+          guest_phone: guestInfo.phone,
           special_requests: guestInfo.specialRequests
         })
         .select()
@@ -60,23 +67,25 @@ const Stay = () => {
 
       if (bookingError) throw bookingError;
 
-      await supabase.functions.invoke('send-booking-confirmation', {
-        body: { bookingId: booking.id }
-      });
+      try {
+        await supabase.functions.invoke('send-booking-confirmation', {
+          body: { bookingId: booking.id }
+        });
+      } catch (error) {
+        console.error("Failed to send confirmation email:", error);
+      }
 
-      toast({
-        title: "Prenotazione confermata!",
-        description: "Ti abbiamo inviato una email di conferma.",
-      });
-
+      toast.success("Prenotazione confermata! Ti abbiamo inviato una email di conferma.");
       setCurrentStep(4);
     } catch (error) {
-      toast({
-        title: "Errore",
-        description: "Si è verificato un errore durante la prenotazione.",
-        variant: "destructive"
-      });
+      console.error("Booking error:", error);
+      toast.error("Si è verificato un errore durante la prenotazione.");
     }
+  };
+
+  const handleCloseDialog = () => {
+    setSelectedProperty(null);
+    setCurrentStep(1);
   };
 
   if (isLoading) {
@@ -93,20 +102,26 @@ const Stay = () => {
     <div className="container mx-auto p-8">
       <BookingSteps currentStep={currentStep} />
       
-      <h1 className="text-4xl font-bold mb-8 gradient-text">Soggiorna</h1>
+      <h1 className="text-4xl font-bold mb-8 text-white">Soggiorna</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {properties?.map((property) => (
-          <TouristPropertyCard
-            key={property.id}
-            property={property}
-            onSelect={handlePropertySelect}
-          />
-        ))}
+        {properties && properties.length > 0 ? (
+          properties.map((property) => (
+            <TouristPropertyCard
+              key={property.id}
+              property={property}
+              onSelect={handlePropertySelect}
+            />
+          ))
+        ) : (
+          <div className="col-span-3 text-center py-8 text-white">
+            Nessun alloggio disponibile al momento.
+          </div>
+        )}
       </div>
 
-      <Dialog open={!!selectedProperty} onOpenChange={() => setSelectedProperty(null)}>
-        <DialogContent className="sm:max-w-[900px] bg-[#1a1a1a] border-white/10">
+      <Dialog open={!!selectedProperty} onOpenChange={handleCloseDialog}>
+        <DialogContent className="sm:max-w-[900px] bg-[#1a1a1a] border-white/10 max-h-[90vh] overflow-y-auto">
           {selectedProperty && (
             <div className="grid md:grid-cols-2 gap-6">
               <div>
