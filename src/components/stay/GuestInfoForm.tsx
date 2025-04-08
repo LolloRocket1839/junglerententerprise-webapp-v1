@@ -1,27 +1,19 @@
 
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { format } from 'date-fns';
-import { it } from 'date-fns/locale';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useToast } from '@/components/ui/use-toast';
-
-const guestFormSchema = z.object({
-  fullName: z.string().min(3, "Il nome deve essere di almeno 3 caratteri"),
-  email: z.string().email("Inserisci un'email valida"),
-  phone: z.string().min(8, "Inserisci un numero di telefono valido"),
-  specialRequests: z.string().optional()
-});
-
-type GuestFormData = z.infer<typeof guestFormSchema>;
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { format } from "date-fns";
+import { it } from "date-fns/locale";
+import { Calendar, Mail, Phone, User } from "lucide-react";
 
 interface GuestInfoFormProps {
-  onSubmit: (data: GuestFormData) => void;
+  onSubmit: (guestInfo: {
+    fullName: string;
+    email: string;
+    phone: string;
+    specialRequests?: string;
+  }) => void;
   bookingData: {
     checkIn: Date;
     checkOut: Date;
@@ -31,100 +23,140 @@ interface GuestInfoFormProps {
 }
 
 export const GuestInfoForm = ({ onSubmit, bookingData }: GuestInfoFormProps) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<GuestFormData>({
-    resolver: zodResolver(guestFormSchema)
-  });
-  const { toast } = useToast();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [specialRequests, setSpecialRequests] = useState("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const onSubmitForm = (data: GuestFormData) => {
-    try {
-      onSubmit(data);
-    } catch (error) {
-      toast({
-        title: "Errore",
-        description: "Si è verificato un errore durante l'invio del form",
-        variant: "destructive"
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!fullName.trim()) {
+      newErrors.fullName = "Nome completo richiesto";
+    }
+    
+    if (!email.trim()) {
+      newErrors.email = "Email richiesta";
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      newErrors.email = "Email non valida";
+    }
+    
+    if (!phone.trim()) {
+      newErrors.phone = "Numero di telefono richiesto";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validate()) {
+      onSubmit({
+        fullName,
+        email,
+        phone,
+        specialRequests,
       });
     }
   };
 
   return (
-    <Card className="p-6 bg-white/5 border-white/10">
-      <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-6">
+    <div className="bg-white/5 border-white/10 rounded-lg p-6 space-y-6">
+      <h3 className="text-xl font-semibold text-white mb-4">Dati dell'ospite</h3>
+      
+      <div className="bg-white/5 rounded-md p-4 mb-6">
+        <div className="flex items-center gap-2 text-white/80 mb-1">
+          <Calendar className="h-4 w-4" />
+          <span className="text-sm">
+            Dal {format(bookingData.checkIn, "d MMMM", { locale: it })} al {format(bookingData.checkOut, "d MMMM yyyy", { locale: it })}
+          </span>
+        </div>
+        <div className="flex items-center gap-2 text-white/80">
+          <User className="h-4 w-4" />
+          <span className="text-sm">{bookingData.guests} {bookingData.guests === 1 ? "ospite" : "ospiti"}</span>
+        </div>
+      </div>
+
+      <div className="space-y-4">
         <div>
-          <h3 className="text-lg font-semibold text-white mb-4">
-            Informazioni di Contatto
-          </h3>
-          
-          <div className="space-y-4">
-            <div>
-              <label className="text-sm text-white/70 mb-1 block">Nome completo</label>
-              <Input
-                {...register('fullName')}
-                className="bg-white/5 border-white/10 text-white"
-              />
-              {errors.fullName && (
-                <p className="text-sm text-red-500 mt-1">{errors.fullName.message}</p>
-              )}
-            </div>
-            
-            <div>
-              <label className="text-sm text-white/70 mb-1 block">Email</label>
-              <Input
-                {...register('email')}
-                type="email"
-                className="bg-white/5 border-white/10 text-white"
-              />
-              {errors.email && (
-                <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>
-              )}
-            </div>
-            
-            <div>
-              <label className="text-sm text-white/70 mb-1 block">Telefono</label>
-              <Input
-                {...register('phone')}
-                className="bg-white/5 border-white/10 text-white"
-              />
-              {errors.phone && (
-                <p className="text-sm text-red-500 mt-1">{errors.phone.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="text-sm text-white/70 mb-1 block">Richieste speciali</label>
-              <Textarea
-                {...register('specialRequests')}
-                className="bg-white/5 border-white/10 text-white"
-                placeholder="Allergie, preferenze, etc."
-              />
-            </div>
+          <label htmlFor="fullName" className="text-sm text-white/70 mb-1 block">
+            Nome completo*
+          </label>
+          <div className="relative">
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" size={16} />
+            <Input
+              id="fullName"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className={`bg-white/5 border-white/10 text-white pl-10 ${errors.fullName ? "border-red-500" : ""}`}
+              placeholder="Il tuo nome completo"
+            />
           </div>
+          {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName}</p>}
         </div>
 
-        <div className="space-y-3 pt-4 border-t border-white/10">
-          <div className="flex justify-between text-white/70">
-            <span>Check-in</span>
-            <span>{format(bookingData.checkIn, 'dd MMM yyyy', { locale: it })}</span>
+        <div>
+          <label htmlFor="email" className="text-sm text-white/70 mb-1 block">
+            Email*
+          </label>
+          <div className="relative">
+            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" size={16} />
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`bg-white/5 border-white/10 text-white pl-10 ${errors.email ? "border-red-500" : ""}`}
+              placeholder="La tua email"
+            />
           </div>
-          <div className="flex justify-between text-white/70">
-            <span>Check-out</span>
-            <span>{format(bookingData.checkOut, 'dd MMM yyyy', { locale: it })}</span>
-          </div>
-          <div className="flex justify-between text-white/70">
-            <span>Ospiti</span>
-            <span>{bookingData.guests}</span>
-          </div>
-          <div className="flex justify-between text-white font-semibold pt-3 border-t border-white/10">
-            <span>Totale</span>
-            <span>€{bookingData.totalPrice}</span>
-          </div>
+          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
         </div>
 
-        <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
-          Conferma Prenotazione
+        <div>
+          <label htmlFor="phone" className="text-sm text-white/70 mb-1 block">
+            Telefono*
+          </label>
+          <div className="relative">
+            <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" size={16} />
+            <Input
+              id="phone"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className={`bg-white/5 border-white/10 text-white pl-10 ${errors.phone ? "border-red-500" : ""}`}
+              placeholder="Il tuo numero di telefono"
+            />
+          </div>
+          {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+        </div>
+
+        <div>
+          <label htmlFor="specialRequests" className="text-sm text-white/70 mb-1 block">
+            Richieste speciali
+          </label>
+          <Textarea
+            id="specialRequests"
+            value={specialRequests}
+            onChange={(e) => setSpecialRequests(e.target.value)}
+            className="bg-white/5 border-white/10 text-white min-h-[100px]"
+            placeholder="Richieste o note aggiuntive per l'host..."
+          />
+        </div>
+      </div>
+
+      <div className="border-t border-white/10 pt-4 mt-4">
+        <div className="flex justify-between mb-4">
+          <span className="text-white">Prezzo totale</span>
+          <span className="text-xl font-bold text-white">€{bookingData.totalPrice}</span>
+        </div>
+        <Button onClick={handleSubmit} className="w-full bg-primary hover:bg-primary/90 py-6">
+          Conferma e prenota
         </Button>
-      </form>
-    </Card>
+        <p className="text-xs text-white/50 text-center mt-2">
+          Cliccando su "Conferma e prenota" accetti i nostri termini e condizioni
+        </p>
+      </div>
+    </div>
   );
 };

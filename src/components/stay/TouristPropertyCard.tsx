@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TouristProperty } from '@/types/tourist';
+import { Bed, Bath, Users, MapPin, Star } from 'lucide-react';
 
 interface TouristPropertyCardProps {
   property: TouristProperty;
@@ -12,33 +13,63 @@ interface TouristPropertyCardProps {
 export const TouristPropertyCard = ({ property, onSelect }: TouristPropertyCardProps) => {
   return (
     <Card 
-      className="overflow-hidden cursor-pointer transition-all duration-200 hover:scale-[1.02] bg-white/5 border-white/10"
+      className="overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] bg-white/5 border-white/10 shadow-md"
       onClick={() => onSelect(property)}
+      tabIndex={0}
+      role="button"
+      aria-label={`Seleziona ${property.title}`}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onSelect(property);
+          e.preventDefault();
+        }
+      }}
     >
       <div className="relative h-48 overflow-hidden">
         <img 
           src={property.images[0]} 
           alt={property.title}
-          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          loading="lazy"
         />
-        <Badge 
-          className="absolute top-2 right-2 bg-green-500"
-          variant="secondary"
-        >
-          Da €{property.price_per_night}/notte
-        </Badge>
+        <div className="absolute top-0 left-0 right-0 p-2 flex justify-between items-start">
+          <Badge 
+            className="bg-primary text-white"
+            variant="secondary"
+          >
+            Da €{property.price_per_night}/notte
+          </Badge>
+          
+          {property.capacity >= 3 && (
+            <Badge 
+              className="bg-pink-600/80 text-white"
+              variant="secondary"
+            >
+              Perfetto per gruppi
+            </Badge>
+          )}
+        </div>
       </div>
       
-      <CardContent className="p-4">
-        <h3 className="text-xl font-semibold mb-2 text-white">{property.title}</h3>
-        <p className="text-sm text-gray-300 mb-4">{property.address}</p>
+      <CardContent className="p-5">
+        <h3 className="text-xl font-semibold mb-1 text-white group-hover:text-primary transition-colors">{property.title}</h3>
+        <p className="text-sm text-gray-300 mb-3 flex items-center gap-1">
+          <MapPin size={14} className="text-gray-400" /> 
+          {property.address}
+        </p>
         
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div className="text-gray-300">
+        <div className="grid grid-cols-3 gap-2 mb-4">
+          <div className="flex items-center gap-1 text-sm text-gray-300">
+            <Users size={14} className="text-gray-400" />
             <span>{property.capacity} ospiti</span>
           </div>
-          <div className="text-gray-300">
+          <div className="flex items-center gap-1 text-sm text-gray-300">
+            <Bed size={14} className="text-gray-400" />
             <span>{property.bedrooms} {property.bedrooms === 1 ? 'camera' : 'camere'}</span>
+          </div>
+          <div className="flex items-center gap-1 text-sm text-gray-300">
+            <Bath size={14} className="text-gray-400" />
+            <span>{property.bathrooms} {property.bathrooms === 1 ? 'bagno' : 'bagni'}</span>
           </div>
         </div>
 
@@ -48,7 +79,10 @@ export const TouristPropertyCard = ({ property, onSelect }: TouristPropertyCardP
             <p className="text-base text-white">€{property.cleaning_fee}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-400">Totale da</p>
+            <div className="flex items-center gap-1 mb-1 justify-end">
+              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+              <span className="text-white text-sm">4.8</span>
+            </div>
             <p className="text-lg font-bold text-green-500">€{property.price_per_night + property.cleaning_fee}</p>
           </div>
         </div>

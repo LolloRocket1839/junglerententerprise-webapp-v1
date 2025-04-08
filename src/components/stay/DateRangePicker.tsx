@@ -2,11 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
-import { format, addDays, isBefore, startOfToday } from "date-fns";
+import { CalendarIcon, ChevronRight } from "lucide-react";
+import { format, addDays, isBefore, startOfToday, isValid } from "date-fns";
 import { it } from "date-fns/locale";
 import { cn } from "@/lib/utils";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 
 interface DateRangePickerProps {
   checkIn: Date | undefined;
@@ -22,29 +22,66 @@ export const DateRangePicker = memo(({
   onCheckOutChange,
 }: DateRangePickerProps) => {
   const today = startOfToday();
+  const [openCheckIn, setOpenCheckIn] = useState(false);
+  const [openCheckOut, setOpenCheckOut] = useState(false);
+
+  // Calculate minimum check-out date (day after check-in or tomorrow)
+  const minCheckOutDate = checkIn ? addDays(checkIn, 1) : addDays(today, 1);
 
   const handleCheckInChange = (date: Date | undefined) => {
     onCheckInChange(date);
+    
+    // If selected check-in date is after current check-out date, clear check-out
     if (date && checkOut && isBefore(checkOut, date)) {
       onCheckOutChange(undefined);
     }
+    
+    // Close check-in popover and open check-out popover when date is selected
+    if (date && isValid(date)) {
+      setTimeout(() => {
+        setOpenCheckIn(false);
+        if (!checkOut) {
+          setOpenCheckOut(true);
+        }
+      }, 300);
+    }
   };
 
+  const handleCheckOutChange = (date: Date | undefined) => {
+    onCheckOutChange(date);
+    
+    // Close check-out popover when date is selected
+    if (date && isValid(date)) {
+      setTimeout(() => {
+        setOpenCheckOut(false);
+      }, 300);
+    }
+  };
+
+  // Clear check-out if check-in is removed
+  useEffect(() => {
+    if (!checkIn && checkOut) {
+      onCheckOutChange(undefined);
+    }
+  }, [checkIn, checkOut, onCheckOutChange]);
+
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <div>
-        <label className="text-sm text-white/70 mb-1 block">Check-in</label>
-        <Popover>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="space-y-1">
+        <label htmlFor="check-in-date" className="text-sm text-white/70 block">Check-in</label>
+        <Popover open={openCheckIn} onOpenChange={setOpenCheckIn}>
           <PopoverTrigger asChild>
             <Button
+              id="check-in-date"
               variant="outline"
               className={cn(
-                "w-full justify-start text-left font-normal bg-white/5 border-white/10 text-white hover:bg-white/10",
+                "w-full justify-start font-normal bg-white/5 border-white/10 text-white hover:bg-white/10 py-6",
                 !checkIn && "text-white/50"
               )}
+              aria-label="Seleziona data di check-in"
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {checkIn ? format(checkIn, "d MMMM yyyy", { locale: it }) : <span>Scegli data</span>}
+              {checkIn ? format(checkIn, "d MMMM yyyy", { locale: it }) : <span>Seleziona data</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0 z-50" align="start">
@@ -75,29 +112,33 @@ export const DateRangePicker = memo(({
         </Popover>
       </div>
       
-      <div>
-        <label className="text-sm text-white/70 mb-1 block">Check-out</label>
-        <Popover>
+      <div className="space-y-1 relative">
+        <label htmlFor="check-out-date" className="text-sm text-white/70 block">Check-out</label>
+        <div className="md:absolute md:left-0 md:right-0 md:top-1/2 md:-translate-y-1/2 pointer-events-none hidden md:flex justify-center items-center">
+          <ChevronRight className="h-4 w-4 text-white/30" />
+        </div>
+        <Popover open={openCheckOut} onOpenChange={setOpenCheckOut}>
           <PopoverTrigger asChild>
             <Button
+              id="check-out-date"
               variant="outline"
               className={cn(
-                "w-full justify-start text-left font-normal bg-white/5 border-white/10 text-white hover:bg-white/10",
+                "w-full justify-start font-normal bg-white/5 border-white/10 text-white hover:bg-white/10 py-6",
                 !checkOut && "text-white/50"
               )}
+              disabled={!checkIn}
+              aria-label="Seleziona data di check-out"
             >
               <CalendarIcon className="mr-2 h-4 w-4" />
-              {checkOut ? format(checkOut, "d MMMM yyyy", { locale: it }) : <span>Scegli data</span>}
+              {checkOut ? format(checkOut, "d MMMM yyyy", { locale: it }) : <span>{checkIn ? "Seleziona data" : "Prima seleziona check-in"}</span>}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0 z-50" align="start">
             <Calendar
               mode="single"
               selected={checkOut}
-              onSelect={onCheckOutChange}
-              disabled={(date) => 
-                (checkIn ? isBefore(date, addDays(checkIn, 1)) : isBefore(date, addDays(today, 1)))
-              }
+              onSelect={handleCheckOutChange}
+              disabled={(date) => isBefore(date, minCheckOutDate)}
               initialFocus
               className={cn("p-3 pointer-events-auto bg-white text-black")}
               classNames={{
@@ -114,7 +155,7 @@ export const DateRangePicker = memo(({
                   "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
                 )
               }}
-              fromDate={checkIn ? addDays(checkIn, 1) : addDays(today, 1)}
+              fromDate={minCheckOutDate}
             />
           </PopoverContent>
         </Popover>
