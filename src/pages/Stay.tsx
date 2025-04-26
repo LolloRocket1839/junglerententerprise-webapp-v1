@@ -9,7 +9,7 @@ import { BookingForm } from '@/components/stay/BookingForm';
 import { GuestInfoForm } from '@/components/stay/GuestInfoForm';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { toast } from "sonner";
-import { FilterX, Loader2, Search } from "lucide-react";
+import { FilterX, Loader2, Search, MapPin, Users, Bed, Bath, Check } from "lucide-react";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
