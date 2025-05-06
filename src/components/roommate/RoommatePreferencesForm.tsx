@@ -1,9 +1,12 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, LazyMotion, domAnimation } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { roommatePreferenceTranslations } from '../../translations/roommatePreferences';
 import { toast } from 'react-hot-toast';
+
+// Lazy load the form content
+const FormContent = React.lazy(() => import('./FormContent'));
 
 interface RoommatePreferences {
   livingSpace: string;
@@ -24,36 +27,49 @@ interface RoommatePreferences {
   personalItems: string;
 }
 
+// Initial state outside component to prevent recreation
+const initialPreferences: Partial<RoommatePreferences> = {
+  livingSpace: '',
+  noiseLevel: '',
+  guests: '',
+  studyTime: '',
+  studyStyle: '',
+  socialLevel: '',
+  foodSharing: '',
+  sleepSchedule: '',
+  pets: '',
+  smoking: '',
+  communication: '',
+  conflict: '',
+  cleaning: '',
+  cleaningResponsibilities: '',
+  temperature: '',
+  personalItems: ''
+};
+
 const RoommatePreferencesForm: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const [preferences, setPreferences] = useState<Partial<RoommatePreferences>>({
-    livingSpace: '',
-    noiseLevel: '',
-    guests: '',
-    studyTime: '',
-    studyStyle: '',
-    socialLevel: '',
-    foodSharing: '',
-    sleepSchedule: '',
-    pets: '',
-    smoking: '',
-    communication: '',
-    conflict: '',
-    cleaning: '',
-    cleaningResponsibilities: '',
-    temperature: '',
-    personalItems: ''
-  });
+  const [preferences, setPreferences] = useState<Partial<RoommatePreferences>>(initialPreferences);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
+  // Memoize translations to prevent unnecessary recalculations
   const currentLang = useMemo(() => i18n.language as keyof typeof roommatePreferenceTranslations, [i18n.language]);
   const translations = useMemo(() => roommatePreferenceTranslations[currentLang], [currentLang]);
 
+  // Optimize fetch with caching
   const fetchPreferences = useCallback(async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('No user found');
+
+      // Use cache-first strategy
+      const cachedData = sessionStorage.getItem('roommatePreferences');
+      if (cachedData) {
+        setPreferences(JSON.parse(cachedData));
+        setLoading(false);
+        return;
+      }
 
       const { data, error } = await supabase
         .from('roommate_preferences')
@@ -65,6 +81,8 @@ const RoommatePreferencesForm: React.FC = () => {
 
       if (data) {
         setPreferences(data.preferences);
+        // Cache the data
+        sessionStorage.setItem('roommatePreferences', JSON.stringify(data.preferences));
       }
     } catch (error) {
       console.error('Error fetching preferences:', error);
@@ -72,17 +90,22 @@ const RoommatePreferencesForm: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, [showToast, t]);
+  }, [t]);
 
   useEffect(() => {
     fetchPreferences();
   }, [fetchPreferences]);
 
   const handlePreferenceChange = useCallback((key: keyof RoommatePreferences, value: string) => {
-    setPreferences(prev => ({
-      ...prev,
-      [key]: value
-    }));
+    setPreferences(prev => {
+      const newPreferences = {
+        ...prev,
+        [key]: value
+      };
+      // Update cache
+      sessionStorage.setItem('roommatePreferences', JSON.stringify(newPreferences));
+      return newPreferences;
+    });
   }, []);
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
@@ -110,7 +133,7 @@ const RoommatePreferencesForm: React.FC = () => {
     } finally {
       setSaving(false);
     }
-  }, [preferences, showToast, t]);
+  }, [preferences, t]);
 
   if (loading) {
     return (
@@ -121,52 +144,30 @@ const RoommatePreferencesForm: React.FC = () => {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="max-w-4xl mx-auto p-6"
-    >
-      <h1 className="text-3xl font-bold mb-8">{t('roommatePreferences')}</h1>
-      
-      <form onSubmit={handleSubmit} className="space-y-8">
-        {Object.entries(preferences).map(([key, value]) => (
-          <div key={key} className="space-y-2">
-            <label className="block text-lg font-medium">
-              {translations.questions[key as keyof typeof translations.questions]}
-            </label>
-            <select
-              value={value || ''}
-              onChange={(e) => handlePreferenceChange(key as keyof RoommatePreferences, e.target.value)}
-              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
-            >
-              <option value="">{t('selectOption')}</option>
-              {Object.entries(translations.options).map(([optionKey, optionValue]) => (
-                <option key={optionKey} value={optionKey}>
-                  {optionValue}
-                </option>
-              ))}
-            </select>
+    <LazyMotion features={domAnimation}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="max-w-4xl mx-auto p-6"
+      >
+        <h1 className="text-3xl font-bold mb-8">{t('roommatePreferences')}</h1>
+        
+        <Suspense fallback={
+          <div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-primary"></div>
           </div>
-        ))}
-
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            disabled={saving}
-            className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50"
-          >
-            {saving ? (
-              <div className="flex items-center">
-                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div>
-                {t('saving')}
-              </div>
-            ) : (
-              t('saveChanges')
-            )}
-          </button>
-        </div>
-      </form>
-    </motion.div>
+        }>
+          <FormContent
+            preferences={preferences}
+            translations={translations}
+            saving={saving}
+            onPreferenceChange={handlePreferenceChange}
+            onSubmit={handleSubmit}
+            t={t}
+          />
+        </Suspense>
+      </motion.div>
+    </LazyMotion>
   );
 };
 
