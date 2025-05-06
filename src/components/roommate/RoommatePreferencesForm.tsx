@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { roommatePreferenceTranslations } from '../../translations/roommatePreferences';
-import { useToast } from '../../hooks/useToast';
+import { toast } from 'react-hot-toast';
 
 interface RoommatePreferences {
   livingSpace: string;
@@ -26,8 +26,7 @@ interface RoommatePreferences {
 
 const RoommatePreferencesForm: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const { showToast } = useToast();
-  const [preferences, setPreferences] = useState<RoommatePreferences>({
+  const [preferences, setPreferences] = useState<Partial<RoommatePreferences>>({
     livingSpace: '',
     noiseLevel: '',
     guests: '',
@@ -69,7 +68,7 @@ const RoommatePreferencesForm: React.FC = () => {
       }
     } catch (error) {
       console.error('Error fetching preferences:', error);
-      showToast('error', t('errorLoadingPreferences'));
+      toast.error(t('errorLoadingPreferences'));
     } finally {
       setLoading(false);
     }
@@ -104,10 +103,10 @@ const RoommatePreferencesForm: React.FC = () => {
 
       if (error) throw error;
 
-      showToast('success', t('preferencesUpdated'));
+      toast.success(t('preferencesUpdated'));
     } catch (error) {
       console.error('Error saving preferences:', error);
-      showToast('error', t('errorUpdatingPreferences'));
+      toast.error(t('errorUpdatingPreferences'));
     } finally {
       setSaving(false);
     }
@@ -136,7 +135,7 @@ const RoommatePreferencesForm: React.FC = () => {
               {translations.questions[key as keyof typeof translations.questions]}
             </label>
             <select
-              value={value}
+              value={value || ''}
               onChange={(e) => handlePreferenceChange(key as keyof RoommatePreferences, e.target.value)}
               className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
             >
@@ -171,4 +170,4 @@ const RoommatePreferencesForm: React.FC = () => {
   );
 };
 
-export default React.memo(RoommatePreferencesForm); 
+export default React.memo(RoommatePreferencesForm);
