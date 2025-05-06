@@ -194,8 +194,22 @@ export const translations = {
     details: "Details",
     legal: "Legal",
 
-    // Marketplace
+    // Navigation
+    invest: "Invest",
+    rent: "Rent",
     marketplace: "Marketplace",
+    stay: "Stay",
+    students: "Students",
+    referral: "Referral",
+    signOut: "Sign Out",
+    signIn: "Sign In",
+    register: "Register",
+    signOutSuccess: "Successfully signed out",
+    signOutMessage: "See you soon!",
+    signOutError: "Error signing out",
+    tryAgain: "Try again later",
+
+    // Marketplace
     searchProducts: "Search products...",
     filters: "Filters",
     category: "Category",
@@ -313,6 +327,21 @@ export const translations = {
     details: "Détails",
     legal: "Légal",
 
+    // Navigation
+    invest: "Investir",
+    rent: "Louer",
+    marketplace: "Marketplace",
+    stay: "Séjourner",
+    students: "Étudiants",
+    referral: "Parrainage",
+    signOut: "Déconnexion",
+    signIn: "Connexion",
+    register: "S'inscrire",
+    signOutSuccess: "Déconnexion réussie",
+    signOutMessage: "À bientôt !",
+    signOutError: "Erreur de déconnexion",
+    tryAgain: "Réessayer plus tard",
+
     // Marketplace
     marketplace: "Marketplace",
     searchProducts: "Rechercher des produits...",
@@ -371,7 +400,81 @@ export const translations = {
     cartCleared: "Panier vidé",
   },
   DE: {
-    // ... existing translations ...
+    // Homepage
+    welcome: "Willkommen bei",
+    payLessEarnMore: "Weniger zahlen, mehr verdienen",
+    getStarted: "Loslegen",
+    howItWorks: "Wie Jungle Rent funktioniert",
+    ecosystem: "Wir verbinden Investoren, Studenten und Gäste, um ein nachhaltiges Studentenwohnungsökosystem zu schaffen.",
+    forInvestors: "Für Investoren",
+    forStudents: "Für Studenten",
+    forShortStays: "Für Kurzaufenthalte",
+    investDescription: "Investieren Sie in verifizierte Studentenimmobilien und erzielen Sie Renditen, während Sie die Bildung unterstützen.",
+    studentDescription: "Finden Sie erschwingliche Langzeitunterkünfte und vernetzen Sie sich mit kompatiblen Mitbewohnern.",
+    stayDescription: "Buchen Sie temporäre Unterkünfte für Prüfungen, Praktika oder Kurzkurse.",
+    startInvesting: "Jetzt investieren",
+    findHousing: "Unterkunft finden",
+    bookStay: "Aufenthalt buchen",
+
+    // Investment Page
+    investmentDashboard: "Investment-Dashboard",
+    totalProperties: "Gesamtimmobilien",
+    averageROI: "Durchschnittlicher ROI",
+    activeInvestors: "Aktive Investoren",
+    opportunities: "Möglichkeiten",
+    myInvestments: "Meine Investitionen",
+    tokenization: "Tokenisierung",
+    analytics: "Analysen",
+    investNow: "Jetzt investieren",
+    moreInfo: "Mehr Infos",
+    fundingProgress: "Finanzierungsfortschritt",
+    exterior: "Außenansicht",
+    interior: "Innenansicht",
+    expectedROI: "Erwarteter ROI",
+    subscription: "Abonnement",
+    availablePhase2: "Verfügbar in Phase 2",
+
+    // Investment Details
+    investmentFeatures: "Investment-Features",
+    annualReturn: "Erwartete jährliche Rendite: 8-12%",
+    minPeriod: "Minimale Anlageperiode: 24 Monate",
+    profManagement: "Professionelles Immobilienmanagement",
+    quarterlyReports: "Detaillierte Quartalsberichte",
+    taxBenefits: "Steuervorteile",
+    taxDeductions: "Steuerabzüge verfügbar",
+    taxAdvice: "Steuerberatung inklusive",
+    returnOptimization: "Renditeoptimierung",
+    propertyManagement: "Immobilienverwaltung",
+    scheduledMaintenance: "Geplante Wartung",
+    cleaningService: "Professioneller Reinigungsservice",
+    insurance: "Umfassende Versicherung inklusive",
+
+    // Common
+    loading: "Laden...",
+    confirm: "Bestätigen",
+    cancel: "Abbrechen",
+    error: "Fehler",
+    success: "Erfolg",
+    units: "Einheiten",
+    investors: "Investoren",
+    overview: "Übersicht",
+    details: "Details",
+    legal: "Rechtliches",
+
+    // Navigation
+    invest: "Investieren",
+    rent: "Mieten",
+    marketplace: "Marktplatz",
+    stay: "Übernachten",
+    students: "Studenten",
+    referral: "Empfehlung",
+    signOut: "Abmelden",
+    signIn: "Anmelden",
+    register: "Registrieren",
+    signOutSuccess: "Erfolgreich abgemeldet",
+    signOutMessage: "Bis bald!",
+    signOutError: "Fehler beim Abmelden",
+    tryAgain: "Später erneut versuchen",
 
     // Marketplace
     marketplace: "Marktplatz",
