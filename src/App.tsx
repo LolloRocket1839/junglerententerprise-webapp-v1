@@ -1,4 +1,3 @@
-
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -7,6 +6,8 @@ import Navigation from './components/navigation/Navigation';
 import { Toaster } from "@/components/ui/toaster";
 import { queryClient } from './lib/react-query';
 import './App.css';
+import PreferenceProfilingGame from './components/quiz/PreferenceProfilingGame';
+import RoommatePreferencesForm from './components/roommate/RoommatePreferencesForm';
 
 // Lazy load routes
 const Index = React.lazy(() => import('./pages/Index'));
@@ -17,6 +18,8 @@ const Referral = React.lazy(() => import('./pages/Referral'));
 const ListRoom = React.lazy(() => import('./pages/ListRoom'));
 const Marketplace = React.lazy(() => import('./pages/Marketplace'));
 const ProductDetail = React.lazy(() => import('./pages/ProductDetail'));
+const StudentProfile = React.lazy(() => import('./pages/StudentProfile'));
+const RoommateMatching = React.lazy(() => import('./pages/RoommateMatching'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -41,6 +44,10 @@ function App() {
               <Route path="/list-room" element={<ListRoom />} />
               <Route path="/marketplace" element={<Marketplace />} />
               <Route path="/marketplace/product/:id" element={<ProductDetail />} />
+              <Route path="/student/profile" element={<StudentProfile />} />
+              <Route path="/student/roommate-matching" element={<RoommateMatching />} />
+              <Route path="/student/preference-profiling" element={<PreferenceProfilingGame />} />
+              <Route path="/student/roommate-preferences" element={<RoommatePreferencesForm />} />
             </Routes>
           </Suspense>
           <Toaster />
