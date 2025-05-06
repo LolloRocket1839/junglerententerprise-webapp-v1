@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '../lib/supabase';
@@ -50,10 +50,11 @@ const StudentProfile: React.FC = () => {
   const [isEditingPreferences, setIsEditingPreferences] = useState(false);
   const [profile, setProfile] = useState<Partial<StudentProfile>>({});
   const [preferences, setPreferences] = useState<Partial<RoommatePreferences>>({});
-  const currentLang = i18n.language as keyof typeof roommateDescriptions;
-  const descriptions = roommateDescriptions[currentLang];
 
-  // Fetch student profile
+  const currentLang = useMemo(() => i18n.language as keyof typeof roommateDescriptions, [i18n.language]);
+  const descriptions = useMemo(() => roommateDescriptions[currentLang], [currentLang]);
+
+  // Fetch student profile with optimized query
   const { data: studentProfile, isLoading: isLoadingProfile } = useQuery({
     queryKey: ['studentProfile'],
     queryFn: async () => {
@@ -69,9 +70,10 @@ const StudentProfile: React.FC = () => {
       if (error) throw error;
       return data as StudentProfile;
     },
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 
-  // Fetch roommate preferences
+  // Fetch roommate preferences with optimized query
   const { data: roommatePreferences, isLoading: isLoadingPreferences } = useQuery({
     queryKey: ['roommatePreferences'],
     queryFn: async () => {
@@ -87,9 +89,10 @@ const StudentProfile: React.FC = () => {
       return data as RoommatePreferences;
     },
     enabled: !!studentProfile,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 
-  // Update profile mutation
+  // Update profile mutation with optimized error handling
   const updateProfileMutation = useMutation({
     mutationFn: async (updatedProfile: Partial<StudentProfile>) => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -117,7 +120,7 @@ const StudentProfile: React.FC = () => {
     },
   });
 
-  // Update preferences mutation
+  // Update preferences mutation with optimized error handling
   const updatePreferencesMutation = useMutation({
     mutationFn: async (updatedPreferences: Partial<RoommatePreferences>) => {
       if (!studentProfile) throw new Error('No profile found');
@@ -156,15 +159,23 @@ const StudentProfile: React.FC = () => {
     }
   }, [roommatePreferences]);
 
-  const handleProfileSubmit = (e: React.FormEvent) => {
+  const handleProfileSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     updateProfileMutation.mutate(profile);
-  };
+  }, [profile, updateProfileMutation]);
 
-  const handlePreferencesSubmit = (e: React.FormEvent) => {
+  const handlePreferencesSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     updatePreferencesMutation.mutate(preferences);
-  };
+  }, [preferences, updatePreferencesMutation]);
+
+  const toggleEditing = useCallback(() => {
+    setIsEditing(prev => !prev);
+  }, []);
+
+  const toggleEditingPreferences = useCallback(() => {
+    setIsEditingPreferences(prev => !prev);
+  }, []);
 
   if (isLoadingProfile || isLoadingPreferences) {
     return (
@@ -194,7 +205,7 @@ const StudentProfile: React.FC = () => {
                 {t('studentProfile')}
               </h2>
               <button
-                onClick={() => setIsEditing(!isEditing)}
+                onClick={toggleEditing}
                 className="p-2 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 {isEditing ? <X size={20} /> : <Edit2 size={20} />}
@@ -347,7 +358,7 @@ const StudentProfile: React.FC = () => {
                 {t('roommatePreferences')}
               </h2>
               <button
-                onClick={() => setIsEditingPreferences(!isEditingPreferences)}
+                onClick={toggleEditingPreferences}
                 className="p-2 text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
               >
                 {isEditingPreferences ? <X size={20} /> : <Edit2 size={20} />}
@@ -541,4 +552,4 @@ const StudentProfile: React.FC = () => {
   );
 };
 
-export default StudentProfile; 
+export default React.memo(StudentProfile); 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
@@ -48,11 +48,10 @@ const RoommatePreferencesForm: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
-    fetchPreferences();
-  }, []);
+  const currentLang = useMemo(() => i18n.language as keyof typeof roommatePreferenceTranslations, [i18n.language]);
+  const translations = useMemo(() => roommatePreferenceTranslations[currentLang], [currentLang]);
 
-  const fetchPreferences = async () => {
+  const fetchPreferences = useCallback(async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('No user found');
@@ -74,16 +73,20 @@ const RoommatePreferencesForm: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [showToast, t]);
 
-  const handlePreferenceChange = (key: keyof RoommatePreferences, value: string) => {
+  useEffect(() => {
+    fetchPreferences();
+  }, [fetchPreferences]);
+
+  const handlePreferenceChange = useCallback((key: keyof RoommatePreferences, value: string) => {
     setPreferences(prev => ({
       ...prev,
       [key]: value
     }));
-  };
+  }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
 
@@ -108,7 +111,7 @@ const RoommatePreferencesForm: React.FC = () => {
     } finally {
       setSaving(false);
     }
-  };
+  }, [preferences, showToast, t]);
 
   if (loading) {
     return (
@@ -117,9 +120,6 @@ const RoommatePreferencesForm: React.FC = () => {
       </div>
     );
   }
-
-  const currentLang = i18n.language as keyof typeof roommatePreferenceTranslations;
-  const translations = roommatePreferenceTranslations[currentLang];
 
   return (
     <motion.div
@@ -171,4 +171,4 @@ const RoommatePreferencesForm: React.FC = () => {
   );
 };
 
-export default RoommatePreferencesForm; 
+export default React.memo(RoommatePreferencesForm); 

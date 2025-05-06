@@ -7,8 +7,11 @@ CREATE TABLE IF NOT EXISTS roommate_preferences (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Create index on user_id
+-- Create indexes for better query performance
 CREATE INDEX IF NOT EXISTS roommate_preferences_user_id_idx ON roommate_preferences(user_id);
+CREATE INDEX IF NOT EXISTS roommate_preferences_created_at_idx ON roommate_preferences(created_at);
+CREATE INDEX IF NOT EXISTS roommate_preferences_updated_at_idx ON roommate_preferences(updated_at);
+CREATE INDEX IF NOT EXISTS roommate_preferences_preferences_idx ON roommate_preferences USING GIN (preferences);
 
 -- Enable Row Level Security
 ALTER TABLE roommate_preferences ENABLE ROW LEVEL SECURITY;
