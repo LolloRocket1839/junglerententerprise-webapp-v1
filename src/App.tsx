@@ -14,6 +14,7 @@ const Stay = React.lazy(() => import('./pages/Stay'));
 const Referral = React.lazy(() => import('./pages/Referral'));
 const ListRoom = React.lazy(() => import('./pages/ListRoom'));
 const Marketplace = React.lazy(() => import('./pages/Marketplace'));
+const ProductDetail = React.lazy(() => import('./pages/ProductDetail'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -37,6 +38,7 @@ function App() {
               <Route path="/referral" element={<Referral />} />
               <Route path="/list-room" element={<ListRoom />} />
               <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="/marketplace/product/:id" element={<ProductDetail />} />
             </Routes>
           </Suspense>
           <Toaster />
