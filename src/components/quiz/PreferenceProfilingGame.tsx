@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '@/integrations/supabase/client';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'react-hot-toast';
@@ -252,4 +253,4 @@ const PreferenceProfilingGame: React.FC = () => {
   );
 };
 
-export default PreferenceProfilingGame; 
+export default PreferenceProfilingGame;
