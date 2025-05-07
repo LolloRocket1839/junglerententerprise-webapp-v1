@@ -1,0 +1,76 @@
+import { i18n } from 'i18next';
+
+const roommate = {
+  en: {
+    game: {
+      title: 'Find Your Perfect Roommate',
+      description: 'Answer a few questions to find your ideal roommate match!',
+      question: 'Question',
+      complete: 'Quiz Complete!',
+      score: 'Your compatibility score: {{score}}',
+      restart: 'Start Over',
+      viewMatches: 'View Matches',
+      questions: {
+        lifestyle: 'What best describes your daily routine?',
+        cleanliness: 'How would you describe your cleanliness habits?',
+        social: 'How social are you at home?',
+        noise: 'What\'s your preferred noise level at home?',
+        guests: 'How often do you have guests over?',
+      },
+      options: {
+        earlyBird: 'Early bird - I wake up early and go to bed early',
+        nightOwl: 'Night owl - I stay up late and sleep in',
+        flexible: 'Flexible - I adapt to different schedules',
+        veryClean: 'Very clean - I like everything organized and spotless',
+        moderate: 'Moderate - I keep things tidy but not obsessive',
+        relaxed: 'Relaxed - I\'m not too concerned about mess',
+        verySocial: 'Very social - I love having people around',
+        moderateSocial: 'Moderately social - I enjoy company but need alone time',
+        private: 'Private - I prefer quiet and solitude',
+        quiet: 'Quiet - I prefer a peaceful environment',
+        moderateNoise: 'Moderate - Some background noise is fine',
+        lively: 'Lively - I enjoy an energetic atmosphere',
+        frequentGuests: 'Frequently - I often have friends over',
+        occasionalGuests: 'Occasionally - I have guests sometimes',
+        rareGuests: 'Rarely - I prefer to meet friends outside',
+      },
+    },
+  },
+  it: {
+    game: {
+      title: 'Trova il Tuo Coinquilino Perfetto',
+      description: 'Rispondi a poche domande per trovare il tuo coinquilino ideale!',
+      question: 'Domanda',
+      complete: 'Quiz Completato!',
+      score: 'Il tuo punteggio di compatibilità: {{score}}',
+      restart: 'Ricomincia',
+      viewMatches: 'Vedi i Match',
+      questions: {
+        lifestyle: 'Quale descrive meglio la tua routine quotidiana?',
+        cleanliness: 'Come descriveresti le tue abitudini di pulizia?',
+        social: 'Quanto sei socievole in casa?',
+        noise: 'Qual è il tuo livello di rumore preferito in casa?',
+        guests: 'Con quale frequenza hai ospiti?',
+      },
+      options: {
+        earlyBird: 'Mattiniero - Mi sveglio presto e vado a letto presto',
+        nightOwl: 'Nottambulo - Sto sveglio fino a tardi e dormo di più',
+        flexible: 'Flessibile - Mi adatto a diversi orari',
+        veryClean: 'Molto ordinato - Mi piace tutto organizzato e impeccabile',
+        moderate: 'Moderato - Mantengo le cose in ordine ma non sono ossessivo',
+        relaxed: 'Rilassato - Non sono troppo preoccupato per il disordine',
+        verySocial: 'Molto socievole - Adoro avere persone intorno',
+        moderateSocial: 'Moderatamente socievole - Mi piace la compagnia ma ho bisogno di tempo per me',
+        private: 'Riservato - Preferisco la quiete e la solitudine',
+        quiet: 'Tranquillo - Preferisco un ambiente pacifico',
+        moderateNoise: 'Moderato - Un po\' di rumore di fondo va bene',
+        lively: 'Vivace - Mi piace un\'atmosfera energica',
+        frequentGuests: 'Spesso - Ho spesso amici a casa',
+        occasionalGuests: 'Occasionalmente - Ho ospiti a volte',
+        rareGuests: 'Raramente - Preferisco incontrare gli amici fuori',
+      },
+    },
+  },
+};
+
+export default roommate; 
