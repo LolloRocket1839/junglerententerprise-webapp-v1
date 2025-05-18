@@ -1,5 +1,6 @@
+
 import { createClient } from '@supabase/supabase-js';
-import { Database } from './database.types';
+import type { Database } from './database.types';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -58,18 +59,9 @@ export const queryWithCache = async <T>(
   return data;
 };
 
-// Prepared statements for common queries
+// Create a simple type for prepared queries to avoid errors
 export const preparedQueries = {
-  getRoommatePreferences: supabase
-    .from('roommate_preferences')
-    .select('*')
-    .eq('user_id', '')
-    .prepare(),
-
-  updateRoommatePreferences: supabase
-    .from('roommate_preferences')
-    .upsert({})
-    .prepare(),
+  // Type-safe prepared queries will be added as needed
 };
 
 // Optimized error handling
@@ -84,4 +76,4 @@ export const handleQueryError = (error: any) => {
     return { error: 'Server busy. Please try again in a moment.' };
   }
   return { error: 'An unexpected error occurred.' };
-}; 
+};

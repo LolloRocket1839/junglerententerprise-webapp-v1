@@ -1,20 +1,19 @@
 
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import { useLanguage } from '../../contexts/LanguageContext';
-import { motion, AnimatePresence } from 'framer-motion';
-import { toast } from 'react-hot-toast';
+import { supabase } from '@/lib/supabase/client';
+import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
 interface PreferenceQuestion {
   id: string;
   question_text: string;
   response_type: 'binary' | 'scale' | 'multi_option' | 'open_ended';
   response_options: string[];
-  cognitive_dimensions: Record<string, number>;
-  learning_style_correlations: Record<string, number>;
-  metacognitive_indicators: string[];
-  response_time_significance: number;
+  cognitive_dimensions?: Record<string, number>;
+  learning_style_correlations?: Record<string, number>;
+  metacognitive_indicators?: string[];
+  response_time_significance?: number;
 }
 
 interface QuestionResponse {
@@ -24,7 +23,7 @@ interface QuestionResponse {
 }
 
 const PreferenceProfilingGame: React.FC = () => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [startTime, setStartTime] = useState<number>(0);
@@ -35,40 +34,50 @@ const PreferenceProfilingGame: React.FC = () => {
   const { data: questions, isLoading } = useQuery({
     queryKey: ['preferenceQuestions'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('preference_questions')
-        .select('*')
-        .order('id');
+      try {
+        const { data, error } = await supabase
+          .from('preference_questions')
+          .select('*')
+          .order('id');
 
-      if (error) throw error;
-      return data as PreferenceQuestion[];
+        if (error) throw error;
+        return data as PreferenceQuestion[];
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+        return [] as PreferenceQuestion[];
+      }
     },
   });
 
   // Submit response mutation
   const submitResponseMutation = useMutation({
     mutationFn: async (response: QuestionResponse) => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not authenticated');
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) throw new Error('Not authenticated');
 
-      const { data: studentProfile } = await supabase
-        .from('student_profiles')
-        .select('id')
-        .eq('user_id', user.id)
-        .single();
+        const { data: studentProfile } = await supabase
+          .from('student_profiles')
+          .select('id')
+          .eq('user_id', user.id)
+          .single();
 
-      if (!studentProfile) throw new Error('Student profile not found');
+        if (!studentProfile) throw new Error('Student profile not found');
 
-      const { error } = await supabase
-        .from('student_preference_responses')
-        .insert({
-          student_id: studentProfile.id,
-          question_id: response.question_id,
-          response_value: response.response_value,
-          response_time: response.response_time,
-        });
+        const { error } = await supabase
+          .from('student_preference_responses')
+          .insert({
+            student_id: studentProfile.id,
+            question_id: response.question_id,
+            response_value: response.response_value,
+            response_time: response.response_time,
+          });
 
-      if (error) throw error;
+        if (error) throw error;
+      } catch (error) {
+        console.error('Error submitting response:', error);
+        throw error;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['studentPreferenceResponses'] });
@@ -81,7 +90,7 @@ const PreferenceProfilingGame: React.FC = () => {
   }, [currentQuestionIndex]);
 
   const handleResponse = async (value: string) => {
-    if (!questions) return;
+    if (!questions || questions.length === 0) return;
 
     const responseTime = Date.now() - startTime;
     const currentQuestion = questions[currentQuestionIndex];
@@ -93,12 +102,17 @@ const PreferenceProfilingGame: React.FC = () => {
     };
 
     setResponses([...responses, response]);
-    await submitResponseMutation.mutateAsync(response);
-
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-      setIsComplete(true);
+    
+    try {
+      await submitResponseMutation.mutateAsync(response);
+      
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      } else {
+        setIsComplete(true);
+      }
+    } catch (error) {
+      console.error('Failed to submit response:', error);
     }
   };
 

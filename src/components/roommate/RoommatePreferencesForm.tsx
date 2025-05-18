@@ -1,37 +1,20 @@
-import React, { useState, useEffect, useCallback, useMemo, Suspense } from 'react';
+
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase, queryWithCache, preparedQueries, handleQueryError } from '../../lib/supabase/client';
+import { supabase } from '../../lib/supabase/client';
 import { roommatePreferenceTranslations } from '../../translations/roommatePreferences';
 import { Skeleton } from '../ui/skeleton';
-import { usePerformanceMonitor } from '../../hooks/usePerformanceMonitor';
+import { toast } from 'react-hot-toast';
 
-// Lazy load the form content
-const FormContent = React.lazy(() => import('./FormContent'));
-
-// Skeleton loader component
-const FormSkeleton = () => (
-  <div className="space-y-6">
-    {[...Array(5)].map((_, i) => (
-      <div key={i} className="space-y-2">
-        <Skeleton className="h-6 w-3/4" />
-        <Skeleton className="h-10 w-full" />
-      </div>
-    ))}
-  </div>
-);
-
+// Simplified component with fixes
 const RoommatePreferencesForm: React.FC = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const [preferences, setPreferences] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Performance monitoring
-  const { measurePerformance } = usePerformanceMonitor();
+  const [saving, setSaving] = useState(false);
 
   // Memoize translations
   const currentLang = useMemo(() => i18n.language, [i18n.language]);
@@ -40,9 +23,8 @@ const RoommatePreferencesForm: React.FC = () => {
     [currentLang]
   );
 
-  // Optimized fetch preferences with caching
+  // Fetch preferences
   const fetchPreferences = useCallback(async () => {
-    const startTime = performance.now();
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
@@ -50,41 +32,40 @@ const RoommatePreferencesForm: React.FC = () => {
         return;
       }
 
-      const { data, error } = await queryWithCache(
-        `preferences-${user.id}`,
-        () => preparedQueries.getRoommatePreferences.execute({ user_id: user.id })
-      );
+      const { data, error } = await supabase
+        .from('roommate_preferences')
+        .select('*')
+        .eq('user_id', user.id)
+        .single();
 
       if (error) throw error;
-      if (data?.[0]?.preferences) {
-        setPreferences(data[0].preferences);
+      if (data?.preferences) {
+        setPreferences(data.preferences);
       }
     } catch (err) {
-      const errorResult = handleQueryError(err);
-      setError(errorResult.error);
+      console.error('Error fetching preferences:', err);
+      toast.error(t('errorLoadingPreferences'));
     } finally {
       setLoading(false);
-      measurePerformance('fetchPreferences', performance.now() - startTime);
     }
-  }, [navigate, measurePerformance]);
+  }, [navigate, t]);
 
   useEffect(() => {
     fetchPreferences();
   }, [fetchPreferences]);
 
-  // Optimized preference change handler
-  const handlePreferenceChange = useCallback((questionId: string, value: string) => {
+  // Handle preference change
+  const handlePreferenceChange = useCallback((key: string, value: string) => {
     setPreferences(prev => ({
       ...prev,
-      [questionId]: value
+      [key]: value
     }));
   }, []);
 
-  // Optimized form submission
+  // Handle form submission
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
-    const startTime = performance.now();
-    setIsSubmitting(true);
+    setSaving(true);
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -93,27 +74,28 @@ const RoommatePreferencesForm: React.FC = () => {
         return;
       }
 
-      const { error } = await preparedQueries.updateRoommatePreferences.execute({
-        user_id: user.id,
-        preferences,
-        updated_at: new Date().toISOString()
-      });
+      const { error } = await supabase
+        .from('roommate_preferences')
+        .upsert({
+          user_id: user.id,
+          preferences,
+          updated_at: new Date().toISOString()
+        });
 
       if (error) throw error;
-      navigate('/student-profile');
+      toast.success(t('preferencesUpdated'));
     } catch (err) {
-      const errorResult = handleQueryError(err);
-      setError(errorResult.error);
+      console.error('Error saving preferences:', err);
+      toast.error(t('errorUpdatingPreferences'));
     } finally {
-      setIsSubmitting(false);
-      measurePerformance('submitPreferences', performance.now() - startTime);
+      setSaving(false);
     }
-  }, [preferences, navigate, measurePerformance]);
+  }, [preferences, navigate, t]);
 
   if (loading) {
     return (
-      <div className="max-w-2xl mx-auto p-6">
-        <FormSkeleton />
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
@@ -122,50 +104,50 @@ const RoommatePreferencesForm: React.FC = () => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="max-w-2xl mx-auto p-6"
+      className="max-w-4xl mx-auto p-6"
     >
-      <h1 className="text-2xl font-bold mb-6">{t('roommatePreferences.title')}</h1>
+      <h1 className="text-3xl font-bold mb-8">{t('roommatePreferences')}</h1>
       
-      <AnimatePresence mode="wait">
-        {error && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
+      <form onSubmit={handleSubmit} className="space-y-8">
+        {Object.entries(preferences).map(([key, value]) => (
+          <div key={key} className="space-y-2">
+            <label className="block text-lg font-medium">
+              {translations?.questions?.[key] || key}
+            </label>
+            <select
+              value={value}
+              onChange={(e) => handlePreferenceChange(key, e.target.value)}
+              className="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+            >
+              <option value="">{t('selectOption')}</option>
+              {translations?.options && Object.entries(translations.options).map(([optionKey, optionValue]) => (
+                <option key={optionKey} value={optionKey}>
+                  {optionValue}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
+        
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            disabled={saving}
+            className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50"
           >
-            {error}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <Suspense fallback={<FormSkeleton />}>
-          <FormContent
-            translations={translations}
-            preferences={preferences}
-            onPreferenceChange={handlePreferenceChange}
-            isSubmitting={isSubmitting}
-          />
-        </Suspense>
-
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          type="submit"
-          disabled={isSubmitting}
-          className={`w-full py-2 px-4 rounded-md text-white font-medium transition-colors
-            ${isSubmitting 
-              ? 'bg-gray-400 cursor-not-allowed' 
-              : 'bg-blue-600 hover:bg-blue-700'
-            }`}
-        >
-          {isSubmitting ? t('common.saving') : t('common.save')}
-        </motion.button>
+            {saving ? (
+              <div className="flex items-center">
+                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div>
+                {t('saving')}
+              </div>
+            ) : (
+              t('saveChanges')
+            )}
+          </button>
+        </div>
       </form>
     </motion.div>
   );
 };
 
-export default React.memo(RoommatePreferencesForm);
+export default RoommatePreferencesForm;
