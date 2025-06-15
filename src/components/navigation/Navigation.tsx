@@ -1,17 +1,15 @@
-
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import MobileMenu from "./MobileMenu";
 import DesktopNav from "./DesktopNav";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [session, setSession] = useState(null);
-  const { language, setLanguage } = useLanguage();
+  const [language, setLanguage] = useState("IT");
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Auth as SupabaseAuth } from '@supabase/auth-ui-react';
@@ -129,7 +128,7 @@ const Auth = () => {
           </div>
 
           <SupabaseAuth
-            supabaseClient={supabase as any}
+            supabaseClient={supabase}
             appearance={{
               theme: ThemeSupa,
               variables: {

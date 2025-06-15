@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -57,7 +56,7 @@ const QuestionPool = () => {
       if (error) throw error;
       
       // Filter unique categories and add required description field
-      const uniqueCategories = Array.from(new Set((data as any[]).map(row => row.category)));
+      const uniqueCategories = Array.from(new Set(data.map(row => row.category)));
       
       return uniqueCategories.map(category => ({
         id: category,
@@ -80,7 +79,7 @@ const QuestionPool = () => {
 
       if (error) throw error;
       
-      return (data as any[]).map(q => ({
+      return data.map(q => ({
         id: q.id,
         text: q.question,
         category: q.category,
@@ -109,7 +108,7 @@ const QuestionPool = () => {
           question_id: currentQuestion.id,
           answer,
           trait
-        } as any);
+        });
 
       if (error) throw error;
 
