@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
-import { CategorySelector } from "./roommate/components/CategorySelector";
-import { QuestionList } from "./roommate/components/QuestionList";
-import { QuestionStats } from "./roommate/components/QuestionStats";
+import { CategorySelector } from "./components/CategorySelector";
+import { QuestionList } from "./components/QuestionList";
+import { QuestionStats } from "./components/QuestionStats";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
 
@@ -60,7 +60,7 @@ const QuestionPool = () => {
 
       if (error) throw error;
       
-      const uniqueCategories = Array.from(new Set(data.map(row => row.category)));
+      const uniqueCategories = Array.from(new Set((data as any[]).map(row => row.category)));
       
       return uniqueCategories.map(category => ({
         id: category,
@@ -83,7 +83,7 @@ const QuestionPool = () => {
 
       if (error) throw error;
 
-      return data.map(q => {
+      return (data as any[]).map(q => {
         const optionsObj: { [key: string]: string } = {};
         if (Array.isArray(q.options)) {
           q.options.forEach((opt: { text: string; trait: string }) => {
@@ -119,7 +119,7 @@ const QuestionPool = () => {
         profile_id: user.id,
         question_id: questionId,
         answer
-      });
+      } as any);
 
     if (error) {
       toast({

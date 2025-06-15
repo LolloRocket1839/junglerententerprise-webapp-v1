@@ -29,7 +29,7 @@ export const CartDrawer = ({ open, onOpenChange }: CartDrawerProps) => {
         .in('id', items.map(item => item.productId));
 
       if (error) throw error;
-      return data as Product[];
+      return data as unknown as Product[];
     },
     enabled: items.length > 0,
   });
@@ -153,4 +153,4 @@ export const CartDrawer = ({ open, onOpenChange }: CartDrawerProps) => {
       </div>
     </Drawer>
   );
-}; 
+};

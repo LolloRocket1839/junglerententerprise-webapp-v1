@@ -41,7 +41,7 @@ const PreferenceProfilingGame: React.FC = () => {
           .order('id');
 
         if (error) throw error;
-        return data as PreferenceQuestion[];
+        return data as unknown as PreferenceQuestion[];
       } catch (error) {
         console.error('Error fetching questions:', error);
         return [] as PreferenceQuestion[];
@@ -67,11 +67,11 @@ const PreferenceProfilingGame: React.FC = () => {
         const { error } = await supabase
           .from('student_preference_responses')
           .insert({
-            student_id: studentProfile.id,
+            student_id: (studentProfile as any).id,
             question_id: response.question_id,
             response_value: response.response_value,
             response_time: response.response_time,
-          });
+          } as any);
 
         if (error) throw error;
       } catch (error) {
