@@ -1,11 +1,9 @@
 
 import React, { Suspense } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { QueryClientProvider } from '@tanstack/react-query';
+import { Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Navigation from './components/navigation/Navigation';
 import { Toaster } from "@/components/ui/toaster";
-import { queryClient } from './lib/react-query';
 import './App.css';
 import PreferenceProfilingGame from './components/quiz/PreferenceProfilingGame';
 import RoommatePreferencesForm from './components/roommate/RoommatePreferencesForm';
@@ -31,30 +29,26 @@ const LoadingFallback = () => (
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <Router>
-          <Navigation />
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/invest" element={<Invest />} />
-              <Route path="/rent" element={<Rent />} />
-              <Route path="/stay" element={<Stay />} />
-              <Route path="/referral" element={<Referral />} />
-              <Route path="/list-room" element={<ListRoom />} />
-              <Route path="/marketplace" element={<Marketplace />} />
-              <Route path="/marketplace/product/:id" element={<ProductDetail />} />
-              <Route path="/student/profile" element={<StudentProfile />} />
-              <Route path="/student/roommate-matching" element={<RoommateMatching />} />
-              <Route path="/student/preference-profiling" element={<PreferenceProfilingGame />} />
-              <Route path="/student/roommate-preferences" element={<RoommatePreferencesForm />} />
-            </Routes>
-          </Suspense>
-          <Toaster />
-        </Router>
-      </LanguageProvider>
-    </QueryClientProvider>
+    <LanguageProvider>
+      <Navigation />
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/invest" element={<Invest />} />
+          <Route path="/rent" element={<Rent />} />
+          <Route path="/stay" element={<Stay />} />
+          <Route path="/referral" element={<Referral />} />
+          <Route path="/list-room" element={<ListRoom />} />
+          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/marketplace/product/:id" element={<ProductDetail />} />
+          <Route path="/student/profile" element={<StudentProfile />} />
+          <Route path="/student/roommate-matching" element={<RoommateMatching />} />
+          <Route path="/student/preference-profiling" element={<PreferenceProfilingGame />} />
+          <Route path="/student/roommate-preferences" element={<RoommatePreferencesForm />} />
+        </Routes>
+      </Suspense>
+      <Toaster />
+    </LanguageProvider>
   );
 }
 
