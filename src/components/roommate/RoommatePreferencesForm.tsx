@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '../../lib/supabase/client';
+import { supabase } from '@/integrations/supabase/client';
 import { roommatePreferenceTranslations } from '../../translations/roommatePreferences';
 import { Skeleton } from '../ui/skeleton';
 import { toast } from 'react-hot-toast';
