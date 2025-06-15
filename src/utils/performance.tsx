@@ -57,7 +57,7 @@ export const withPerformanceTracking = <P extends object>(
 const apiCache = new Map<string, { data: any; timestamp: number }>();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
-export const optimizeApiCall = async <T>(
+export const optimizeApiCall = async <T,>(
   apiCall: () => Promise<T>,
   cacheKey: string
 ): Promise<T> => {
@@ -190,4 +190,4 @@ export const PerformanceMonitor = {
     const metrics = PerformanceMonitor.getMetrics();
     console.table(metrics);
   },
-}; 
+};
