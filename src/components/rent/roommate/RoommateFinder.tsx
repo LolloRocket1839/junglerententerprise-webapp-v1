@@ -1,10 +1,11 @@
+
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import QuestionPool from "./QuestionPool";
 import RoommateProfileGrid from "./RoommateProfileGrid";
 import WelcomeScreen from "./WelcomeScreen";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 
 type View = "welcome" | "questions" | "matches";
 
@@ -12,45 +13,8 @@ const RoommateFinder = () => {
   const [currentView, setCurrentView] = useState<View>("welcome");
   const { toast } = useToast();
 
-  const { data: session } = useQuery({
-    queryKey: ['auth-session'],
-    queryFn: async () => {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      if (error) {
-        console.error('Session error:', error);
-        toast({
-          title: "Authentication Error",
-          description: "Please sign in to access all features.",
-          variant: "destructive"
-        });
-        throw error;
-      }
-      return session;
-    }
-  });
-
-  const { data: profile } = useQuery({
-    queryKey: ['user-profile', session?.user?.id],
-    enabled: !!session?.user?.id,
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', session?.user?.id)
-        .single();
-
-      if (error) {
-        console.error('Profile error:', error);
-        toast({
-          title: "Profile Error",
-          description: "Unable to load your profile. Please try again.",
-          variant: "destructive"
-        });
-        throw error;
-      }
-      return data;
-    }
-  });
+  const { session } = useAuth();
+  const { data: profile } = useProfile();
 
   const handleStart = () => {
     if (!session) {
