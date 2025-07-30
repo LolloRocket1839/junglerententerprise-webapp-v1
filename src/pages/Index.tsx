@@ -7,6 +7,7 @@ const Index = () => {
 
   useEffect(() => {
     // Redirect to unified properties page
+    console.log('Index component mounted, redirecting to /properties');
     navigate('/properties');
   }, [navigate]);
 

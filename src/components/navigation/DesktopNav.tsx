@@ -33,6 +33,7 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
     }
   };
 
+  console.log('DesktopNav rendering with properties link');
   return (
     <div className="hidden md:flex items-center space-x-6">
       <Link 
