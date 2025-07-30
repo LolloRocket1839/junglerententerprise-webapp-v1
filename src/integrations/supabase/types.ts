@@ -120,6 +120,69 @@ export type Database = {
           },
         ]
       }
+      contracts: {
+        Row: {
+          canone_mensile: number | null
+          clausole_speciali: string | null
+          created_at: string | null
+          data_fine: string
+          data_inizio: string
+          deposito: number | null
+          documenti: string[] | null
+          id: string
+          property_id: string
+          stato: string | null
+          tenant_id: string
+          tipo: Database["public"]["Enums"]["contract_type"]
+          updated_at: string | null
+        }
+        Insert: {
+          canone_mensile?: number | null
+          clausole_speciali?: string | null
+          created_at?: string | null
+          data_fine: string
+          data_inizio: string
+          deposito?: number | null
+          documenti?: string[] | null
+          id?: string
+          property_id: string
+          stato?: string | null
+          tenant_id: string
+          tipo: Database["public"]["Enums"]["contract_type"]
+          updated_at?: string | null
+        }
+        Update: {
+          canone_mensile?: number | null
+          clausole_speciali?: string | null
+          created_at?: string | null
+          data_fine?: string
+          data_inizio?: string
+          deposito?: number | null
+          documenti?: string[] | null
+          id?: string
+          property_id?: string
+          stato?: string | null
+          tenant_id?: string
+          tipo?: Database["public"]["Enums"]["contract_type"]
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contracts_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contracts_tenant_id_fkey"
+            columns: ["tenant_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dynamic_questions: {
         Row: {
           category_id: string | null
@@ -744,6 +807,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          address: string | null
           avatar_url: string | null
           bio: string | null
           budget_max: number | null
@@ -751,16 +815,22 @@ export type Database = {
           created_at: string
           current_city: string | null
           date_of_birth: string | null
+          documento_identita: string | null
           first_name: string | null
           future_city: string | null
           id: string
           is_premium: boolean | null
+          kyc_status: Database["public"]["Enums"]["kyc_status"] | null
           last_name: string | null
           move_in_date: string | null
+          phone_number: string | null
           preferences: Json | null
+          tax_code: string | null
           updated_at: string
+          user_type: Database["public"]["Enums"]["user_type"] | null
         }
         Insert: {
+          address?: string | null
           avatar_url?: string | null
           bio?: string | null
           budget_max?: number | null
@@ -768,16 +838,22 @@ export type Database = {
           created_at?: string
           current_city?: string | null
           date_of_birth?: string | null
+          documento_identita?: string | null
           first_name?: string | null
           future_city?: string | null
           id: string
           is_premium?: boolean | null
+          kyc_status?: Database["public"]["Enums"]["kyc_status"] | null
           last_name?: string | null
           move_in_date?: string | null
+          phone_number?: string | null
           preferences?: Json | null
+          tax_code?: string | null
           updated_at?: string
+          user_type?: Database["public"]["Enums"]["user_type"] | null
         }
         Update: {
+          address?: string | null
           avatar_url?: string | null
           bio?: string | null
           budget_max?: number | null
@@ -785,14 +861,76 @@ export type Database = {
           created_at?: string
           current_city?: string | null
           date_of_birth?: string | null
+          documento_identita?: string | null
           first_name?: string | null
           future_city?: string | null
           id?: string
           is_premium?: boolean | null
+          kyc_status?: Database["public"]["Enums"]["kyc_status"] | null
           last_name?: string | null
           move_in_date?: string | null
+          phone_number?: string | null
           preferences?: Json | null
+          tax_code?: string | null
           updated_at?: string
+          user_type?: Database["public"]["Enums"]["user_type"] | null
+        }
+        Relationships: []
+      }
+      properties: {
+        Row: {
+          cap: string | null
+          citta: string
+          created_at: string | null
+          descrizione: string | null
+          id: string
+          immagini: string[] | null
+          indirizzo: string
+          numero_bagni: number | null
+          numero_stanze: number
+          prezzo_acquisto: number
+          rendimento_annuo: number | null
+          spese_gestione: number | null
+          stato: Database["public"]["Enums"]["property_status"] | null
+          superficie_mq: number | null
+          updated_at: string | null
+          valore_corrente: number | null
+        }
+        Insert: {
+          cap?: string | null
+          citta: string
+          created_at?: string | null
+          descrizione?: string | null
+          id?: string
+          immagini?: string[] | null
+          indirizzo: string
+          numero_bagni?: number | null
+          numero_stanze: number
+          prezzo_acquisto: number
+          rendimento_annuo?: number | null
+          spese_gestione?: number | null
+          stato?: Database["public"]["Enums"]["property_status"] | null
+          superficie_mq?: number | null
+          updated_at?: string | null
+          valore_corrente?: number | null
+        }
+        Update: {
+          cap?: string | null
+          citta?: string
+          created_at?: string | null
+          descrizione?: string | null
+          id?: string
+          immagini?: string[] | null
+          indirizzo?: string
+          numero_bagni?: number | null
+          numero_stanze?: number
+          prezzo_acquisto?: number
+          rendimento_annuo?: number | null
+          spese_gestione?: number | null
+          stato?: Database["public"]["Enums"]["property_status"] | null
+          superficie_mq?: number | null
+          updated_at?: string | null
+          valore_corrente?: number | null
         }
         Relationships: []
       }
@@ -1438,6 +1576,60 @@ export type Database = {
           },
         ]
       }
+      sfp_tokens: {
+        Row: {
+          created_at: string | null
+          data_emissione: string | null
+          data_scadenza: string | null
+          id: string
+          importo: number
+          investor_id: string
+          percentuale_proprieta: number
+          property_id: string
+          stato: string | null
+          token_hash: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          data_emissione?: string | null
+          data_scadenza?: string | null
+          id?: string
+          importo: number
+          investor_id: string
+          percentuale_proprieta: number
+          property_id: string
+          stato?: string | null
+          token_hash?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          data_emissione?: string | null
+          data_scadenza?: string | null
+          id?: string
+          importo?: number
+          investor_id?: string
+          percentuale_proprieta?: number
+          property_id?: string
+          stato?: string | null
+          token_hash?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sfp_tokens_investor_id_fkey"
+            columns: ["investor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sfp_tokens_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       student_documents: {
         Row: {
           created_at: string | null
@@ -1885,6 +2077,59 @@ export type Database = {
           },
         ]
       }
+      transactions: {
+        Row: {
+          commissioni: number | null
+          created_at: string | null
+          data_transazione: string | null
+          descrizione: string | null
+          id: string
+          importo: number
+          metodo_pagamento: string | null
+          riferimento_id: string | null
+          riferimento_tipo: string | null
+          stato: string | null
+          tipo: Database["public"]["Enums"]["transaction_type"]
+          user_id: string
+        }
+        Insert: {
+          commissioni?: number | null
+          created_at?: string | null
+          data_transazione?: string | null
+          descrizione?: string | null
+          id?: string
+          importo: number
+          metodo_pagamento?: string | null
+          riferimento_id?: string | null
+          riferimento_tipo?: string | null
+          stato?: string | null
+          tipo: Database["public"]["Enums"]["transaction_type"]
+          user_id: string
+        }
+        Update: {
+          commissioni?: number | null
+          created_at?: string | null
+          data_transazione?: string | null
+          descrizione?: string | null
+          id?: string
+          importo?: number
+          metodo_pagamento?: string | null
+          riferimento_id?: string | null
+          riferimento_tipo?: string | null
+          stato?: string | null
+          tipo?: Database["public"]["Enums"]["transaction_type"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       transition_periods: {
         Row: {
           created_at: string | null
@@ -2114,13 +2359,23 @@ export type Database = {
         | "active"
         | "expired"
         | "terminated"
+      contract_type: "rental" | "investment" | "management"
       document_type: "passport" | "id_card" | "driver_license"
       document_verification_status: "pending" | "approved" | "rejected"
+      kyc_status: "pending" | "approved" | "rejected"
       payment_status: "pending" | "partial" | "complete" | "refunded"
       property_status: "available" | "reserved" | "occupied" | "maintenance"
       revenue_source: "student" | "tourist"
       tourist_property_status: "available" | "booked" | "maintenance"
+      transaction_type:
+        | "investment"
+        | "rental_payment"
+        | "dividend"
+        | "fee"
+        | "deposit"
+        | "withdrawal"
       transition_status: "planned" | "in_progress" | "completed"
+      user_type: "investor" | "student" | "tourist"
       verification_status: "pending" | "verified" | "rejected"
     }
     CompositeTypes: {
@@ -2258,13 +2513,24 @@ export const Constants = {
         "expired",
         "terminated",
       ],
+      contract_type: ["rental", "investment", "management"],
       document_type: ["passport", "id_card", "driver_license"],
       document_verification_status: ["pending", "approved", "rejected"],
+      kyc_status: ["pending", "approved", "rejected"],
       payment_status: ["pending", "partial", "complete", "refunded"],
       property_status: ["available", "reserved", "occupied", "maintenance"],
       revenue_source: ["student", "tourist"],
       tourist_property_status: ["available", "booked", "maintenance"],
+      transaction_type: [
+        "investment",
+        "rental_payment",
+        "dividend",
+        "fee",
+        "deposit",
+        "withdrawal",
+      ],
       transition_status: ["planned", "in_progress", "completed"],
+      user_type: ["investor", "student", "tourist"],
       verification_status: ["pending", "verified", "rejected"],
     },
   },

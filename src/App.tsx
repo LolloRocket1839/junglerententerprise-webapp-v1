@@ -10,8 +10,8 @@ import Stay from './pages/Stay';
 import Referral from './pages/Referral';
 import ListRoom from './pages/ListRoom';
 import Marketplace from './pages/Marketplace';
-import Auth from './components/auth/Auth';
-import StudentDashboard from './components/rent/StudentDashboard';
+import Dashboard from './pages/Dashboard';
+import { AuthForm } from './components/auth/AuthForm';
 import { Toaster } from "@/components/ui/toaster";
 import './App.css';
 
@@ -32,8 +32,8 @@ function App() {
             <Route path="/referral" element={<Referral />} />
             <Route path="/list-room" element={<ListRoom />} />
             <Route path="/marketplace" element={<Marketplace />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/student" element={<StudentDashboard />} />
+            <Route path="/auth" element={<AuthForm />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
           <Toaster />
         </Router>
