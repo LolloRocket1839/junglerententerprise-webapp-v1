@@ -41,7 +41,6 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
     }
   };
 
-  console.log('MobileMenu rendering with properties link');
   return (
     <div
       className={`fixed inset-0 z-50 transform transition-transform duration-300 ease-in-out ${

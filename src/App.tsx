@@ -22,7 +22,6 @@ import './App.css';
 const queryClient = new QueryClient();
 
 function App() {
-  console.log('App component rendering with unified properties system');
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
