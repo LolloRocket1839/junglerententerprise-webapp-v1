@@ -3,82 +3,20 @@ import { Button } from "@/components/ui/button";
 import { LogIn, LogOut, UserPlus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface MobileMenuProps {
   session: any;
   isOpen: boolean;
   onClose: () => void;
   onNavigate: () => void;
-  language: string;
+  
 }
 
-const menuItems = {
-  IT: {
-    invest: "Investi",
-    rent: "Affitta",
-    marketplace: "Marketplace",
-    stay: "Soggiorna",
-    students: "Studenti",
-    referral: "Referral",
-    signOut: "Esci",
-    signIn: "Accedi",
-    register: "Registrati",
-    signOutSuccess: "Disconnessione effettuata",
-    signOutMessage: "Torna presto!",
-    signOutError: "Errore durante la disconnessione",
-    tryAgain: "Riprova più tardi",
-  },
-  EN: {
-    invest: "Invest",
-    rent: "Rent",
-    marketplace: "Marketplace",
-    stay: "Stay",
-    students: "Students",
-    referral: "Referral",
-    signOut: "Sign Out",
-    signIn: "Sign In",
-    register: "Register",
-    signOutSuccess: "Signed out successfully",
-    signOutMessage: "Come back soon!",
-    signOutError: "Error signing out",
-    tryAgain: "Please try again later",
-  },
-  FR: {
-    invest: "Investir",
-    rent: "Louer",
-    marketplace: "Marketplace",
-    stay: "Séjourner",
-    students: "Étudiants",
-    referral: "Parrainage",
-    signOut: "Déconnexion",
-    signIn: "Connexion",
-    register: "S'inscrire",
-    signOutSuccess: "Déconnexion réussie",
-    signOutMessage: "À bientôt !",
-    signOutError: "Erreur de déconnexion",
-    tryAgain: "Veuillez réessayer plus tard",
-  },
-  DE: {
-    invest: "Investieren",
-    rent: "Mieten",
-    marketplace: "Marktplatz",
-    stay: "Aufenthalt",
-    students: "Studenten",
-    referral: "Empfehlung",
-    signOut: "Abmelden",
-    signIn: "Anmelden",
-    register: "Registrieren",
-    signOutSuccess: "Erfolgreich abgemeldet",
-    signOutMessage: "Bis bald!",
-    signOutError: "Fehler beim Abmelden",
-    tryAgain: "Bitte versuchen Sie es später erneut",
-  },
-};
-
-const MobileMenu = ({ session, isOpen, onClose, onNavigate, language = "IT" }: MobileMenuProps) => {
+const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const text = menuItems[language as keyof typeof menuItems];
+  const { t } = useLanguage();
 
   const handleNavigation = (path: string) => {
     onClose();
@@ -91,13 +29,13 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate, language = "IT" }: M
       await supabase.auth.signOut();
       handleNavigation('/');
       toast({
-        title: text.signOutSuccess,
-        description: text.signOutMessage,
+        title: t('signOutSuccess'),
+        description: t('signOutMessage'),
       });
     } catch (error) {
       toast({
-        title: text.signOutError,
-        description: text.tryAgain,
+        title: t('signOutError'),
+        description: t('tryAgain'),
         variant: "destructive",
       });
     }
@@ -117,31 +55,31 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate, language = "IT" }: M
               onClick={() => handleNavigation("/invest")}
               className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95 w-full"
             >
-              {text.invest}
+              {t('invest')}
             </button>
             <button
               onClick={() => handleNavigation("/rent")}
               className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
             >
-              {text.rent}
+              {t('rent')}
             </button>
             <button
               onClick={() => handleNavigation("/marketplace")}
               className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
             >
-              {text.marketplace}
+              {t('marketplace')}
             </button>
             <button
               onClick={() => handleNavigation("/stay")}
               className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
             >
-              {text.stay}
+              {t('stay')}
             </button>
             <button
               onClick={() => handleNavigation("/referral")}
               className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95"
             >
-              {text.referral}
+              {t('referral')}
             </button>
           </div>
 
@@ -153,7 +91,7 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate, language = "IT" }: M
                 className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20"
               >
                 <LogOut className="w-4 h-4" />
-                {text.signOut}
+                {t('signOut')}
               </Button>
             ) : (
               <div className="space-y-4">
@@ -163,7 +101,7 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate, language = "IT" }: M
                   className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20"
                 >
                   <LogIn className="w-4 h-4" />
-                  {text.signIn}
+                  {t('signIn')}
                 </Button>
                 <Button
                   variant="default"
@@ -171,7 +109,7 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate, language = "IT" }: M
                   className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#FB923C] text-white"
                 >
                   <UserPlus className="w-4 h-4" />
-                  {text.register}
+                  {t('register')}
                 </Button>
               </div>
             )}

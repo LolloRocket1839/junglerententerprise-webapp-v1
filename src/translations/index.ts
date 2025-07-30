@@ -74,7 +74,38 @@ export const translations = {
     signOutSuccess: "Disconnessione effettuata",
     signOutMessage: "Torna presto!",
     signOutError: "Errore durante la disconnessione",
-    tryAgain: "Riprova più tardi"
+    tryAgain: "Riprova più tardi",
+
+    // Roles
+    student: "Studente",
+    tourist: "Turista",
+    investor: "Investitore",
+    studentDesc: "Cerca alloggi a lungo termine con sconti studenti",
+    touristDesc: "Prenota soggiorni brevi in appartamenti",
+    investorDesc: "Gestisci proprietà e analizza rendimenti",
+
+    // Marketplace
+    allItems: "Tutti gli articoli",
+    furniture: "Arredamento",
+    electronics: "Elettronica",
+    textbooks: "Libri",
+    services: "Servizi",
+    swap: "Scambia",
+    searchMarketplace: "Cerca nel marketplace...",
+
+    // Referral
+    referralDashboard: "Dashboard Referral",
+    yourReferralCode: "Il Tuo Codice Referral",
+    totalReferrals: "Referral Totali",
+    investmentGenerated: "Investimenti Generati",
+    daysEarned: "Giorni Guadagnati",
+    pendingDays: "Giorni in Sospeso",
+    copyReferralCode: "Codice referral copiato negli appunti!",
+    referralInfo: "Guadagna 1 giorno gratuito di alloggio per ogni €1.000 di investimento che porti a Jungle Rent. Condividi il tuo codice referral con potenziali investitori e traccia le tue ricompense qui.",
+
+    // Investment
+    investmentDashboardText: "Dashboard Investimenti",
+    closeDialog: "Chiudi"
   },
   EN: {
     // Homepage
@@ -136,7 +167,53 @@ export const translations = {
     investors: "Investors",
     overview: "Overview",
     details: "Details",
-    legal: "Legal"
+    legal: "Legal",
+
+    // Navigation
+    invest: "Invest",
+    rent: "Rent",
+    marketplace: "Marketplace",
+    stay: "Stay",
+    students: "Students",
+    referral: "Referral",
+    signOut: "Sign Out",
+    signIn: "Sign In",
+    register: "Register",
+    signOutSuccess: "Signed out successfully",
+    signOutMessage: "Come back soon!",
+    signOutError: "Error signing out",
+    tryAgain: "Please try again later",
+
+    // Roles
+    student: "Student",
+    tourist: "Tourist",
+    investor: "Investor",
+    studentDesc: "Find long-term housing with student discounts",
+    touristDesc: "Book short stays in apartments",
+    investorDesc: "Manage properties and analyze returns",
+
+    // Marketplace
+    allItems: "All items",
+    furniture: "Furniture",
+    electronics: "Electronics",
+    textbooks: "Textbooks",
+    services: "Services",
+    swap: "Swap",
+    searchMarketplace: "Search marketplace...",
+
+    // Referral
+    referralDashboard: "Referral Dashboard",
+    yourReferralCode: "Your Referral Code",
+    totalReferrals: "Total Referrals",
+    investmentGenerated: "Investment Generated",
+    daysEarned: "Days Earned",
+    pendingDays: "Pending Days",
+    copyReferralCode: "Referral code copied to clipboard!",
+    referralInfo: "Earn 1 free accommodation day for every €1,000 investment you bring to Jungle Rent. Share your referral code with potential investors and track your rewards here.",
+
+    // Investment
+    investmentDashboardText: "Investment Dashboard",
+    closeDialog: "Close"
   },
   FR: {
     // Homepage
@@ -213,7 +290,38 @@ export const translations = {
     signOutSuccess: "Déconnexion réussie",
     signOutMessage: "Revenez bientôt !",
     signOutError: "Erreur lors de la déconnexion",
-    tryAgain: "Réessayez plus tard"
+    tryAgain: "Réessayez plus tard",
+
+    // Roles
+    student: "Étudiant",
+    tourist: "Touriste",
+    investor: "Investisseur",
+    studentDesc: "Trouvez des logements à long terme avec des réductions étudiantes",
+    touristDesc: "Réservez des séjours courts en appartements",
+    investorDesc: "Gérez les propriétés et analysez les rendements",
+
+    // Marketplace
+    allItems: "Tous les articles",
+    furniture: "Mobilier",
+    electronics: "Électronique",
+    textbooks: "Manuels",
+    services: "Services",
+    swap: "Échange",
+    searchMarketplace: "Rechercher dans le marketplace...",
+
+    // Referral
+    referralDashboard: "Tableau de Bord Parrainage",
+    yourReferralCode: "Votre Code de Parrainage",
+    totalReferrals: "Parrainages Totaux",
+    investmentGenerated: "Investissement Généré",
+    daysEarned: "Jours Gagnés",
+    pendingDays: "Jours en Attente",
+    copyReferralCode: "Code de parrainage copié dans le presse-papiers !",
+    referralInfo: "Gagnez 1 jour d'hébergement gratuit pour chaque 1 000 € d'investissement que vous apportez à Jungle Rent. Partagez votre code de parrainage avec des investisseurs potentiels et suivez vos récompenses ici.",
+
+    // Investment
+    investmentDashboardText: "Tableau de Bord d'Investissement",
+    closeDialog: "Fermer"
   },
   DE: {
     // Homepage
@@ -290,6 +398,37 @@ export const translations = {
     signOutSuccess: "Erfolgreich abgemeldet",
     signOutMessage: "Kommen Sie bald wieder!",
     signOutError: "Fehler beim Abmelden",
-    tryAgain: "Später erneut versuchen"
+    tryAgain: "Später erneut versuchen",
+
+    // Roles
+    student: "Student",
+    tourist: "Tourist",
+    investor: "Investor",
+    studentDesc: "Finden Sie Langzeitunterkünfte mit Studentenrabatten",
+    touristDesc: "Buchen Sie Kurzaufenthalte in Apartments",
+    investorDesc: "Verwalten Sie Immobilien und analysieren Sie Renditen",
+
+    // Marketplace
+    allItems: "Alle Artikel",
+    furniture: "Möbel",
+    electronics: "Elektronik",
+    textbooks: "Lehrbücher",
+    services: "Dienstleistungen",
+    swap: "Tauschen",
+    searchMarketplace: "Im Marktplatz suchen...",
+
+    // Referral
+    referralDashboard: "Empfehlungs-Dashboard",
+    yourReferralCode: "Ihr Empfehlungscode",
+    totalReferrals: "Gesamte Empfehlungen",
+    investmentGenerated: "Generierte Investitionen",
+    daysEarned: "Verdiente Tage",
+    pendingDays: "Ausstehende Tage",
+    copyReferralCode: "Empfehlungscode in die Zwischenablage kopiert!",
+    referralInfo: "Verdienen Sie 1 kostenlosen Unterkunftstag für jede 1.000 € Investition, die Sie zu Jungle Rent bringen. Teilen Sie Ihren Empfehlungscode mit potenziellen Investoren und verfolgen Sie Ihre Belohnungen hier.",
+
+    // Investment
+    investmentDashboardText: "Investment Dashboard",
+    closeDialog: "Schließen"
   }
 };

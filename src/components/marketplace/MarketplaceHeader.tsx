@@ -2,6 +2,7 @@ import { Search, X, ArrowLeftRight } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { MarketplaceCategory } from './types';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface MarketplaceHeaderProps {
   searchQuery: string;
@@ -16,13 +17,15 @@ const MarketplaceHeader = ({
   selectedCategory,
   setSelectedCategory
 }: MarketplaceHeaderProps) => {
+  const { t } = useLanguage();
+  
   const categories: Record<MarketplaceCategory, string> = {
-    'all': 'Tutti gli articoli',
-    'furniture': 'Arredamento',
-    'electronics': 'Elettronica',
-    'textbooks': 'Libri',
-    'services': 'Servizi',
-    'swap': 'Scambia'
+    'all': t('allItems'),
+    'furniture': t('furniture'),
+    'electronics': t('electronics'),
+    'textbooks': t('textbooks'),
+    'services': t('services'),
+    'swap': t('swap')
   };
 
   return (
@@ -30,7 +33,7 @@ const MarketplaceHeader = ({
       <div className="relative max-w-2xl mx-auto">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 h-4 w-4" />
         <Input
-          placeholder="Cerca nel marketplace..."
+          placeholder={t('searchMarketplace')}
           className="pl-10 pr-4 h-12 w-full glass-input bg-white/5 border-white/10 text-white placeholder:text-white/40"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}

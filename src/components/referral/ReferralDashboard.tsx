@@ -4,8 +4,10 @@ import { Copy, Share2, Gift, TrendingUp, Calendar, QrCode, AlertCircle } from 'l
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ReferralDashboard = () => {
+  const { t } = useLanguage();
   const [referralCode] = useState("JR-ST12345-ABC");
   const stats = {
     totalReferrals: 4,
@@ -16,20 +18,20 @@ const ReferralDashboard = () => {
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(referralCode);
-    toast.success("Codice referral copiato negli appunti!");
+    toast.success(t('copyReferralCode'));
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#065f46] to-[#047857] px-4 py-8">
       <div className="container mx-auto max-w-6xl">
         <h1 className="text-4xl font-bold text-white mb-8 animate-fade-in">
-          Dashboard Referral
+          {t('referralDashboard')}
         </h1>
 
         {/* Referral Code Card */}
         <Card className="bg-white/10 backdrop-blur-md border-white/20 mb-8">
           <CardHeader>
-            <CardTitle className="text-white">Il Tuo Codice Referral</CardTitle>
+            <CardTitle className="text-white">{t('yourReferralCode')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-4">
@@ -57,7 +59,7 @@ const ReferralDashboard = () => {
                 <Gift className="h-5 w-5 text-primary" />
                 <p className="text-lg font-semibold text-white">{stats.totalReferrals}</p>
               </div>
-              <p className="text-sm text-white/60 mt-1">Referral Totali</p>
+              <p className="text-sm text-white/60 mt-1">{t('totalReferrals')}</p>
             </CardContent>
           </Card>
 
@@ -67,7 +69,7 @@ const ReferralDashboard = () => {
                 <TrendingUp className="h-5 w-5 text-primary" />
                 <p className="text-lg font-semibold text-white">€{stats.investmentGenerated}</p>
               </div>
-              <p className="text-sm text-white/60 mt-1">Investimenti Generati</p>
+              <p className="text-sm text-white/60 mt-1">{t('investmentGenerated')}</p>
             </CardContent>
           </Card>
 
@@ -77,7 +79,7 @@ const ReferralDashboard = () => {
                 <Calendar className="h-5 w-5 text-primary" />
                 <p className="text-lg font-semibold text-white">{stats.daysEarned} giorni</p>
               </div>
-              <p className="text-sm text-white/60 mt-1">Giorni Guadagnati</p>
+              <p className="text-sm text-white/60 mt-1">{t('daysEarned')}</p>
             </CardContent>
           </Card>
 
@@ -87,7 +89,7 @@ const ReferralDashboard = () => {
                 <Calendar className="h-5 w-5 text-primary" />
                 <p className="text-lg font-semibold text-white">{stats.pendingDays} giorni</p>
               </div>
-              <p className="text-sm text-white/60 mt-1">Giorni in Sospeso</p>
+              <p className="text-sm text-white/60 mt-1">{t('pendingDays')}</p>
             </CardContent>
           </Card>
         </div>
@@ -97,10 +99,9 @@ const ReferralDashboard = () => {
           <CardContent className="pt-6">
             <div className="flex items-start gap-3">
               <AlertCircle className="h-5 w-5 text-primary mt-0.5" />
-              <p className="text-sm text-white/80">
-                Guadagna 1 giorno gratuito di alloggio per ogni €1.000 di investimento che porti a Jungle Rent.
-                Condividi il tuo codice referral con potenziali investitori e traccia le tue ricompense qui.
-              </p>
+            <p className="text-sm text-white/80">
+              {t('referralInfo')}
+            </p>
             </div>
           </CardContent>
         </Card>

@@ -72,7 +72,6 @@ const Navigation = () => {
           setIsMenuOpen(false);
           navigate('/');
         }}
-        language={language}
       />
     </nav>
   );

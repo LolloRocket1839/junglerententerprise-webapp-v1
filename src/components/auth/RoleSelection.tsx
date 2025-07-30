@@ -2,27 +2,7 @@
 import { Building2, GraduationCap, Palmtree, ShieldCheck } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import type { UserRole, UserRoleOption } from '@/types/auth';
-
-const roleOptions: UserRoleOption[] = [
-  {
-    id: 'student',
-    title: 'Studente',
-    description: 'Cerca alloggi a lungo termine con sconti studenti',
-    icon: 'GraduationCap'
-  },
-  {
-    id: 'tourist',
-    title: 'Turista',
-    description: 'Prenota soggiorni brevi in appartamenti',
-    icon: 'Palmtree'
-  },
-  {
-    id: 'investor',
-    title: 'Investitore',
-    description: 'Gestisci proprietà e analizza rendimenti',
-    icon: 'Building2'
-  }
-];
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface RoleSelectionProps {
   onRoleSelect: (role: UserRole) => void;
@@ -30,6 +10,28 @@ interface RoleSelectionProps {
 }
 
 export function RoleSelection({ onRoleSelect, selectedRole }: RoleSelectionProps) {
+  const { t } = useLanguage();
+  
+  const roleOptions: UserRoleOption[] = [
+    {
+      id: 'student',
+      title: t('student'),
+      description: t('studentDesc'),
+      icon: 'GraduationCap'
+    },
+    {
+      id: 'tourist',
+      title: t('tourist'),
+      description: t('touristDesc'),
+      icon: 'Palmtree'
+    },
+    {
+      id: 'investor',
+      title: t('investor'),
+      description: t('investorDesc'),
+      icon: 'Building2'
+    }
+  ];
   return (
     <div className="grid gap-4 md:grid-cols-3">
       {roleOptions.map((option) => (
