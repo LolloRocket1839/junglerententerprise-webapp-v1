@@ -518,6 +518,7 @@ export type Database = {
           description: string
           id: string
           image_url: string | null
+          looking_for: string | null
           name: string
           price: number
           seller_id: string | null
@@ -529,6 +530,7 @@ export type Database = {
           description: string
           id?: string
           image_url?: string | null
+          looking_for?: string | null
           name: string
           price: number
           seller_id?: string | null
@@ -540,6 +542,7 @@ export type Database = {
           description?: string
           id?: string
           image_url?: string | null
+          looking_for?: string | null
           name?: string
           price?: number
           seller_id?: string | null
