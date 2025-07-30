@@ -1,18 +1,16 @@
 
-import OnboardingTour from "@/components/onboarding/OnboardingTour";
-import { HeroSection } from "@/components/home/HeroSection";
-import { UserTypeSection } from "@/components/home/UserTypeSection";
-import { HowItWorksSection } from "@/components/home/HowItWorksSection";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <OnboardingTour />
-      <HeroSection />
-      <UserTypeSection />
-      <HowItWorksSection />
-    </div>
-  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect to unified properties page
+    navigate('/properties');
+  }, [navigate]);
+
+  return null;
 };
 
 export default Index;
