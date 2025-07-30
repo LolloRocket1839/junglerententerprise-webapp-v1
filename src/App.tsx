@@ -12,6 +12,7 @@ import ListRoom from './pages/ListRoom';
 import Marketplace from './pages/Marketplace';
 import Dashboard from './pages/Dashboard';
 import { AuthForm } from './components/auth/AuthForm';
+import { MobileTabNavigation } from './components/mobile/MobileTabNavigation';
 import { Toaster } from "@/components/ui/toaster";
 import './App.css';
 
@@ -35,6 +36,7 @@ function App() {
             <Route path="/auth" element={<AuthForm />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
+          <MobileTabNavigation />
           <Toaster />
         </Router>
       </LanguageProvider>
