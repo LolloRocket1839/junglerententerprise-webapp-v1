@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 220 15% 8%;
-    --foreground: 0 0% 98%;
-    --card: 220 15% 12%;
-    --card-foreground: 0 0% 95%;
-    --popover: 220 15% 12%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 200 40% 55%;
+    --background: 160 20% 5%;
+    --foreground: 0 0% 100%;
+    --card: 160 20% 10%;
+    --card-foreground: 0 0% 100%;
+    --popover: 160 20% 10%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 142 76% 36%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 15% 90%;
-    --secondary-foreground: 220 15% 15%;
-    --muted: 220 15% 25%;
-    --muted-foreground: 0 0% 75%;
-    --accent: 180 30% 45%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 160 20% 20%;
+    --muted-foreground: 0 0% 80%;
+    --accent: 142 76% 36%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 75% 65%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 15% 25%;
-    --input: 220 15% 25%;
-    --ring: 200 40% 55%;
+    --border: 160 20% 20%;
+    --input: 160 20% 20%;
+    --ring: 142 76% 36%;
     --radius: 0.75rem;
   }
 }
@@ -33,7 +33,7 @@
   }
   
   body {
-    @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-foreground font-sans selection:bg-primary/20;
+    @apply bg-[#1a472a] text-white font-sans selection:bg-emerald-500/30;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -52,27 +52,27 @@
   .glass-card {
     @apply glass rounded-2xl transition-all duration-300 
            hover:bg-white/10 shadow-xl hover:shadow-2xl 
-           hover:shadow-primary/10;
+           hover:shadow-emerald-500/10;
   }
 
   .glass-button {
     @apply glass rounded-full px-6 py-3 text-sm font-semibold 
-           text-foreground transition-all duration-300 hover:bg-white/20 
+           text-white transition-all duration-300 hover:bg-white/20 
            active:scale-95 disabled:opacity-50 shadow-lg hover:shadow-xl;
   }
 
   .glass-input {
     @apply glass rounded-lg px-4 py-2 
-           text-foreground placeholder-muted-foreground transition-all duration-300
-           focus:outline-none focus:ring-2 focus:ring-primary/50 shadow-lg;
+           text-white placeholder-white/40 transition-all duration-300
+           focus:outline-none focus:ring-2 focus:ring-emerald-500/50 shadow-lg;
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-primary via-accent to-primary 
+    @apply bg-gradient-to-r from-white via-white/90 to-white/70 
            bg-clip-text text-transparent;
   }
 
   .jungle-shadow {
-    @apply shadow-[0_8px_32px_-8px_hsl(var(--primary)/0.2)];
+    @apply shadow-[0_8px_32px_-8px_rgba(52,211,153,0.2)];
   }
 }
