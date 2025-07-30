@@ -38,9 +38,14 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16 md:h-20">
           <Link 
             to="/" 
-            className="text-xl sm:text-2xl font-medium bg-gradient-to-r from-primary via-primary-light to-primary 
+            className="flex items-center gap-2 text-xl sm:text-2xl font-medium bg-gradient-to-r from-primary via-primary-light to-primary 
                      bg-clip-text text-transparent transition-all duration-300 hover:scale-105"
           >
+            <img 
+              src="/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png" 
+              alt="Jungle Rent Logo" 
+              className="w-6 h-6 sm:w-8 sm:h-8"
+            />
             Jungle Rent
           </Link>
 
