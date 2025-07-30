@@ -5,7 +5,7 @@ import { translations } from '@/translations';
 type LanguageContextType = {
   language: string;
   setLanguage: (lang: string) => void;
-  t: (key: keyof typeof translations.EN) => string;
+  t: (key: string) => string;
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -13,12 +13,13 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
   const [language, setLanguage] = useState('IT');
 
-  const t = (key: keyof typeof translations.EN): string => {
-    if (!translations[language as keyof typeof translations]) {
+  const t = (key: string): string => {
+    const langTranslations = translations[language as keyof typeof translations];
+    if (!langTranslations) {
       console.warn(`Translation for language ${language} not found`);
-      return translations.IT[key] || key;
+      return translations.IT[key as keyof typeof translations.IT] || key;
     }
-    return translations[language as keyof typeof translations][key] || translations.IT[key] || key;
+    return langTranslations[key as keyof typeof langTranslations] || translations.IT[key as keyof typeof translations.IT] || key;
   };
 
   return (

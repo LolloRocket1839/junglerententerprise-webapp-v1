@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, DollarSign, GraduationCap, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GlassCard } from "@/components/ui/glass-card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const UserTypeCard = ({ 
   icon: Icon, 
@@ -45,6 +46,7 @@ const UserTypeCard = ({
 );
 
 export const UserTypeSection = () => {
+  const { t } = useLanguage();
   return (
     <section 
       id="user-type-section"
@@ -55,24 +57,24 @@ export const UserTypeSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           <UserTypeCard
             icon={DollarSign}
-            title="Per Investitori"
-            description="Investi in alloggi studenteschi sostenibili e ottieni rendimenti superiori al mercato supportando l'istruzione accessibile."
+            title={t('forInvestors')}
+            description={t('investDescription')}
             linkTo="/invest"
-            buttonText="Inizia a Investire"
+            buttonText={t('startInvesting')}
           />
           <UserTypeCard
             icon={GraduationCap}
-            title="Per Studenti"
-            description="Trova il tuo alloggio studentesco perfetto a lungo termine e connettiti con potenziali coinquilini."
+            title={t('forStudents')}
+            description={t('studentDescription')}
             linkTo="/rent"
-            buttonText="Trova Alloggio"
+            buttonText={t('findHousing')}
           />
           <UserTypeCard
             icon={Calendar}
-            title="Brevi Soggiorni"
-            description="Cerchi un posto dove soggiornare per visitare la città d'estate? Le nostre soluzioni fanno al caso tuo."
+            title={t('forShortStays')}
+            description={t('stayDescription')}
             linkTo="/stay"
-            buttonText="Prenota Soggiorno"
+            buttonText={t('bookStay')}
           />
         </div>
       </div>

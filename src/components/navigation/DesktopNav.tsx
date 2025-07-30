@@ -9,54 +9,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface DesktopNavProps {
   session: any;
   onLanguageChange?: (lang: string) => void;
 }
-
-const menuItems = {
-  IT: {
-    invest: "Investi",
-    rent: "Affitta",
-    marketplace: "Marketplace",
-    stay: "Soggiorna",
-    referral: "Referral",
-    signOut: "Esci",
-    signIn: "Accedi",
-    register: "Registrati",
-  },
-  EN: {
-    invest: "Invest",
-    rent: "Rent",
-    marketplace: "Marketplace",
-    stay: "Stay",
-    referral: "Referral",
-    signOut: "Sign Out",
-    signIn: "Sign In",
-    register: "Register",
-  },
-  FR: {
-    invest: "Investir",
-    rent: "Louer",
-    marketplace: "Marketplace",
-    stay: "Séjourner",
-    referral: "Parrainage",
-    signOut: "Déconnexion",
-    signIn: "Connexion",
-    register: "S'inscrire",
-  },
-  DE: {
-    invest: "Investieren",
-    rent: "Mieten",
-    marketplace: "Marktplatz",
-    stay: "Aufenthalt",
-    referral: "Empfehlung",
-    signOut: "Abmelden",
-    signIn: "Anmelden",
-    register: "Registrieren",
-  },
-};
 
 const languages = {
   IT: "Italiano",
@@ -66,8 +24,7 @@ const languages = {
 };
 
 const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
-  const [language, setLanguage] = useState("IT");
-  const text = menuItems[language as keyof typeof menuItems];
+  const { language, setLanguage, t } = useLanguage();
 
   const handleLanguageChange = (lang: string) => {
     setLanguage(lang);
@@ -83,35 +40,35 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        {text.invest}
+        {t('invest')}
       </Link>
       <Link 
         to="/rent" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        {text.rent}
+        {t('rent')}
       </Link>
       <Link 
         to="/marketplace" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        {text.marketplace}
+        {t('marketplace')}
       </Link>
       <Link 
         to="/stay" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        {text.stay}
+        {t('stay')}
       </Link>
       <Link 
         to="/referral" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
       >
-        {text.referral}
+        {t('referral')}
       </Link>
 
       <DropdownMenu>
@@ -147,7 +104,7 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
           className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white"
         >
           <LogOut className="w-4 h-4" />
-          {text.signOut}
+          {t('signOut')}
         </Button>
       ) : (
         <div className="flex items-center gap-3">
@@ -160,7 +117,7 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
           >
             <Link to="/auth">
               <LogIn className="w-4 h-4" />
-              {text.signIn}
+              {t('signIn')}
             </Link>
           </Button>
           <Button 
@@ -172,7 +129,7 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
           >
             <Link to="/auth">
               <UserPlus className="w-4 h-4" />
-              {text.register}
+              {t('register')}
             </Link>
           </Button>
         </div>
