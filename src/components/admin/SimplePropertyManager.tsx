@@ -150,7 +150,7 @@ const SimplePropertyManager = () => {
               setEditingId(null);
               reset();
             }}
-            className="glass-button flex items-center gap-2"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2"
           >
             <Plus className="h-4 w-4" />
             {showForm ? 'Chiudi Form' : 'Aggiungi Proprietà'}
@@ -168,25 +168,25 @@ const SimplePropertyManager = () => {
                 <Input
                   {...register('title', { required: true })}
                   placeholder="Titolo (es. Appartamento Corso Duca)"
-                  className="glass-input"
+                  className="bg-background/50 border-border text-foreground"
                 />
                 <Input
                   {...register('city', { required: true })}
                   placeholder="Città (es. Torino)"
-                  className="glass-input"
+                  className="bg-background/50 border-border text-foreground"
                 />
               </div>
               
               <Input
                 {...register('address', { required: true })}
                 placeholder="Indirizzo completo"
-                className="glass-input"
+                className="bg-background/50 border-border text-foreground"
               />
               
               <Textarea
                 {...register('description')}
                 placeholder="Descrizione della proprietà..."
-                className="glass-input min-h-[100px]"
+                className="bg-background/50 border-border text-foreground min-h-[100px]"
               />
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -194,26 +194,26 @@ const SimplePropertyManager = () => {
                   {...register('price', { required: true })}
                   type="number"
                   placeholder="Prezzo €/mese"
-                  className="glass-input"
+                  className="bg-background/50 border-border text-foreground"
                 />
                 <Input
                   {...register('size', { required: true })}
                   type="number"
                   placeholder="Dimensione m²"
-                  className="glass-input"
+                  className="bg-background/50 border-border text-foreground"
                 />
                 <Input
                   {...register('rooms', { required: true })}
                   type="number"
                   placeholder="Numero stanze"
-                  className="glass-input"
+                  className="bg-background/50 border-border text-foreground"
                 />
               </div>
               
               <Input
                 {...register('image_url')}
                 placeholder="URL immagine (opzionale)"
-                className="glass-input"
+                className="bg-background/50 border-border text-foreground"
               />
               
               <div className="flex gap-3">
@@ -229,7 +229,7 @@ const SimplePropertyManager = () => {
                 >
                   Annulla
                 </Button>
-                <Button type="submit" className="flex-1 glass-button">
+                <Button type="submit" className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground">
                   {editingId ? 'Aggiorna' : 'Crea'} Proprietà
                 </Button>
               </div>
