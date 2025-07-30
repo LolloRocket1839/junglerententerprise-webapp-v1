@@ -44,7 +44,7 @@ const Navigation = () => {
             <img 
               src="/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png" 
               alt="Jungle Rent Logo" 
-              className="w-6 h-6 sm:w-8 sm:h-8"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-primary/20"
             />
             Jungle Rent
           </Link>
