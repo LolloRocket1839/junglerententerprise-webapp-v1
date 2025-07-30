@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Leaf, TreePalm } from "lucide-react";
+import { ArrowRight, TreePalm } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GlassCard } from "@/components/ui/glass-card";
 
@@ -17,7 +17,6 @@ export const HeroSection = () => {
       
       {/* Decorative elements - higher z-index */}
       <div className="absolute inset-0 z-20 pointer-events-none">
-        <Leaf className="absolute top-10 left-10 h-6 w-6 text-primary/40 animate-float-slow" aria-hidden="true" />
         <TreePalm className="absolute bottom-10 right-10 h-6 w-6 text-primary/40 animate-float-slower" aria-hidden="true" />
       </div>
       
