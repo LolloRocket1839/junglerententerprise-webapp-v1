@@ -8,6 +8,7 @@ import Invest from './pages/Invest';
 import Rent from './pages/Rent';
 import Stay from './pages/Stay';
 import Referral from './pages/Referral';
+import Properties from './pages/Properties';
 import ListRoom from './pages/ListRoom';
 import Marketplace from './pages/Marketplace';
 import Dashboard from './pages/Dashboard';
@@ -27,6 +28,7 @@ function App() {
           <Navigation />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/properties" element={<Properties />} />
             <Route path="/invest" element={<Invest />} />
             <Route path="/rent" element={<Rent />} />
             <Route path="/stay" element={<Stay />} />

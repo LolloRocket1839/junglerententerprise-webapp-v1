@@ -36,6 +36,13 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
   return (
     <div className="hidden md:flex items-center space-x-8">
       <Link 
+        to="/properties" 
+        className="text-base text-white/80 hover:text-white transition-all duration-300 
+                   hover:border-b-2 hover:border-primary font-sans tracking-wide"
+      >
+        Proprietà
+      </Link>
+      <Link 
         to="/invest" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"
