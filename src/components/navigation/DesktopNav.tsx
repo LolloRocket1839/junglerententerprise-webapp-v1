@@ -79,6 +79,13 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
       >
         {t('referral')}
       </Link>
+      <Link 
+        to="/admin" 
+        className="text-base text-white/80 hover:text-white transition-all duration-300 
+                   hover:border-b-2 hover:border-primary font-sans tracking-wide"
+      >
+        Admin
+      </Link>
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

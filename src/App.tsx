@@ -11,6 +11,7 @@ import Referral from './pages/Referral';
 import Properties from './pages/Properties';
 import ListRoom from './pages/ListRoom';
 import Marketplace from './pages/Marketplace';
+import Admin from './pages/Admin';
 import Dashboard from './pages/Dashboard';
 import { AuthForm } from './components/auth/AuthForm';
 import { MobileTabNavigation } from './components/mobile/MobileTabNavigation';
@@ -36,6 +37,7 @@ function App() {
             <Route path="/referral" element={<Referral />} />
             <Route path="/list-room" element={<ListRoom />} />
             <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="/auth" element={<AuthForm />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
