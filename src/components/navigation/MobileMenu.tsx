@@ -53,9 +53,10 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
           <div className="flex-grow space-y-6">
             <button
               onClick={() => handleNavigation("/properties")}
-              className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95 w-full"
+              className="text-lg text-left text-white/90 hover:text-white transition-colors active:scale-95 w-full
+                         bg-primary/20 px-4 py-2 rounded-lg border border-primary/30 font-semibold"
             >
-              Proprietà
+              🏠 Tutte le Proprietà
             </button>
             <button
               onClick={() => handleNavigation("/invest")}
