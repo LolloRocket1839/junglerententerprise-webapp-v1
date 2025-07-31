@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { DateRangePicker } from "./DateRangePicker";
 import { PricingSummary } from "./PricingSummary";
 import { useBookingAvailability } from "@/hooks/useBookingAvailability";
-import { Loader2, Users } from "lucide-react";
+import { Loader2, Users, Minus, Plus } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 interface BookingFormProps {
@@ -95,7 +95,7 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
                         disabled={guests <= 1}
                         className="h-10 w-10 p-0 rounded-full bg-white/10 hover:bg-white/20 border-0 text-white hover:text-white disabled:opacity-30 transition-all duration-200 hover:scale-105"
                       >
-                        <span className="text-lg font-light">−</span>
+                        <Minus size={16} />
                       </Button>
                       <Button
                         type="button"
@@ -103,7 +103,7 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
                         disabled={guests >= property.capacity}
                         className="h-10 w-10 p-0 rounded-full bg-primary hover:bg-primary/80 border-0 text-white hover:text-white disabled:opacity-30 transition-all duration-200 hover:scale-105"
                       >
-                        <span className="text-lg font-light">+</span>
+                        <Plus size={16} />
                       </Button>
                     </div>
                   </div>
