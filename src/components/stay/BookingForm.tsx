@@ -68,24 +68,39 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
             />
 
             <div className="mt-2">
-              <label htmlFor="guests" className="text-sm text-white/70 mb-1 block">
+              <label htmlFor="guests" className="text-sm text-white/70 mb-3 block">
                 Ospiti
               </label>
-              <div className="relative">
-                <Input
-                  id="guests"
-                  type="number"
-                  min={1}
-                  max={property.capacity}
-                  value={guests}
-                  onChange={handleGuestChange}
-                  className="bg-white/5 border-white/10 text-white pl-9 py-6"
-                  aria-label="Numero di ospiti"
-                />
-                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
-                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-white/50">
-                  Max: {property.capacity}
-                </span>
+              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-lg p-4">
+                <div className="flex items-center gap-3">
+                  <Users className="text-white/70" size={20} />
+                  <span className="text-white text-lg font-medium">{guests} {guests === 1 ? 'ospite' : 'ospiti'}</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setGuests(Math.max(1, guests - 1))}
+                    disabled={guests <= 1}
+                    className="h-8 w-8 p-0 rounded-full bg-white/10 border-white/20 text-white hover:bg-white/20 disabled:opacity-30 transition-all"
+                  >
+                    -
+                  </Button>
+                  <span className="text-white/50 text-xs min-w-[60px] text-center">
+                    max {property.capacity}
+                  </span>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setGuests(Math.min(property.capacity, guests + 1))}
+                    disabled={guests >= property.capacity}
+                    className="h-8 w-8 p-0 rounded-full bg-white/10 border-white/20 text-white hover:bg-white/20 disabled:opacity-30 transition-all"
+                  >
+                    +
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
