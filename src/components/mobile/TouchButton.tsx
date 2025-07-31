@@ -29,10 +29,12 @@ export const TouchButton = forwardRef<HTMLButtonElement, TouchButtonProps>(
     return (
       <button
         className={cn(
-          'inline-flex items-center justify-center gap-3 rounded-xl font-medium transition-all duration-150',
+          'inline-flex items-center justify-center gap-3 rounded-xl font-medium transition-all duration-200 ease-out',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
           'disabled:pointer-events-none disabled:opacity-50',
-          'active:scale-95 touch-manipulation',
+          'active:scale-95 touch-manipulation transform-gpu will-change-transform',
+          'hover:shadow-md hover:-translate-y-0.5',
+          'active:translate-y-0',
           'select-none',
           variants[variant],
           sizes[size],
@@ -40,6 +42,12 @@ export const TouchButton = forwardRef<HTMLButtonElement, TouchButtonProps>(
           className
         )}
         ref={ref}
+        onTouchStart={() => {
+          // Add haptic feedback for mobile
+          if ('vibrate' in navigator) {
+            navigator.vibrate(2);
+          }
+        }}
         {...props}
       >
         {icon && <span className="shrink-0">{icon}</span>}

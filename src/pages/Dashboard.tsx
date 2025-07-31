@@ -2,9 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useProfile } from '@/hooks/useProfile';
-import { StudentDashboard } from '@/components/dashboards/StudentDashboard';
-import { InvestorDashboard } from '@/components/dashboards/InvestorDashboard';
-import { TouristDashboard } from '@/components/dashboards/TouristDashboard';
+import { SmartDashboard } from '@/components/smart/SmartDashboard';
 import { supabase } from '@/integrations/supabase/client';
 
 export default function Dashboard() {
@@ -69,14 +67,6 @@ export default function Dashboard() {
     );
   }
 
-  // Render appropriate dashboard based on user type
-  switch (profile.user_type) {
-    case 'investor':
-      return <InvestorDashboard />;
-    case 'tourist':
-      return <TouristDashboard />;
-    case 'student':
-    default:
-      return <StudentDashboard />;
-  }
+  // Render unified smart dashboard for all user types
+  return <SmartDashboard userType={profile.user_type} userState={profile} />;
 }

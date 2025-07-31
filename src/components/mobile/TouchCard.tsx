@@ -23,16 +23,23 @@ export function TouchCard({
       className={cn(
         'rounded-2xl border bg-card text-card-foreground shadow-sm p-6',
         isInteractive && [
-          'cursor-pointer transition-all duration-200',
-          'hover:shadow-md hover:scale-[1.02]',
-          'active:scale-[0.98] active:shadow-sm',
-          'touch-manipulation select-none'
+          'cursor-pointer transition-all duration-300 ease-out',
+          'hover:shadow-lg hover:scale-[1.02] hover:-translate-y-1',
+          'active:scale-[0.98] active:shadow-sm active:translate-y-0',
+          'touch-manipulation select-none',
+          'transform-gpu will-change-transform'
         ],
         className
       )}
       onClick={onClick}
       role={onClick ? 'button' : undefined}
       tabIndex={onClick ? 0 : undefined}
+      onTouchStart={() => {
+        // Add haptic feedback for mobile
+        if ('vibrate' in navigator) {
+          navigator.vibrate(1);
+        }
+      }}
     >
       {children}
     </div>

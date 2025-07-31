@@ -23,12 +23,12 @@ export function MobileTabNavigation() {
   const tabs: TabItem[] = [
     {
       icon: <Home className="h-5 w-5" />,
-      label: 'Home',
-      path: '/'
+      label: 'Dashboard',
+      path: session ? '/dashboard' : '/'
     },
     {
       icon: <Search className="h-5 w-5" />,
-      label: 'Cerca',
+      label: 'Discover',
       path: '/rent',
       userTypes: ['student', 'tourist']
     },
@@ -40,7 +40,7 @@ export function MobileTabNavigation() {
     },
     {
       icon: <Palmtree className="h-5 w-5" />,
-      label: 'Soggiorni',
+      label: 'Viaggi',
       path: '/stay',
       userTypes: ['tourist']
     },
@@ -59,7 +59,7 @@ export function MobileTabNavigation() {
     return tabs.filter(tab => 
       !tab.userTypes || 
       tab.userTypes.includes(profile.user_type) ||
-      tab.label === 'Home' || 
+      tab.label === 'Dashboard' || 
       tab.label === 'Profilo'
     );
   };
