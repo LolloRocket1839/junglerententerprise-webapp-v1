@@ -68,38 +68,45 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
             />
 
             <div className="mt-2">
-              <label htmlFor="guests" className="text-sm text-white/70 mb-3 block">
+              <label className="text-sm text-white/70 mb-3 block">
                 Ospiti
               </label>
-              <div className="flex items-center justify-between bg-white/5 border border-white/10 rounded-lg p-4">
-                <div className="flex items-center gap-3">
-                  <Users className="text-white/70" size={20} />
-                  <span className="text-white text-lg font-medium">{guests} {guests === 1 ? 'ospite' : 'ospiti'}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setGuests(Math.max(1, guests - 1))}
-                    disabled={guests <= 1}
-                    className="h-8 w-8 p-0 rounded-full bg-white/10 border-white/20 text-white hover:bg-white/20 disabled:opacity-30 transition-all"
-                  >
-                    -
-                  </Button>
-                  <span className="text-white/50 text-xs min-w-[60px] text-center">
-                    max {property.capacity}
-                  </span>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setGuests(Math.min(property.capacity, guests + 1))}
-                    disabled={guests >= property.capacity}
-                    className="h-8 w-8 p-0 rounded-full bg-white/10 border-white/20 text-white hover:bg-white/20 disabled:opacity-30 transition-all"
-                  >
-                    +
-                  </Button>
+              <div className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-200">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                      <Users className="text-primary" size={20} />
+                    </div>
+                    <div>
+                      <div className="text-white text-lg font-semibold">{guests}</div>
+                      <div className="text-white/60 text-sm">{guests === 1 ? 'ospite' : 'ospiti'}</div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <div className="text-white/50 text-xs">massimo</div>
+                      <div className="text-white/70 text-sm font-medium">{property.capacity}</div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        onClick={() => setGuests(Math.max(1, guests - 1))}
+                        disabled={guests <= 1}
+                        className="h-10 w-10 p-0 rounded-full bg-white/10 hover:bg-white/20 border-0 text-white hover:text-white disabled:opacity-30 transition-all duration-200 hover:scale-105"
+                      >
+                        <span className="text-lg font-light">−</span>
+                      </Button>
+                      <Button
+                        type="button"
+                        onClick={() => setGuests(Math.min(property.capacity, guests + 1))}
+                        disabled={guests >= property.capacity}
+                        className="h-10 w-10 p-0 rounded-full bg-primary hover:bg-primary/80 border-0 text-white hover:text-white disabled:opacity-30 transition-all duration-200 hover:scale-105"
+                      >
+                        <span className="text-lg font-light">+</span>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
