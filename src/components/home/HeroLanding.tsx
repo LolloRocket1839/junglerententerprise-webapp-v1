@@ -18,16 +18,19 @@ interface ActionCardProps {
   popular?: boolean;
 }
 
-const ActionCard = ({ icon, title, description, badge, gradient, onClick, popular }: ActionCardProps) => (
-  <GlassCard 
-    className={`p-6 cursor-pointer group hover:scale-105 transform transition-all duration-300 hover:shadow-2xl ${gradient} relative overflow-hidden`}
-    onClick={onClick}
-  >
-    {popular && (
-      <Badge className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold">
-        ⭐ Popolare
-      </Badge>
-    )}
+const ActionCard = ({ icon, title, description, badge, gradient, onClick, popular }: ActionCardProps) => {
+  const { t } = useLanguage();
+  
+  return (
+    <GlassCard 
+      className={`p-6 cursor-pointer group hover:scale-105 transform transition-all duration-300 hover:shadow-2xl ${gradient} relative overflow-hidden`}
+      onClick={onClick}
+    >
+      {popular && (
+        <Badge className="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-semibold">
+          ⭐ {t('popular')}
+        </Badge>
+      )}
     <div className="flex items-start space-x-4">
       <div className="p-3 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors">
         {icon}
@@ -43,8 +46,9 @@ const ActionCard = ({ icon, title, description, badge, gradient, onClick, popula
       </div>
       <ArrowRight className="w-5 h-5 text-white/50 group-hover:text-white group-hover:translate-x-1 transition-all" />
     </div>
-  </GlassCard>
-);
+    </GlassCard>
+  );
+};
 
 export const HeroLanding = () => {
   const { t } = useLanguage();
@@ -66,25 +70,25 @@ export const HeroLanding = () => {
   const actionCards = [
     {
       icon: <Home className="w-6 h-6 text-white" />,
-      title: "Trova Casa",
-      description: "Cerca la tua casa ideale con prezzi scontati",
-      badge: "Risparmi fino al 20%",
+      title: t('findHome'),
+      description: t('findHomeDesc'),
+      badge: t('saveUpTo'),
       gradient: "hover:bg-gradient-to-br hover:from-emerald-500/20 hover:to-green-600/20",
       onClick: () => navigate('/rent'),
       popular: true
     },
     {
       icon: <Users className="w-6 h-6 text-white" />,
-      title: "Trova Coinquilino",
-      description: "Connettiti con coinquilini compatibili",
-      badge: "AI Match",
+      title: t('findRoommate'),
+      description: t('findRoommateDesc'),
+      badge: t('aiMatch'),
       gradient: "hover:bg-gradient-to-br hover:from-purple-500/20 hover:to-pink-600/20",
       onClick: () => navigate('/rent?tab=roommate')
     },
     {
       icon: <MapPin className="w-6 h-6 text-white" />,
-      title: "Esplora Zone",
-      description: "Scopri i quartieri migliori per studenti",
+      title: t('exploreAreas'),
+      description: t('exploreAreasDesc'),
       gradient: "hover:bg-gradient-to-br hover:from-blue-500/20 hover:to-cyan-600/20",
       onClick: () => navigate('/properties')
     }
@@ -131,7 +135,7 @@ export const HeroLanding = () => {
               <div className="flex items-center space-x-3">
                 <Search className="w-5 h-5 text-white/60 ml-4" />
                 <Input
-                  placeholder="Cerca per città, università o zona..."
+                  placeholder={t('searchPlaceholder')}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
@@ -141,7 +145,7 @@ export const HeroLanding = () => {
                   onClick={handleSearch}
                   className="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-6"
                 >
-                  Cerca
+                  {t('search')}
                 </Button>
               </div>
             </GlassCard>
@@ -163,15 +167,15 @@ export const HeroLanding = () => {
           <div className="flex justify-center items-center space-x-8 text-center">
             <div className="text-white/60">
               <div className="text-2xl font-bold text-emerald-400">1000+</div>
-              <div className="text-sm">Proprietà</div>
+              <div className="text-sm">{t('properties')}</div>
             </div>
             <div className="text-white/60">
               <div className="text-2xl font-bold text-emerald-400">500+</div>
-              <div className="text-sm">Studenti</div>
+              <div className="text-sm">{t('students')}</div>
             </div>
             <div className="text-white/60">
               <div className="text-2xl font-bold text-emerald-400">95%</div>
-              <div className="text-sm">Soddisfazione</div>
+              <div className="text-sm">{t('satisfaction')}</div>
             </div>
           </div>
         </div>
