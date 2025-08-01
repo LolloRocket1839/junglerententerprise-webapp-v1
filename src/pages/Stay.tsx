@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -8,10 +7,21 @@ import { BookingSteps } from '@/components/stay/BookingSteps';
 import { BookingForm } from '@/components/stay/BookingForm';
 import { GuestInfoForm } from '@/components/stay/GuestInfoForm';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { GlassCard } from '@/components/ui/glass-card';
+import { Badge } from '@/components/ui/badge';
 import { toast } from "sonner";
-import { FilterX, Loader2, Search, MapPin, Users, Bed, Bath, Check } from "lucide-react";
+import { FilterX, Loader2, Search, MapPin, Users, Bed, Bath, Check, Sparkles, TreePine, Home } from "lucide-react";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+
+const FeatureHighlight = ({ icon, text }: { icon: React.ReactNode; text: string }) => (
+  <div className="flex items-center space-x-2 text-white/80">
+    <div className="p-1 rounded-full bg-emerald-500/20">
+      {icon}
+    </div>
+    <span className="text-sm">{text}</span>
+  </div>
+);
 
 const Stay = () => {
   const [selectedProperty, setSelectedProperty] = useState<TouristProperty | null>(null);
@@ -121,193 +131,250 @@ const Stay = () => {
 
   if (error) {
     return (
-      <div className="container mx-auto p-8">
-        <div className="flex flex-col items-center justify-center min-h-[400px] text-center space-y-4">
-          <div className="text-red-500 text-xl">Errore nel caricamento delle proprietà</div>
-          <Button onClick={() => window.location.reload()}>Riprova</Button>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-[#1a472a] via-[#2d5a3f] to-[#3d6b52] flex items-center justify-center">
+        <GlassCard className="p-8 text-center">
+          <div className="text-red-400 text-xl mb-4">Errore nel caricamento delle proprietà</div>
+          <Button onClick={() => window.location.reload()} className="glass-button">
+            Riprova
+          </Button>
+        </GlassCard>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto p-4 md:p-8">
-      <BookingSteps currentStep={currentStep} />
-      
-      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-        <h1 className="text-3xl md:text-4xl font-bold text-white">Soggiorna</h1>
-        
-        <div className="flex w-full md:w-auto flex-1 md:flex-initial gap-2">
-          <div className="relative flex-1 md:w-64">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
-            <Input
-              type="text"
-              placeholder="Cerca per città o nome"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-white/5 border-white/10 text-white pl-10 w-full"
+    <div className="min-h-screen bg-gradient-to-br from-[#1a472a] via-[#2d5a3f] to-[#3d6b52] relative overflow-hidden">
+      {/* Floating Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-20 w-32 h-32 bg-emerald-400/10 rounded-full blur-xl animate-float-slow" />
+        <div className="absolute top-40 right-32 w-48 h-48 bg-green-400/10 rounded-full blur-xl animate-float-slower" />
+        <div className="absolute bottom-32 left-1/3 w-24 h-24 bg-lime-400/10 rounded-full blur-xl animate-pulse-gentle" />
+        <TreePine className="absolute top-1/4 right-1/4 w-16 h-16 text-emerald-400/20 animate-leaf-float" />
+        <Home className="absolute bottom-1/4 left-1/4 w-12 h-12 text-emerald-400/15 animate-pulse-gentle" />
+      </div>
+
+      <div className="relative z-10 container mx-auto p-4 md:p-8 pt-24">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center mb-6">
+            <Sparkles className="w-8 h-8 text-emerald-400 mr-3 animate-pulse-gentle" />
+            <h1 className="text-4xl md:text-6xl font-bold">
+              <span className="bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent">
+                Soggiorna in
+              </span>
+              <span className="text-emerald-400 ml-2">Stile</span>
+            </h1>
+          </div>
+          
+          <p className="text-xl md:text-2xl text-white/80 mb-8 font-light leading-relaxed">
+            Scopri alloggi unici verificati per il tuo soggiorno perfetto
+            <br />
+            <span className="text-emerald-400 font-medium">Prezzi trasparenti, qualità garantita</span>
+          </p>
+
+          {/* Features */}
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
+            <FeatureHighlight 
+              icon={<Check className="w-4 h-4 text-emerald-400" />} 
+              text="Verificato al 100%" 
+            />
+            <FeatureHighlight 
+              icon={<Users className="w-4 h-4 text-emerald-400" />} 
+              text="Host selezionati" 
+            />
+            <FeatureHighlight 
+              icon={<MapPin className="w-4 h-4 text-emerald-400" />} 
+              text="Posizioni premium" 
             />
           </div>
-          
-          <select
-            className="bg-white/5 border border-white/10 rounded-md text-white p-2 text-sm"
-            value={filters.capacity}
-            onChange={(e) => handleFilterChange(parseInt(e.target.value))}
-            aria-label="Filtro per numero di ospiti"
-          >
-            <option value={0}>Ospiti</option>
-            <option value={1}>1+ ospiti</option>
-            <option value={2}>2+ ospiti</option>
-            <option value={4}>4+ ospiti</option>
-            <option value={6}>6+ ospiti</option>
-          </select>
-          
-          {(searchTerm || filters.capacity > 0) && (
-            <Button 
-              variant="ghost" 
-              size="icon"
-              onClick={clearFilters}
-              className="bg-white/5 hover:bg-white/10"
-              aria-label="Cancella filtri"
-            >
-              <FilterX size={18} />
-            </Button>
-          )}
         </div>
-      </div>
-      
-      {isLoading ? (
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="flex flex-col items-center gap-4">
-            <Loader2 className="h-12 w-12 animate-spin text-primary" />
-            <p className="text-white/70">Caricamento alloggi...</p>
-          </div>
-        </div>
-      ) : (
-        <>
-          {filteredProperties && filteredProperties.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {filteredProperties.map((property) => (
-                <TouristPropertyCard
-                  key={property.id}
-                  property={property}
-                  onSelect={handlePropertySelect}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="col-span-3 text-center py-16 bg-white/5 rounded-xl border border-white/10">
-              <div className="max-w-md mx-auto space-y-4">
-                <h3 className="text-xl font-semibold text-white">Nessun alloggio trovato</h3>
-                <p className="text-white/70">
-                  {searchTerm || filters.capacity > 0 ? 
-                    "Nessun alloggio corrisponde ai filtri selezionati. Prova a modificare la tua ricerca." :
-                    "Attualmente non ci sono alloggi disponibili. Ti invitiamo a controllare nuovamente più tardi."}
-                </p>
-                {(searchTerm || filters.capacity > 0) && (
-                  <Button 
-                    variant="outline" 
-                    onClick={clearFilters}
-                    className="mt-4 bg-white/5 hover:bg-white/10 border-white/20"
-                  >
-                    <FilterX className="mr-2 h-4 w-4" />
-                    Cancella filtri
-                  </Button>
-                )}
-              </div>
-            </div>
-          )}
-        </>
-      )}
 
-      <Dialog open={!!selectedProperty} onOpenChange={(open) => !open && handleCloseDialog()}>
-        <DialogContent className="sm:max-w-[900px] bg-[#1a1a1a] border-white/10 max-h-[90vh] overflow-y-auto">
-          {selectedProperty && (
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <div className="relative rounded-lg overflow-hidden">
-                  <img 
-                    src={selectedProperty.images[0]} 
-                    alt={selectedProperty.title}
-                    className="w-full h-[300px] object-cover rounded-lg"
-                  />
-                  {selectedProperty.images.length > 1 && (
-                    <div className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded-md">
-                      +{selectedProperty.images.length - 1} foto
-                    </div>
-                  )}
-                </div>
-                <div className="mt-4">
-                  <h2 className="text-2xl font-bold text-white mb-2">{selectedProperty.title}</h2>
-                  <div className="flex items-center gap-2 text-white/70 mb-3">
-                    <MapPin size={16} />
-                    {selectedProperty.address}, {selectedProperty.city}
-                  </div>
-                  <div className="flex gap-4 mb-4">
-                    <div className="flex items-center gap-1 text-white/80">
-                      <Users size={16} />
-                      <span>{selectedProperty.capacity} ospiti</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-white/80">
-                      <Bed size={16} />
-                      <span>{selectedProperty.bedrooms} {selectedProperty.bedrooms === 1 ? 'camera' : 'camere'}</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-white/80">
-                      <Bath size={16} />
-                      <span>{selectedProperty.bathrooms} {selectedProperty.bathrooms === 1 ? 'bagno' : 'bagni'}</span>
-                    </div>
-                  </div>
-                  <p className="text-white/70">{selectedProperty.description}</p>
-                  
-                  {selectedProperty.amenities && selectedProperty.amenities.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-white/10">
-                      <h3 className="text-lg font-semibold text-white mb-2">Servizi</h3>
-                      <div className="grid grid-cols-2 gap-2">
-                        {selectedProperty.amenities.map((amenity, index) => (
-                          <div key={index} className="flex items-center gap-2">
-                            <Check className="h-4 w-4 text-green-500" />
-                            <span className="text-white/80 text-sm">{amenity}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
+        <BookingSteps currentStep={currentStep} />
+        
+        {/* Enhanced Search Section */}
+        <GlassCard className="p-6 mb-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="flex items-center space-x-2">
+              <Search className="w-5 h-5 text-emerald-400" />
+              <h2 className="text-xl font-semibold text-white">Trova il tuo alloggio</h2>
+              <Badge className="bg-emerald-500/20 text-emerald-100">
+                {filteredProperties?.length || 0} disponibili
+              </Badge>
+            </div>
+            
+            <div className="flex w-full md:w-auto flex-1 md:flex-initial gap-3">
+              <div className="relative flex-1 md:w-64">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
+                <Input
+                  type="text"
+                  placeholder="Cerca per città o nome"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="glass-input pl-10 w-full"
+                />
               </div>
               
-              {currentStep === 2 && (
-                <BookingForm 
-                  property={selectedProperty} 
-                  onBook={handleDateSelection}
-                />
-              )}
-              {currentStep === 3 && (
-                <GuestInfoForm 
-                  onSubmit={handleGuestInfo}
-                  bookingData={bookingData}
-                />
-              )}
-              {currentStep === 4 && (
-                <div className="bg-white/5 rounded-lg p-6 border border-green-500/20 text-center flex flex-col items-center justify-center h-full">
-                  <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-4">
-                    <Check className="h-8 w-8 text-green-500" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-green-500 mb-4">Prenotazione Confermata!</h3>
-                  <p className="text-gray-300 mb-6">
-                    Grazie per aver scelto di soggiornare con noi. Ti abbiamo inviato una email con tutti i dettagli.
-                  </p>
-                  <Button 
-                    onClick={handleCloseDialog}
-                    className="bg-white/10 hover:bg-white/20 text-white"
-                  >
-                    Torna agli alloggi
-                  </Button>
-                </div>
+              <select
+                className="glass-input text-white p-2 text-sm min-w-[120px]"
+                value={filters.capacity}
+                onChange={(e) => handleFilterChange(parseInt(e.target.value))}
+                aria-label="Filtro per numero di ospiti"
+              >
+                <option value={0}>Ospiti</option>
+                <option value={1}>1+ ospiti</option>
+                <option value={2}>2+ ospiti</option>
+                <option value={4}>4+ ospiti</option>
+                <option value={6}>6+ ospiti</option>
+              </select>
+              
+              {(searchTerm || filters.capacity > 0) && (
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  onClick={clearFilters}
+                  className="glass-button"
+                  aria-label="Cancella filtri"
+                >
+                  <FilterX size={18} />
+                </Button>
               )}
             </div>
-          )}
-        </DialogContent>
-      </Dialog>
+          </div>
+        </GlassCard>
+        
+        {isLoading ? (
+          <GlassCard className="flex items-center justify-center min-h-[400px]">
+            <div className="flex flex-col items-center gap-4">
+              <Loader2 className="h-12 w-12 animate-spin text-emerald-400" />
+              <p className="text-white/70">Caricamento alloggi premium...</p>
+            </div>
+          </GlassCard>
+        ) : (
+          <>
+            {filteredProperties && filteredProperties.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                {filteredProperties.map((property) => (
+                  <TouristPropertyCard
+                    key={property.id}
+                    property={property}
+                    onSelect={handlePropertySelect}
+                  />
+                ))}
+              </div>
+            ) : (
+              <GlassCard className="text-center py-16">
+                <div className="max-w-md mx-auto space-y-4">
+                  <h3 className="text-xl font-semibold text-white">Nessun alloggio trovato</h3>
+                  <p className="text-white/70">
+                    {searchTerm || filters.capacity > 0 ? 
+                      "Nessun alloggio corrisponde ai filtri selezionati. Prova a modificare la tua ricerca." :
+                      "Attualmente non ci sono alloggi disponibili. Ti invitiamo a controllare nuovamente più tardi."}
+                  </p>
+                  {(searchTerm || filters.capacity > 0) && (
+                    <Button 
+                      variant="outline" 
+                      onClick={clearFilters}
+                      className="mt-4 glass-button"
+                    >
+                      <FilterX className="mr-2 h-4 w-4" />
+                      Cancella filtri
+                    </Button>
+                  )}
+                </div>
+              </GlassCard>
+            )}
+          </>
+        )}
+
+        <Dialog open={!!selectedProperty} onOpenChange={(open) => !open && handleCloseDialog()}>
+          <DialogContent className="sm:max-w-[900px] glass-premium max-h-[90vh] overflow-y-auto">
+            {selectedProperty && (
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <div className="relative rounded-lg overflow-hidden">
+                    <img 
+                      src={selectedProperty.images[0]} 
+                      alt={selectedProperty.title}
+                      className="w-full h-[300px] object-cover rounded-lg"
+                    />
+                    {selectedProperty.images.length > 1 && (
+                      <Badge className="absolute bottom-2 right-2 bg-black/60 text-white">
+                        +{selectedProperty.images.length - 1} foto
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="mt-4">
+                    <h2 className="text-2xl font-bold text-white mb-2">{selectedProperty.title}</h2>
+                    <div className="flex items-center gap-2 text-white/70 mb-3">
+                      <MapPin size={16} />
+                      {selectedProperty.address}, {selectedProperty.city}
+                    </div>
+                    <div className="flex gap-4 mb-4">
+                      <div className="flex items-center gap-1 text-white/80">
+                        <Users size={16} />
+                        <span>{selectedProperty.capacity} ospiti</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-white/80">
+                        <Bed size={16} />
+                        <span>{selectedProperty.bedrooms} {selectedProperty.bedrooms === 1 ? 'camera' : 'camere'}</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-white/80">
+                        <Bath size={16} />
+                        <span>{selectedProperty.bathrooms} {selectedProperty.bathrooms === 1 ? 'bagno' : 'bagni'}</span>
+                      </div>
+                    </div>
+                    <p className="text-white/70">{selectedProperty.description}</p>
+                    
+                    {selectedProperty.amenities && selectedProperty.amenities.length > 0 && (
+                      <div className="mt-4 pt-4 border-t border-white/10">
+                        <h3 className="text-lg font-semibold text-white mb-2">Servizi</h3>
+                        <div className="grid grid-cols-2 gap-2">
+                          {selectedProperty.amenities.map((amenity, index) => (
+                            <div key={index} className="flex items-center gap-2">
+                              <Check className="h-4 w-4 text-green-500" />
+                              <span className="text-white/80 text-sm">{amenity}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                {currentStep === 2 && (
+                  <BookingForm 
+                    property={selectedProperty} 
+                    onBook={handleDateSelection}
+                  />
+                )}
+                {currentStep === 3 && (
+                  <GuestInfoForm 
+                    onSubmit={handleGuestInfo}
+                    bookingData={bookingData}
+                  />
+                )}
+                {currentStep === 4 && (
+                  <GlassCard className="text-center p-6 bg-gradient-to-r from-green-500/20 to-emerald-600/20 border-green-500/30 flex flex-col items-center justify-center h-full">
+                    <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-4">
+                      <Check className="h-8 w-8 text-green-500" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-green-400 mb-4">Prenotazione Confermata!</h3>
+                    <p className="text-white/70 mb-6">
+                      Grazie per aver scelto di soggiornare con noi. Ti abbiamo inviato una email con tutti i dettagli.
+                    </p>
+                    <Button 
+                      onClick={handleCloseDialog}
+                      className="glass-button"
+                    >
+                      Torna agli alloggi
+                    </Button>
+                  </GlassCard>
+                )}
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 };
