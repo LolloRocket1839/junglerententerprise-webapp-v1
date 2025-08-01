@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MarketplaceItemType } from './types';
+import { MarketplaceMessaging } from './MarketplaceMessaging';
 
 interface MarketplaceItemProps {
   item: MarketplaceItemType;
@@ -49,9 +50,15 @@ const MarketplaceItem = ({ item, onWishlist }: MarketplaceItemProps) => {
               {`${item.seller.first_name} ${item.seller.last_name}`}
             </span>
           </div>
-          <Button variant="outline" className="text-xs">
-            Contatta
-          </Button>
+        </div>
+        
+        {/* Messaging Component */}
+        <div className="mt-4">
+          <MarketplaceMessaging
+            itemId={item.id}
+            sellerId={item.seller.id}
+            sellerName={`${item.seller.first_name} ${item.seller.last_name}`}
+          />
         </div>
       </div>
     </Card>
