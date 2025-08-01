@@ -1,5 +1,7 @@
 import { Star, MessageCircle, UserPlus, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 interface RoomCardProps {
   room: {
@@ -17,6 +19,9 @@ interface RoomCardProps {
 }
 
 const RoomCard = ({ room, onRoomClick }: RoomCardProps) => {
+  const { language } = useLanguage();
+  const t = (key: string) => rentalTranslations[language]?.[key] || key;
+  
   return (
     <div 
       key={room.id} 
@@ -66,10 +71,10 @@ const RoomCard = ({ room, onRoomClick }: RoomCardProps) => {
         <div className="flex items-center justify-between pt-4 border-t border-white/10">
           <div>
             <p className="text-2xl font-bold text-white">€{room.price}</p>
-            <p className="text-white/60">al mese</p>
+            <p className="text-white/60">{t('perMonth2')}</p>
           </div>
           <p className="text-white/60 text-sm">
-            {room.reviews} recensioni
+            {room.reviews} {t('reviews')}
           </p>
         </div>
       </div>

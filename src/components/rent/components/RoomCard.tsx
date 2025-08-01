@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Phone, CheckCircle2, XCircle } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { RoomMockup } from '../types/mockups';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 interface RoomCardProps {
   room: RoomMockup;
@@ -14,6 +16,8 @@ interface RoomCardProps {
 
 export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
   const phoneNumber = "+393319053037";
+  const { language } = useLanguage();
+  const t = (key: string) => rentalTranslations[language]?.[key] || key;
   
   const handleCall = () => {
     window.location.href = `tel:${phoneNumber}`;
@@ -38,13 +42,13 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
                   : "bg-red-500/80 hover:bg-red-500/90"
               }`}
             >
-              {isAvailable ? "Disponibile" : "Non disponibile"}
+              {isAvailable ? t('available') : t('notAvailable')}
             </Badge>
           </div>
           <div className="p-6">
             <h3 className="text-2xl font-semibold mb-2">{room.name}</h3>
             <p className="text-gray-600 mb-4">{propertyStreet}</p>
-            <p className="text-xl font-bold text-primary mb-2">€{room.price}/mese</p>
+            <p className="text-xl font-bold text-primary mb-2">€{room.price}{t('perMonth2')}</p>
             <p className="text-sm text-gray-500">{room.size} • {room.floorLevel}</p>
           </div>
         </Card>
@@ -79,12 +83,12 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
             
             <div className="space-y-6">
               <div>
-                <h4 className="font-semibold mb-2">Descrizione</h4>
+                <h4 className="font-semibold mb-2">{t('description')}</h4>
                 <p className="text-gray-600">{room.description}</p>
               </div>
               
               <div>
-                <h4 className="font-semibold mb-2">Arredamento</h4>
+                <h4 className="font-semibold mb-2">{t('furniture')}</h4>
                 <ul className="list-disc pl-5 text-gray-600">
                   {room.furniture.map((item, index) => (
                     <li key={index}>{item}</li>
@@ -93,7 +97,7 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
               </div>
               
               <div>
-                <h4 className="font-semibold mb-2">Servizi</h4>
+                <h4 className="font-semibold mb-2">{t('amenities')}</h4>
                 <ul className="list-disc pl-5 text-gray-600">
                   {room.amenities.map((item, index) => (
                     <li key={index}>{item}</li>
@@ -102,7 +106,7 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
               </div>
               
               <div>
-                <p className="text-lg font-semibold text-primary">€{room.price}/mese</p>
+                <p className="text-lg font-semibold text-primary">€{room.price}{t('perMonth2')}</p>
                 <p className="text-gray-600">{room.availability}</p>
               </div>
             </div>

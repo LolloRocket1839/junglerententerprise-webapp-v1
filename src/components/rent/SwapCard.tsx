@@ -2,6 +2,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRightLeft } from "lucide-react";
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 interface SwapCardProps {
   swap: any;
@@ -9,6 +11,9 @@ interface SwapCardProps {
 }
 
 const SwapCard = ({ swap, onContactClick }: SwapCardProps) => {
+  const { language } = useLanguage();
+  const t = (key: string) => rentalTranslations[language]?.[key] || key;
+  
   return (
     <Card className="glass-card overflow-hidden">
       {(swap.image || swap.currentHub?.image) && (
@@ -28,7 +33,7 @@ const SwapCard = ({ swap, onContactClick }: SwapCardProps) => {
               {swap.item || swap.currentHub?.name}
             </h3>
             <p className="text-sm text-white/60">
-              Posted by {swap.author} • {swap.timestamp}
+              {t('postedBy')} {swap.author} • {swap.timestamp}
             </p>
           </div>
           <Button 
@@ -37,7 +42,7 @@ const SwapCard = ({ swap, onContactClick }: SwapCardProps) => {
             className="glass-button"
             onClick={() => onContactClick(swap.id)}
           >
-            Contact
+            {t('contact')}
           </Button>
         </div>
 
@@ -50,10 +55,10 @@ const SwapCard = ({ swap, onContactClick }: SwapCardProps) => {
         {swap.currentHub && (
           <div className="space-y-2">
             <p className="text-sm text-white/80">
-              Room: {swap.currentHub.room}
+              {t('room')}: {swap.currentHub.room}
             </p>
             <p className="text-sm text-white/80">
-              Price: €{swap.currentHub.price}/month
+              {t('price')}: €{swap.currentHub.price}{t('perMonth2')}
             </p>
             <div className="flex flex-wrap gap-2">
               {swap.currentHub.features.map((feature: string, index: number) => (
@@ -67,7 +72,7 @@ const SwapCard = ({ swap, onContactClick }: SwapCardProps) => {
 
         <div className="flex items-center gap-2 text-sm text-white/80">
           <ArrowRightLeft className="w-4 h-4" />
-          <span>Looking for: {swap.lookingFor.hub || swap.lookingFor}</span>
+          <span>{t('lookingFor')}: {swap.lookingFor.hub || swap.lookingFor}</span>
         </div>
 
         <div className="flex flex-wrap gap-2 mt-2">

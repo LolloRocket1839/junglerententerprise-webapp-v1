@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { UnifiedProperty } from './UnifiedPropertyGrid';
 import PropertyActionDialog from './PropertyActionDialog';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 interface PropertyCardProps {
   property: UnifiedProperty;
@@ -22,6 +24,8 @@ interface PropertyCardProps {
 const PropertyCard = ({ property }: PropertyCardProps) => {
   const [actionDialogOpen, setActionDialogOpen] = useState(false);
   const [selectedAction, setSelectedAction] = useState<'invest' | 'book' | 'rent' | null>(null);
+  const { language } = useLanguage();
+  const t = (key: string) => rentalTranslations[language]?.[key] || key;
 
   const handleAction = (action: 'invest' | 'book' | 'rent') => {
     setSelectedAction(action);
@@ -34,7 +38,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
     if (property.usage_types.includes('investment')) {
       badges.push({
         type: 'investment',
-        label: 'Investi',
+        label: t('invest'),
         variant: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
         icon: TrendingUp
       });
@@ -43,7 +47,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
     if (property.usage_types.includes('short_term')) {
       badges.push({
         type: 'short_term',
-        label: 'Prenota',
+        label: t('book'),
         variant: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
         icon: Calendar
       });
@@ -52,7 +56,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
     if (property.usage_types.includes('long_term')) {
       badges.push({
         type: 'long_term',
-        label: 'Affitta',
+        label: t('rent'),
         variant: 'bg-green-500/20 text-green-400 border-green-500/30',
         icon: Home
       });
@@ -63,15 +67,15 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
 
   const getMainPrice = () => {
     if (property.price_per_night) {
-      return `€${property.price_per_night}/notte`;
+      return `€${property.price_per_night}${t('perNight')}`;
     }
     if (property.discounted_price_monthly) {
-      return `€${property.discounted_price_monthly}/mese`;
+      return `€${property.discounted_price_monthly}${t('perMonth')}`;
     }
     if (property.market_price_monthly) {
-      return `€${property.market_price_monthly}/mese`;
+      return `€${property.market_price_monthly}${t('perMonth')}`;
     }
-    return 'Prezzo su richiesta';
+    return t('priceOnRequest');
   };
 
   const getInvestmentProgress = () => {
@@ -135,7 +139,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             <span className="text-lg font-bold text-white">{getMainPrice()}</span>
             {property.discounted_price_monthly && property.market_price_monthly && (
               <span className="text-sm text-white/60 line-through">
-                €{property.market_price_monthly}/mese
+                €{property.market_price_monthly}{t('perMonth')}
               </span>
             )}
           </div>
@@ -144,8 +148,8 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           {property.usage_types.includes('investment') && property.investment_goal && (
             <div className="space-y-1">
               <div className="flex justify-between text-xs text-white/60">
-                <span>Raccolti: €{property.amount_raised?.toLocaleString() || 0}</span>
-                <span>Obiettivo: €{property.investment_goal.toLocaleString()}</span>
+                <span>{t('collected')}: €{property.amount_raised?.toLocaleString() || 0}</span>
+                <span>{t('target')}: €{property.investment_goal.toLocaleString()}</span>
               </div>
               <div className="w-full bg-white/10 rounded-full h-1.5">
                 <div 
@@ -182,7 +186,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
                 onClick={() => handleAction('invest')}
               >
                 <TrendingUp className="h-3 w-3 mr-1" />
-                Investi
+                {t('invest')}
               </Button>
             )}
             
@@ -194,7 +198,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
                 onClick={() => handleAction('book')}
               >
                 <Calendar className="h-3 w-3 mr-1" />
-                Prenota
+                {t('book')}
               </Button>
             )}
             
@@ -206,7 +210,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
                 onClick={() => handleAction('rent')}
               >
                 <Home className="h-3 w-3 mr-1" />
-                Affitta
+                {t('rent')}
               </Button>
             )}
           </div>

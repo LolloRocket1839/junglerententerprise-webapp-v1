@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Heart, MapPin, School, ArrowRight } from 'lucide-react';
 import { Property } from '../types';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 interface PropertyCardProps {
   property: Property;
@@ -18,6 +20,9 @@ export const PropertyCard = ({
   onFavoriteToggle,
   onSelect
 }: PropertyCardProps) => {
+  const { language } = useLanguage();
+  const t = (key: string) => rentalTranslations[language]?.[key] || key;
+  
   return (
     <Card className="glass-card overflow-hidden group">
       <div className="relative h-48 overflow-hidden">
@@ -60,32 +65,32 @@ export const PropertyCard = ({
         <div className="grid grid-cols-3 gap-2 mb-4">
           <div className="glass p-2 rounded text-center">
             <span className="text-white text-sm font-semibold">{property.rooms}</span>
-            <span className="block text-white/60 text-xs">Stanze</span>
+            <span className="block text-white/60 text-xs">{t('rooms')}</span>
           </div>
           <div className="glass p-2 rounded text-center">
             <span className="text-white text-sm font-semibold">{property.bathrooms}</span>
-            <span className="block text-white/60 text-xs">Bagni</span>
+            <span className="block text-white/60 text-xs">{t('bathrooms')}</span>
           </div>
           <div className="glass p-2 rounded text-center">
             <span className="text-white text-sm font-semibold">{property.size_sqm}m²</span>
-            <span className="block text-white/60 text-xs">Superficie</span>
+            <span className="block text-white/60 text-xs">{t('surface')}</span>
           </div>
         </div>
         
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-white/60 text-sm">Prezzo di mercato</span>
+            <span className="text-white/60 text-sm">{t('marketPrice')}</span>
             <div className="flex items-center">
               <span className="text-white/60 text-sm line-through mr-2">
-                €{property.market_price_monthly}/mese
+                €{property.market_price_monthly}{t('perMonth')}
               </span>
               <span className="text-lg font-bold text-white">
-                €{property.discounted_price_monthly}/mese
+                €{property.discounted_price_monthly}{t('perMonth')}
               </span>
             </div>
           </div>
           <Button onClick={() => onSelect(property)}>
-            Dettagli <ArrowRight className="ml-2 h-4 w-4" />
+            {t('details')} <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
       </div>
