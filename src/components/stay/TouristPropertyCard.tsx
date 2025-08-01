@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TouristProperty } from '@/types/tourist';
 import { Bed, Bath, Users, MapPin, Star } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { stayTranslations } from '@/translations/stay';
 
 interface TouristPropertyCardProps {
   property: TouristProperty;
@@ -11,13 +13,16 @@ interface TouristPropertyCardProps {
 }
 
 export const TouristPropertyCard = ({ property, onSelect }: TouristPropertyCardProps) => {
+  const { language } = useLanguage();
+  const t = (key: string) => stayTranslations[language]?.[key] || key;
+  
   return (
     <Card 
       className="overflow-hidden cursor-pointer transition-all duration-300 hover:scale-[1.02] bg-white/5 border-white/10 shadow-md"
       onClick={() => onSelect(property)}
       tabIndex={0}
       role="button"
-      aria-label={`Seleziona ${property.title}`}
+      aria-label={`${t('select')} ${property.title}`}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           onSelect(property);
@@ -37,7 +42,7 @@ export const TouristPropertyCard = ({ property, onSelect }: TouristPropertyCardP
             className="bg-primary text-white"
             variant="secondary"
           >
-            Da €{property.price_per_night}/notte
+            {t('from')} €{property.price_per_night}/{t('night')}
           </Badge>
           
           {property.capacity >= 3 && (
@@ -45,7 +50,7 @@ export const TouristPropertyCard = ({ property, onSelect }: TouristPropertyCardP
               className="bg-pink-600/80 text-white"
               variant="secondary"
             >
-              Perfetto per gruppi
+              {t('perfectForGroups')}
             </Badge>
           )}
         </div>
@@ -61,21 +66,21 @@ export const TouristPropertyCard = ({ property, onSelect }: TouristPropertyCardP
         <div className="grid grid-cols-3 gap-2 mb-4">
           <div className="flex items-center gap-1 text-sm text-gray-300">
             <Users size={14} className="text-gray-400" />
-            <span>{property.capacity} ospiti</span>
+            <span>{property.capacity} {property.capacity === 1 ? t('guest') : t('guestsPlural')}</span>
           </div>
           <div className="flex items-center gap-1 text-sm text-gray-300">
             <Bed size={14} className="text-gray-400" />
-            <span>{property.bedrooms} {property.bedrooms === 1 ? 'camera' : 'camere'}</span>
+            <span>{property.bedrooms} {property.bedrooms === 1 ? t('room') : t('rooms')}</span>
           </div>
           <div className="flex items-center gap-1 text-sm text-gray-300">
             <Bath size={14} className="text-gray-400" />
-            <span>{property.bathrooms} {property.bathrooms === 1 ? 'bagno' : 'bagni'}</span>
+            <span>{property.bathrooms} {property.bathrooms === 1 ? t('bathroom') : t('bathrooms')}</span>
           </div>
         </div>
 
         <div className="flex justify-between items-center mt-4 pt-4 border-t border-white/10">
           <div>
-            <p className="text-sm text-gray-400">Pulizie</p>
+            <p className="text-sm text-gray-400">{t('cleaning')}</p>
             <p className="text-base text-white">€{property.cleaning_fee}</p>
           </div>
           <div>

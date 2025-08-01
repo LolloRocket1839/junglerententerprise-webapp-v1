@@ -11,8 +11,12 @@ import {
   ArrowRight,
   Shield
 } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { stayTranslations } from '@/translations/stay';
 
 const StaySection = () => {
+  const { language } = useLanguage();
+  const t = (key: string) => stayTranslations[language]?.[key] || key;
   const [searchParams, setSearchParams] = useState({
     location: '',
     dates: '',
@@ -89,10 +93,10 @@ const StaySection = () => {
       <div className="relative py-20 px-8">
         <div className="max-w-4xl mx-auto text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 animate-fade-in">
-            Find your perfect short-term stay
+            {t('findPerfectStay')}
           </h1>
           <p className="text-xl text-white/80 animate-fade-in">
-            Book verified accommodations near where you need to be
+            {t('bookVerifiedAccommodations')}
           </p>
         </div>
 
@@ -106,7 +110,7 @@ const StaySection = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="University City"
+                  placeholder={t('universityCity')}
                   className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white placeholder-white/60 focus:outline-none focus:border-green-500"
                 />
               </div>
@@ -117,7 +121,7 @@ const StaySection = () => {
                 </div>
                 <input
                   type="text"
-                  placeholder="Check-in - Check-out"
+                  placeholder={t('checkInOut')}
                   className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white placeholder-white/60 focus:outline-none focus:border-green-500"
                 />
               </div>
@@ -129,15 +133,15 @@ const StaySection = () => {
                 <select
                   className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-white/60 focus:outline-none focus:border-green-500 appearance-none"
                 >
-                  <option>1 Guest</option>
-                  <option>2 Guests</option>
-                  <option>3 Guests</option>
+                  <option>1 {t('guest')}</option>
+                  <option>2 {t('guestsPlural')}</option>
+                  <option>3 {t('guestsPlural')}</option>
                 </select>
               </div>
 
               <button className="bg-green-500 hover:bg-green-600 text-white rounded-lg py-2 px-4 transition-colors flex items-center justify-center gap-2">
                 <Search className="h-5 w-5" />
-                <span>Search</span>
+                <span>{t('search')}</span>
               </button>
             </div>
           </div>
@@ -163,7 +167,7 @@ const StaySection = () => {
                 <div className="absolute top-3 left-3">
                   <span className="bg-green-500 text-white text-sm px-3 py-1 rounded-full flex items-center gap-2">
                     <Shield className="w-4 h-4" />
-                    Verified
+                    {t('verified')}
                   </span>
                 </div>
               </div>
@@ -190,15 +194,15 @@ const StaySection = () => {
                 <div className="flex gap-4 mb-6">
                   <div className="flex items-center gap-2 text-white/80">
                     <Wifi className="w-4 h-4" />
-                    <span>WiFi</span>
+                    <span>{t('wifi')}</span>
                   </div>
                   <div className="flex items-center gap-2 text-white/80">
                     <Coffee className="w-4 h-4" />
-                    <span>Kitchen</span>
+                    <span>{t('kitchen')}</span>
                   </div>
                   <div className="flex items-center gap-2 text-white/80">
                     <Book className="w-4 h-4" />
-                    <span>Study Area</span>
+                    <span>{t('studyArea')}</span>
                   </div>
                 </div>
 
@@ -206,10 +210,10 @@ const StaySection = () => {
                 <div className="flex items-end justify-between pt-4 border-t border-white/10">
                   <div>
                     <p className="text-2xl font-bold text-white">€{listing.price}</p>
-                    <p className="text-white/60">per night</p>
+                    <p className="text-white/60">{t('perNight')}</p>
                   </div>
                   <button className="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
-                    <span>View Details</span>
+                    <span>{t('viewDetails')}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>

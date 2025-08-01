@@ -14,6 +14,7 @@ import { FilterX, Loader2, Search, MapPin, Users, Bed, Bath, Check, Sparkles, Tr
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { stayTranslations } from '@/translations/stay';
 
 const FeatureHighlight = ({ icon, text }: { icon: React.ReactNode; text: string }) => (
   <div className="flex items-center space-x-2 text-white/80">
@@ -25,7 +26,8 @@ const FeatureHighlight = ({ icon, text }: { icon: React.ReactNode; text: string 
 );
 
 const Stay = () => {
-  const { t } = useLanguage();
+  const { language } = useLanguage();
+  const t = (key: string) => stayTranslations[language]?.[key] || key;
   const [selectedProperty, setSelectedProperty] = useState<TouristProperty | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [bookingData, setBookingData] = useState<any>(null);

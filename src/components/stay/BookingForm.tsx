@@ -8,6 +8,8 @@ import { DateRangePicker } from "./DateRangePicker";
 import { useBookingAvailability } from "@/hooks/useBookingAvailability";
 import { Loader2, Minus, Plus } from "lucide-react";
 import { addDays, nextSaturday, nextSunday } from "date-fns";
+import { useLanguage } from '@/contexts/LanguageContext';
+import { stayTranslations } from '@/translations/stay';
 
 interface BookingFormProps {
   property: TouristProperty;
@@ -15,6 +17,8 @@ interface BookingFormProps {
 }
 
 export const BookingForm = ({ property, onBook }: BookingFormProps) => {
+  const { language } = useLanguage();
+  const t = (key: string) => stayTranslations[language]?.[key] || key;
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [guests, setGuests] = useState(2);
@@ -37,12 +41,12 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
 
   const handleSubmit = () => {
     if (!checkIn || !checkOut) {
-      toast.error("Seleziona le date di check-in e check-out");
+      toast.error(t('selectDates'));
       return;
     }
     
     if (!isAvailable) {
-      toast.error("Le date selezionate non sono disponibili");
+      toast.error(t('datesNotAvailable'));
       return;
     }
     
@@ -69,7 +73,7 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
 
         {/* Minimal Guest Selector */}
         <div className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-lg">
-          <span className="text-white/80 text-sm">Ospiti</span>
+          <span className="text-white/80 text-sm">{t('guests')}</span>
           <div className="flex items-center gap-3">
             <Button
               type="button"
@@ -95,15 +99,15 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
         {nights > 0 && (
           <div className="p-3 bg-white/5 border border-white/10 rounded-lg">
             <div className="flex justify-between text-sm text-white/70 mb-1">
-              <span>€{property.price_per_night} × {nights} {nights === 1 ? 'notte' : 'notti'}</span>
+              <span>€{property.price_per_night} × {nights} {nights === 1 ? t('night') : t('nights')}</span>
               <span>€{basePrice}</span>
             </div>
             <div className="flex justify-between text-sm text-white/70 mb-2">
-              <span>Spese di pulizia</span>
+              <span>{t('cleaningFees')}</span>
               <span>€{cleaningFee}</span>
             </div>
             <div className="flex justify-between font-semibold text-white pt-2 border-t border-white/10">
-              <span>Totale</span>
+              <span>{t('total')}</span>
               <span>€{total}</span>
             </div>
           </div>
@@ -117,14 +121,14 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
           {isLoading ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Verificando...
+              {t('checking')}...
             </>
           ) : !checkIn || !checkOut ? (
-            'Seleziona le date'
+            t('selectDates')
           ) : isAvailable ? (
-            'Prenota ora'
+            t('bookNow')
           ) : (
-            'Non disponibile'
+            t('notAvailable')
           )}
         </Button>
       </div>
