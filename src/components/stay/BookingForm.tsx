@@ -1,15 +1,13 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { TouristProperty } from "@/types/tourist";
 import { toast } from "sonner";
 import { DateRangePicker } from "./DateRangePicker";
-import { PricingSummary } from "./PricingSummary";
 import { useBookingAvailability } from "@/hooks/useBookingAvailability";
-import { Loader2, Users, Minus, Plus } from "lucide-react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Loader2, Minus, Plus } from "lucide-react";
+import { addDays, nextSaturday, nextSunday } from "date-fns";
 
 interface BookingFormProps {
   property: TouristProperty;
@@ -19,8 +17,17 @@ interface BookingFormProps {
 export const BookingForm = ({ property, onBook }: BookingFormProps) => {
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
-  const [guests, setGuests] = useState(1);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [guests, setGuests] = useState(2);
+
+  // Smart defaults - set next weekend
+  useEffect(() => {
+    const today = new Date();
+    const smartCheckIn = nextSaturday(today);
+    const smartCheckOut = nextSunday(today);
+    
+    setCheckIn(smartCheckIn);
+    setCheckOut(smartCheckOut);
+  }, []);
   
   const { isAvailable, nights, isLoading } = useBookingAvailability({
     property,
@@ -42,100 +49,68 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
     onBook({ checkIn, checkOut, guests });
   };
 
-  const handleGuestChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value);
-    if (value >= 1 && value <= property.capacity) {
-      setGuests(value);
-    }
-  };
 
   // Calculate if we can proceed (has dates and availability check is complete)
   const canProceed = checkIn && checkOut && !isLoading && isAvailable;
 
-  return (
-    <Card className="p-6 bg-white/5 border-white/10 shadow-lg transition-all">
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-lg font-semibold text-white mb-4">
-            Seleziona le date
-          </h3>
-          <div className="grid gap-4">
-            <DateRangePicker
-              checkIn={checkIn}
-              checkOut={checkOut}
-              onCheckInChange={setCheckIn}
-              onCheckOutChange={setCheckOut}
-            />
+  const basePrice = property.price_per_night * nights;
+  const cleaningFee = property.cleaning_fee;
+  const total = basePrice + cleaningFee;
 
-            <div className="mt-2">
-              <label className="text-sm text-white/70 mb-3 block">
-                Ospiti
-              </label>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-all duration-200">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-                      <Users className="text-primary" size={20} />
-                    </div>
-                    <div>
-                      <div className="text-white text-lg font-semibold">{guests}</div>
-                      <div className="text-white/60 text-sm">{guests === 1 ? 'ospite' : 'ospiti'}</div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
-                      <div className="text-white/50 text-xs">massimo</div>
-                      <div className="text-white/70 text-sm font-medium">{property.capacity}</div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="button"
-                        onClick={() => setGuests(Math.max(1, guests - 1))}
-                        disabled={guests <= 1}
-                        className="h-10 w-10 p-0 rounded-full bg-white/10 hover:bg-white/20 border-0 text-white hover:text-white disabled:opacity-30 transition-all duration-200 hover:scale-105"
-                      >
-                        <Minus size={16} />
-                      </Button>
-                      <Button
-                        type="button"
-                        onClick={() => setGuests(Math.min(property.capacity, guests + 1))}
-                        disabled={guests >= property.capacity}
-                        className="h-10 w-10 p-0 rounded-full bg-primary hover:bg-primary/80 border-0 text-white hover:text-white disabled:opacity-30 transition-all duration-200 hover:scale-105"
-                      >
-                        <Plus size={16} />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+  return (
+    <Card className="p-4 bg-white/5 border-white/10 shadow-lg">
+      <div className="space-y-4">
+        <DateRangePicker
+          checkIn={checkIn}
+          checkOut={checkOut}
+          onCheckInChange={setCheckIn}
+          onCheckOutChange={setCheckOut}
+        />
+
+        {/* Minimal Guest Selector */}
+        <div className="flex items-center justify-between p-3 bg-white/5 border border-white/10 rounded-lg">
+          <span className="text-white/80 text-sm">Ospiti</span>
+          <div className="flex items-center gap-3">
+            <Button
+              type="button"
+              onClick={() => setGuests(Math.max(1, guests - 1))}
+              disabled={guests <= 1}
+              className="h-8 w-8 p-0 rounded-full bg-white/10 hover:bg-white/20 border-0 disabled:opacity-30"
+            >
+              <Minus size={14} />
+            </Button>
+            <span className="text-white font-medium w-8 text-center">{guests}</span>
+            <Button
+              type="button"
+              onClick={() => setGuests(Math.min(property.capacity, guests + 1))}
+              disabled={guests >= property.capacity}
+              className="h-8 w-8 p-0 rounded-full bg-primary hover:bg-primary/80 border-0 disabled:opacity-30"
+            >
+              <Plus size={14} />
+            </Button>
           </div>
         </div>
 
-        <Collapsible 
-          open={isDetailOpen} 
-          onOpenChange={setIsDetailOpen}
-          className="border border-white/10 rounded-md overflow-hidden"
-        >
-          <CollapsibleTrigger asChild>
-            <Button 
-              variant="ghost" 
-              className="w-full justify-between py-4 text-white/90 hover:text-white hover:bg-white/5"
-            >
-              <span>Dettagli prezzo</span>
-              <span className="text-xl font-bold">
-                {nights > 0 ? `€${(property.price_per_night * nights) + property.cleaning_fee}` : '€0'}
-              </span>
-            </Button>
-          </CollapsibleTrigger>
-          <CollapsibleContent className="bg-white/5 p-4">
-            <PricingSummary property={property} nights={nights} />
-          </CollapsibleContent>
-        </Collapsible>
+        {/* Always Visible Compact Pricing */}
+        {nights > 0 && (
+          <div className="p-3 bg-white/5 border border-white/10 rounded-lg">
+            <div className="flex justify-between text-sm text-white/70 mb-1">
+              <span>€{property.price_per_night} × {nights} {nights === 1 ? 'notte' : 'notti'}</span>
+              <span>€{basePrice}</span>
+            </div>
+            <div className="flex justify-between text-sm text-white/70 mb-2">
+              <span>Spese di pulizia</span>
+              <span>€{cleaningFee}</span>
+            </div>
+            <div className="flex justify-between font-semibold text-white pt-2 border-t border-white/10">
+              <span>Totale</span>
+              <span>€{total}</span>
+            </div>
+          </div>
+        )}
 
         <Button
-          className="w-full bg-primary hover:bg-primary/90 py-6 text-base transition-all duration-300"
+          className="w-full bg-primary hover:bg-primary/90 py-4 text-base font-medium transition-all duration-300"
           disabled={!canProceed}
           onClick={handleSubmit}
         >
