@@ -1,5 +1,7 @@
 import React from 'react';
 import { Building2, Users, TrendingUp } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { investTranslations } from '@/translations/invest';
 
 interface PropertyStatsProps {
   units: number;
@@ -12,12 +14,15 @@ const PropertyStats: React.FC<PropertyStatsProps> = ({
   reviewsCount,
   rating
 }) => {
+  const { language } = useLanguage();
+  const t = (key: string) => investTranslations[language]?.[key] || key;
+  
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="glass-card p-4 flex flex-col">
         <div className="flex items-center gap-2 text-primary mb-2">
           <Building2 className="w-4 h-4" />
-          <span className="text-sm font-medium">Unità</span>
+          <span className="text-sm font-medium">{t('unitsLabel')}</span>
         </div>
         <p className="text-2xl font-bold text-white tracking-tight">{units}</p>
       </div>
@@ -25,7 +30,7 @@ const PropertyStats: React.FC<PropertyStatsProps> = ({
       <div className="glass-card p-4 flex flex-col">
         <div className="flex items-center gap-2 text-primary mb-2">
           <Users className="w-4 h-4" />
-          <span className="text-sm font-medium">Investitori</span>
+          <span className="text-sm font-medium">{t('investors')}</span>
         </div>
         <p className="text-2xl font-bold text-white tracking-tight">{reviewsCount}</p>
       </div>
@@ -33,7 +38,7 @@ const PropertyStats: React.FC<PropertyStatsProps> = ({
       <div className="glass-card p-4 flex flex-col">
         <div className="flex items-center gap-2 text-primary mb-2">
           <TrendingUp className="w-4 h-4" />
-          <span className="text-sm font-medium">ROI</span>
+          <span className="text-sm font-medium">{t('roi')}</span>
         </div>
         <p className="text-2xl font-bold text-green-500 tracking-tight">{rating}%</p>
       </div>

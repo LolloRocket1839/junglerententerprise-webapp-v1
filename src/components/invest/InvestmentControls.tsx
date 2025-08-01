@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import InvestmentInput from './InvestmentInput';
 import InvestmentConfirmationDialog from './InvestmentConfirmationDialog';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { investTranslations } from '@/translations/invest';
 
 interface InvestmentControlsProps {
   amount: number;
@@ -24,6 +26,9 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   roi,
   onInvest
 }) => {
+  const { language } = useLanguage();
+  const t = (key: string) => investTranslations[language]?.[key] || key;
+  
   const [inputValue, setInputValue] = useState(amount.toString());
   const [error, setError] = useState<string | null>(null);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -35,10 +40,10 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
 
   const validateAmount = (value: number): string | null => {
     if (value < minInvestment) {
-      return `L'importo minimo è €${minInvestment}`;
+      return `${t('minAmountError')}${minInvestment}`;
     }
     if (value > maxInvestment) {
-      return `L'importo massimo è €${maxInvestment}`;
+      return `${t('maxAmountError')}${maxInvestment}`;
     }
     return null;
   };
@@ -66,7 +71,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
         return;
       }
       onAmountChange(numericValue);
-      toast.success("Importo confermato");
+      toast.success(t('amountConfirmed'));
     }
   };
 
@@ -103,7 +108,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
         <label className="text-3xl font-bold text-white tracking-tight antialiased block 
                          bg-gradient-to-r from-white via-white/90 to-white bg-clip-text 
                          drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-          Importo Investimento (€)
+          {t('investmentAmount')}
         </label>
         
         <div className="flex flex-col gap-4">
@@ -146,13 +151,13 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6 glass-card backdrop-blur-xl">
             <div>
-              <span className="block text-sm font-medium text-gray-300 mb-2">Unità acquistate:</span>
+              <span className="block text-sm font-medium text-gray-300 mb-2">{t('unitsPurchased')}</span>
               <span className="text-2xl font-bold text-white tracking-tight drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-r from-white via-white/90 to-white bg-clip-text">
-                {calculateUnits(amount)} unità
+                {calculateUnits(amount)} {t('units')}
               </span>
             </div>
             <div>
-              <span className="block text-sm font-medium text-gray-300 mb-2">Rendimento annuo stimato:</span>
+              <span className="block text-sm font-medium text-gray-300 mb-2">{t('estimatedAnnualReturn')}</span>
               <span className="text-xl font-semibold text-green-500 tracking-tight shadow-sm">€{calculateExpectedReturn(amount)}</span>
             </div>
           </div>
@@ -167,7 +172,7 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
                      text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]
                      uppercase"
           >
-            Investi Ora
+            {t('investNow')}
           </Button>
         </div>
       </div>

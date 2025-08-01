@@ -1,5 +1,7 @@
 import React from 'react';
 import { DollarSign, TrendingUp, Building2, Calendar } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { investTranslations } from '@/translations/invest';
 
 interface InvestmentSummaryProps {
   amount: number;
@@ -26,6 +28,9 @@ const InvestmentSummary: React.FC<InvestmentSummaryProps> = ({
   units,
   estimatedDate,
 }) => {
+  const { language } = useLanguage();
+  const t = (key: string) => investTranslations[language]?.[key] || key;
+  
   // Format units to remove decimal places if it's a whole number
   const formattedUnits = Number.isInteger(units) ? units.toString() : units.toFixed(2);
 
@@ -33,22 +38,22 @@ const InvestmentSummary: React.FC<InvestmentSummaryProps> = ({
     <div className="grid grid-cols-1 gap-4">
       <SummaryItem
         icon={DollarSign}
-        label="Importo selezionato"
+        label={t('selectedAmount')}
         value={`€${amount.toLocaleString()}`}
       />
       <SummaryItem
         icon={TrendingUp}
-        label="ROI stimato"
+        label={t('estimatedROI')}
         value={roi}
       />
       <SummaryItem
         icon={Building2}
-        label="Unità acquistate"
-        value={`${formattedUnits} unità`}
+        label={t('purchasedUnits')}
+        value={`${formattedUnits} ${t('units')}`}
       />
       <SummaryItem
         icon={Calendar}
-        label="Prima distribuzione"
+        label={t('firstDistribution')}
         value={estimatedDate}
       />
     </div>

@@ -8,6 +8,26 @@ export const investTranslations = {
     subscription: "Subscription",
     investNow: "Invest Now",
     
+    // Investment Controls
+    investmentAmount: "Investment Amount (€)",
+    minAmountError: "The minimum amount is €",
+    maxAmountError: "The maximum amount is €", 
+    amountConfirmed: "Amount confirmed",
+    unitsPurchased: "Units purchased:",
+    units: "units",
+    estimatedAnnualReturn: "Estimated annual return:",
+    
+    // Investment Summary
+    selectedAmount: "Selected amount",
+    estimatedROI: "Estimated ROI",
+    purchasedUnits: "Purchased units",
+    firstDistribution: "First distribution",
+    
+    // Property Stats
+    unitsLabel: "Units",
+    investors: "Investors",
+    roi: "ROI",
+    
     // Investment Dialog Content
     fundingProgress: "Funding Progress",
     overview: "Overview",
@@ -61,6 +81,26 @@ export const investTranslations = {
     subscription: "Sottoscrizione",
     investNow: "Investi Ora",
     
+    // Investment Controls
+    investmentAmount: "Importo Investimento (€)",
+    minAmountError: "L'importo minimo è €",
+    maxAmountError: "L'importo massimo è €", 
+    amountConfirmed: "Importo confermato",
+    unitsPurchased: "Unità acquistate:",
+    units: "unità",
+    estimatedAnnualReturn: "Rendimento annuo stimato:",
+    
+    // Investment Summary
+    selectedAmount: "Importo selezionato",
+    estimatedROI: "ROI stimato",
+    purchasedUnits: "Unità acquistate",
+    firstDistribution: "Prima distribuzione",
+    
+    // Property Stats
+    unitsLabel: "Unità",
+    investors: "Investitori",
+    roi: "ROI",
+    
     // Investment Dialog Content
     fundingProgress: "Progresso Raccolta Fondi",
     overview: "Overview",
@@ -113,6 +153,26 @@ export const investTranslations = {
     tbd: "Noch festzulegen",
     subscription: "Zeichnung",
     investNow: "Jetzt Investieren",
+    
+    // Investment Controls
+    investmentAmount: "Investitionsbetrag (€)",
+    minAmountError: "Der Mindestbetrag beträgt €",
+    maxAmountError: "Der Höchstbetrag beträgt €", 
+    amountConfirmed: "Betrag bestätigt",
+    unitsPurchased: "Gekaufte Einheiten:",
+    units: "Einheiten",
+    estimatedAnnualReturn: "Geschätzte jährliche Rendite:",
+    
+    // Investment Summary
+    selectedAmount: "Ausgewählter Betrag",
+    estimatedROI: "Geschätzte Rendite",
+    purchasedUnits: "Gekaufte Einheiten",
+    firstDistribution: "Erste Ausschüttung",
+    
+    // Property Stats
+    unitsLabel: "Einheiten",
+    investors: "Investoren",
+    roi: "Rendite",
     
     // Investment Dialog Content
     fundingProgress: "Finanzierungsfortschritt",
