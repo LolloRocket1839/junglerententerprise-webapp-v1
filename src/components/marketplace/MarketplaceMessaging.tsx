@@ -1,13 +1,10 @@
 import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Send, MessageCircle } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/hooks/useAuth';
-import { formatDistanceToNow } from 'date-fns';
 
 interface MarketplaceMessagingProps {
   itemId: string;
@@ -15,74 +12,26 @@ interface MarketplaceMessagingProps {
   sellerName: string;
 }
 
-interface Message {
-  id: string;
-  message: string;
-  sender_id: string;
-  created_at: string;
-  sender?: {
-    first_name: string;
-    last_name: string;
-  };
-}
-
-interface Conversation {
-  id: string;
-  buyer_id: string;
-  seller_id: string;
-  last_message: string;
-  last_message_at: string;
-}
-
 export const MarketplaceMessaging = ({ itemId, sellerId, sellerName }: MarketplaceMessagingProps) => {
-  const [newMessage, setNewMessage] = useState('');
-  const [conversationId, setConversationId] = useState<string | null>(null);
+  const [message, setMessage] = useState('');
   const { session } = useAuth();
   const { toast } = useToast();
-  const queryClient = useQueryClient();
 
-  // Get or create conversation using raw query since tables aren't in types yet
-  const { data: conversation } = useQuery({
-    queryKey: ['marketplace-conversation', itemId, session?.user?.id],
-    queryFn: async () => {
-      if (!session?.user?.id) return null;
+  const handleSendMessage = () => {
+    if (!message.trim()) return;
+    
+    toast({
+      title: "Message functionality coming soon!",
+      description: "Direct messaging between users will be available soon.",
+    });
+    setMessage('');
+  };
 
-      try {
-        // First try to find existing conversation
-        const { data: existing, error: existingError } = await supabase
-          .rpc('get_marketplace_conversation', {
-            p_item_id: itemId,
-            p_buyer_id: session.user.id
-          });
+  // Don't show messaging to seller of their own item
+  if (session?.user?.id === sellerId) {
+    return null;
+  }
 
-        if (existing && existing.length > 0) {
-          setConversationId(existing[0].id);
-          return existing[0] as Conversation;
-        }
-
-        // Create new conversation if none exists
-        const { data: newConv, error: createError } = await supabase
-          .rpc('create_marketplace_conversation', {
-            p_item_id: itemId,
-            p_buyer_id: session.user.id,
-            p_seller_id: sellerId
-          });
-
-        if (createError) throw createError;
-        if (newConv && newConv.length > 0) {
-          setConversationId(newConv[0].id);
-          return newConv[0] as Conversation;
-        }
-        return null;
-      } catch (error) {
-        console.error('Error with conversation:', error);
-        return null;
-      }
-    },
-    enabled: !!session?.user?.id && !!itemId && session?.user?.id !== sellerId
-  });
-
-  // For now, disable messaging until the new tables are properly typed
   if (!session?.user) {
     return (
       <Card className="glass-premium">
@@ -94,11 +43,6 @@ export const MarketplaceMessaging = ({ itemId, sellerId, sellerName }: Marketpla
     );
   }
 
-  // Don't show messaging to seller of their own item
-  if (session?.user?.id === sellerId) {
-    return null;
-  }
-
   return (
     <Card className="glass-premium">
       <CardHeader>
@@ -108,13 +52,31 @@ export const MarketplaceMessaging = ({ itemId, sellerId, sellerName }: Marketpla
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="text-center p-6 glass-premium rounded-lg">
-          <p className="text-white/70 mb-4">
-            Interested in this item? Contact the seller directly!
+        <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+          <p className="text-blue-300 text-sm mb-3">
+            Interested in this item? Send a message to the seller!
           </p>
-          <Button className="w-full">
-            Send Message (Coming Soon)
-          </Button>
+          
+          <div className="flex space-x-2">
+            <Input
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              placeholder="Type your message..."
+              className="bg-white/10 border-white/20 text-white placeholder-white/60"
+              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+            />
+            <Button
+              onClick={handleSendMessage}
+              disabled={!message.trim()}
+              size="icon"
+            >
+              <Send className="w-4 h-4" />
+            </Button>
+          </div>
+          
+          <p className="text-white/50 text-xs mt-2">
+            Full messaging system coming soon
+          </p>
         </div>
       </CardContent>
     </Card>

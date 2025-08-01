@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ClipboardCheck, Users, MessageSquare } from "lucide-react";
 import { SuccessStories } from './SuccessStories';
 import { PlatformStats } from './PlatformStats';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -11,10 +12,12 @@ interface WelcomeScreenProps {
 }
 
 const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
+  const { t } = useLanguage();
+  
   const steps = [
-    { icon: <ClipboardCheck className="w-5 h-5" />, text: "Breve Questionario" },
-    { icon: <Users className="w-5 h-5" />, text: "Vedi Match" },
-    { icon: <MessageSquare className="w-5 h-5" />, text: "Connettiti" }
+    { icon: <ClipboardCheck className="w-5 h-5" />, text: t('shortQuiz') },
+    { icon: <Users className="w-5 h-5" />, text: t('seeMatches') },
+    { icon: <MessageSquare className="w-5 h-5" />, text: t('connect') }
   ];
 
   return (
@@ -35,7 +38,7 @@ const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
               transition={{ delay: 0.2 }}
               className="text-4xl font-bold text-white"
             >
-              Trova il tuo Coinquilino Ideale
+              {t('roommateTitle')}
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0 }}
@@ -43,7 +46,7 @@ const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
               transition={{ delay: 0.4 }}
               className="text-lg text-white/80"
             >
-              Rispondi a poche domande, trova i tuoi match e connettiti con potenziali coinquilini!
+              {t('roommateSubtitle')}
             </motion.p>
           </motion.div>
           
@@ -63,7 +66,7 @@ const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
               className="glass-button bg-primary hover:bg-primary/90 text-primary-foreground"
               size="lg"
             >
-              🎯 Inizia Questionario
+              {t('startQuiz')}
             </Button>
             <Button 
               onClick={onViewMatches}
@@ -71,16 +74,16 @@ const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
               size="lg"
               className="glass-button"
             >
-              💝 Vedi Match Precedenti
+              {t('viewMatches')}
             </Button>
           </motion.div>
 
           <div className="text-center p-6 glass-premium rounded-lg">
-            <h4 className="font-semibold text-white mb-2">Quick Start Guide</h4>
+            <h4 className="font-semibold text-white mb-2">{t('quickStartGuide')}</h4>
             <div className="space-y-2 text-sm text-white/70">
-              <p>1. Complete the personality quiz (5-10 min)</p>
-              <p>2. Get matched with compatible roommates</p>
-              <p>3. Start conversations and find your perfect living partner</p>
+              <p>{t('step1')}</p>
+              <p>{t('step2')}</p>
+              <p>{t('step3')}</p>
             </div>
           </div>
 
@@ -90,7 +93,7 @@ const WelcomeScreen = ({ onStart, onViewMatches }: WelcomeScreenProps) => {
             transition={{ delay: 0.8 }}
             className="space-y-6"
           >
-            <h3 className="text-lg font-semibold text-white">3 Passi per il tuo Match Perfetto</h3>
+            <h3 className="text-lg font-semibold text-white">3 {t('quickStartGuide')}</h3>
             <div className="grid grid-cols-1 gap-4">
               {steps.map((step, index) => (
                 <motion.div
