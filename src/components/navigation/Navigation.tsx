@@ -5,13 +5,14 @@ import { Menu, X, Download } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 import DesktopNav from "./DesktopNav";
 import { useAuth } from "@/hooks/useAuth";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { session } = useAuth();
-  const [language, setLanguage] = useState("IT");
+  const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,10 +24,7 @@ const Navigation = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleLanguageChange = (lang: string) => {
-    setLanguage(lang);
-  };
-
+  // Remove unused handler since we use setLanguage directly
   const handleLogoDownload = (format: string) => {
     const logoUrl = "/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png";
     const link = document.createElement('a');
@@ -133,19 +131,19 @@ const Navigation = () => {
                 <DropdownMenuContent align="start" className="w-48">
                   <DropdownMenuItem onClick={() => handleLogoDownload('jpg')} className="cursor-pointer">
                     <Download size={16} className="mr-2" />
-                    Scarica JPG
+                    {t('download')} JPG
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => handleLogoDownload('png')} className="cursor-pointer">
                     <Download size={16} className="mr-2" />
-                    Scarica PNG
+                    {t('download')} PNG
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => handleLogoDownload('svg')} className="cursor-pointer">
                     <Download size={16} className="mr-2" />
-                    Scarica SVG
+                    {t('download')} SVG
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => handleLogoDownload('pdf')} className="cursor-pointer">
                     <Download size={16} className="mr-2" />
-                    Scarica PDF
+                    {t('download')} PDF
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -155,7 +153,7 @@ const Navigation = () => {
 
           <DesktopNav 
             session={session} 
-            onLanguageChange={handleLanguageChange}
+            onLanguageChange={setLanguage}
           />
           
           <button 

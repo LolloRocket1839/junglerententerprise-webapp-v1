@@ -13,6 +13,39 @@ export const translations = {
     profile: "Profile",
     settings: "Settings",
     
+    // Stay Page
+    stayInStyle: "Stay in Style",
+    discoverAccommodations: "Discover unique verified accommodations for your perfect stay",
+    transparentPricing: "Transparent pricing, guaranteed quality",
+    verified100: "100% Verified",
+    selectedHosts: "Selected hosts",
+    premiumLocations: "Premium locations",
+    findAccommodation: "Find your accommodation",
+    available: "available",
+    searchCityName: "Search by city or name",
+    guests: "Guests",
+    clearFilters: "Clear filters",
+    loadingPremium: "Loading premium accommodations...",
+    noAccommodationFound: "No accommodation found",
+    noMatchFilters: "No accommodation matches the selected filters. Try modifying your search.",
+    noCurrentlyAvailable: "Currently no accommodations are available. Please check again later.",
+    photos: "photos",
+    services: "Services",
+    bookingConfirmed: "Booking Confirmed!",
+    thankYouBooking: "Thank you for choosing to stay with us. We have sent you an email with all the details.",
+    backToAccommodations: "Back to accommodations",
+    room: "room",
+    rooms: "rooms",
+    bathroom: "bathroom",
+    bathrooms: "bathrooms",
+    guest: "guest",
+    guestsPlural: "guests",
+    night: "night",
+    checkInOut: "Check-in - Check-out",
+    search: "Search",
+    errorLoadingProperties: "Error loading properties",
+    retry: "Retry",
+    
     // Roommate Finder
     roommateTitle: "Find Your Perfect Roommate",
     roommateSubtitle: "Answer personalized questions and let our AI match you with compatible roommates based on lifestyle, study habits, and preferences.",
@@ -73,7 +106,8 @@ export const translations = {
     edit: "Edit",
     create: "Create",
     update: "Update",
-    featured: "Featured"
+    featured: "Featured",
+    download: "Download"
   },
   
   it: {
@@ -89,6 +123,39 @@ export const translations = {
     signOut: "Esci",
     profile: "Profilo",
     settings: "Impostazioni",
+    
+    // Stay Page
+    stayInStyle: "Soggiorna in Stile",
+    discoverAccommodations: "Scopri alloggi unici verificati per il tuo soggiorno perfetto",
+    transparentPricing: "Prezzi trasparenti, qualità garantita",
+    verified100: "Verificato al 100%",
+    selectedHosts: "Host selezionati",
+    premiumLocations: "Posizioni premium",
+    findAccommodation: "Trova il tuo alloggio",
+    available: "disponibili",
+    searchCityName: "Cerca per città o nome",
+    guests: "Ospiti",
+    clearFilters: "Cancella filtri",
+    loadingPremium: "Caricamento alloggi premium...",
+    noAccommodationFound: "Nessun alloggio trovato",
+    noMatchFilters: "Nessun alloggio corrisponde ai filtri selezionati. Prova a modificare la tua ricerca.",
+    noCurrentlyAvailable: "Attualmente non ci sono alloggi disponibili. Ti invitiamo a controllare nuovamente più tardi.",
+    photos: "foto",
+    services: "Servizi",
+    bookingConfirmed: "Prenotazione Confermata!",
+    thankYouBooking: "Grazie per aver scelto di soggiornare con noi. Ti abbiamo inviato una email con tutti i dettagli.",
+    backToAccommodations: "Torna agli alloggi",
+    room: "camera",
+    rooms: "camere",
+    bathroom: "bagno",
+    bathrooms: "bagni",
+    guest: "ospite",
+    guestsPlural: "ospiti",
+    night: "notte",
+    checkInOut: "Check-in - Check-out",
+    search: "Cerca",
+    errorLoadingProperties: "Errore nel caricamento delle proprietà",
+    retry: "Riprova",
     
     // Roommate Finder
     roommateTitle: "Trova il tuo Coinquilino Ideale",
@@ -150,7 +217,8 @@ export const translations = {
     edit: "Modifica",
     create: "Crea",
     update: "Aggiorna",
-    featured: "In Evidenza"
+    featured: "In Evidenza",
+    download: "Scarica"
   },
   
   ro: {

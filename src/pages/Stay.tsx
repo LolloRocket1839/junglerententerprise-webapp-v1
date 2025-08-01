@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { FilterX, Loader2, Search, MapPin, Users, Bed, Bath, Check, Sparkles, TreePine, Home } from "lucide-react";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const FeatureHighlight = ({ icon, text }: { icon: React.ReactNode; text: string }) => (
   <div className="flex items-center space-x-2 text-white/80">
@@ -24,6 +25,7 @@ const FeatureHighlight = ({ icon, text }: { icon: React.ReactNode; text: string 
 );
 
 const Stay = () => {
+  const { t } = useLanguage();
   const [selectedProperty, setSelectedProperty] = useState<TouristProperty | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [bookingData, setBookingData] = useState<any>(null);
@@ -42,7 +44,7 @@ const Stay = () => {
         return data as TouristProperty[];
       } catch (error) {
         console.error("Error fetching properties:", error);
-        toast.error("Errore nel caricamento delle proprietà");
+        toast.error(t('errorLoadingProperties'));
         return [];
       }
     },
@@ -76,7 +78,7 @@ const Stay = () => {
 
   const handleGuestInfo = async (guestInfo: any) => {
     try {
-      toast.loading("Elaborazione della prenotazione in corso...");
+      toast.loading(t('loading'));
 
       const { data: booking, error: bookingError } = await supabase
         .from('tourist_bookings')
@@ -105,12 +107,12 @@ const Stay = () => {
       }
 
       toast.dismiss();
-      toast.success("Prenotazione confermata! Ti abbiamo inviato una email di conferma.");
+      toast.success(t('bookingConfirmed'));
       setCurrentStep(4);
     } catch (error) {
       console.error("Booking error:", error);
       toast.dismiss();
-      toast.error("Si è verificato un errore durante la prenotazione.");
+      toast.error(t('error'));
     }
   };
 
@@ -133,9 +135,9 @@ const Stay = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#1a472a] via-[#2d5a3f] to-[#3d6b52] flex items-center justify-center">
         <GlassCard className="p-8 text-center">
-          <div className="text-red-400 text-xl mb-4">Errore nel caricamento delle proprietà</div>
+          <div className="text-red-400 text-xl mb-4">{t('errorLoadingProperties')}</div>
           <Button onClick={() => window.location.reload()} className="glass-button">
-            Riprova
+            {t('retry')}
           </Button>
         </GlassCard>
       </div>
@@ -160,31 +162,30 @@ const Stay = () => {
             <Sparkles className="w-8 h-8 text-emerald-400 mr-3 animate-pulse-gentle" />
             <h1 className="text-4xl md:text-6xl font-bold">
               <span className="bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent">
-                Soggiorna in
+                {t('stayInStyle')}
               </span>
-              <span className="text-emerald-400 ml-2">Stile</span>
             </h1>
           </div>
           
           <p className="text-xl md:text-2xl text-white/80 mb-8 font-light leading-relaxed">
-            Scopri alloggi unici verificati per il tuo soggiorno perfetto
+            {t('discoverAccommodations')}
             <br />
-            <span className="text-emerald-400 font-medium">Prezzi trasparenti, qualità garantita</span>
+            <span className="text-emerald-400 font-medium">{t('transparentPricing')}</span>
           </p>
 
           {/* Features */}
           <div className="flex flex-wrap justify-center gap-6 mb-8">
             <FeatureHighlight 
               icon={<Check className="w-4 h-4 text-emerald-400" />} 
-              text="Verificato al 100%" 
+              text={t('verified100')} 
             />
             <FeatureHighlight 
               icon={<Users className="w-4 h-4 text-emerald-400" />} 
-              text="Host selezionati" 
+              text={t('selectedHosts')} 
             />
             <FeatureHighlight 
               icon={<MapPin className="w-4 h-4 text-emerald-400" />} 
-              text="Posizioni premium" 
+              text={t('premiumLocations')} 
             />
           </div>
         </div>
@@ -196,9 +197,9 @@ const Stay = () => {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center space-x-2">
               <Search className="w-5 h-5 text-emerald-400" />
-              <h2 className="text-xl font-semibold text-white">Trova il tuo alloggio</h2>
+              <h2 className="text-xl font-semibold text-white">{t('findAccommodation')}</h2>
               <Badge className="bg-emerald-500/20 text-emerald-100">
-                {filteredProperties?.length || 0} disponibili
+                {filteredProperties?.length || 0} {t('available')}
               </Badge>
             </div>
             
@@ -207,7 +208,7 @@ const Stay = () => {
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
                 <Input
                   type="text"
-                  placeholder="Cerca per città o nome"
+                  placeholder={t('searchCityName')}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="glass-input pl-10 w-full"
@@ -218,13 +219,13 @@ const Stay = () => {
                 className="glass-input text-white p-2 text-sm min-w-[120px]"
                 value={filters.capacity}
                 onChange={(e) => handleFilterChange(parseInt(e.target.value))}
-                aria-label="Filtro per numero di ospiti"
+                aria-label={t('guests')}
               >
-                <option value={0}>Ospiti</option>
-                <option value={1}>1+ ospiti</option>
-                <option value={2}>2+ ospiti</option>
-                <option value={4}>4+ ospiti</option>
-                <option value={6}>6+ ospiti</option>
+                <option value={0}>{t('guests')}</option>
+                <option value={1}>1+ {t('guests').toLowerCase()}</option>
+                <option value={2}>2+ {t('guests').toLowerCase()}</option>
+                <option value={4}>4+ {t('guests').toLowerCase()}</option>
+                <option value={6}>6+ {t('guests').toLowerCase()}</option>
               </select>
               
               {(searchTerm || filters.capacity > 0) && (
@@ -233,7 +234,7 @@ const Stay = () => {
                   size="icon"
                   onClick={clearFilters}
                   className="glass-button"
-                  aria-label="Cancella filtri"
+                  aria-label={t('clearFilters')}
                 >
                   <FilterX size={18} />
                 </Button>
@@ -246,7 +247,7 @@ const Stay = () => {
           <GlassCard className="flex items-center justify-center min-h-[400px]">
             <div className="flex flex-col items-center gap-4">
               <Loader2 className="h-12 w-12 animate-spin text-emerald-400" />
-              <p className="text-white/70">Caricamento alloggi premium...</p>
+              <p className="text-white/70">{t('loadingPremium')}</p>
             </div>
           </GlassCard>
         ) : (
@@ -264,11 +265,11 @@ const Stay = () => {
             ) : (
               <GlassCard className="text-center py-16">
                 <div className="max-w-md mx-auto space-y-4">
-                  <h3 className="text-xl font-semibold text-white">Nessun alloggio trovato</h3>
+                  <h3 className="text-xl font-semibold text-white">{t('noAccommodationFound')}</h3>
                   <p className="text-white/70">
                     {searchTerm || filters.capacity > 0 ? 
-                      "Nessun alloggio corrisponde ai filtri selezionati. Prova a modificare la tua ricerca." :
-                      "Attualmente non ci sono alloggi disponibili. Ti invitiamo a controllare nuovamente più tardi."}
+                      t('noMatchFilters') :
+                      t('noCurrentlyAvailable')}
                   </p>
                   {(searchTerm || filters.capacity > 0) && (
                     <Button 
@@ -277,7 +278,7 @@ const Stay = () => {
                       className="mt-4 glass-button"
                     >
                       <FilterX className="mr-2 h-4 w-4" />
-                      Cancella filtri
+                      {t('clearFilters')}
                     </Button>
                   )}
                 </div>
@@ -299,7 +300,7 @@ const Stay = () => {
                     />
                     {selectedProperty.images.length > 1 && (
                       <Badge className="absolute bottom-2 right-2 bg-black/60 text-white">
-                        +{selectedProperty.images.length - 1} foto
+                        +{selectedProperty.images.length - 1} {t('photos')}
                       </Badge>
                     )}
                   </div>
@@ -312,22 +313,22 @@ const Stay = () => {
                     <div className="flex gap-4 mb-4">
                       <div className="flex items-center gap-1 text-white/80">
                         <Users size={16} />
-                        <span>{selectedProperty.capacity} ospiti</span>
+                        <span>{selectedProperty.capacity} {selectedProperty.capacity === 1 ? t('guest') : t('guestsPlural')}</span>
                       </div>
                       <div className="flex items-center gap-1 text-white/80">
                         <Bed size={16} />
-                        <span>{selectedProperty.bedrooms} {selectedProperty.bedrooms === 1 ? 'camera' : 'camere'}</span>
+                        <span>{selectedProperty.bedrooms} {selectedProperty.bedrooms === 1 ? t('room') : t('rooms')}</span>
                       </div>
                       <div className="flex items-center gap-1 text-white/80">
                         <Bath size={16} />
-                        <span>{selectedProperty.bathrooms} {selectedProperty.bathrooms === 1 ? 'bagno' : 'bagni'}</span>
+                        <span>{selectedProperty.bathrooms} {selectedProperty.bathrooms === 1 ? t('bathroom') : t('bathrooms')}</span>
                       </div>
                     </div>
                     <p className="text-white/70">{selectedProperty.description}</p>
                     
                     {selectedProperty.amenities && selectedProperty.amenities.length > 0 && (
                       <div className="mt-4 pt-4 border-t border-white/10">
-                        <h3 className="text-lg font-semibold text-white mb-2">Servizi</h3>
+                        <h3 className="text-lg font-semibold text-white mb-2">{t('services')}</h3>
                         <div className="grid grid-cols-2 gap-2">
                           {selectedProperty.amenities.map((amenity, index) => (
                             <div key={index} className="flex items-center gap-2">
@@ -358,15 +359,15 @@ const Stay = () => {
                     <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mb-4">
                       <Check className="h-8 w-8 text-green-500" />
                     </div>
-                    <h3 className="text-2xl font-bold text-green-400 mb-4">Prenotazione Confermata!</h3>
+                    <h3 className="text-2xl font-bold text-green-400 mb-4">{t('bookingConfirmed')}</h3>
                     <p className="text-white/70 mb-6">
-                      Grazie per aver scelto di soggiornare con noi. Ti abbiamo inviato una email con tutti i dettagli.
+                      {t('thankYouBooking')}
                     </p>
                     <Button 
                       onClick={handleCloseDialog}
                       className="glass-button"
                     >
-                      Torna agli alloggi
+                      {t('backToAccommodations')}
                     </Button>
                   </GlassCard>
                 )}

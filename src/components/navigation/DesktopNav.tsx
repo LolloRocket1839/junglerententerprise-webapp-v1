@@ -27,7 +27,7 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
   const { language, setLanguage, t } = useLanguage();
 
   const handleLanguageChange = (lang: string) => {
-    setLanguage(lang);
+    setLanguage(lang as 'en' | 'it' | 'ro' | 'es' | 'fr' | 'de');
     if (onLanguageChange) {
       onLanguageChange(lang);
     }
