@@ -8,6 +8,8 @@ import InvestmentControls from './InvestmentControls';
 import InvestmentSummary from './InvestmentSummary';
 import PropertyDetailsTab from './PropertyDetailsTab';
 import LegalDocumentsTab from './LegalDocumentsTab';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { investTranslations } from '@/translations/invest';
 
 interface InvestmentContentProps {
   property: Property;
@@ -70,7 +72,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
           <div className="pt-4">
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm font-semibold text-white/90 antialiased">
-                Progresso Raccolta Fondi
+                {t('fundingProgress')}
               </span>
               <span className="text-sm font-bold text-white antialiased">
                 €{property.amount_raised.toLocaleString()} / €{property.investment_goal.toLocaleString()}
@@ -91,19 +93,19 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
               value="overview"
               className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased"
             >
-              Overview
+              {t('overview')}
             </TabsTrigger>
             <TabsTrigger 
               value="details"
               className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased"
             >
-              Dettagli
+              {t('details')}
             </TabsTrigger>
             <TabsTrigger 
               value="legal"
               className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased"
             >
-              Legale
+              {t('legal')}
             </TabsTrigger>
           </TabsList>
           

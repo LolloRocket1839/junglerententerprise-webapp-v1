@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import { DialogClose } from "@/components/ui/dialog";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { investTranslations } from '@/translations/invest';
 
 interface InvestmentHeaderProps {
   propertyName: string;
@@ -32,7 +33,7 @@ const InvestmentHeader: React.FC<InvestmentHeaderProps> = ({
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/invest" className="text-sm font-medium text-white/80 hover:text-white">
-                {t('investmentDashboardText')}
+                {t('investmentDashboard')}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>

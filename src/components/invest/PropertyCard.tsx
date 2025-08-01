@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Info, ImageIcon, EuroIcon } from 'lucide-react';
 import { Property } from './types';
 import ProgressBar from './ProgressBar';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { investTranslations } from '@/translations/invest';
 
 interface PropertyCardProps {
   property: Property;
@@ -13,6 +15,8 @@ interface PropertyCardProps {
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo, className }) => {
+  const { language } = useLanguage();
+  const t = (key: string) => investTranslations[language]?.[key] || key;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const toggleImage = (e: React.MouseEvent) => {
@@ -38,7 +42,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
           <>
             <img
               src={property.images[currentImageIndex]}
-              alt={`${property.name} - ${currentImageIndex === 0 ? 'Esterno' : 'Interno'}`}
+              alt={`${property.name} - ${currentImageIndex === 0 ? t('exterior') : t('interior')}`}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               loading="lazy"
             />
@@ -51,7 +55,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
               <ImageIcon className="w-4 h-4 text-white" />
             </Button>
             <div className="absolute top-2 left-2 bg-black/50 px-2 py-1 rounded text-xs text-white">
-              {currentImageIndex === 0 ? 'Esterno' : 'Interno'}
+              {currentImageIndex === 0 ? t('exterior') : t('interior')}
             </div>
           </>
         ) : (
@@ -73,16 +77,16 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
             </span>
           </div>
           <div className="text-right">
-            <p className="text-xs text-white/60">ROI Previsto</p>
+            <p className="text-xs text-white/60">{t('expectedROI')}</p>
             <p className="text-base font-semibold text-primary">
-              {property.rating ? `${property.rating}%` : 'Da definire'}
+              {property.rating ? `${property.rating}%` : t('tbd')}
             </p>
           </div>
         </div>
 
         <div className="space-y-3">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-white/60">Sottoscrizione</span>
+            <span className="text-sm text-white/60">{t('subscription')}</span>
             <span className="text-sm font-semibold text-white">{calculatePercentage()}%</span>
           </div>
           <ProgressBar 
@@ -105,7 +109,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
               onInvest(property);
             }}
           >
-            Investi Ora
+            {t('investNow')}
             <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
           </Button>
           <Button 
