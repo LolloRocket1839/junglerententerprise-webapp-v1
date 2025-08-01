@@ -67,6 +67,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
           </div>
           
           <PropertyStats
+            key={language}
             units={12}
             reviewsCount={property.reviews_count || 0}
             rating={property.rating || 8}
