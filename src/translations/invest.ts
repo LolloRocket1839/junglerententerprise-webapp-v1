@@ -1,5 +1,22 @@
 export const investTranslations = {
   en: {
+    // Main Page
+    investInFuture: "Invest in the Future",
+    smartRealEstate: "Smart real estate investments with guaranteed returns",
+    startFrom: "Starting from €100",
+    guaranteedReturns: "Guaranteed Returns",
+    guaranteedReturnsDesc: "Secure investments with predictable 8-12% annual returns",
+    secureInvestments: "Secure Investments", 
+    secureInvestmentsDesc: "All properties are verified and legally protected",
+    investorCommunity: "Investor Community",
+    investorCommunityDesc: "Join thousands of smart investors building wealth together",
+    verified: "Verified",
+    readyToInvest: "Ready to Start Investing?",
+    readyToInvestDesc: "Join our community of smart investors today",
+    zeroCommissions: "Zero Commissions",
+    immediateLiquidity: "Immediate Liquidity", 
+    support247: "24/7 Support",
+    
     // Property Card
     exterior: "Exterior",
     interior: "Interior", 
@@ -73,6 +90,23 @@ export const investTranslations = {
   },
   
   it: {
+    // Main Page
+    investInFuture: "Investi nel Futuro",
+    smartRealEstate: "Investimenti immobiliari intelligenti con rendimenti garantiti",
+    startFrom: "A partire da €100",
+    guaranteedReturns: "Rendimenti Garantiti",
+    guaranteedReturnsDesc: "Investimenti sicuri con rendimenti annuali prevedibili dell'8-12%",
+    secureInvestments: "Investimenti Sicuri", 
+    secureInvestmentsDesc: "Tutte le proprietà sono verificate e legalmente protette",
+    investorCommunity: "Comunità di Investitori",
+    investorCommunityDesc: "Unisciti a migliaia di investitori intelligenti che costruiscono ricchezza insieme",
+    verified: "Verificato",
+    readyToInvest: "Pronto ad Investire?",
+    readyToInvestDesc: "Unisciti oggi alla nostra comunità di investitori intelligenti",
+    zeroCommissions: "Zero Commissioni",
+    immediateLiquidity: "Liquidità Immediata", 
+    support247: "Supporto 24/7",
+    
     // Property Card
     exterior: "Esterno",
     interior: "Interno",
@@ -146,6 +180,23 @@ export const investTranslations = {
   },
   
   de: {
+    // Main Page
+    investInFuture: "In die Zukunft Investieren",
+    smartRealEstate: "Intelligente Immobilieninvestitionen mit garantierten Renditen",
+    startFrom: "Ab €100",
+    guaranteedReturns: "Garantierte Renditen",
+    guaranteedReturnsDesc: "Sichere Investitionen mit vorhersehbaren 8-12% jährlichen Renditen",
+    secureInvestments: "Sichere Investitionen", 
+    secureInvestmentsDesc: "Alle Immobilien sind verifiziert und rechtlich geschützt",
+    investorCommunity: "Investoren-Gemeinschaft",
+    investorCommunityDesc: "Schließen Sie sich Tausenden von intelligenten Investoren an, die gemeinsam Vermögen aufbauen",
+    verified: "Verifiziert",
+    readyToInvest: "Bereit zu Investieren?",
+    readyToInvestDesc: "Werden Sie noch heute Teil unserer intelligenten Investoren-Gemeinschaft",
+    zeroCommissions: "Keine Gebühren",
+    immediateLiquidity: "Sofortige Liquidität", 
+    support247: "24/7 Support",
+    
     // Property Card
     exterior: "Außenbereich",
     interior: "Innenbereich",
@@ -219,6 +270,23 @@ export const investTranslations = {
   },
   
   ro: {
+    // Main Page
+    investInFuture: "Investește în Viitor",
+    smartRealEstate: "Investiții imobiliare inteligente cu randamente garantate",
+    startFrom: "Începând de la €100",
+    guaranteedReturns: "Randamente Garantate",
+    guaranteedReturnsDesc: "Investiții sigure cu randamente anuale previzibile de 8-12%",
+    secureInvestments: "Investiții Sigure", 
+    secureInvestmentsDesc: "Toate proprietățile sunt verificate și protejate legal",
+    investorCommunity: "Comunitatea Investitorilor",
+    investorCommunityDesc: "Alătură-te miilor de investitori inteligenți care construiesc avere împreună",
+    verified: "Verificat",
+    readyToInvest: "Gata să Investești?",
+    readyToInvestDesc: "Alătură-te astăzi comunității noastre de investitori inteligenți",
+    zeroCommissions: "Zero Comisioane",
+    immediateLiquidity: "Lichiditate Imediată", 
+    support247: "Suport 24/7",
+    
     // Property Card
     exterior: "Exterior",
     interior: "Interior",
@@ -272,6 +340,23 @@ export const investTranslations = {
   },
   
   es: {
+    // Main Page
+    investInFuture: "Invierte en el Futuro",
+    smartRealEstate: "Inversiones inmobiliarias inteligentes con rendimientos garantizados",
+    startFrom: "Desde €100",
+    guaranteedReturns: "Rendimientos Garantizados",
+    guaranteedReturnsDesc: "Inversiones seguras con rendimientos anuales predecibles del 8-12%",
+    secureInvestments: "Inversiones Seguras", 
+    secureInvestmentsDesc: "Todas las propiedades están verificadas y protegidas legalmente",
+    investorCommunity: "Comunidad de Inversores",
+    investorCommunityDesc: "Únete a miles de inversores inteligentes construyendo riqueza juntos",
+    verified: "Verificado",
+    readyToInvest: "¿Listo para Invertir?",
+    readyToInvestDesc: "Únete hoy a nuestra comunidad de inversores inteligentes",
+    zeroCommissions: "Cero Comisiones",
+    immediateLiquidity: "Liquidez Inmediata", 
+    support247: "Soporte 24/7",
+    
     // Property Card
     exterior: "Exterior",
     interior: "Interior",
@@ -325,6 +410,23 @@ export const investTranslations = {
   },
   
   fr: {
+    // Main Page
+    investInFuture: "Investir dans l'Avenir",
+    smartRealEstate: "Investissements immobiliers intelligents avec des rendements garantis",
+    startFrom: "À partir de €100",
+    guaranteedReturns: "Rendements Garantis",
+    guaranteedReturnsDesc: "Investissements sécurisés avec des rendements annuels prévisibles de 8-12%",
+    secureInvestments: "Investissements Sécurisés", 
+    secureInvestmentsDesc: "Toutes les propriétés sont vérifiées et légalement protégées",
+    investorCommunity: "Communauté d'Investisseurs",
+    investorCommunityDesc: "Rejoignez des milliers d'investisseurs intelligents construisant leur patrimoine ensemble",
+    verified: "Vérifié",
+    readyToInvest: "Prêt à Investir?",
+    readyToInvestDesc: "Rejoignez notre communauté d'investisseurs intelligents dès aujourd'hui",
+    zeroCommissions: "Zéro Commission",
+    immediateLiquidity: "Liquidité Immédiate", 
+    support247: "Support 24/7",
+    
     // Property Card
     exterior: "Extérieur",
     interior: "Intérieur",
