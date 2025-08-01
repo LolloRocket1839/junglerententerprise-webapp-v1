@@ -38,20 +38,20 @@ const Invest = () => {
   const features = [
     {
       icon: <TrendingUp className="w-6 h-6 text-emerald-400" />,
-      title: "Rendimenti Garantiti",
-      description: "Investimenti immobiliari con rendimento annuo del 8-12%",
+      title: t('guaranteedReturns'),
+      description: t('guaranteedReturnsDesc'),
       badge: "8-12%"
     },
     {
       icon: <Shield className="w-6 h-6 text-blue-400" />,
-      title: "Investimenti Sicuri",
-      description: "Tutti gli immobili sono verificati e assicurati",
-      badge: "Verificato"
+      title: t('secureInvestments'),
+      description: t('secureInvestmentsDesc'),
+      badge: t('verified')
     },
     {
       icon: <Users className="w-6 h-6 text-purple-400" />,
-      title: "Community di Investitori",
-      description: "Unisciti a oltre 1000+ investitori attivi",
+      title: t('investorCommunity'),
+      description: t('investorCommunityDesc'),
       badge: "1000+"
     }
   ];
@@ -80,16 +80,15 @@ const Invest = () => {
             <Zap className="w-8 h-8 text-emerald-400 mr-3 animate-pulse-gentle" />
             <h1 className="text-4xl md:text-6xl font-bold">
               <span className="bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent">
-                Investi nel
+                {t('investInFuture')}
               </span>
-              <span className="text-emerald-400 ml-2">Futuro</span>
             </h1>
           </div>
           
           <p className="text-xl md:text-2xl text-white/80 mb-8 font-light leading-relaxed">
-            Investimenti immobiliari intelligenti con rendimenti garantiti
+            {t('smartRealEstate')}
             <br />
-            <span className="text-emerald-400 font-medium">Inizia da €100</span>
+            <span className="text-emerald-400 font-medium">{t('startFrom')}</span>
           </p>
         </div>
 
@@ -116,23 +115,23 @@ const Invest = () => {
         {/* Call to Action */}
         <GlassCard className="text-center p-8 bg-gradient-to-r from-emerald-500/20 to-green-600/20 border-emerald-500/30">
           <h3 className="text-2xl font-bold text-white mb-4">
-            Pronto a Investire?
+            {t('readyToInvest')}
           </h3>
           <p className="text-white/70 mb-6">
-            Unisciti a migliaia di investitori che stanno già guadagnando con noi
+            {t('readyToInvestDesc')}
           </p>
           <div className="flex justify-center items-center space-x-6 text-sm text-white/60">
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse-gentle" />
-              <span>Commissioni 0%</span>
+              <span>{t('zeroCommissions')}</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse-gentle" />
-              <span>Liquidità immediata</span>
+              <span>{t('immediateLiquidity')}</span>
             </div>
             <div className="flex items-center space-x-2">
               <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse-gentle" />
-              <span>Supporto 24/7</span>
+              <span>{t('support247')}</span>
             </div>
           </div>
         </GlassCard>

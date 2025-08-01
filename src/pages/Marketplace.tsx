@@ -3,6 +3,7 @@ import MarketplaceGrid from '@/components/marketplace/MarketplaceGrid';
 import { GlassCard } from '@/components/ui/glass-card';
 import { Badge } from '@/components/ui/badge';
 import { ShoppingBag, Users, Zap, TreePine, Building2, Sparkles, TrendingUp } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const FeatureCard = ({ icon, title, stat }: { icon: React.ReactNode; title: string; stat: string }) => (
   <GlassCard className="interactive-card text-center p-4">
@@ -15,6 +16,8 @@ const FeatureCard = ({ icon, title, stat }: { icon: React.ReactNode; title: stri
 );
 
 const Marketplace = () => {
+  const { t } = useLanguage();
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a472a] via-[#2d5a3f] to-[#3d6b52] relative overflow-hidden">
       {/* Floating Background Elements */}
@@ -35,38 +38,37 @@ const Marketplace = () => {
               <Sparkles className="w-8 h-8 text-emerald-400 mr-3 animate-pulse-gentle" />
               <h1 className="text-4xl md:text-6xl font-bold">
                 <span className="bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent">
-                  Jungle
+                  {t('jungleMarketplace')}
                 </span>
-                <span className="text-emerald-400 ml-2">Marketplace</span>
               </h1>
             </div>
             
             <p className="text-xl md:text-2xl text-white/80 mb-8 font-light leading-relaxed">
-              La piattaforma di scambio per studenti e giovani professionali
+              {t('studentExchangePlatform')}
               <br />
-              <span className="text-emerald-400 font-medium">Vendi, Compra, Scambia in sicurezza</span>
+              <span className="text-emerald-400 font-medium">{t('sellBuyExchange')}</span>
             </p>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
               <FeatureCard 
                 icon={<ShoppingBag className="w-6 h-6 text-emerald-400" />}
-                title="Prodotti Attivi"
+                title={t('activeProducts')}
                 stat="150+"
               />
               <FeatureCard 
                 icon={<Users className="w-6 h-6 text-blue-400" />}
-                title="Utenti Verificati"
+                title={t('verifiedUsers')}
                 stat="300+"
               />
               <FeatureCard 
                 icon={<TrendingUp className="w-6 h-6 text-purple-400" />}
-                title="Transazioni"
+                title={t('transactions')}
                 stat="500+"
               />
               <FeatureCard 
                 icon={<Zap className="w-6 h-6 text-yellow-400" />}
-                title="Valutazione"
+                title={t('rating')}
                 stat="4.9★"
               />
             </div>
@@ -74,19 +76,19 @@ const Marketplace = () => {
             {/* Categories */}
             <div className="flex flex-wrap justify-center gap-3 mb-8">
               <Badge className="bg-emerald-500/20 text-emerald-100 hover:bg-emerald-500/30 transition-all cursor-pointer">
-                📚 Libri di Studio
+                📚 {t('studyBooks')}
               </Badge>
               <Badge className="bg-blue-500/20 text-blue-100 hover:bg-blue-500/30 transition-all cursor-pointer">
-                💻 Elettronica
+                💻 {t('electronics')}
               </Badge>
               <Badge className="bg-purple-500/20 text-purple-100 hover:bg-purple-500/30 transition-all cursor-pointer">
-                🏠 Casa & Arredo
+                🏠 {t('homeDecor')}
               </Badge>
               <Badge className="bg-pink-500/20 text-pink-100 hover:bg-pink-500/30 transition-all cursor-pointer">
-                👕 Abbigliamento
+                👕 {t('clothing')}
               </Badge>
               <Badge className="bg-orange-500/20 text-orange-100 hover:bg-orange-500/30 transition-all cursor-pointer">
-                🚲 Mobilità
+                🚲 {t('mobility')}
               </Badge>
             </div>
 
@@ -97,22 +99,22 @@ const Marketplace = () => {
                   <div className="p-3 rounded-full bg-emerald-500/20 w-fit mx-auto mb-3">
                     <Zap className="w-6 h-6 text-emerald-400" />
                   </div>
-                  <h3 className="text-white font-semibold mb-2">Transazioni Sicure</h3>
-                  <p className="text-white/60 text-sm">Pagamenti protetti e verifiche identità</p>
+                  <h3 className="text-white font-semibold mb-2">{t('secureTransactions')}</h3>
+                  <p className="text-white/60 text-sm">{t('secureTransactionsDesc')}</p>
                 </div>
                 <div>
                   <div className="p-3 rounded-full bg-blue-500/20 w-fit mx-auto mb-3">
                     <Users className="w-6 h-6 text-blue-400" />
                   </div>
-                  <h3 className="text-white font-semibold mb-2">Community Verificata</h3>
-                  <p className="text-white/60 text-sm">Solo studenti e professionali verificati</p>
+                  <h3 className="text-white font-semibold mb-2">{t('verifiedCommunity')}</h3>
+                  <p className="text-white/60 text-sm">{t('verifiedCommunityDesc')}</p>
                 </div>
                 <div>
                   <div className="p-3 rounded-full bg-purple-500/20 w-fit mx-auto mb-3">
                     <ShoppingBag className="w-6 h-6 text-purple-400" />
                   </div>
-                  <h3 className="text-white font-semibold mb-2">Prezzi Giusti</h3>
-                  <p className="text-white/60 text-sm">Valutazioni automatiche e prezzi equi</p>
+                  <h3 className="text-white font-semibold mb-2">{t('fairPrices')}</h3>
+                  <p className="text-white/60 text-sm">{t('fairPricesDesc')}</p>
                 </div>
               </div>
             </GlassCard>

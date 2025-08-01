@@ -8,6 +8,7 @@ import { Home, Users, Zap, ArrowRight } from 'lucide-react';
 import { GlassCard } from '@/components/ui/glass-card';
 import { toast } from '@/components/ui/use-toast';
 import { SmartRecommendations } from '@/components/smart/SmartRecommendations';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface UnifiedSearchProps {
   initialTab?: 'property' | 'roommate';
@@ -17,6 +18,7 @@ interface UnifiedSearchProps {
 type SearchMode = 'property' | 'roommate' | 'smart';
 
 export const UnifiedSearch = ({ initialTab = 'property', searchQuery = '' }: UnifiedSearchProps) => {
+  const { t } = useLanguage();
   const [searchMode, setSearchMode] = useState<SearchMode>(initialTab);
   const [searchParams, setSearchParams] = useState<SearchParams>({
     city: '',

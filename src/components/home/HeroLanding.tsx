@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Search, Home, Users, MapPin, Sparkles, ArrowRight, TreePine } from 'lucide-react';
 import { GlassCard } from "@/components/ui/glass-card";
 import { toast } from "@/components/ui/use-toast";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ActionCardProps {
   icon: React.ReactNode;
@@ -46,14 +47,15 @@ const ActionCard = ({ icon, title, description, badge, gradient, onClick, popula
 );
 
 export const HeroLanding = () => {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
       toast({
-        title: "Ricerca avviata",
-        description: `Cerco "${searchQuery}" per te...`,
+        title: t('searchStarted'),
+        description: `${t('searching')} "${searchQuery}"...`,
       });
       navigate(`/rent?search=${encodeURIComponent(searchQuery)}`);
     } else {
