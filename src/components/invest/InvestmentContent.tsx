@@ -28,6 +28,9 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
   setInvestmentAmount,
   onInvest
 }) => {
+  const { language } = useLanguage();
+  const t = (key: string) => investTranslations[language]?.[key] || key;
+  
   const calculateROI = (amount: number) => {
     return ((property.rating || 8) / 100 * amount).toFixed(2);
   };
