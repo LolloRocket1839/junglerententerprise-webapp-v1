@@ -67,7 +67,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
           <h3 className="text-lg font-semibold text-white">{property.name}</h3>
           <p className="text-sm text-white/60">{property.location}</p>
         </div>
-        <p className="text-sm text-white/80 line-clamp-2">{property.description}</p>
+        <p className="text-sm text-white/80 line-clamp-2">{t(property.description)}</p>
         
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">

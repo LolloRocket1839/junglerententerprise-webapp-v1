@@ -5,9 +5,9 @@ export const mockProperties: Property[] = [
     id: '1',
     name: 'Casa Via Garibaldi',
     location: 'Via Giuseppe Garibaldi 45, Torino',
-    description: 'Elegante appartamento storico nel cuore di Torino con soffitti affrescati e pavimenti in parquet originale',
+    description: 'elegantHistoric',
     price_per_night: 180,
-    amenities: ['Terrazza', 'Vista Palazzo', 'Ascensore', 'Aria Condizionata'],
+    amenities: ['terrace', 'palaceView', 'elevator', 'airConditioning'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c'
@@ -21,9 +21,9 @@ export const mockProperties: Property[] = [
     id: '2',
     name: 'Casa Via Roma',
     location: 'Via Roma 76, Torino',
-    description: 'Lussuoso appartamento con vista sulla Piazza San Carlo e interni di design contemporaneo',
+    description: 'luxuriousContemporary',
     price_per_night: 220,
-    amenities: ['Vista Piazza', 'Garage', 'Palestra', 'Concierge'],
+    amenities: ['squareView', 'garage', 'gym', 'concierge'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
       'https://images.unsplash.com/photo-1600121848594-d8644e57abab'
@@ -37,9 +37,9 @@ export const mockProperties: Property[] = [
     id: '3',
     name: 'Casa Via Po',
     location: 'Via Po 20, Torino',
-    description: 'Esclusivo appartamento con vista sulla Mole Antonelliana e portici storici',
+    description: 'exclusiveApartment',
     price_per_night: 300,
-    amenities: ['Portici Storici', 'Vista Mole', 'Terrazza', 'Cantina'],
+    amenities: ['historicArcades', 'moleView', 'terrace', 'cellar'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
       'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0'
@@ -53,9 +53,9 @@ export const mockProperties: Property[] = [
     id: '4',
     name: 'Casa Piazza Vittorio',
     location: 'Piazza Vittorio Veneto 197, Torino',
-    description: 'Prestigioso attico con vista panoramica sulla piazza e sul fiume Po',
+    description: 'prestigiousAttic',
     price_per_night: 250,
-    amenities: ['Terrazza Panoramica', 'Spa', 'Servizio in Camera', 'Cantina Vini'],
+    amenities: ['panoramicTerrace', 'spa', 'roomService', 'wineCellar'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
       'https://images.unsplash.com/photo-1600607687644-c94bf5588563'
@@ -69,9 +69,9 @@ export const mockProperties: Property[] = [
     id: '5',
     name: 'Casa Via Pietro Micca',
     location: 'Via Pietro Micca 35, Torino',
-    description: 'Elegante appartamento nel quartiere storico con soffitti alti e finestre ad arco',
+    description: 'elegantHistoricQuarter',
     price_per_night: 190,
-    amenities: ['Design Storico', 'Biblioteca', 'Cortile Interno', 'Biciclette'],
+    amenities: ['historicDesign', 'library', 'internalCourtyard', 'bicycles'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
       'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d'
@@ -85,9 +85,9 @@ export const mockProperties: Property[] = [
     id: '6',
     name: 'Casa Corso Vittorio',
     location: 'Corso Vittorio Emanuele II 127, Torino',
-    description: 'Lussuoso appartamento vicino al Parco del Valentino con ampio soggiorno e vista sul parco',
+    description: 'luxuriousNearPark',
     price_per_night: 210,
-    amenities: ['Vista Parco', 'Balcone', 'Smart Home', 'Colazione Inclusa'],
+    amenities: ['parkView', 'balcony', 'smartHome', 'breakfastIncluded'],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c',
       'https://images.unsplash.com/photo-1600210492493-0946911123ea'
