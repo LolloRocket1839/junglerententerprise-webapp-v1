@@ -75,4 +75,57 @@
   .jungle-shadow {
     @apply shadow-[0_8px_32px_-8px_rgba(52,211,153,0.2)];
   }
+
+  /* Enhanced Glass Morphism 2.0 */
+  .glass-premium {
+    @apply bg-gradient-to-br from-white/10 via-white/5 to-white/10 
+           backdrop-blur-2xl border border-white/20 shadow-2xl
+           transition-all duration-500 ease-out;
+  }
+
+  .glass-premium:hover {
+    @apply bg-gradient-to-br from-white/15 via-white/8 to-white/15 
+           shadow-[0_20px_50px_-10px_rgba(52,211,153,0.3)]
+           transform scale-[1.02] border-white/30;
+  }
+
+  /* Magnetic Hover Effects */
+  .magnetic-hover {
+    @apply transition-all duration-300 cursor-pointer;
+  }
+
+  .magnetic-hover:hover {
+    @apply animate-magnetic-hover shadow-lg transform translate-y-[-2px];
+  }
+
+  /* Smart Interaction States */
+  .interactive-card {
+    @apply glass-premium p-6 rounded-2xl cursor-pointer
+           transition-all duration-300 ease-out
+           hover:shadow-[0_25px_60px_-15px_rgba(52,211,153,0.4)]
+           active:scale-[0.98];
+  }
+
+  /* Progressive Disclosure */
+  .disclosure-trigger {
+    @apply transition-all duration-300 overflow-hidden;
+  }
+
+  .disclosure-content {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  /* Enhanced Animations */
+  .float-elegant {
+    @apply animate-float-slow;
+  }
+
+  .pulse-elegant {
+    @apply animate-pulse-gentle;
+  }
+
+  .shimmer-effect {
+    @apply bg-gradient-to-r from-transparent via-white/10 to-transparent
+           bg-[length:1000px_100%] animate-shimmer;
+  }
 }
