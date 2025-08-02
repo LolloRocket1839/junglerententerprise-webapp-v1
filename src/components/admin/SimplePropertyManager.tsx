@@ -7,8 +7,12 @@ import { Card } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, Upload, Edit, Trash2 } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 const SimplePropertyManager = () => {
+  const { language } = useLanguage();
+  const t = (key: string) => rentalTranslations[language]?.[key] || key;
   const [properties, setProperties] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -153,7 +157,7 @@ const SimplePropertyManager = () => {
             className="bg-primary hover:bg-primary/90 text-primary-foreground flex items-center gap-2"
           >
             <Plus className="h-4 w-4" />
-            {showForm ? 'Chiudi Form' : 'Aggiungi Proprietà'}
+            {showForm ? 'Chiudi Form' : t('addProperty')}
           </Button>
         </div>
 
@@ -252,7 +256,7 @@ const SimplePropertyManager = () => {
               <p className="text-white/60 text-sm mb-2 line-clamp-1">
                 {property.address}, {property.city}
               </p>
-              <p className="text-white font-bold mb-3">€{property.market_price_monthly}/mese</p>
+              <p className="text-white font-bold mb-3">€{property.market_price_monthly}{t('perMonth2')}</p>
               <p className="text-white/70 text-sm mb-3 line-clamp-2">
                 {property.description}
               </p>
@@ -263,8 +267,8 @@ const SimplePropertyManager = () => {
                   onClick={() => handleEdit(property)}
                   className="flex-1 text-xs"
                 >
-                  <Edit className="h-3 w-3 mr-1" />
-                  Modifica
+                <Edit className="h-3 w-3 mr-1" />
+                {t('edit')}
                 </Button>
                 <Button
                   size="sm"
@@ -272,8 +276,8 @@ const SimplePropertyManager = () => {
                   onClick={() => handleDelete(property.id)}
                   className="flex-1 text-xs"
                 >
-                  <Trash2 className="h-3 w-3 mr-1" />
-                  Elimina
+                <Trash2 className="h-3 w-3 mr-1" />
+                {t('delete')}
                 </Button>
               </div>
             </Card>

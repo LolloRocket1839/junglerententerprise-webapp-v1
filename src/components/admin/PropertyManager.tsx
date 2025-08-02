@@ -33,6 +33,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Plus, Upload, X, Edit, Trash2 } from 'lucide-react';
 import { Card } from "@/components/ui/card";
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 const propertySchema = z.object({
   title: z.string().min(1, "Titolo richiesto"),
@@ -60,6 +62,8 @@ interface PropertyManagerProps {
 }
 
 const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
+  const { language } = useLanguage();
+  const t = (key: string) => rentalTranslations[language]?.[key] || key;
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
@@ -296,7 +300,7 @@ const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
           <DialogTrigger asChild>
             <Button className="glass-button flex items-center gap-2">
               <Plus className="h-4 w-4" />
-              Aggiungi Proprietà
+              {t('addProperty')}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[800px] bg-black/90 border-white/10 max-h-[90vh] overflow-y-auto">
@@ -562,7 +566,7 @@ const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
             </div>
             <h3 className="text-white font-semibold mb-2">{property.title}</h3>
             <p className="text-white/60 text-sm mb-2">{property.address}, {property.city}</p>
-            <p className="text-white font-bold mb-3">€{property.market_price_monthly}/mese</p>
+            <p className="text-white font-bold mb-3">€{property.market_price_monthly}{t('perMonth2')}</p>
             <div className="flex gap-2">
               <Button
                 size="sm"
@@ -571,7 +575,7 @@ const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
                 className="flex-1 text-xs"
               >
                 <Edit className="h-3 w-3 mr-1" />
-                Modifica
+                {t('edit')}
               </Button>
               <Button
                 size="sm"
@@ -580,7 +584,7 @@ const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
                 className="flex-1 text-xs"
               >
                 <Trash2 className="h-3 w-3 mr-1" />
-                Elimina
+                {t('delete')}
               </Button>
             </div>
           </Card>

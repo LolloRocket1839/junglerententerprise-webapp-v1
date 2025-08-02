@@ -37,7 +37,12 @@ export const rentalTranslations = {
     furniture: "Furniture",
     amenities: "Amenities", 
     reviews: "reviews",
-    perMonth2: "per month"
+    perMonth2: "per month",
+    
+    // Admin interface
+    edit: "Edit",
+    delete: "Delete",
+    addProperty: "Add Property"
   },
   
   it: {
@@ -78,7 +83,12 @@ export const rentalTranslations = {
     furniture: "Arredamento",
     amenities: "Servizi",
     reviews: "recensioni",
-    perMonth2: "al mese"
+    perMonth2: "al mese",
+    
+    // Admin interface
+    edit: "Modifica",
+    delete: "Elimina",
+    addProperty: "Aggiungi Proprietà"
   },
   
   de: {
@@ -119,7 +129,12 @@ export const rentalTranslations = {
     furniture: "Möbel",
     amenities: "Ausstattung",
     reviews: "Bewertungen",
-    perMonth2: "pro Monat"
+    perMonth2: "pro Monat",
+    
+    // Admin interface
+    edit: "Bearbeiten",
+    delete: "Löschen",
+    addProperty: "Immobilie hinzufügen"
   },
   
   ro: {
@@ -160,7 +175,12 @@ export const rentalTranslations = {
     furniture: "Mobilier",
     amenities: "Facilități",
     reviews: "recenzii",
-    perMonth2: "pe lună"
+    perMonth2: "pe lună",
+    
+    // Admin interface
+    edit: "Editează",
+    delete: "Șterge",
+    addProperty: "Adaugă Proprietate"
   },
   
   es: {
@@ -201,7 +221,12 @@ export const rentalTranslations = {
     furniture: "Mobiliario",
     amenities: "Servicios",
     reviews: "reseñas",
-    perMonth2: "al mes"
+    perMonth2: "al mes",
+    
+    // Admin interface
+    edit: "Editar",
+    delete: "Eliminar",
+    addProperty: "Añadir Propiedad"
   },
   
   fr: {
@@ -242,6 +267,11 @@ export const rentalTranslations = {
     furniture: "Mobilier",
     amenities: "Équipements",
     reviews: "avis",
-    perMonth2: "par mois"
+    perMonth2: "par mois",
+    
+    // Admin interface
+    edit: "Modifier",
+    delete: "Supprimer",
+    addProperty: "Ajouter une Propriété"
   }
 };
