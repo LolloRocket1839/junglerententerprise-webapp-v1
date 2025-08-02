@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { PriceInput } from "@/components/ui/price-input";
 import { SearchParams } from '../../types';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 interface AdvancedFiltersProps {
   searchParams: SearchParams;
@@ -9,6 +11,11 @@ interface AdvancedFiltersProps {
 }
 
 export const AdvancedFilters = ({ searchParams, onParamsChange }: AdvancedFiltersProps) => {
+  const { language } = useLanguage();
+  const t = (key: keyof typeof rentalTranslations.en) => {
+    return rentalTranslations[language as keyof typeof rentalTranslations]?.[key] || rentalTranslations.en[key];
+  };
+
   const [errors, setErrors] = useState<{
     minPrice?: string;
     maxPrice?: string;
@@ -20,8 +27,8 @@ export const AdvancedFilters = ({ searchParams, onParamsChange }: AdvancedFilter
     
     if (minNum && maxNum && minNum > maxNum) {
       return {
-        minPrice: "Il prezzo minimo non può essere maggiore del massimo",
-        maxPrice: "Il prezzo massimo non può essere minore del minimo"
+        minPrice: t('minPriceError'),
+        maxPrice: t('maxPriceError')
       };
     }
     return {};
@@ -45,29 +52,29 @@ export const AdvancedFilters = ({ searchParams, onParamsChange }: AdvancedFilter
     >
       <div>
         <label htmlFor="min-price" className="text-white/80 mb-2 block text-sm font-medium">
-          Prezzo Minimo
+          {t('minPrice')}
         </label>
         <PriceInput
           id="min-price"
-          placeholder="Inserisci prezzo minimo"
+          placeholder={t('enterMinPrice')}
           value={searchParams.minPrice}
           onChange={(e) => handlePriceChange('minPrice', e.target.value)}
           error={errors.minPrice}
-          aria-label="Prezzo minimo in euro"
+          aria-label={t('enterMinPrice')}
         />
       </div>
 
       <div>
         <label htmlFor="max-price" className="text-white/80 mb-2 block text-sm font-medium">
-          Prezzo Massimo
+          {t('maxPrice')}
         </label>
         <PriceInput
           id="max-price"
-          placeholder="Inserisci prezzo massimo"
+          placeholder={t('enterMaxPrice')}
           value={searchParams.maxPrice}
           onChange={(e) => handlePriceChange('maxPrice', e.target.value)}
           error={errors.maxPrice}
-          aria-label="Prezzo massimo in euro"
+          aria-label={t('enterMaxPrice')}
         />
       </div>
     </div>

@@ -4,6 +4,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { MapPin } from 'lucide-react';
 import { cities } from '../../data/mockData';
 import { SearchParams } from '../../types';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 interface CitySelectProps {
   value: string;
@@ -11,10 +13,15 @@ interface CitySelectProps {
 }
 
 export const CitySelect = ({ value, onChange }: CitySelectProps) => {
+  const { language } = useLanguage();
+  const t = (key: keyof typeof rentalTranslations.en) => {
+    return rentalTranslations[language as keyof typeof rentalTranslations]?.[key] || rentalTranslations.en[key];
+  };
+
   return (
     <div className="md:col-span-5">
       <label htmlFor="city-select" className="text-white/80 mb-2 block text-sm font-medium">
-        Città
+        {t('city')}
       </label>
       <Select
         value={value}
@@ -27,7 +34,7 @@ export const CitySelect = ({ value, onChange }: CitySelectProps) => {
         >
           <div className="flex items-center gap-2">
             <MapPin className="w-4 h-4 opacity-70" />
-            <SelectValue placeholder="Seleziona una città" />
+            <SelectValue placeholder={t('selectCity')} />
           </div>
         </SelectTrigger>
         <SelectContent className="bg-[#1a1a1a] border-white/20 max-h-[300px]">

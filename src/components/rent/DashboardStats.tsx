@@ -1,4 +1,6 @@
 import { Clock, BellDot, Calendar, Home } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 interface StatCardProps {
   icon: React.ElementType;
@@ -25,26 +27,31 @@ const StatCard = ({ icon: Icon, label, value, index }: StatCardProps) => (
 );
 
 const DashboardStats = () => {
+  const { language } = useLanguage();
+  const t = (key: keyof typeof rentalTranslations.en) => {
+    return rentalTranslations[language as keyof typeof rentalTranslations]?.[key] || rentalTranslations.en[key];
+  };
+
   const stats = [
     {
       icon: Clock,
-      label: 'Next House Meeting',
-      value: 'Tomorrow, 18:00',
+      label: t('nextHouseMeeting'),
+      value: `${t('tomorrow')}, 18:00`,
     },
     {
       icon: BellDot,
-      label: 'Notifications',
-      value: '3 New',
+      label: t('notifications'),
+      value: `3 ${t('new')}`,
     },
     {
       icon: Calendar,
-      label: 'Next Event',
-      value: 'House Dinner',
+      label: t('nextEvent'),
+      value: t('houseDinner'),
     },
     {
       icon: Home,
-      label: 'Room Status',
-      value: 'All Good',
+      label: t('roomStatus'),
+      value: t('allGood'),
     }
   ];
 

@@ -42,7 +42,48 @@ export const rentalTranslations = {
     // Admin interface
     edit: "Edit",
     delete: "Delete",
-    addProperty: "Add Property"
+    addProperty: "Add Property",
+    
+    // Dashboard and Activity
+    recentActivities: "Recent Activities",
+    nextHouseMeeting: "Next House Meeting",
+    notifications: "Notifications",
+    nextEvent: "Next Event",
+    roomStatus: "Room Status",
+    tomorrow: "Tomorrow",
+    new: "New",
+    houseDinner: "House Dinner",
+    allGood: "All Good",
+    payBill: "Bill to Pay",
+    confirmUtilities: "Confirm your share of this month's utilities",
+    houseMeeting: "House Meeting",
+    voteCleaningSchedule: "Vote for next weekend's cleaning schedule",
+    roomCheck: "Room Check",
+    monthlyInspection: "Monthly room inspection scheduled",
+    days: "days",
+    hours: "hours",
+    
+    // Search and Location
+    city: "City",
+    selectCity: "Select a city",
+    university: "University", 
+    selectUniversity: "Select university",
+    roommates: "Roommates",
+    numberOfRoommates: "Number of roommates",
+    houseForYou: "House all for you",
+    houseFor2: "House for 2",
+    houseFor3: "House for 3", 
+    houseFor4: "House for 4",
+    findYourIdealHome: "Find your ideal home",
+    saveUpTo20Percent: "Save up to 20% on the market with long-term rentals, verified to guarantee quality and safety",
+    
+    // Price filters
+    minPrice: "Min Price",
+    maxPrice: "Max Price",
+    enterMinPrice: "Enter minimum price",
+    enterMaxPrice: "Enter maximum price",
+    minPriceError: "Minimum price cannot be greater than maximum",
+    maxPriceError: "Maximum price cannot be less than minimum"
   },
   
   it: {
@@ -88,7 +129,48 @@ export const rentalTranslations = {
     // Admin interface
     edit: "Modifica",
     delete: "Elimina",
-    addProperty: "Aggiungi Proprietà"
+    addProperty: "Aggiungi Proprietà",
+    
+    // Dashboard and Activity
+    recentActivities: "Attività Recenti",
+    nextHouseMeeting: "Prossima Riunione Casa",
+    notifications: "Notifiche",
+    nextEvent: "Prossimo Evento",
+    roomStatus: "Stato Stanza",
+    tomorrow: "Domani",
+    new: "Nuovo",
+    houseDinner: "Cena di Casa",
+    allGood: "Tutto Bene",
+    payBill: "Bolletta da Pagare",
+    confirmUtilities: "Conferma la tua parte delle utenze di questo mese",
+    houseMeeting: "Riunione Casa",
+    voteCleaningSchedule: "Vota per il programma delle pulizie del prossimo weekend",
+    roomCheck: "Controllo Stanza",
+    monthlyInspection: "Ispezione mensile della stanza programmata",
+    days: "giorni",
+    hours: "ore",
+    
+    // Search and Location
+    city: "Città",
+    selectCity: "Seleziona una città",
+    university: "Università",
+    selectUniversity: "Seleziona l'università",
+    roommates: "Coinquilini",
+    numberOfRoommates: "Numero di coinquilini",
+    houseForYou: "Casa tutta per te",
+    houseFor2: "Casa in 2",
+    houseFor3: "Casa in 3",
+    houseFor4: "Casa in 4",
+    findYourIdealHome: "Trova la tua casa ideale",
+    saveUpTo20Percent: "Risparmia fino al 20% sul mercato con affitti a lungo termine, verificati per garantire qualità e sicurezza",
+    
+    // Price filters
+    minPrice: "Prezzo Minimo",
+    maxPrice: "Prezzo Massimo",
+    enterMinPrice: "Inserisci prezzo minimo",
+    enterMaxPrice: "Inserisci prezzo massimo",
+    minPriceError: "Il prezzo minimo non può essere maggiore del massimo",
+    maxPriceError: "Il prezzo massimo non può essere minore del minimo"
   },
   
   de: {
@@ -134,7 +216,48 @@ export const rentalTranslations = {
     // Admin interface
     edit: "Bearbeiten",
     delete: "Löschen",
-    addProperty: "Immobilie hinzufügen"
+    addProperty: "Immobilie hinzufügen",
+    
+    // Dashboard and Activity
+    recentActivities: "Aktuelle Aktivitäten",
+    nextHouseMeeting: "Nächstes Haustreffen",
+    notifications: "Benachrichtigungen",
+    nextEvent: "Nächste Veranstaltung",
+    roomStatus: "Zimmerstatus",
+    tomorrow: "Morgen",
+    new: "Neu",
+    houseDinner: "Hausabendessen",
+    allGood: "Alles in Ordnung",
+    payBill: "Rechnung zu bezahlen",
+    confirmUtilities: "Bestätigen Sie Ihren Anteil an den Nebenkosten dieses Monats",
+    houseMeeting: "Haustreffen",
+    voteCleaningSchedule: "Abstimmen über den Putzplan für das nächste Wochenende",
+    roomCheck: "Zimmerkontrolle",
+    monthlyInspection: "Monatliche Zimmerinspektion geplant",
+    days: "Tage",
+    hours: "Stunden",
+    
+    // Search and Location
+    city: "Stadt",
+    selectCity: "Stadt auswählen",
+    university: "Universität",
+    selectUniversity: "Universität auswählen",
+    roommates: "Mitbewohner",
+    numberOfRoommates: "Anzahl der Mitbewohner",
+    houseForYou: "Haus ganz für Sie",
+    houseFor2: "Haus für 2",
+    houseFor3: "Haus für 3",
+    houseFor4: "Haus für 4",
+    findYourIdealHome: "Finden Sie Ihr ideales Zuhause",
+    saveUpTo20Percent: "Sparen Sie bis zu 20% auf dem Markt mit langfristigen Mietverträgen, verifiziert für Qualität und Sicherheit",
+    
+    // Price filters
+    minPrice: "Mindestpreis",
+    maxPrice: "Höchstpreis",
+    enterMinPrice: "Mindestpreis eingeben",
+    enterMaxPrice: "Höchstpreis eingeben",
+    minPriceError: "Der Mindestpreis kann nicht höher als der Höchstpreis sein",
+    maxPriceError: "Der Höchstpreis kann nicht niedriger als der Mindestpreis sein"
   },
   
   ro: {
@@ -180,7 +303,48 @@ export const rentalTranslations = {
     // Admin interface
     edit: "Editează",
     delete: "Șterge",
-    addProperty: "Adaugă Proprietate"
+    addProperty: "Adaugă Proprietate",
+    
+    // Dashboard and Activity
+    recentActivities: "Activități Recente",
+    nextHouseMeeting: "Următoarea Întâlnire de Casă",
+    notifications: "Notificări",
+    nextEvent: "Următorul Eveniment",
+    roomStatus: "Statusul Camerei",
+    tomorrow: "Mâine",
+    new: "Nou",
+    houseDinner: "Cina de Casă",
+    allGood: "Totul Bine",
+    payBill: "Factură de Plătit",
+    confirmUtilities: "Confirmă partea ta din utilitățile acestei luni",
+    houseMeeting: "Întâlnire de Casă",
+    voteCleaningSchedule: "Votează pentru programul de curățenie al săptămânii viitoare",
+    roomCheck: "Verificare Cameră",
+    monthlyInspection: "Inspecția lunară a camerei programată",
+    days: "zile",
+    hours: "ore",
+    
+    // Search and Location
+    city: "Oraș",
+    selectCity: "Selectează un oraș",
+    university: "Universitate",
+    selectUniversity: "Selectează universitatea",
+    roommates: "Colegi de cameră",
+    numberOfRoommates: "Numărul de colegi de cameră",
+    houseForYou: "Casă doar pentru tine",
+    houseFor2: "Casă pentru 2",
+    houseFor3: "Casă pentru 3",
+    houseFor4: "Casă pentru 4",
+    findYourIdealHome: "Găsește casa ta ideală",
+    saveUpTo20Percent: "Economisește până la 20% pe piață cu închirieri pe termen lung, verificate pentru a garanta calitatea și siguranța",
+    
+    // Price filters
+    minPrice: "Preț Minim",
+    maxPrice: "Preț Maxim",
+    enterMinPrice: "Introduceți prețul minim",
+    enterMaxPrice: "Introduceți prețul maxim",
+    minPriceError: "Prețul minim nu poate fi mai mare decât maximul",
+    maxPriceError: "Prețul maxim nu poate fi mai mic decât minimul"
   },
   
   es: {
@@ -226,7 +390,48 @@ export const rentalTranslations = {
     // Admin interface
     edit: "Editar",
     delete: "Eliminar",
-    addProperty: "Añadir Propiedad"
+    addProperty: "Añadir Propiedad",
+    
+    // Dashboard and Activity
+    recentActivities: "Actividades Recientes",
+    nextHouseMeeting: "Próxima Reunión de Casa",
+    notifications: "Notificaciones",
+    nextEvent: "Próximo Evento",
+    roomStatus: "Estado de la Habitación",
+    tomorrow: "Mañana",
+    new: "Nuevo",
+    houseDinner: "Cena de Casa",
+    allGood: "Todo Bien",
+    payBill: "Factura por Pagar",
+    confirmUtilities: "Confirma tu parte de los servicios públicos de este mes",
+    houseMeeting: "Reunión de Casa",
+    voteCleaningSchedule: "Vota por el programa de limpieza del próximo fin de semana",
+    roomCheck: "Revisión de Habitación",
+    monthlyInspection: "Inspección mensual de la habitación programada",
+    days: "días",
+    hours: "horas",
+    
+    // Search and Location
+    city: "Ciudad",
+    selectCity: "Selecciona una ciudad",
+    university: "Universidad",
+    selectUniversity: "Selecciona la universidad",
+    roommates: "Compañeros de piso",
+    numberOfRoommates: "Número de compañeros de piso",
+    houseForYou: "Casa solo para ti",
+    houseFor2: "Casa para 2",
+    houseFor3: "Casa para 3",
+    houseFor4: "Casa para 4",
+    findYourIdealHome: "Encuentra tu hogar ideal",
+    saveUpTo20Percent: "Ahorra hasta el 20% en el mercado con alquileres a largo plazo, verificados para garantizar calidad y seguridad",
+    
+    // Price filters
+    minPrice: "Precio Mínimo",
+    maxPrice: "Precio Máximo",
+    enterMinPrice: "Introduce el precio mínimo",
+    enterMaxPrice: "Introduce el precio máximo",
+    minPriceError: "El precio mínimo no puede ser mayor que el máximo",
+    maxPriceError: "El precio máximo no puede ser menor que el mínimo"
   },
   
   fr: {
@@ -272,6 +477,47 @@ export const rentalTranslations = {
     // Admin interface
     edit: "Modifier",
     delete: "Supprimer",
-    addProperty: "Ajouter une Propriété"
+    addProperty: "Ajouter une Propriété",
+    
+    // Dashboard and Activity
+    recentActivities: "Activités Récentes",
+    nextHouseMeeting: "Prochaine Réunion de Maison",
+    notifications: "Notifications",
+    nextEvent: "Prochain Événement",
+    roomStatus: "État de la Chambre",
+    tomorrow: "Demain",
+    new: "Nouveau",
+    houseDinner: "Dîner de Maison",
+    allGood: "Tout Va Bien",
+    payBill: "Facture à Payer",
+    confirmUtilities: "Confirmez votre part des charges de ce mois",
+    houseMeeting: "Réunion de Maison",
+    voteCleaningSchedule: "Votez pour le programme de nettoyage du prochain week-end",
+    roomCheck: "Vérification de Chambre",
+    monthlyInspection: "Inspection mensuelle de la chambre programmée",
+    days: "jours",
+    hours: "heures",
+    
+    // Search and Location
+    city: "Ville",
+    selectCity: "Sélectionnez une ville",
+    university: "Université",
+    selectUniversity: "Sélectionnez l'université",
+    roommates: "Colocataires",
+    numberOfRoommates: "Nombre de colocataires",
+    houseForYou: "Maison rien que pour vous",
+    houseFor2: "Maison pour 2",
+    houseFor3: "Maison pour 3",
+    houseFor4: "Maison pour 4",
+    findYourIdealHome: "Trouvez votre maison idéale",
+    saveUpTo20Percent: "Économisez jusqu'à 20% sur le marché avec des locations à long terme, vérifiées pour garantir qualité et sécurité",
+    
+    // Price filters
+    minPrice: "Prix Minimum",
+    maxPrice: "Prix Maximum",
+    enterMinPrice: "Entrez le prix minimum",
+    enterMaxPrice: "Entrez le prix maximum",
+    minPriceError: "Le prix minimum ne peut pas être supérieur au maximum",
+    maxPriceError: "Le prix maximum ne peut pas être inférieur au minimum"
   }
 };

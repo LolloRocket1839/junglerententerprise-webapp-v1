@@ -1,30 +1,37 @@
 import { AlertCircle, Calendar, Home } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { rentalTranslations } from '@/translations/rental';
 
 const ActivityFeed = () => {
+  const { language } = useLanguage();
+  const t = (key: keyof typeof rentalTranslations.en) => {
+    return rentalTranslations[language as keyof typeof rentalTranslations]?.[key] || rentalTranslations.en[key];
+  };
+
   const activities = [
     {
       icon: AlertCircle,
-      title: 'Bolletta da Pagare',
-      message: "Conferma la tua parte delle utenze di questo mese",
-      time: '2 giorni',
+      title: t('payBill'),
+      message: t('confirmUtilities'),
+      time: `2 ${t('days')}`,
     },
     {
       icon: Calendar,
-      title: 'Riunione Casa',
-      message: "Vota per il programma delle pulizie del prossimo weekend",
-      time: '5 ore',
+      title: t('houseMeeting'),
+      message: t('voteCleaningSchedule'),
+      time: `5 ${t('hours')}`,
     },
     {
       icon: Home,
-      title: 'Controllo Stanza',
-      message: 'Ispezione mensile della stanza programmata',
-      time: 'Domani',
+      title: t('roomCheck'),
+      message: t('monthlyInspection'),
+      time: t('tomorrow'),
     }
   ];
 
   return (
     <div className="glass-card p-4 sm:p-6 animate-fade-in" style={{ animationDelay: '400ms' }}>
-      <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Attività Recenti</h3>
+      <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">{t('recentActivities')}</h3>
       <div className="space-y-3 sm:space-y-4">
         {activities.map((activity, index) => {
           const Icon = activity.icon;
