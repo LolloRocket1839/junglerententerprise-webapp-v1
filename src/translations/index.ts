@@ -102,10 +102,14 @@ export const translations = {
     pendingDays: "Giorni in Sospeso",
     copyReferralCode: "Codice referral copiato negli appunti!",
     referralInfo: "Guadagna 1 giorno gratuito di alloggio per ogni €1.000 di investimento che porti a Jungle Rent. Condividi il tuo codice referral con potenziali investitori e traccia le tue ricompense qui.",
-
+    
     // Investment
     investmentDashboardText: "Dashboard Investimenti",
-    closeDialog: "Chiudi"
+    closeDialog: "Chiudi",
+    
+    // Rent page
+    findIdealHome: "Trova la Casa Ideale",
+    intelligentSearch: "Ricerca intelligente per proprietà, coinquilini e tutto ciò di cui hai bisogno"
   },
   EN: {
     // Homepage
@@ -210,10 +214,14 @@ export const translations = {
     pendingDays: "Pending Days",
     copyReferralCode: "Referral code copied to clipboard!",
     referralInfo: "Earn 1 free accommodation day for every €1,000 investment you bring to Jungle Rent. Share your referral code with potential investors and track your rewards here.",
-
+    
     // Investment
     investmentDashboardText: "Investment Dashboard",
-    closeDialog: "Close"
+    closeDialog: "Close",
+    
+    // Rent page
+    findIdealHome: "Find Your Ideal Home",
+    intelligentSearch: "Intelligent search for properties, roommates, and everything you need"
   },
   FR: {
     // Homepage
@@ -318,10 +326,14 @@ export const translations = {
     pendingDays: "Jours en Attente",
     copyReferralCode: "Code de parrainage copié dans le presse-papiers !",
     referralInfo: "Gagnez 1 jour d'hébergement gratuit pour chaque 1 000 € d'investissement que vous apportez à Jungle Rent. Partagez votre code de parrainage avec des investisseurs potentiels et suivez vos récompenses ici.",
-
+    
     // Investment
     investmentDashboardText: "Tableau de Bord d'Investissement",
-    closeDialog: "Fermer"
+    closeDialog: "Fermer",
+    
+    // Rent page
+    findIdealHome: "Trouvez Votre Maison Idéale",
+    intelligentSearch: "Recherche intelligente pour propriétés, colocataires et tout ce dont vous avez besoin"
   },
   DE: {
     // Homepage
@@ -426,9 +438,13 @@ export const translations = {
     pendingDays: "Ausstehende Tage",
     copyReferralCode: "Empfehlungscode in die Zwischenablage kopiert!",
     referralInfo: "Verdienen Sie 1 kostenlosen Unterkunftstag für jede 1.000 € Investition, die Sie zu Jungle Rent bringen. Teilen Sie Ihren Empfehlungscode mit potenziellen Investoren und verfolgen Sie Ihre Belohnungen hier.",
-
+    
     // Investment
     investmentDashboardText: "Investment Dashboard",
-    closeDialog: "Schließen"
+    closeDialog: "Schließen",
+    
+    // Rent page
+    findIdealHome: "Finden Sie Ihr Ideales Zuhause",
+    intelligentSearch: "Intelligente Suche nach Immobilien, Mitbewohnern und allem was Sie brauchen"
   }
 };
