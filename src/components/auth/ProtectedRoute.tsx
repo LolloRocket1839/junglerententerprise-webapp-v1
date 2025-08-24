@@ -1,6 +1,10 @@
 import { Navigate, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
 import { GlassCard } from '@/components/ui/glass-card';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -10,6 +14,8 @@ interface ProtectedRouteProps {
 export function ProtectedRoute({ children, requireEmailVerification = false }: ProtectedRouteProps) {
   const { session, user, isLoading } = useAuth();
   const location = useLocation();
+  const { toast } = useToast();
+  const [isResending, setIsResending] = useState(false);
 
   if (isLoading) {
     return (
@@ -32,13 +38,67 @@ export function ProtectedRoute({ children, requireEmailVerification = false }: P
     const isEmailVerified = user.email === 'test@jungle.com' || !!user.email_confirmed_at;
     
     if (!isEmailVerified) {
+      const handleResendVerification = async () => {
+        if (!user?.email) return;
+        
+        setIsResending(true);
+        try {
+          const { error } = await supabase.auth.resend({
+            type: 'signup',
+            email: user.email
+          });
+          
+          if (error) throw error;
+          
+          toast({
+            title: "Email inviata",
+            description: "Controlla la tua casella di posta per il link di verifica"
+          });
+        } catch (error: any) {
+          toast({
+            title: "Errore",
+            description: error.message,
+            variant: "destructive"
+          });
+        } finally {
+          setIsResending(false);
+        }
+      };
+
+      const handleRefresh = () => {
+        window.location.reload();
+      };
+
       return (
         <div className="min-h-screen flex items-center justify-center p-4">
-          <GlassCard className="max-w-md p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">Email Verification Required</h2>
-            <p className="text-muted-foreground">
-              Please check your email and click the verification link before accessing this page.
-            </p>
+          <GlassCard className="max-w-md p-8 text-center space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold mb-4">Verifica Email Richiesta</h2>
+              <p className="text-muted-foreground mb-4">
+                Controlla la tua email e clicca sul link di verifica per accedere a questa pagina.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Email: <span className="font-medium">{user?.email}</span>
+              </p>
+            </div>
+            
+            <div className="space-y-3">
+              <Button 
+                onClick={handleResendVerification}
+                disabled={isResending}
+                className="w-full"
+              >
+                {isResending ? 'Invio in corso...' : 'Reinvia Email di Verifica'}
+              </Button>
+              
+              <Button 
+                variant="outline"
+                onClick={handleRefresh}
+                className="w-full"
+              >
+                Ho verificato, aggiorna
+              </Button>
+            </div>
           </GlassCard>
         </div>
       );
