@@ -23,7 +23,7 @@ const languages = {
 };
 
 // Navigation component for desktop and mobile
-export function DesktopNav({ onLanguageChange }: DesktopNavProps) {
+export default function DesktopNav({ onLanguageChange }: DesktopNavProps) {
   const { language, setLanguage, t } = useLanguage();
   const { session, signOut } = useAuth();
 

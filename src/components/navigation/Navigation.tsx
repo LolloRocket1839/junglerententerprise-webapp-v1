@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, Download } from "lucide-react";
 import MobileMenu from "./MobileMenu";
-import { DesktopNav } from "./DesktopNav";
+import DesktopNav from "./DesktopNav";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
