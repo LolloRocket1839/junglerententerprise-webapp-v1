@@ -1,10 +1,10 @@
 
-// Cache-busting refresh - Build 2025.3 - CLEAN SLATE
+// FRESH START - Build 2025.4 - COMPLETE CLEAN
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { AuthProvider } from './contexts/AuthProvider';
-import TopNav from './components/navigation/TopNav';
+import Header from './components/navigation/Header';
 import Index from './pages/Index';
 import Invest from './pages/Invest';
 import Rent from './pages/Rent';
@@ -21,7 +21,7 @@ import { MobileTabNavigation } from './components/mobile/MobileTabNavigation';
 import { Toaster } from "@/components/ui/toaster";
 import './App.css';
 
-// Create a client
+// NEW START - Cache cleared
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -37,7 +37,7 @@ function App() {
       <AuthProvider>
         <LanguageProvider>
           <Router>
-            <TopNav />
+            <Header />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<AuthForm />} />

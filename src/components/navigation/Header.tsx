@@ -1,4 +1,4 @@
-// Clean Navigation Component 2025
+// Brand New Header Component 2025-01-24
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Download } from "lucide-react";
@@ -8,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-const TopNav: React.FC = () => {
+const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { session } = useAuth();
@@ -81,4 +81,4 @@ const TopNav: React.FC = () => {
   );
 };
 
-export default TopNav;
+export default Header;
