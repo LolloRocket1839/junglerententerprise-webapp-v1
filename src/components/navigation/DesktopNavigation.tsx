@@ -8,10 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-interface DesktopNavProps {
+interface DesktopNavigationProps {
   onLanguageChange?: (lang: string) => void;
 }
 
@@ -22,9 +21,7 @@ const languages = {
   DE: "Deutsch",
 };
 
-// Desktop Navigation Component - Updated 2024
-// Navigation component for desktop and mobile
-export default function DesktopNav({ onLanguageChange }: DesktopNavProps) {
+export default function DesktopNavigation({ onLanguageChange }: DesktopNavigationProps) {
   const { language, setLanguage, t } = useLanguage();
   const { session, signOut } = useAuth();
 

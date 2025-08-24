@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, Download } from "lucide-react";
 import MobileMenu from "./MobileMenu";
-// Force cache refresh with timestamp comment
-import DesktopNav from "./DesktopNav";
+// Updated import path to force cache refresh
+import DesktopNavigation from "./DesktopNavigation";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -152,7 +152,7 @@ const Navigation = () => {
             </Link>
           </div>
 
-          <DesktopNav 
+          <DesktopNavigation 
             onLanguageChange={setLanguage}
           />
           
