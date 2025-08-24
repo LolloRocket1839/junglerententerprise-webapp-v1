@@ -1,5 +1,4 @@
-
-// FORCE CACHE BREAK - COMPLETE RESTART 2025.7
+// BRAND NEW APP STRUCTURE - FORCE CACHE BREAK
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LanguageProvider } from './contexts/LanguageContext';
@@ -21,11 +20,10 @@ import { MobileTabNavigation } from './components/mobile/MobileTabNavigation';
 import { Toaster } from "@/components/ui/toaster";
 import './App.css';
 
-// NEW START - Cache cleared
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
+      staleTime: 1000 * 60 * 5,
       retry: 1,
     },
   },
