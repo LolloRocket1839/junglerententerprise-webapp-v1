@@ -64,27 +64,6 @@ export const mockProperties = [
     phone_number: "+393319053037"
   },
   {
-    id: "3",
-    title: "Studio Via Morgari",
-    address: "Via Morgari 14, Torino",
-    description: "Monolocale moderno nel cuore di San Salvario, quartiere universitario per eccellenza. Vicino a tutti i servizi e alla vita notturna.",
-    city: "Torino",
-    discounted_price_monthly: 420,
-    market_price_monthly: 420,
-    size_sqm: 35,
-    rooms: 1,
-    bathrooms: 1,
-    images: [rentStudio],
-    distance_to_university: "12 min dal Politecnico di Torino",
-    availability_start: "2024-09-15",
-    savings_percentage: 0,
-    current_status: "available",
-    has_balcony: false,
-    has_kitchen: true,
-    utilities_included: true,
-    phone_number: "+393319053037"
-  },
-  {
     id: "4",
     title: "Trilocale Corso Vittorio",
     address: "Corso Vittorio Emanuele II 68, Torino",
