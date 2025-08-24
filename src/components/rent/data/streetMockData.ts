@@ -1,10 +1,14 @@
 import { StreetProperty } from '../types/mockups';
+import rentRoomSingle from '@/assets/rent-room-single.jpg';
+import rentRoomDouble from '@/assets/rent-room-double.jpg';
+import rentStudio from '@/assets/rent-studio.jpg';
+import rentBuildingExterior from '@/assets/rent-building-exterior.jpg';
 
 export const mockProperties: StreetProperty[] = [
   {
     street: "Via Reumberto 1",
     description: "Elegante palazzo nel centro storico",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
+    image: rentBuildingExterior,
     contactPhone: "+39 123 456 7890",
     rooms: [
       {
@@ -12,7 +16,7 @@ export const mockProperties: StreetProperty[] = [
         name: "Camera Singola A",
         price: 450,
         size: "16m²",
-        image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+        image: rentRoomSingle,
         description: "Stanza in ottime condizioni caratterizzata da ottima luminosità grazie alle ampie finestre che si affacciano sul cortile interno. Ambiente accogliente e ben curato, recentemente ristrutturato con finiture moderne e materiali di qualità. La posizione privilegiata garantisce un'illuminazione naturale per gran parte della giornata, creando un ambiente ideale per studio e relax.",
         furniture: [
           "Letto singolo con materasso ortopedico",
@@ -30,11 +34,11 @@ export const mockProperties: StreetProperty[] = [
         availability: "Disponibile dal 1 Settembre 2024",
         floorLevel: "2° Piano con ascensore",
         images: [
-          "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-          "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
-          "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
-          "https://images.unsplash.com/photo-1460925895917-afdab827c52f",
-          "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"
+          rentRoomSingle,
+          rentRoomDouble,
+          rentStudio,
+          rentBuildingExterior,
+          rentRoomSingle
         ],
         contactPhone: "+39 123 456 7890"
       },
@@ -43,7 +47,7 @@ export const mockProperties: StreetProperty[] = [
         name: "Camera Doppia B",
         price: 650,
         size: "24m²",
-        image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
+        image: rentRoomDouble,
         description: "Spaziosa camera doppia con balcone privato e bagno en-suite. Ideale per studenti che cercano comfort e privacy.",
         furniture: [
           "2 Letti singoli (possibilità letto matrimoniale)",
@@ -61,9 +65,9 @@ export const mockProperties: StreetProperty[] = [
         availability: "Disponibile dal 1 Settembre 2024",
         floorLevel: "3° Piano con ascensore",
         images: [
-          "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
-          "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
-          "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
+          rentRoomDouble,
+          rentStudio,
+          rentRoomSingle
         ],
         contactPhone: "+39 123 456 7890"
       }
@@ -72,7 +76,7 @@ export const mockProperties: StreetProperty[] = [
   {
     street: "Via Roma 42",
     description: "Moderno complesso residenziale",
-    image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334",
+    image: rentBuildingExterior,
     contactPhone: "+39 123 456 7891",
     rooms: [
       {
@@ -80,7 +84,7 @@ export const mockProperties: StreetProperty[] = [
         name: "Studio C",
         price: 550,
         size: "20m²",
-        image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
+        image: rentStudio,
         description: "Moderno monolocale con angolo cottura e zona notte separata. Design contemporaneo e finiture di pregio.",
         furniture: [
           "Letto a una piazza e mezza",
@@ -98,9 +102,9 @@ export const mockProperties: StreetProperty[] = [
         availability: "Disponibile dal 15 Settembre 2024",
         floorLevel: "1° Piano",
         images: [
-          "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
-          "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-          "https://images.unsplash.com/photo-1649972904349-6e44c42644a7"
+          rentStudio,
+          rentRoomSingle,
+          rentRoomDouble
         ],
         contactPhone: "+39 123 456 7891"
       }

@@ -1,3 +1,10 @@
+import rentRoomSingle from '@/assets/rent-room-single.jpg';
+import rentRoomDouble from '@/assets/rent-room-double.jpg';
+import rentStudio from '@/assets/rent-studio.jpg';
+import rentApartmentLiving from '@/assets/rent-apartment-living.jpg';
+import rentBuildingExterior from '@/assets/rent-building-exterior.jpg';
+import rentKitchen from '@/assets/rent-kitchen.jpg';
+
 export const cities = [
   "Roma", "Milano", "Firenze", "Torino", "Bologna", "Napoli", "Padova", "Pisa"
 ];
@@ -25,7 +32,7 @@ export const mockProperties = [
     size_sqm: 65,
     rooms: 2,
     bathrooms: 1,
-    images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"],
+    images: [rentApartmentLiving],
     distance_to_university: "2 min dal Politecnico di Torino",
     availability_start: "2024-09-01",
     savings_percentage: 0,
@@ -46,7 +53,7 @@ export const mockProperties = [
     size_sqm: 55,
     rooms: 2,
     bathrooms: 1,
-    images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c"],
+    images: [rentRoomDouble],
     distance_to_university: "7 min dal Politecnico di Torino",
     availability_start: "2024-09-01",
     savings_percentage: 0,
@@ -67,7 +74,7 @@ export const mockProperties = [
     size_sqm: 35,
     rooms: 1,
     bathrooms: 1,
-    images: ["https://images.unsplash.com/photo-1600607687644-c94bf5588563"],
+    images: [rentStudio],
     distance_to_university: "12 min dal Politecnico di Torino",
     availability_start: "2024-09-15",
     savings_percentage: 0,
@@ -88,7 +95,7 @@ export const mockProperties = [
     size_sqm: 85,
     rooms: 3,
     bathrooms: 2,
-    images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"],
+    images: [rentBuildingExterior],
     distance_to_university: "10 min dal Politecnico di Torino",
     availability_start: "2024-09-01",
     savings_percentage: 0,
@@ -109,7 +116,7 @@ export const mockProperties = [
     size_sqm: 95,
     rooms: 3,
     bathrooms: 2,
-    images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c"],
+    images: [rentKitchen],
     distance_to_university: "3 min dall'Università degli Studi di Torino",
     availability_start: "2024-09-01",
     savings_percentage: 0,
@@ -130,7 +137,7 @@ export const mockProperties = [
     size_sqm: 60,
     rooms: 2,
     bathrooms: 1,
-    images: ["https://images.unsplash.com/photo-1600607687644-c94bf5588563"],
+    images: [rentRoomSingle],
     distance_to_university: "5 min dall'Università degli Studi di Torino",
     availability_start: "2024-09-15",
     savings_percentage: 0,
@@ -151,7 +158,7 @@ export const mockProperties = [
     size_sqm: 40,
     rooms: 1,
     bathrooms: 1,
-    images: ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"],
+    images: [rentRoomDouble],
     distance_to_university: "1 min dall'Università degli Studi di Torino",
     availability_start: "2024-09-01",
     savings_percentage: 0,
@@ -172,7 +179,7 @@ export const mockProperties = [
     size_sqm: 50,
     rooms: 2,
     bathrooms: 1,
-    images: ["https://images.unsplash.com/photo-1600585154340-be6161a56a0c"],
+    images: [rentStudio],
     distance_to_university: "8 min dall'Università degli Studi di Torino",
     availability_start: "2024-09-15",
     savings_percentage: 0,
