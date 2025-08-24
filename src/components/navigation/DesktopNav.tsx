@@ -22,7 +22,7 @@ const languages = {
   DE: "Deutsch",
 };
 
-const DesktopNav = ({ onLanguageChange }: DesktopNavProps) => {
+export function DesktopNav({ onLanguageChange }: DesktopNavProps) {
   const { language, setLanguage, t } = useLanguage();
   const { session, signOut } = useAuth();
 
@@ -164,6 +164,4 @@ const DesktopNav = ({ onLanguageChange }: DesktopNavProps) => {
       )}
     </div>
   );
-};
-
-export default DesktopNav;
+}
