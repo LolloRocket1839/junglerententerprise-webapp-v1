@@ -1,5 +1,4 @@
-
-// Force complete cache refresh - Jan 2025
+// New Navigation Component - Cache Fix 2025
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, Download } from "lucide-react";
@@ -9,7 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-const Navigation: React.FC = () => {
+const MainNavigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { session } = useAuth();
@@ -25,7 +24,6 @@ const Navigation: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Remove unused handler since we use setLanguage directly
   const handleLogoDownload = (format: string) => {
     const logoUrl = "/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png";
     const link = document.createElement('a');
@@ -171,17 +169,16 @@ const Navigation: React.FC = () => {
         </div>
       </div>
 
-          <MobileMenu 
-            isOpen={isMenuOpen}
-            onClose={() => setIsMenuOpen(false)}
-            onNavigate={() => {
-              setIsMenuOpen(false);
-              navigate('/');
-            }}
-          />
+        <MobileMenu 
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
+          onNavigate={() => {
+            setIsMenuOpen(false);
+            navigate('/');
+          }}
+        />
     </nav>
   );
 };
 
-// Updated export with explicit typing to force cache refresh
-export default Navigation;
+export default MainNavigation;
