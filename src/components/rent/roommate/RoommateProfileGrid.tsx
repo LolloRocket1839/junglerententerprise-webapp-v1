@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { useState, useMemo } from "react";
+import { useSecureProfiles } from "@/hooks/useSecureProfiles";
 import RoommateProfilePreview from "./RoommateProfilePreview";
 import RoommateFilters, { FilterOptions } from "./RoommateFilters";
 import { useToast } from "@/components/ui/use-toast";
@@ -14,27 +13,32 @@ const RoommateProfileGrid = () => {
     preference: 'all'
   });
 
-  const { data: profiles, isLoading, error } = useQuery({
-    queryKey: ['roommate-profiles', filters],
-    queryFn: async () => {
-      let query = supabase
-        .from('profiles')
-        .select('*')
-        .not('id', 'eq', (await supabase.auth.getUser()).data.user?.id);
+  const { data: allProfiles, isLoading, error } = useSecureProfiles();
 
-      // Apply filters
+  // Apply filters client-side to the secure profile data
+  const profiles = useMemo(() => {
+    if (!allProfiles) return [];
+
+    return allProfiles.filter(profile => {
+      // Budget filter
       if (filters.budget !== 'all') {
         const [min, max] = filters.budget.split('-');
         if (min && max) {
-          query = query
-            .gte('budget_min', parseInt(min))
-            .lte('budget_max', parseInt(max));
+          const minBudget = parseInt(min);
+          const maxBudget = parseInt(max);
+          if (!profile.budget_min || !profile.budget_max ||
+              profile.budget_min < minBudget || profile.budget_max > maxBudget) {
+            return false;
+          }
         } else if (min === '801+') {
-          query = query.gte('budget_min', 801);
+          if (!profile.budget_min || profile.budget_min < 801) {
+            return false;
+          }
         }
       }
 
-      if (filters.moveInDate !== 'all') {
+      // Move-in date filter
+      if (filters.moveInDate !== 'all' && profile.move_in_date) {
         const today = new Date();
         let futureDate = new Date();
         switch (filters.moveInDate) {
@@ -48,18 +52,14 @@ const RoommateProfileGrid = () => {
             futureDate.setMonth(today.getMonth() + 6);
             break;
         }
-        query = query.lte('move_in_date', futureDate.toISOString());
+        if (new Date(profile.move_in_date) > futureDate) {
+          return false;
+        }
       }
 
-      if (filters.preference !== 'all') {
-        query = query.contains('preferences', { [filters.preference]: true });
-      }
-
-      const { data, error } = await query;
-      if (error) throw error;
-      return data;
-    },
-  });
+      return true;
+    });
+  }, [allProfiles, filters]);
 
   const handleFilterChange = (key: keyof FilterOptions, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));

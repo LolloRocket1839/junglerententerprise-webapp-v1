@@ -23,7 +23,7 @@ export function useProfile() {
         .single();
 
       if (error) {
-        console.error('Profile fetch error:', error);
+        // Remove sensitive logging in production
         throw error;
       }
       return data;
