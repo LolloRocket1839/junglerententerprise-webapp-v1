@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, Download } from "lucide-react";
 import MobileMenu from "./MobileMenu";
+// Force cache refresh with timestamp comment
 import DesktopNav from "./DesktopNav";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/contexts/LanguageContext";
