@@ -1,7 +1,7 @@
 
 // COMPLETE CACHE BREAK - FORCE RELOAD 2025.7
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
+import NewApp from './NewApp.tsx';
 import './index.css';
 
 // Register service worker for PWA
@@ -32,7 +32,7 @@ const appRoot = createRoot(root);
 
 // Gestisci il cleanup quando l'app viene smontata
 try {
-  appRoot.render(<App />);
+  appRoot.render(<NewApp />);
 } catch (error) {
   console.error('Errore durante il rendering:', error);
 }
