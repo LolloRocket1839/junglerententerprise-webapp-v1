@@ -1,17 +1,17 @@
-// COMPLETELY NEW NAVIGATION - NO OLD DEPENDENCIES
+// ABSOLUTE FRESH START - DIFFERENT LOCATION 2025
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Download, LogIn, LogOut, User, Home, Building, DollarSign, Bed, MapPin, Gift, ShoppingBag } from "lucide-react";
+import { Menu, LogIn, LogOut, User, Home, Building, DollarSign, Bed, MapPin, Gift, ShoppingBag } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-const TopNavigation: React.FC = () => {
+export const AppHeader: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { session, signOut } = useAuth();
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,7 +21,7 @@ const TopNavigation: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
+  const navigationLinks = [
     { href: "/properties", label: "Properties", icon: Building },
     { href: "/invest", label: "Invest", icon: DollarSign },
     { href: "/rent", label: "Rent", icon: Bed },
@@ -30,46 +30,19 @@ const TopNavigation: React.FC = () => {
     { href: "/referral", label: "Referral", icon: Gift },
   ];
 
-  const handleLogoDownload = (format: 'SVG' | 'PDF') => {
-    const svgContent = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="#00ff88"/><text x="50" y="55" text-anchor="middle" fill="white" font-size="12" font-family="Arial, sans-serif">JR</text></svg>`;
-    const blob = new Blob([svgContent], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `jungle-rent-logo.${format.toLowerCase()}`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const handleLanguageChange = (lang: string) => {
-    setLanguage(lang as 'en' | 'it' | 'ro' | 'es' | 'fr' | 'de');
-  };
-
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass shadow-lg py-2' : 'bg-transparent py-4'}`}>
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 text-xl font-bold text-white hover:text-primary transition-colors">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="bg-primary hover:bg-primary/80 text-white p-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/20">
-                JR
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => handleLogoDownload('SVG')}>
-                  Download SVG Logo
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleLogoDownload('PDF')}>
-                  Download PDF Logo
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="bg-primary hover:bg-primary/80 text-white p-2 rounded-full transition-colors">
+              JR
+            </div>
             <span>Jungle Rent</span>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            {navItems.map((item) => (
+            {navigationLinks.map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
@@ -79,28 +52,18 @@ const TopNavigation: React.FC = () => {
               </Link>
             ))}
             
-            {/* Language Selector */}
             <DropdownMenu>
               <DropdownMenuTrigger className="text-white hover:text-primary transition-colors">
                 {language?.toUpperCase() || 'IT'}
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => handleLanguageChange('it')}>
-                  Italiano
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleLanguageChange('en')}>
-                  English
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleLanguageChange('fr')}>
-                  Français
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => handleLanguageChange('de')}>
-                  Deutsch
-                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLanguage('it' as any)}>Italiano</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLanguage('en' as any)}>English</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLanguage('fr' as any)}>Français</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setLanguage('de' as any)}>Deutsch</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Auth Section */}
             {session ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -129,7 +92,6 @@ const TopNavigation: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile Menu */}
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -144,7 +106,7 @@ const TopNavigation: React.FC = () => {
                     Home
                   </Link>
                   
-                  {navItems.map((item) => {
+                  {navigationLinks.map((item) => {
                     const Icon = item.icon;
                     return (
                       <Link
@@ -165,11 +127,7 @@ const TopNavigation: React.FC = () => {
                           <User className="w-5 h-5" />
                           Dashboard
                         </Link>
-                        <Button 
-                          onClick={() => signOut()}
-                          variant="outline" 
-                          className="w-full"
-                        >
+                        <Button onClick={() => signOut()} variant="outline" className="w-full">
                           <LogOut className="w-4 h-4 mr-2" />
                           Sign Out
                         </Button>
@@ -192,5 +150,3 @@ const TopNavigation: React.FC = () => {
     </nav>
   );
 };
-
-export default TopNavigation;
