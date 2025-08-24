@@ -1,22 +1,21 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { LogIn, LogOut, UserPlus } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { LogIn, LogOut, UserPlus, User } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface MobileMenuProps {
-  session: any;
   isOpen: boolean;
   onClose: () => void;
   onNavigate: () => void;
-  
 }
 
-const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) => {
+const MobileMenu = ({ isOpen, onClose, onNavigate }: MobileMenuProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useLanguage();
+  const { session, signOut } = useAuth();
 
   const handleNavigation = (path: string) => {
     onClose();
@@ -26,7 +25,7 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
 
   const handleSignOut = async () => {
     try {
-      await supabase.auth.signOut();
+      await signOut();
       handleNavigation('/');
       toast({
         title: t('signOutSuccess'),
@@ -92,14 +91,24 @@ const MobileMenu = ({ session, isOpen, onClose, onNavigate }: MobileMenuProps) =
 
           <div className="pt-6 border-t border-white/20">
             {session ? (
-              <Button
-                variant="outline"
-                onClick={handleSignOut}
-                className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20"
-              >
-                <LogOut className="w-4 h-4" />
-                {t('signOut')}
-              </Button>
+              <div className="space-y-4">
+                <Button
+                  variant="ghost"
+                  onClick={() => handleNavigation("/dashboard")}
+                  className="w-full flex items-center justify-center gap-2 text-white/80 hover:text-white"
+                >
+                  <User className="w-4 h-4" />
+                  Dashboard
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleSignOut}
+                  className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20"
+                >
+                  <LogOut className="w-4 h-4" />
+                  {t('signOut')}
+                </Button>
+              </div>
             ) : (
               <div className="space-y-4">
                 <Button

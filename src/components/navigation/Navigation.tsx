@@ -152,7 +152,6 @@ const Navigation = () => {
           </div>
 
           <DesktopNav 
-            session={session} 
             onLanguageChange={setLanguage}
           />
           
@@ -171,15 +170,14 @@ const Navigation = () => {
         </div>
       </div>
 
-      <MobileMenu 
-        session={session}
-        isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-        onNavigate={() => {
-          setIsMenuOpen(false);
-          navigate('/');
-        }}
-      />
+          <MobileMenu 
+            isOpen={isMenuOpen}
+            onClose={() => setIsMenuOpen(false)}
+            onNavigate={() => {
+              setIsMenuOpen(false);
+              navigate('/');
+            }}
+          />
     </nav>
   );
 };

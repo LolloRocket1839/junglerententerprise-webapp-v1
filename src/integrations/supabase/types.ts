@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.12 (cd3cf9e)"
@@ -511,6 +511,44 @@ export type Database = {
           },
         ]
       }
+      marketplace_conversations: {
+        Row: {
+          buyer_id: string
+          created_at: string | null
+          id: string
+          item_id: string
+          last_message: string | null
+          last_message_at: string | null
+          seller_id: string
+        }
+        Insert: {
+          buyer_id: string
+          created_at?: string | null
+          id?: string
+          item_id: string
+          last_message?: string | null
+          last_message_at?: string | null
+          seller_id: string
+        }
+        Update: {
+          buyer_id?: string
+          created_at?: string | null
+          id?: string
+          item_id?: string
+          last_message?: string | null
+          last_message_at?: string | null
+          seller_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketplace_conversations_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       marketplace_items: {
         Row: {
           category: string
@@ -554,6 +592,38 @@ export type Database = {
             columns: ["seller_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      marketplace_messages: {
+        Row: {
+          conversation_id: string
+          created_at: string | null
+          id: string
+          message: string
+          sender_id: string
+        }
+        Insert: {
+          conversation_id: string
+          created_at?: string | null
+          id?: string
+          message: string
+          sender_id: string
+        }
+        Update: {
+          conversation_id?: string
+          created_at?: string | null
+          id?: string
+          message?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketplace_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "marketplace_conversations"
             referencedColumns: ["id"]
           },
         ]
@@ -772,6 +842,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      platform_stats: {
+        Row: {
+          active_users: number | null
+          id: string
+          marketplace_items: number | null
+          properties_listed: number | null
+          successful_roommate_pairs: number | null
+          total_matches: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          active_users?: number | null
+          id?: string
+          marketplace_items?: number | null
+          properties_listed?: number | null
+          successful_roommate_pairs?: number | null
+          total_matches?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          active_users?: number | null
+          id?: string
+          marketplace_items?: number | null
+          properties_listed?: number | null
+          successful_roommate_pairs?: number | null
+          total_matches?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       points_of_interest: {
         Row: {
@@ -1232,6 +1332,48 @@ export type Database = {
           },
         ]
       }
+      roommate_compatibility: {
+        Row: {
+          budget_score: number | null
+          calculated_at: string | null
+          compatibility_score: number
+          created_at: string | null
+          id: string
+          lifestyle_score: number | null
+          location_score: number | null
+          personality_score: number | null
+          profile_id: string
+          study_score: number | null
+          target_profile_id: string
+        }
+        Insert: {
+          budget_score?: number | null
+          calculated_at?: string | null
+          compatibility_score?: number
+          created_at?: string | null
+          id?: string
+          lifestyle_score?: number | null
+          location_score?: number | null
+          personality_score?: number | null
+          profile_id: string
+          study_score?: number | null
+          target_profile_id: string
+        }
+        Update: {
+          budget_score?: number | null
+          calculated_at?: string | null
+          compatibility_score?: number
+          created_at?: string | null
+          id?: string
+          lifestyle_score?: number | null
+          location_score?: number | null
+          personality_score?: number | null
+          profile_id?: string
+          study_score?: number | null
+          target_profile_id?: string
+        }
+        Relationships: []
+      }
       roommate_matches: {
         Row: {
           created_at: string
@@ -1295,6 +1437,36 @@ export type Database = {
           id?: string
           options?: Json
           question?: string
+        }
+        Relationships: []
+      }
+      roommate_success_stories: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_featured: boolean | null
+          match_duration: string | null
+          story: string
+          title: string
+          user_names: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_featured?: boolean | null
+          match_duration?: string | null
+          story: string
+          title: string
+          user_names: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_featured?: boolean | null
+          match_duration?: string | null
+          story?: string
+          title?: string
+          user_names?: string
         }
         Relationships: []
       }
@@ -2337,18 +2509,18 @@ export type Database = {
       }
       create_notification: {
         Args: {
-          profile_id: string
-          type: string
-          title: string
-          message: string
           data?: Json
+          message: string
+          profile_id: string
+          title: string
+          type: string
         }
         Returns: string
       }
       has_role: {
         Args: {
-          user_id: string
           required_role: Database["public"]["Enums"]["app_role"]
+          user_id: string
         }
         Returns: boolean
       }

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { LogIn, LogOut, UserPlus, Globe, Check } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { LogIn, LogOut, UserPlus, Globe, Check, User } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +12,6 @@ import { useState } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface DesktopNavProps {
-  session: any;
   onLanguageChange?: (lang: string) => void;
 }
 
@@ -23,8 +22,9 @@ const languages = {
   DE: "Deutsch",
 };
 
-const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
+const DesktopNav = ({ onLanguageChange }: DesktopNavProps) => {
   const { language, setLanguage, t } = useLanguage();
+  const { session, signOut } = useAuth();
 
   const handleLanguageChange = (lang: string) => {
     setLanguage(lang as 'en' | 'it' | 'ro' | 'es' | 'fr' | 'de');
@@ -112,15 +112,28 @@ const DesktopNav = ({ session, onLanguageChange }: DesktopNavProps) => {
       </DropdownMenu>
       
       {session ? (
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={() => supabase.auth.signOut()}
-          className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white"
-        >
-          <LogOut className="w-4 h-4" />
-          {t('signOut')}
-        </Button>
+        <div className="flex items-center gap-3">
+          <Button 
+            variant="ghost" 
+            size="sm"
+            className="flex items-center gap-2 text-white/80 hover:text-white"
+            asChild
+          >
+            <Link to="/dashboard">
+              <User className="w-4 h-4" />
+              Dashboard
+            </Link>
+          </Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={signOut}
+            className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white"
+          >
+            <LogOut className="w-4 h-4" />
+            {t('signOut')}
+          </Button>
+        </div>
       ) : (
         <div className="flex items-center gap-3">
           <Button 

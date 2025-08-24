@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { RoleSelection } from './RoleSelection';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,7 +20,17 @@ export function AuthForm() {
   const [userType, setUserType] = useState<UserType>('student');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { session } = useAuth();
   const { toast } = useToast();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (session) {
+      const from = location.state?.from?.pathname || '/dashboard';
+      navigate(from, { replace: true });
+    }
+  }, [session, navigate, location]);
 
   async function handleSignUp(e: React.FormEvent) {
     e.preventDefault();
@@ -40,11 +51,11 @@ export function AuthForm() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/`,
+          emailRedirectTo: `${window.location.origin}/dashboard`,
           data: {
             first_name: firstName,
             last_name: lastName,
-            user_type: userType
+            initial_role: userType
           }
         }
       });
@@ -85,7 +96,8 @@ export function AuthForm() {
         description: "Benvenuto su Jungle Rent!"
       });
       
-      navigate('/');
+      const from = location.state?.from?.pathname || '/dashboard';
+      navigate(from, { replace: true });
     } catch (error: any) {
       toast({
         title: "Errore durante l'accesso",
