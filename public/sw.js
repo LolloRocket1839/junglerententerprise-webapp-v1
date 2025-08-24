@@ -1,5 +1,5 @@
-const CACHE_NAME = 'jungle-rent-v2.0.0-fresh';
-const RUNTIME_CACHE = 'jungle-rent-runtime-fresh';
+const CACHE_NAME = 'jungle-rent-v1.0.0';
+const RUNTIME_CACHE = 'jungle-rent-runtime';
 
 // Assets to cache during installation
 const PRECACHE_ASSETS = [

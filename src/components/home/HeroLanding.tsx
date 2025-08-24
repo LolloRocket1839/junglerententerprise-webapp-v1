@@ -106,6 +106,7 @@ export const HeroLanding = () => {
         <div className="absolute top-20 left-20 w-32 h-32 bg-emerald-400/10 rounded-full blur-xl animate-float-slow" />
         <div className="absolute top-40 right-32 w-48 h-48 bg-green-400/10 rounded-full blur-xl animate-float-slower" />
         <div className="absolute bottom-32 left-1/3 w-24 h-24 bg-lime-400/10 rounded-full blur-xl animate-pulse-gentle" />
+        <TreePine className="absolute top-1/4 right-1/4 w-16 h-16 text-emerald-400/20 animate-leaf-float" />
       </div>
 
       {/* Main Content */}
@@ -113,6 +114,7 @@ export const HeroLanding = () => {
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto mb-12">
           <div className="flex items-center justify-center mb-6">
+            <Sparkles className="w-8 h-8 text-emerald-400 mr-3 animate-pulse-gentle" />
             <h1 className="text-5xl md:text-7xl font-bold">
               <span className="bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent">
                 Jungle

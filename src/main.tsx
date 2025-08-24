@@ -1,11 +1,9 @@
 
-// NUCLEAR CACHE RESET - COMPLETELY NEW STRUCTURE 2025.8
+// Force hard refresh - Cache break 2025
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
-// TEMPORARILY DISABLE SERVICE WORKER TO CLEAR CACHE
-/*
 // Register service worker for PWA
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -18,7 +16,6 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
-*/
 
 // Assicurati che tutti gli handlers vengano puliti correttamente
 const cleanupHandlers = new Set<() => void>();

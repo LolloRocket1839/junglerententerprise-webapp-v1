@@ -74,7 +74,7 @@ export const mockProperties = [
     size_sqm: 35,
     rooms: 1,
     bathrooms: 1,
-    images: [rentApartmentLiving],
+    images: [rentStudio],
     distance_to_university: "12 min dal Politecnico di Torino",
     availability_start: "2024-09-15",
     savings_percentage: 0,

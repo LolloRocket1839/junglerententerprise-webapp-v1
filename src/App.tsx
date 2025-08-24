@@ -1,9 +1,10 @@
-// BRAND NEW APP STRUCTURE - FORCE CACHE BREAK
+
+// Cache-busting refresh - Build 2025.1
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { AuthProvider } from './contexts/AuthProvider';
-import { AppHeader } from './layout/AppHeader';
+import MainNavigation from './components/navigation/MainNavigation';
 import Index from './pages/Index';
 import Invest from './pages/Invest';
 import Rent from './pages/Rent';
@@ -20,10 +21,11 @@ import { MobileTabNavigation } from './components/mobile/MobileTabNavigation';
 import { Toaster } from "@/components/ui/toaster";
 import './App.css';
 
+// Create a client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5,
+      staleTime: 1000 * 60 * 5, // 5 minutes
       retry: 1,
     },
   },
@@ -35,7 +37,7 @@ function App() {
       <AuthProvider>
         <LanguageProvider>
           <Router>
-            <AppHeader />
+            <MainNavigation />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<AuthForm />} />

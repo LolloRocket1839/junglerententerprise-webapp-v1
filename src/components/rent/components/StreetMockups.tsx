@@ -21,27 +21,23 @@ export const StreetMockups = () => {
           <Dialog key={index}>
             <DialogTrigger asChild>
               <Card className="glass-card overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
-                <div className="relative h-64 bg-gradient-to-br from-primary/20 to-secondary/20">
+                <div className="relative h-64">
                   <img 
                     src={property.image} 
                     alt={property.street}
                     className="w-full h-full object-cover rounded-t-xl"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-t-xl" />
-                  <div className="absolute top-2 right-2 px-3 py-1 rounded-full text-sm font-medium bg-green-500/80 text-white backdrop-blur-sm">
+                  <div className="absolute top-2 right-2 px-3 py-1 rounded-full text-sm font-medium bg-green-500/80 text-white">
                     Disponibile
                   </div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h3 className="text-2xl font-bold text-white drop-shadow-lg">{property.street}</h3>
-                    <p className="text-white/90 text-sm mt-1">Da €{Math.min(...property.rooms.map(r => r.price))}/mese</p>
-                  </div>
                 </div>
-                <div className="p-4">
-                  <p className="text-white/70 text-sm mb-2">{property.description}</p>
-                  <p className="text-white/60 text-xs">{property.rooms.length} stanze disponibili</p>
+                <div className="p-6">
+                  <h3 className="text-2xl font-semibold text-white mb-3">{property.street}</h3>
+                  <p className="text-white/70 text-lg mb-2">{property.description}</p>
+                  <p className="text-white/70 text-sm">{property.rooms.length} stanze disponibili</p>
+                  <div className="mt-4">
+                    <p className="text-xl font-bold text-primary">Da €{Math.min(...property.rooms.map(r => r.price))}/mese</p>
+                  </div>
                 </div>
               </Card>
             </DialogTrigger>

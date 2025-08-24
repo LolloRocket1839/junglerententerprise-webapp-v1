@@ -3,8 +3,6 @@ import rentRoomSingle from '@/assets/rent-room-single.jpg';
 import rentRoomDouble from '@/assets/rent-room-double.jpg';
 import rentStudio from '@/assets/rent-studio.jpg';
 import rentBuildingExterior from '@/assets/rent-building-exterior.jpg';
-import rentApartmentLiving from '@/assets/rent-apartment-living.jpg';
-import rentKitchen from '@/assets/rent-kitchen.jpg';
 
 export const mockProperties: StreetProperty[] = [
   {
@@ -40,7 +38,7 @@ export const mockProperties: StreetProperty[] = [
           rentRoomDouble,
           rentStudio,
           rentBuildingExterior,
-          rentApartmentLiving
+          rentRoomSingle
         ],
         contactPhone: "+39 123 456 7890"
       },
@@ -69,9 +67,7 @@ export const mockProperties: StreetProperty[] = [
         images: [
           rentRoomDouble,
           rentStudio,
-          rentRoomSingle,
-          rentKitchen,
-          rentApartmentLiving
+          rentRoomSingle
         ],
         contactPhone: "+39 123 456 7890"
       }
@@ -108,9 +104,7 @@ export const mockProperties: StreetProperty[] = [
         images: [
           rentStudio,
           rentRoomSingle,
-          rentRoomDouble,
-          rentKitchen,
-          rentBuildingExterior
+          rentRoomDouble
         ],
         contactPhone: "+39 123 456 7891"
       }
