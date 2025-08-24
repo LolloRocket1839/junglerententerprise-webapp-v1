@@ -114,7 +114,6 @@ export const HeroLanding = () => {
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto mb-12">
           <div className="flex items-center justify-center mb-6">
-            <Sparkles className="w-8 h-8 text-emerald-400 mr-3 animate-pulse-gentle" />
             <h1 className="text-5xl md:text-7xl font-bold">
               <span className="bg-gradient-to-r from-white via-emerald-100 to-white bg-clip-text text-transparent">
                 Jungle
