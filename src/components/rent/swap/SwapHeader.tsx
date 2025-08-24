@@ -27,7 +27,9 @@ const SwapHeader = ({ isUploadOpen, setIsUploadOpen, onFilesUploaded }: SwapHead
       <FileUploadDialog
         open={isUploadOpen}
         onOpenChange={setIsUploadOpen}
-        onFilesUploaded={onFilesUploaded}
+        onFilesUploaded={(uploadedFiles) => {
+          console.log('Files uploaded:', uploadedFiles);
+        }}
       />
     </div>
   );

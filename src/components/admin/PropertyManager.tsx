@@ -31,10 +31,13 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { Plus, Upload, X, Edit, Trash2 } from 'lucide-react';
+import { Plus, Upload, X, Edit, Trash2, AlertCircle } from 'lucide-react';
 import { Card } from "@/components/ui/card";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { rentalTranslations } from '@/translations/rental';
+import { useStorageUpload } from '@/hooks/useStorageUpload';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
+import { Progress } from '@/components/ui/progress';
 
 const propertySchema = z.object({
   title: z.string().min(1, "Titolo richiesto"),
@@ -72,6 +75,12 @@ const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
   const [editingProperty, setEditingProperty] = useState<any>(null);
   const { session } = useAuth();
   const { toast } = useToast();
+  
+  const { uploadFiles, uploading, progress, resetProgress, validateFile } = useStorageUpload(
+    'property-images',
+    'properties',
+    { maxSizeMB: 5, maxDimension: 1600 }
+  );
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertySchema),
@@ -115,41 +124,45 @@ const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files || []);
-    setSelectedImages(prev => [...prev, ...files]);
+    
+    // Validate files
+    const validFiles: File[] = [];
+    const invalidFiles: string[] = [];
     
     files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePreviews(prev => [...prev, e.target?.result as string]);
-      };
-      reader.readAsDataURL(file);
+      const error = validateFile(file);
+      if (error) {
+        invalidFiles.push(`${file.name}: ${error}`);
+      } else {
+        validFiles.push(file);
+      }
     });
+    
+    if (invalidFiles.length > 0) {
+      toast({
+        title: "File non validi",
+        description: invalidFiles.join(', '),
+        variant: "destructive"
+      });
+    }
+    
+    if (validFiles.length > 0) {
+      setSelectedImages(prev => [...prev, ...validFiles]);
+      
+      // Generate previews
+      validFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImagePreviews(prev => [...prev, e.target?.result as string]);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
   };
 
   const removeImage = (index: number) => {
     setSelectedImages(prev => prev.filter((_, i) => i !== index));
     setImagePreviews(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const uploadImages = async (files: File[]): Promise<string[]> => {
-    const uploadPromises = files.map(async (file) => {
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Date.now()}-${Math.random()}.${fileExt}`;
-      
-      const { data, error } = await supabase.storage
-        .from('property-images')
-        .upload(fileName, file);
-
-      if (error) throw error;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from('property-images')
-        .getPublicUrl(data.path);
-
-      return publicUrl;
-    });
-
-    return Promise.all(uploadPromises);
   };
 
   const onSubmit = async (data: PropertyFormData) => {
@@ -168,7 +181,14 @@ const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
       let imageUrls: string[] = [];
       
       if (selectedImages.length > 0) {
-        imageUrls = await uploadImages(selectedImages);
+        const uploadResults = await uploadFiles(selectedImages);
+        imageUrls = uploadResults
+          .filter(result => result.success && result.publicUrl)
+          .map(result => result.publicUrl!);
+        
+        if (imageUrls.length === 0) {
+          throw new Error('Nessuna immagine caricata con successo');
+        }
       }
 
       const propertyData = {
@@ -224,6 +244,7 @@ const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
       form.reset();
       setSelectedImages([]);
       setImagePreviews([]);
+      resetProgress();
       setIsOpen(false);
       setEditingProperty(null);
       loadProperties();
@@ -541,10 +562,12 @@ const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
                   </Button>
                   <Button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || uploading}
                     className="flex-1 glass-button"
                   >
-                    {isSubmitting ? "Salvando..." : (editingProperty ? "Aggiorna" : "Crea Proprietà")}
+                    {isSubmitting ? "Salvando..." : 
+                     uploading ? "Caricando immagini..." :
+                     (editingProperty ? "Aggiorna" : "Crea Proprietà")}
                   </Button>
                 </div>
               </form>
@@ -558,10 +581,15 @@ const PropertyManager = ({ onPropertyChange }: PropertyManagerProps) => {
         {properties.map((property) => (
           <Card key={property.id} className="bg-black/50 border-white/10 p-4">
             <div className="aspect-video relative overflow-hidden rounded-lg mb-3">
-              <img
-                src={property.images?.[0] || 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=500'}
+              <ImageWithFallback
+                src={property.images?.[0]}
                 alt={property.title}
                 className="object-cover w-full h-full"
+                fallback={
+                  <div className="w-full h-full bg-muted flex items-center justify-center">
+                    <span className="text-muted-foreground text-sm">Nessuna immagine</span>
+                  </div>
+                }
               />
             </div>
             <h3 className="text-white font-semibold mb-2">{property.title}</h3>

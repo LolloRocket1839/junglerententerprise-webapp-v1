@@ -1,16 +1,20 @@
 import { useState, useCallback } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useDropzone } from 'react-dropzone';
-import { Upload, File, X } from 'lucide-react';
+import { Upload, File, X, AlertCircle } from 'lucide-react';
 import { Button } from './button';
 import { useToast } from './use-toast';
+import { useStorageUpload } from '@/hooks/useStorageUpload';
+import { Progress } from '@/components/ui/progress';
 
 interface FileUploadDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onFilesUploaded?: (files: File[]) => void;
+  onFilesUploaded?: (files: Array<{ publicUrl?: string; filePath: string }>) => void;
   allowedTypes?: string[];
   maxFiles?: number;
+  bucket?: string;
+  prefix?: string;
 }
 
 const FileUploadDialog = ({
@@ -18,22 +22,53 @@ const FileUploadDialog = ({
   onOpenChange,
   onFilesUploaded,
   allowedTypes = ['image/*', 'application/pdf'],
-  maxFiles = 5
+  maxFiles = 5,
+  bucket = 'student_documents',
+  prefix = 'uploads'
 }: FileUploadDialogProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const { toast } = useToast();
+  
+  const { uploadFiles, uploading, progress, resetProgress, validateFile } = useStorageUpload(
+    bucket,
+    prefix,
+    { maxSizeMB: 10 }
+  );
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length + files.length > maxFiles) {
       toast({
-        title: "Too many files",
-        description: `You can only upload up to ${maxFiles} files at once.`,
+        title: "Troppi file",
+        description: `Puoi caricare massimo ${maxFiles} file alla volta.`,
         variant: "destructive"
       });
       return;
     }
-    setFiles(prev => [...prev, ...acceptedFiles]);
-  }, [files.length, maxFiles, toast]);
+
+    const validFiles: File[] = [];
+    const invalidFiles: string[] = [];
+    
+    acceptedFiles.forEach(file => {
+      const error = validateFile(file);
+      if (error) {
+        invalidFiles.push(`${file.name}: ${error}`);
+      } else {
+        validFiles.push(file);
+      }
+    });
+    
+    if (invalidFiles.length > 0) {
+      toast({
+        title: "File non validi",
+        description: invalidFiles.join(', '),
+        variant: "destructive"
+      });
+    }
+    
+    if (validFiles.length > 0) {
+      setFiles(prev => [...prev, ...validFiles]);
+    }
+  }, [files.length, maxFiles, toast, validateFile]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -45,24 +80,43 @@ const FileUploadDialog = ({
     setFiles(files.filter(file => file !== fileToRemove));
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (files.length === 0) {
       toast({
-        title: "No files selected",
-        description: "Please select at least one file to upload.",
+        title: "Nessun file selezionato",
+        description: "Seleziona almeno un file per l'upload.",
         variant: "destructive"
       });
       return;
     }
 
-    // Here you would typically upload the files to your server
-    onFilesUploaded?.(files);
-    toast({
-      title: "Files uploaded successfully",
-      description: `${files.length} file(s) have been uploaded.`
-    });
-    setFiles([]);
-    onOpenChange(false);
+    try {
+      const uploadResults = await uploadFiles(files);
+      const successfulUploads = uploadResults.filter(result => result.success);
+      
+      if (successfulUploads.length > 0) {
+        onFilesUploaded?.(successfulUploads.map(result => ({
+          publicUrl: result.publicUrl,
+          filePath: result.filePath
+        })));
+        
+        toast({
+          title: "Upload completato!",
+          description: `${successfulUploads.length} file caricati con successo.`
+        });
+        
+        setFiles([]);
+        resetProgress();
+        onOpenChange(false);
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast({
+        title: "Errore",
+        description: "Errore durante l'upload dei file",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -81,15 +135,42 @@ const FileUploadDialog = ({
             <Upload className="w-12 h-12 mx-auto mb-4 text-gray-400" />
             <p className="text-sm text-gray-600">
               {isDragActive
-                ? "Drop the files here..."
-                : "Drag 'n' drop files here, or click to select files"}
+                ? "Rilascia i file qui..."
+                : uploading ? "Caricamento in corso..." : "Trascina i file qui o clicca per selezionare"}
             </p>
             <p className="text-xs text-gray-500 mt-2">
-              Supported files: Images and PDFs (max {maxFiles} files)
+              File supportati: Immagini e PDF (max {maxFiles} file, 10MB ciascuno)
             </p>
           </div>
 
-          {files.length > 0 && (
+          {/* Upload Progress */}
+          {progress.length > 0 && (
+            <div className="space-y-2 mb-4">
+              {progress.map((p, index) => (
+                <div key={index} className="space-y-1">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-gray-700 truncate">{p.file.name}</span>
+                    <span className={`${
+                      p.status === 'completed' ? 'text-green-600' : 
+                      p.status === 'error' ? 'text-red-600' : 'text-gray-600'
+                    }`}>
+                      {p.status === 'completed' ? '✓' : 
+                       p.status === 'error' ? '✗' : `${p.progress}%`}
+                    </span>
+                  </div>
+                  <Progress value={p.progress} className="h-1" />
+                   {p.error && (
+                     <div className="flex items-center gap-1 text-xs text-red-600">
+                       <AlertCircle className="w-3 h-3" />
+                       {p.error}
+                     </div>
+                   )}
+                 </div>
+               ))}
+             </div>
+           )}
+
+          {files.length > 0 && !uploading && (
             <div className="space-y-2">
               {files.map((file, index) => (
                 <div
@@ -113,8 +194,8 @@ const FileUploadDialog = ({
             </div>
           )}
 
-          <Button onClick={handleUpload} className="w-full">
-            Upload {files.length} file{files.length !== 1 ? 's' : ''}
+          <Button onClick={handleUpload} className="w-full" disabled={uploading}>
+            {uploading ? "Caricando..." : `Carica ${files.length} file${files.length !== 1 ? '' : ''}`}
           </Button>
         </div>
       </DialogContent>

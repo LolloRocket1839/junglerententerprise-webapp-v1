@@ -31,6 +31,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { MarketplaceCategory } from './types';
+import { useStorageUpload } from '@/hooks/useStorageUpload';
+import ImageWithFallback from '@/components/ui/ImageWithFallback';
+import { Progress } from '@/components/ui/progress';
 import { Plus, Upload, X } from 'lucide-react';
 
 const formSchema = z.object({
@@ -55,6 +58,12 @@ const CreateMarketplaceItemDialog = ({ onItemCreated }: CreateMarketplaceItemDia
   const { session } = useAuth();
   const { toast } = useToast();
 
+  const { uploadSingleFile, uploading, validateFile } = useStorageUpload(
+    'marketplace-images',
+    undefined,
+    { maxSizeMB: 3, maxDimension: 1200 }
+  );
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,6 +80,16 @@ const CreateMarketplaceItemDialog = ({ onItemCreated }: CreateMarketplaceItemDia
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      const error = validateFile(file);
+      if (error) {
+        toast({
+          title: "File non valido",
+          description: error,
+          variant: "destructive"
+        });
+        return;
+      }
+
       setSelectedImage(file);
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -86,20 +105,11 @@ const CreateMarketplaceItemDialog = ({ onItemCreated }: CreateMarketplaceItemDia
   };
 
   const uploadImage = async (file: File): Promise<string> => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${Date.now()}.${fileExt}`;
-    
-    const { data, error } = await supabase.storage
-      .from('marketplace-images')
-      .upload(fileName, file);
-
-    if (error) throw error;
-
-    const { data: { publicUrl } } = supabase.storage
-      .from('marketplace-images')
-      .getPublicUrl(data.path);
-
-    return publicUrl;
+    const result = await uploadSingleFile(file);
+    if (!result.success || !result.publicUrl) {
+      throw new Error(result.error || 'Upload fallito');
+    }
+    return result.publicUrl;
   };
 
   const onSubmit = async (data: FormData) => {
@@ -196,18 +206,23 @@ const CreateMarketplaceItemDialog = ({ onItemCreated }: CreateMarketplaceItemDia
                     onChange={handleImageSelect}
                     className="hidden"
                     id="image-upload"
+                    disabled={uploading}
                   />
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => document.getElementById('image-upload')?.click()}
+                    disabled={uploading}
                   >
                     Scegli File
                   </Button>
+                  <p className="text-xs text-white/60 mt-2">
+                    Max 3MB. Supportati: JPEG, PNG, WebP
+                  </p>
                 </div>
               ) : (
                 <div className="relative">
-                  <img
+                  <ImageWithFallback
                     src={imagePreview}
                     alt="Preview"
                     className="w-full h-48 object-cover rounded-lg"
@@ -218,6 +233,7 @@ const CreateMarketplaceItemDialog = ({ onItemCreated }: CreateMarketplaceItemDia
                     size="sm"
                     className="absolute top-2 right-2"
                     onClick={removeImage}
+                    disabled={uploading}
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -341,10 +357,11 @@ const CreateMarketplaceItemDialog = ({ onItemCreated }: CreateMarketplaceItemDia
               </Button>
               <Button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || uploading}
                 className="flex-1 glass-button"
               >
-                {isSubmitting ? "Creando..." : "Crea Annuncio"}
+                {isSubmitting ? "Creando..." : 
+                 uploading ? "Caricando immagine..." : "Crea Annuncio"}
               </Button>
             </div>
           </form>
