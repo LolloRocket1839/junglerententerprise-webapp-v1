@@ -2517,12 +2517,30 @@ export type Database = {
         }
         Returns: string
       }
+      get_public_profile_summaries: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          bio: string
+          budget_max: number
+          budget_min: number
+          created_at: string
+          current_city: string
+          first_name: string
+          future_city: string
+          id: string
+          move_in_date: string
+        }[]
+      }
       has_role: {
         Args: {
           required_role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Returns: boolean
+      }
+      system_add_jungle_coins: {
+        Args: { amount: number; reason: string }
+        Returns: undefined
       }
     }
     Enums: {
