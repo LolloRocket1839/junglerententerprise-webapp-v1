@@ -1,6 +1,6 @@
-// Brand New Navigation - 2025-01-24
+// Clean Navigation Component 2025
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Menu, X, Download } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 import DesktopNavigation from "./DesktopNavigation";
@@ -8,30 +8,23 @@ import { useAuth } from "@/hooks/useAuth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-const FreshNavigation: React.FC = () => {
+const TopNav: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { session } = useAuth();
-  const { language, setLanguage, t } = useLanguage();
-  const navigate = useNavigate();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleLogoDownload = (format: 'SVG' | 'PDF') => {
     if (format === 'SVG') {
-      const svgContent = `
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="40" fill="#00ff88"/>
-          <text x="50" y="55" text-anchor="middle" fill="white" font-size="12" font-family="Arial, sans-serif">JR</text>
-        </svg>
-      `;
+      const svgContent = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="#00ff88"/><text x="50" y="55" text-anchor="middle" fill="white" font-size="12" font-family="Arial, sans-serif">JR</text></svg>`;
       const blob = new Blob([svgContent], { type: 'image/svg+xml' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -39,48 +32,15 @@ const FreshNavigation: React.FC = () => {
       a.download = 'jungle-rent-logo.svg';
       a.click();
       URL.revokeObjectURL(url);
-    } else {
-      const canvas = document.createElement('canvas');
-      canvas.width = 200;
-      canvas.height = 200;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.fillStyle = '#00ff88';
-        ctx.beginPath();
-        ctx.arc(100, 100, 80, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.fillStyle = 'white';
-        ctx.font = '24px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('JR', 100, 110);
-        
-        canvas.toBlob((blob) => {
-          if (blob) {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'jungle-rent-logo.pdf';
-            a.click();
-            URL.revokeObjectURL(url);
-          }
-        });
-      }
     }
   };
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'glass shadow-lg py-2' : 'bg-transparent py-4'
-        }`}
-      >
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass shadow-lg py-2' : 'bg-transparent py-4'}`}>
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
-            <Link 
-              to="/" 
-              className="flex items-center space-x-3 text-xl font-bold text-white hover:text-primary transition-colors"
-            >
+            <Link to="/" className="flex items-center space-x-3 text-xl font-bold text-white hover:text-primary transition-colors">
               <DropdownMenu>
                 <DropdownMenuTrigger className="bg-primary hover:bg-primary/80 text-white p-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-white/20">
                   JR
@@ -105,11 +65,7 @@ const FreshNavigation: React.FC = () => {
                 className="text-white p-2 rounded-md hover:bg-white/10 transition-colors"
                 aria-label="Toggle navigation menu"
               >
-                {isMenuOpen ? (
-                  <X className="w-6 h-6" />
-                ) : (
-                  <Menu className="w-6 h-6" />
-                )}
+                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
           </div>
@@ -125,4 +81,4 @@ const FreshNavigation: React.FC = () => {
   );
 };
 
-export default FreshNavigation;
+export default TopNav;
