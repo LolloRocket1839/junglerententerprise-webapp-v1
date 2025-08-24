@@ -91,13 +91,17 @@ export function AuthForm() {
 
   async function handleSignIn(e: React.FormEvent) {
     e.preventDefault();
+    console.log('🔍 Sign in clicked - email:', email, 'password length:', password.length);
     setIsLoading(true);
     
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      console.log('🔄 Attempting Supabase sign in...');
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
+      
+      console.log('📝 Supabase response:', { data: data?.user?.email, error: error?.message });
       
       if (error) throw error;
       
@@ -106,9 +110,11 @@ export function AuthForm() {
         description: "Benvenuto su Jungle Rent!"
       });
       
+      console.log('✅ Sign in successful, navigating...');
       const from = location.state?.from?.pathname || '/dashboard';
       navigate(from, { replace: true });
     } catch (error: any) {
+      console.error('❌ Sign in error:', error);
       const friendlyMessage = error.message.includes('Invalid login credentials')
         ? "Email o password non corretti. Riprova."
         : error.message.includes('Email not confirmed')
@@ -127,12 +133,16 @@ export function AuthForm() {
 
 
   async function handleTestLogin() {
+    console.log('🧪 Test login clicked');
     setIsLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      console.log('🔄 Attempting test login with test@jungle.com');
+      const { data, error } = await supabase.auth.signInWithPassword({
         email: 'test@jungle.com',
         password: 'test123456'
       });
+      
+      console.log('📝 Test login response:', { data: data?.user?.email, error: error?.message });
       
       if (error) throw error;
       
@@ -141,8 +151,10 @@ export function AuthForm() {
         description: "Accesso con account di test"
       });
       
+      console.log('✅ Test login successful, navigating...');
       navigate('/dashboard');
     } catch (error: any) {
+      console.error('❌ Test login error:', error);
       toast({
         title: "Errore test login",
         description: error.message,
@@ -152,6 +164,8 @@ export function AuthForm() {
       setIsLoading(false);
     }
   }
+
+  console.log('🎨 Rendering AuthForm - session:', !!session, 'loading:', isLoading);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-md">
