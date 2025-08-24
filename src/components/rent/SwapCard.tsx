@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRightLeft } from "lucide-react";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { rentalTranslations } from '@/translations/rental';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 interface SwapCardProps {
   swap: any;
@@ -18,7 +19,7 @@ const SwapCard = ({ swap, onContactClick }: SwapCardProps) => {
     <Card className="glass-card overflow-hidden">
       {(swap.image || swap.currentHub?.image) && (
         <div className="relative h-48">
-          <img 
+          <ImageWithFallback 
             src={swap.image || swap.currentHub?.image} 
             alt={swap.item || swap.currentHub?.name} 
             className="w-full h-full object-cover"

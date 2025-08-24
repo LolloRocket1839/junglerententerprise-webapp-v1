@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Ruler, Bed, Phone, Key } from 'lucide-react';
 import { RoomMockup } from '../types/mockups';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 interface RoomDetailsDialogProps {
   room: RoomMockup;
@@ -24,7 +25,7 @@ export const RoomDetailsDialog: React.FC<RoomDetailsDialogProps> = ({ room, prop
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div className="relative h-64 rounded-lg overflow-hidden">
-            <img 
+            <ImageWithFallback 
               src={room.images[0]} 
               alt={room.name}
               className="w-full h-full object-cover"
@@ -33,7 +34,7 @@ export const RoomDetailsDialog: React.FC<RoomDetailsDialogProps> = ({ room, prop
           <div className="grid grid-cols-2 gap-2">
             {room.images.slice(1).map((image, idx) => (
               <div key={idx} className="relative h-32 rounded-lg overflow-hidden">
-                <img 
+                <ImageWithFallback 
                   src={image} 
                   alt={`${room.name} - ${idx + 2}`}
                   className="w-full h-full object-cover"

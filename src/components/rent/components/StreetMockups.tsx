@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Phone, Home, Euro } from 'lucide-react';
 import { mockProperties } from '../data/streetMockData';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 export const StreetMockups = () => {
   const handleCall = (phoneNumber: string) => {
@@ -22,7 +23,7 @@ export const StreetMockups = () => {
             <DialogTrigger asChild>
               <Card className="glass-card overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
                 <div className="relative h-64">
-                  <img 
+                  <ImageWithFallback 
                     src={property.image} 
                     alt={property.street}
                     className="w-full h-full object-cover rounded-t-xl"
@@ -51,7 +52,7 @@ export const StreetMockups = () => {
               
               <div className="space-y-6 mt-4">
                 <div className="aspect-video relative rounded-lg overflow-hidden">
-                  <img 
+                  <ImageWithFallback 
                     src={property.image} 
                     alt={property.street}
                     className="w-full h-full object-cover"

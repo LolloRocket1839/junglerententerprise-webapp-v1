@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { rentalTranslations } from '@/translations/rental';
 import { StudentProperty } from '@/types/rental';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 interface PropertyCardProps {
   property: StudentProperty;
@@ -21,7 +22,7 @@ export const PropertyCard = ({ property, onSelect }: PropertyCardProps) => {
     <Card className="glass-card overflow-hidden">
       <CardHeader className="p-0">
         <div className="relative h-48 overflow-hidden">
-          <img 
+          <ImageWithFallback 
             src={property.images[0]} 
             alt={property.title}
             className="w-full h-full object-cover transition-transform hover:scale-105"

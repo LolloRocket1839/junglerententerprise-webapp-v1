@@ -2,6 +2,7 @@ import { Star, MessageCircle, UserPlus, X } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useLanguage } from '@/contexts/LanguageContext';
 import { rentalTranslations } from '@/translations/rental';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 interface RoomCardProps {
   room: {
@@ -29,7 +30,7 @@ const RoomCard = ({ room, onRoomClick }: RoomCardProps) => {
       onClick={() => onRoomClick(room.id)}
     >
       <div className="relative h-48 overflow-hidden">
-        <img 
+        <ImageWithFallback 
           src={room.image} 
           alt={`${room.hub} - ${room.room}`}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"

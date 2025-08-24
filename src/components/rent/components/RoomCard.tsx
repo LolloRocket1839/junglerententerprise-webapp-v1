@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { RoomMockup } from '../types/mockups';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { rentalTranslations } from '@/translations/rental';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 interface RoomCardProps {
   room: RoomMockup;
@@ -30,7 +31,7 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
       <DialogTrigger asChild>
         <Card className="overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-[1.02]">
           <div className="relative h-48">
-            <img 
+            <ImageWithFallback 
               src={room.image} 
               alt={room.name}
               className="w-full h-full object-cover"
@@ -75,7 +76,7 @@ export const RoomCard = ({ room, propertyStreet }: RoomCardProps) => {
                       [&::-webkit-scrollbar-thumb]:border-background
                       [&::-webkit-scrollbar-thumb:hover]:bg-primary/70">
           <div className="space-y-4">
-            <img 
+            <ImageWithFallback 
               src={room.image} 
               alt={room.name}
               className="w-full h-64 object-cover rounded-lg"

@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Heart, MapPin, Home, Calendar, CheckCircle, Phone, Key } from 'lucide-react';
 import { Property, Application } from '../types';
+import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 interface PropertyDetailProps {
   property: Property;
@@ -45,7 +46,7 @@ export const PropertyDetail = ({
         <div className="lg:col-span-2">
           <Card className="glass-card overflow-hidden">
             <div className="relative aspect-video">
-              <img 
+              <ImageWithFallback 
                 src={property.images[0]} 
                 alt={property.title}
                 className="w-full h-full object-cover"
