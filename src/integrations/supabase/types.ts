@@ -2520,6 +2520,7 @@ export type Database = {
       get_public_profile_summaries: {
         Args: Record<PropertyKey, never>
         Returns: {
+          avatar_url: string
           bio: string
           budget_max: number
           budget_min: number
@@ -2528,7 +2529,9 @@ export type Database = {
           first_name: string
           future_city: string
           id: string
+          last_name: string
           move_in_date: string
+          preferences: Json
         }[]
       }
       has_role: {

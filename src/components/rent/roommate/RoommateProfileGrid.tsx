@@ -17,7 +17,7 @@ const RoommateProfileGrid = () => {
 
   // Apply filters client-side to the secure profile data
   const profiles = useMemo(() => {
-    if (!allProfiles) return [];
+    if (!allProfiles || !Array.isArray(allProfiles)) return [];
 
     return allProfiles.filter(profile => {
       // Budget filter

@@ -28,7 +28,7 @@ export function useSecureProfiles() {
       if (error) {
         throw error;
       }
-      return data || [];
+      return (data || []) as SecureProfile[];
     },
   });
 }
