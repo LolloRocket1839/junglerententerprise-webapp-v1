@@ -1,10 +1,10 @@
 
-// COMPLETE FRESH START - NO CACHE 2025.5
+// COMPLETE RESET - NO CACHED FILES 2025.6
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { AuthProvider } from './contexts/AuthProvider';
-import NavBar from './components/navigation/NavBar';
+import TopNavigation from './components/ui/TopNavigation';
 import Index from './pages/Index';
 import Invest from './pages/Invest';
 import Rent from './pages/Rent';
@@ -37,7 +37,7 @@ function App() {
       <AuthProvider>
         <LanguageProvider>
           <Router>
-            <NavBar />
+            <TopNavigation />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<AuthForm />} />

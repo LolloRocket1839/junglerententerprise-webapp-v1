@@ -1,4 +1,4 @@
-// BRAND NEW NAVBAR - ZERO CACHE 2025
+// COMPLETELY NEW NAVIGATION - NO OLD DEPENDENCIES
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Download, LogIn, LogOut, User, Home, Building, DollarSign, Bed, MapPin, Gift, ShoppingBag } from "lucide-react";
@@ -8,7 +8,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
-const NavBar: React.FC = () => {
+const TopNavigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const { session, signOut } = useAuth();
   const { language, setLanguage, t } = useLanguage();
@@ -193,4 +193,4 @@ const NavBar: React.FC = () => {
   );
 };
 
-export default NavBar;
+export default TopNavigation;
