@@ -106,27 +106,6 @@ export const mockProperties = [
     phone_number: "+393319053037"
   },
   {
-    id: "6",
-    title: "Loft Via Po",
-    address: "Via Po 43, Torino",
-    description: "Caratteristico loft in palazzo storico del '700, completamente ristrutturato. Soffitti alti e travi a vista.",
-    city: "Torino",
-    discounted_price_monthly: 840,
-    market_price_monthly: 840,
-    size_sqm: 60,
-    rooms: 2,
-    bathrooms: 1,
-    images: [rentRoomSingle],
-    distance_to_university: "5 min dall'Università degli Studi di Torino",
-    availability_start: "2024-09-15",
-    savings_percentage: 0,
-    current_status: "available",
-    has_balcony: false,
-    has_kitchen: true,
-    utilities_included: true,
-    phone_number: "+393319053037"
-  },
-  {
     id: "7",
     title: "Studio Via Sant'Ottavio",
     address: "Via Sant'Ottavio 20, Torino",
