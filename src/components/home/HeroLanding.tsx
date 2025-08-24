@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Search, Home, Users, MapPin, Sparkles, ArrowRight, TreePine } from 'lucide-react';
+import { Search, Home, Users, MapPin, Sparkles, ArrowRight } from 'lucide-react';
 import { GlassCard } from "@/components/ui/glass-card";
 import { toast } from "@/components/ui/use-toast";
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -106,7 +106,6 @@ export const HeroLanding = () => {
         <div className="absolute top-20 left-20 w-32 h-32 bg-emerald-400/10 rounded-full blur-xl animate-float-slow" />
         <div className="absolute top-40 right-32 w-48 h-48 bg-green-400/10 rounded-full blur-xl animate-float-slower" />
         <div className="absolute bottom-32 left-1/3 w-24 h-24 bg-lime-400/10 rounded-full blur-xl animate-pulse-gentle" />
-        <TreePine className="absolute top-1/4 right-1/4 w-16 h-16 text-emerald-400/20 animate-leaf-float" />
       </div>
 
       {/* Main Content */}
