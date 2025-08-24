@@ -22,6 +22,7 @@ const languages = {
   DE: "Deutsch",
 };
 
+// Navigation component for desktop and mobile
 export function DesktopNav({ onLanguageChange }: DesktopNavProps) {
   const { language, setLanguage, t } = useLanguage();
   const { session, signOut } = useAuth();
