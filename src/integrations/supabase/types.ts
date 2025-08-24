@@ -2517,6 +2517,10 @@ export type Database = {
         }
         Returns: string
       }
+      get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
       get_public_profile_summaries: {
         Args: Record<PropertyKey, never>
         Returns: {

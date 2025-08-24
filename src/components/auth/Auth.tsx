@@ -82,6 +82,12 @@ const Auth = () => {
   };
 
   const handleTestLogin = async () => {
+    // Gate test login in production
+    if (import.meta.env.PROD) {
+      console.warn('Test login is disabled in production');
+      return;
+    }
+
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: 'test@jungle.com',
@@ -116,15 +122,19 @@ const Auth = () => {
           <h2 className="text-2xl font-bold text-white mb-6 text-center">Benvenuto su Jungle</h2>
           
           <div className="mb-6">
-            <Button 
-              onClick={handleTestLogin}
-              className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-3"
-            >
-              Accesso Test Rapido (Salta Verifica)
-            </Button>
-            <p className="text-xs text-white/60 mt-2 text-center">
-              Solo per sviluppo: Accede automaticamente con test@jungle.com
-            </p>
+            {!import.meta.env.PROD && (
+              <>
+                <Button 
+                  onClick={handleTestLogin}
+                  className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-3"
+                >
+                  Accesso Test Rapido (Salta Verifica)
+                </Button>
+                <p className="text-xs text-white/60 mt-2 text-center">
+                  Solo per sviluppo: Accede automaticamente con test@jungle.com
+                </p>
+              </>
+            )}
           </div>
 
           <SupabaseAuth

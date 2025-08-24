@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
-const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+const SUPABASE_ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -20,10 +20,30 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
-    const { investmentId }: EmailRequest = await req.json();
+    // Verify authentication
+    const authHeader = req.headers.get('authorization')
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Missing authorization header' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
 
-    // Fetch investment details with hub and profile information
+    const supabase = createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!, {
+      global: { headers: { Authorization: authHeader } }
+    });
+
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    if (userError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid authentication' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    const { investmentId }: EmailRequest = await req.json();
+    
+    // Verify the investment belongs to the authenticated user
     const { data: investment, error: investmentError } = await supabase
       .from('investments')
       .select(`
@@ -32,17 +52,14 @@ const handler = async (req: Request): Promise<Response> => {
         profiles:profile_id (*)
       `)
       .eq('id', investmentId)
+      .eq('profile_id', user.id)
       .single();
 
     if (investmentError || !investment) {
-      throw new Error('Investment not found');
-    }
-
-    // Get user email from auth.users
-    const { data: { user }, error: userError } = await supabase.auth.admin.getUserById(investment.profile_id);
-    
-    if (userError || !user?.email) {
-      throw new Error('User not found');
+      return new Response(
+        JSON.stringify({ error: 'Investment not found or access denied' }),
+        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
     }
 
     const emailHtml = `
