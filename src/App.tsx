@@ -1,10 +1,10 @@
 
-// Cache-busting refresh - Build 2025.1
+// Cache-busting refresh - Build 2025.2
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { AuthProvider } from './contexts/AuthProvider';
-import MainNavigation from './components/navigation/MainNavigation';
+import AppNavigation from './components/navigation/AppNavigation';
 import Index from './pages/Index';
 import Invest from './pages/Invest';
 import Rent from './pages/Rent';
@@ -37,7 +37,7 @@ function App() {
       <AuthProvider>
         <LanguageProvider>
           <Router>
-            <MainNavigation />
+            <AppNavigation />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<AuthForm />} />
