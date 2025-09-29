@@ -3,15 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Heart, MapPin, School, ArrowRight } from 'lucide-react';
-import { Property } from '../types';
+import { StudentProperty } from '@/types/rental';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { rentalTranslations } from '@/translations/rental';
 
 interface PropertyCardProps {
-  property: Property;
+  property: StudentProperty;
   isFavorite: boolean;
   onFavoriteToggle: (id: string) => void;
-  onSelect: (property: Property) => void;
+  onSelect: (property: StudentProperty) => void;
 }
 
 export const PropertyCard = ({
@@ -42,11 +42,13 @@ export const PropertyCard = ({
         >
           <Heart className={`h-5 w-5 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
         </Button>
-        <div className="absolute top-2 left-2">
-          <Badge className="bg-green-500 text-white">
-            -{property.savings_percentage}%
-          </Badge>
-        </div>
+        {property.discount_percentage > 0 && (
+          <div className="absolute top-2 left-2">
+            <Badge className="bg-green-500 text-white">
+              -{property.discount_percentage}%
+            </Badge>
+          </div>
+        )}
       </div>
       
       <div className="p-5">
@@ -54,11 +56,7 @@ export const PropertyCard = ({
           <h3 className="text-xl font-semibold text-white mb-1">{property.title}</h3>
           <div className="flex items-center text-white/60 text-sm">
             <MapPin className="w-4 h-4 mr-1" />
-            {property.address}
-          </div>
-          <div className="flex items-center text-white/60 text-sm mt-1">
-            <School className="w-4 h-4 mr-1" />
-            {property.distance_to_university}
+            {property.address}, {property.city}
           </div>
         </div>
         

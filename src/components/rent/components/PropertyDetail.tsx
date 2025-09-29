@@ -3,15 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Heart, MapPin, Home, Calendar, CheckCircle, Phone, Key } from 'lucide-react';
-import { Property, Application } from '../types';
+import { Application } from '../types';
+import { StudentProperty } from '@/types/rental';
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 interface PropertyDetailProps {
-  property: Property;
+  property: StudentProperty;
   isFavorite: boolean;
   onFavoriteToggle: (id: string) => void;
   onBack: () => void;
-  onApply: (property: Property) => void;
+  onApply: (property: StudentProperty) => void;
   applications: Application[];
 }
 
@@ -59,11 +60,13 @@ export const PropertyDetail = ({
               >
                 <Heart className={`h-5 w-5 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
               </Button>
-              <div className="absolute top-4 left-4">
-                <Badge className="bg-green-500 text-white">
-                  -{property.savings_percentage}%
-                </Badge>
-              </div>
+              {property.discount_percentage > 0 && (
+                <div className="absolute top-4 left-4">
+                  <Badge className="bg-green-500 text-white">
+                    -{property.discount_percentage}%
+                  </Badge>
+                </div>
+              )}
             </div>
             
             <div className="p-6">

@@ -2,14 +2,14 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { AlertCircle } from 'lucide-react';
 import { PropertyCard } from './PropertyCard';
-import { Property } from '../types';
+import { StudentProperty } from '@/types/rental';
 
 interface PropertyListProps {
-  properties: Property[];
+  properties: StudentProperty[];
   selectedCity: string;
   favorites: string[];
   onFavoriteToggle: (id: string) => void;
-  onPropertySelect: (property: Property) => void;
+  onPropertySelect: (property: StudentProperty) => void;
   onBackToSearch: () => void;
 }
 

@@ -7,7 +7,8 @@ import { SearchForm } from './components/SearchForm';
 import { PropertyList } from './components/PropertyList';
 import { PropertyDetail } from './components/PropertyDetail';
 import { mockProperties } from './data/mockData';
-import { SearchParams, Property, Application } from './types';
+import { SearchParams, Application } from './types';
+import { StudentProperty } from '@/types/rental';
 
 const EnhancedRentalSection = () => {
   const [searchParams, setSearchParams] = useState<SearchParams>({
@@ -20,9 +21,9 @@ const EnhancedRentalSection = () => {
   });
   const [activeTab, setActiveTab] = useState('search');
   const [selectedCity, setSelectedCity] = useState('');
-  const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
+  const [filteredProperties, setFilteredProperties] = useState<StudentProperty[]>([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+  const [selectedProperty, setSelectedProperty] = useState<StudentProperty | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [viewedProperties, setViewedProperties] = useState<string[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
@@ -52,24 +53,37 @@ const EnhancedRentalSection = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedCity) {
-      const filtered = mockProperties.filter(property =>
-        property.city === selectedCity &&
-        (searchParams.minPrice
-          ? property.discounted_price_monthly >= parseInt(searchParams.minPrice)
-          : true) &&
-        (searchParams.maxPrice
-          ? property.discounted_price_monthly <= parseInt(searchParams.maxPrice)
-          : true) &&
-        (searchParams.roomType
-          ? (searchParams.roomType === 'studio' && property.rooms === 1) ||
-            (searchParams.roomType === 'apartment' && property.rooms > 1)
-          : true)
-      );
-      setFilteredProperties(filtered);
-    } else {
-      setFilteredProperties(mockProperties);
-    }
+    const fetchProperties = async () => {
+      if (selectedCity) {
+        try {
+          let query = supabase
+            .from('student_properties')
+            .select('*')
+            .eq('city', selectedCity)
+            .eq('current_status', 'available');
+
+          if (searchParams.minPrice) {
+            query = query.gte('discounted_price_monthly', parseInt(searchParams.minPrice));
+          }
+          if (searchParams.maxPrice) {
+            query = query.lte('discounted_price_monthly', parseInt(searchParams.maxPrice));
+          }
+          if (searchParams.roomType) {
+            query = query.eq('rooms', parseInt(searchParams.roomType));
+          }
+
+          const { data, error } = await query;
+          if (error) throw error;
+          setFilteredProperties((data as StudentProperty[]) || []);
+        } catch (error) {
+          console.error('Error fetching properties:', error);
+          setFilteredProperties([]);
+        }
+      } else {
+        setFilteredProperties([]);
+      }
+    };
+    fetchProperties();
   }, [selectedCity, searchParams]);
 
   const handleSearch = () => {
@@ -89,7 +103,7 @@ const EnhancedRentalSection = () => {
     });
   };
 
-  const handlePropertySelect = (property: Property) => {
+  const handlePropertySelect = (property: StudentProperty) => {
     setSelectedProperty(property);
     setActiveTab('property');
     if (!viewedProperties.includes(property.id)) {
@@ -113,7 +127,7 @@ const EnhancedRentalSection = () => {
     }
   };
 
-  const handleApply = (property: Property) => {
+  const handleApply = (property: StudentProperty) => {
     if (applications.some(app => app.property_id === property.id)) {
       toast({
         title: "Hai già fatto domanda",
