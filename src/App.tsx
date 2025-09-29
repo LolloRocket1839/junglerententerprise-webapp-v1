@@ -1,26 +1,28 @@
-
 // Cache-busting refresh - Build 2025.1
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Suspense, lazy } from 'react';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { AuthProvider } from './contexts/AuthProvider';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import MainNavigation from './components/navigation/MainNavigation';
-import Index from './pages/Index';
-import Invest from './pages/Invest';
-import Rent from './pages/Rent';
-import Stay from './pages/Stay';
-import Referral from './pages/Referral';
-import Properties from './pages/Properties';
-import ListRoom from './pages/ListRoom';
-import Marketplace from './pages/Marketplace';
-import Admin from './pages/Admin';
-import Dashboard from './pages/Dashboard';
-import { AuthForm } from './components/auth/AuthForm';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 import { MobileTabNavigation } from './components/mobile/MobileTabNavigation';
 import { Toaster } from "@/components/ui/toaster";
 import './App.css';
+
+// Lazy load route components for code splitting
+const Index = lazy(() => import('./pages/Index'));
+const Invest = lazy(() => import('./pages/Invest'));
+const Rent = lazy(() => import('./pages/Rent'));
+const Stay = lazy(() => import('./pages/Stay'));
+const Referral = lazy(() => import('./pages/Referral'));
+const Properties = lazy(() => import('./pages/Properties'));
+const ListRoom = lazy(() => import('./pages/ListRoom'));
+const Marketplace = lazy(() => import('./pages/Marketplace'));
+const Admin = lazy(() => import('./pages/Admin'));
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const AuthForm = lazy(() => import('./components/auth/AuthForm').then(m => ({ default: m.AuthForm })));
 
 // Create a client
 const queryClient = new QueryClient({
@@ -32,6 +34,13 @@ const queryClient = new QueryClient({
   },
 });
 
+// Loading fallback component
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+  </div>
+);
+
 function App() {
   console.log('[App] Rendering app...');
   
@@ -42,7 +51,8 @@ function App() {
           <LanguageProvider>
             <Router>
               <MainNavigation />
-              <Routes>
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<AuthForm />} />
               <Route path="/properties" element={<Properties />} />
@@ -86,7 +96,8 @@ function App() {
                   <Dashboard />
                 </ProtectedRoute>
               } />
-              </Routes>
+                </Routes>
+              </Suspense>
               <MobileTabNavigation />
               <Toaster />
             </Router>

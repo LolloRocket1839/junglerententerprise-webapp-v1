@@ -6,6 +6,8 @@ interface ImageWithFallbackProps extends React.ImgHTMLAttributes<HTMLImageElemen
   src?: string | null;
   fallback?: React.ReactNode;
   className?: string;
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
 }
 
 const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
@@ -13,6 +15,8 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
   alt = '',
   fallback,
   className,
+  loading = 'lazy',
+  decoding = 'async',
   ...props
 }) => {
   const [hasError, setHasError] = useState(false);
@@ -60,6 +64,8 @@ const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({
         {...props}
         src={src}
         alt={alt}
+        loading={loading}
+        decoding={decoding}
         className={cn(className, isLoading && 'hidden')}
         onError={handleError}
         onLoad={handleLoad}
