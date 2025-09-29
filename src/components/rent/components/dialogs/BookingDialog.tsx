@@ -7,6 +7,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { StudentProperty } from '@/types/rental';
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { it } from "date-fns/locale";
 import { CalendarIcon, Upload, FileText, CreditCard } from "lucide-react";
@@ -123,13 +124,14 @@ export const BookingDialog = ({
                         {moveInDate ? format(moveInDate, "PPP", { locale: it }) : "Seleziona data"}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-auto p-0 pointer-events-auto" align="start">
                       <Calendar
                         mode="single"
                         selected={moveInDate}
                         onSelect={setMoveInDate}
                         disabled={(date) => date < new Date()}
                         initialFocus
+                        className="pointer-events-auto"
                       />
                     </PopoverContent>
                   </Popover>
@@ -143,13 +145,14 @@ export const BookingDialog = ({
                         {moveOutDate ? format(moveOutDate, "PPP", { locale: it }) : "Seleziona data"}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-auto p-0 pointer-events-auto" align="start">
                       <Calendar
                         mode="single"
                         selected={moveOutDate}
                         onSelect={setMoveOutDate}
                         disabled={(date) => !moveInDate || date <= moveInDate}
                         initialFocus
+                        className="pointer-events-auto"
                       />
                     </PopoverContent>
                   </Popover>
