@@ -14,6 +14,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import type { UserType } from '@/types/auth';
 
 export function AuthForm() {
+  console.log('[AuthForm] Rendering');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -25,16 +26,27 @@ export function AuthForm() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const { session } = useAuth();
+  const { session, isLoading: authLoading } = useAuth();
   const { toast } = useToast();
 
   // Redirect if already authenticated
   useEffect(() => {
-    if (session) {
+    console.log('[AuthForm] Session check:', { session: !!session, authLoading });
+    if (session && !authLoading) {
       const from = location.state?.from?.pathname || '/dashboard';
+      console.log('[AuthForm] Redirecting to:', from);
       navigate(from, { replace: true });
     }
-  }, [session, navigate, location]);
+  }, [session, authLoading, navigate, location]);
+
+  if (authLoading) {
+    console.log('[AuthForm] Auth is loading...');
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
 
   async function handleSignUp(e: React.FormEvent) {
     e.preventDefault();

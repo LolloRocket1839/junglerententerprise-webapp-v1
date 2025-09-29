@@ -9,11 +9,16 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 const MainNavigation: React.FC = () => {
+  console.log('[MainNavigation] Rendering');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { session } = useAuth();
+  const { session, isLoading } = useAuth();
   const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log('[MainNavigation] Auth state:', { session: !!session, isLoading });
+  }, [session, isLoading]);
 
   useEffect(() => {
     const handleScroll = () => {
