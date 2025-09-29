@@ -12,6 +12,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { PropertyList } from './components/PropertyList';
 import { supabase } from '@/integrations/supabase/client';
 import { StudentProperty } from '@/types/rental';
+import { PropertyDetailDialog } from './components/dialogs/PropertyDetailDialog';
+import { BookingDialog } from './components/dialogs/BookingDialog';
 
 interface UnifiedSearchProps {
   initialTab?: 'property' | 'roommate';

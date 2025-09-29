@@ -1805,6 +1805,65 @@ export type Database = {
           },
         ]
       }
+      student_applications: {
+        Row: {
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          last_name: string
+          move_in_date: string
+          move_out_date: string
+          payment_plan: string
+          phone: string
+          property_id: string
+          status: string
+          student_id: string
+          university: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          last_name: string
+          move_in_date: string
+          move_out_date: string
+          payment_plan: string
+          phone: string
+          property_id: string
+          status?: string
+          student_id: string
+          university: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          move_in_date?: string
+          move_out_date?: string
+          payment_plan?: string
+          phone?: string
+          property_id?: string
+          status?: string
+          student_id?: string
+          university?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_applications_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "student_properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       student_documents: {
         Row: {
           created_at: string | null
