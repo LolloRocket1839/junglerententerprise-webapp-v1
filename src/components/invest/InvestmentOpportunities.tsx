@@ -2,22 +2,32 @@ import React, { useState } from 'react';
 import { Dialog } from "@/components/ui/dialog";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { Property } from './types';
 import PropertyCard from './PropertyCard';
 import InvestmentOpportunityDialog from './InvestmentOpportunityDialog';
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { mockProperties } from './mockData';
 
 const InvestmentOpportunities = () => {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [showDetails, setShowDetails] = useState(false);
 
-  // Using mock data directly instead of Supabase query
-  const { data: properties, isLoading } = useQuery({
+  const { data: properties, isLoading, error } = useQuery({
     queryKey: ['investment-properties'],
     queryFn: async () => {
-      // Return mock data
-      return mockProperties;
+      console.log('[InvestmentOpportunities] Fetching properties from hubs table...');
+      const { data, error } = await supabase
+        .from('hubs')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('[InvestmentOpportunities] Error fetching properties:', error);
+        throw error;
+      }
+
+      console.log('[InvestmentOpportunities] Fetched properties:', data?.length || 0);
+      return data as Property[];
     },
     retry: 1,
     retryDelay: 1000
@@ -31,6 +41,22 @@ const InvestmentOpportunities = () => {
 
   return (
     <div className="space-y-6 p-4 md:p-6">
+      {error && (
+        <Alert variant="destructive" className="mb-4">
+          <AlertDescription>
+            Failed to load investment opportunities. Please try again later.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {!isLoading && properties?.length === 0 && (
+        <Alert className="mb-4">
+          <AlertDescription>
+            No investment opportunities available at the moment. Check back soon!
+          </AlertDescription>
+        </Alert>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {isLoading ? (
           [1, 2, 3].map((i) => (
