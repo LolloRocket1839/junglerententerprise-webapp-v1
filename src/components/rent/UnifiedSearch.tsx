@@ -126,12 +126,20 @@ export const UnifiedSearch = ({ initialTab = 'property', searchQuery = '' }: Uni
     );
   };
 
+  const [selectedProperty, setSelectedProperty] = useState<StudentProperty | null>(null);
+  const [showPropertyDetail, setShowPropertyDetail] = useState(false);
+  const [showBookingDialog, setShowBookingDialog] = useState(false);
+
   const handlePropertySelect = (property: StudentProperty) => {
     console.log('[UnifiedSearch] Property selected:', property);
-    toast({
-      title: "Dettagli proprietà",
-      description: "Apertura dettagli completi...",
-    });
+    setSelectedProperty(property);
+    setShowPropertyDetail(true);
+  };
+
+  const handleBooking = (property: StudentProperty) => {
+    setShowPropertyDetail(false);
+    setSelectedProperty(property);
+    setShowBookingDialog(true);
   };
 
   const handleBackToSearch = () => {
@@ -263,6 +271,23 @@ export const UnifiedSearch = ({ initialTab = 'property', searchQuery = '' }: Uni
           />
         </div>
       </div>
+
+      {/* Property Detail Dialog */}
+      <PropertyDetailDialog
+        property={selectedProperty}
+        isOpen={showPropertyDetail}
+        onClose={() => setShowPropertyDetail(false)}
+        onBooking={handleBooking}
+        isFavorite={selectedProperty ? favorites.includes(selectedProperty.id) : false}
+        onFavoriteToggle={handleFavoriteToggle}
+      />
+
+      {/* Booking Dialog */}
+      <BookingDialog
+        property={selectedProperty}
+        isOpen={showBookingDialog}
+        onClose={() => setShowBookingDialog(false)}
+      />
     </div>
   );
 };
