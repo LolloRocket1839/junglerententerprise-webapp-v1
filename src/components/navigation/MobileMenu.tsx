@@ -1,8 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { LogIn, LogOut, UserPlus, User } from "lucide-react";
-import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface MobileMenuProps {
@@ -13,31 +9,12 @@ interface MobileMenuProps {
 
 const MobileMenu = ({ isOpen, onClose, onNavigate }: MobileMenuProps) => {
   const navigate = useNavigate();
-  const { toast } = useToast();
   const { t } = useLanguage();
-  const { session, signOut } = useAuth();
 
   const handleNavigation = (path: string) => {
     onClose();
     onNavigate();
     navigate(path);
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await signOut();
-      handleNavigation('/');
-      toast({
-        title: t('signOutSuccess'),
-        description: t('signOutMessage'),
-      });
-    } catch (error) {
-      toast({
-        title: t('signOutError'),
-        description: t('tryAgain'),
-        variant: "destructive",
-      });
-    }
   };
 
   return (
@@ -87,48 +64,6 @@ const MobileMenu = ({ isOpen, onClose, onNavigate }: MobileMenuProps) => {
             >
               {t('referral')}
             </button>
-          </div>
-
-          <div className="pt-6 border-t border-white/20">
-            {session ? (
-              <div className="space-y-4">
-                <Button
-                  variant="ghost"
-                  onClick={() => handleNavigation("/dashboard")}
-                  className="w-full flex items-center justify-center gap-2 text-white/80 hover:text-white"
-                >
-                  <User className="w-4 h-4" />
-                  Dashboard
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleSignOut}
-                  className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20"
-                >
-                  <LogOut className="w-4 h-4" />
-                  {t('signOut')}
-                </Button>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <Button
-                  variant="outline"
-                  onClick={() => handleNavigation("/auth")}
-                  className="w-full flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white border-white/20"
-                >
-                  <LogIn className="w-4 h-4" />
-                  {t('signIn')}
-                </Button>
-                <Button
-                  variant="default"
-                  onClick={() => handleNavigation("/auth")}
-                  className="w-full flex items-center justify-center gap-2 bg-[#F97316] hover:bg-[#FB923C] text-white"
-                >
-                  <UserPlus className="w-4 h-4" />
-                  {t('register')}
-                </Button>
-              </div>
-            )}
           </div>
         </div>
       </div>

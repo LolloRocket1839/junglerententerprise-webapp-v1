@@ -1,10 +1,8 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Home, Search, Building2, User, Palmtree } from 'lucide-react';
+import { Home, Search, Building2, Palmtree } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { useAuth } from '@/hooks/useAuth';
-import { useProfile } from '@/hooks/useProfile';
 
 interface TabItem {
   icon: React.ReactNode;
@@ -17,54 +15,29 @@ interface TabItem {
 export function MobileTabNavigation() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { session } = useAuth();
-  const { data: profile } = useProfile();
 
   const tabs: TabItem[] = [
     {
       icon: <Home className="h-5 w-5" />,
-      label: 'Dashboard',
-      path: session ? '/dashboard' : '/'
+      label: 'Home',
+      path: '/'
     },
     {
       icon: <Search className="h-5 w-5" />,
       label: 'Discover',
-      path: '/rent',
-      userTypes: ['student', 'tourist']
+      path: '/rent'
     },
     {
       icon: <Building2 className="h-5 w-5" />,
       label: 'Investi',
-      path: '/invest',
-      userTypes: ['investor']
+      path: '/invest'
     },
     {
       icon: <Palmtree className="h-5 w-5" />,
       label: 'Viaggi',
-      path: '/stay',
-      userTypes: ['tourist']
-    },
-    {
-      icon: <User className="h-5 w-5" />,
-      label: 'Profilo',
-      path: session ? '/dashboard' : '/auth'
+      path: '/stay'
     }
   ];
-
-  const getVisibleTabs = () => {
-    if (!session || !profile) {
-      return tabs.filter(tab => !tab.userTypes || tab.label === 'Profilo');
-    }
-
-    return tabs.filter(tab => 
-      !tab.userTypes || 
-      tab.userTypes.includes(profile.user_type) ||
-      tab.label === 'Dashboard' || 
-      tab.label === 'Profilo'
-    );
-  };
-
-  const visibleTabs = getVisibleTabs();
 
   const isActive = (path: string) => {
     if (path === '/') {
@@ -76,7 +49,7 @@ export function MobileTabNavigation() {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border z-50 md:hidden">
       <div className="flex items-center justify-around px-2 py-2 safe-area-bottom">
-        {visibleTabs.map((tab) => (
+        {tabs.map((tab) => (
           <Button
             key={tab.path}
             variant="ghost"
