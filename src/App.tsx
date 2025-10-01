@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Suspense, lazy } from 'react';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { AuthProvider } from './contexts/AuthProvider';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import MainNavigation from './components/navigation/MainNavigation';
 import { MobileTabNavigation } from './components/mobile/MobileTabNavigation';
@@ -44,27 +45,29 @@ function App() {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <LanguageProvider>
-          <Router>
-            <MainNavigation />
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/properties" element={<Properties />} />
-                <Route path="/invest" element={<Invest />} />
-                <Route path="/rent" element={<Rent />} />
-                <Route path="/stay" element={<Stay />} />
-                <Route path="/referral" element={<Referral />} />
-                <Route path="/marketplace" element={<Marketplace />} />
-                <Route path="/list-room" element={<ListRoom />} />
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-              </Routes>
-            </Suspense>
-            <MobileTabNavigation />
-            <Toaster />
-          </Router>
-        </LanguageProvider>
+        <AuthProvider>
+          <LanguageProvider>
+            <Router>
+              <MainNavigation />
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/properties" element={<Properties />} />
+                  <Route path="/invest" element={<Invest />} />
+                  <Route path="/rent" element={<Rent />} />
+                  <Route path="/stay" element={<Stay />} />
+                  <Route path="/referral" element={<Referral />} />
+                  <Route path="/marketplace" element={<Marketplace />} />
+                  <Route path="/list-room" element={<ListRoom />} />
+                  <Route path="/admin" element={<Admin />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                </Routes>
+              </Suspense>
+              <MobileTabNavigation />
+              <Toaster />
+            </Router>
+          </LanguageProvider>
+        </AuthProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );
