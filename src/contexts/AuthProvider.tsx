@@ -8,28 +8,25 @@ interface AuthContextType {
   signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// Default context value (authentication disabled)
+const defaultAuthContext: AuthContextType = {
+  session: null,
+  user: null,
+  isLoading: false,
+  signOut: async () => {}
+};
+
+const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
 // Mock AuthProvider that returns no session (authentication disabled)
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const value = {
-    session: null,
-    user: null,
-    isLoading: false,
-    signOut: async () => {}
-  };
-
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={defaultAuthContext}>
       {children}
     </AuthContext.Provider>
   );
 }
 
 export function useAuthContext() {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuthContext must be used within an AuthProvider');
-  }
-  return context;
+  return useContext(AuthContext);
 }
