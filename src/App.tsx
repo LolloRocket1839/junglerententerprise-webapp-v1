@@ -8,6 +8,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import MainNavigation from './components/navigation/MainNavigation';
 import { MobileTabNavigation } from './components/mobile/MobileTabNavigation';
 import { Toaster } from "@/components/ui/toaster";
+import { DemoBanner } from '@/components/ui/demo-banner';
 import './App.css';
 
 // Lazy load route components for code splitting
@@ -64,6 +65,7 @@ function App() {
                 </Routes>
               </Suspense>
               <MobileTabNavigation />
+              <DemoBanner />
               <Toaster />
             </Router>
           </LanguageProvider>

@@ -38,10 +38,16 @@ const itemVariants = {
 };
 
 export function SmartDashboard({ userType, userState }: SmartDashboardProps) {
+  // Use provided props (demo mode) or fetch from auth (when enabled)
   const { session } = useAuth();
   const { data: profile, isLoading } = useProfile();
 
-  if (isLoading) {
+  // Use provided userState or profile data
+  const effectiveProfile = userState || profile;
+  const currentUserType = userType || effectiveProfile?.user_type || 'student';
+
+  // Show loading only if auth is enabled and still loading
+  if (!userState && session && isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <motion.div
@@ -53,11 +59,10 @@ export function SmartDashboard({ userType, userState }: SmartDashboardProps) {
     );
   }
 
-  if (!session || !profile) {
+  // In demo mode, always show dashboard
+  if (!effectiveProfile) {
     return null;
   }
-
-  const currentUserType = userType || profile.user_type;
 
   return (
     <motion.div
@@ -68,15 +73,15 @@ export function SmartDashboard({ userType, userState }: SmartDashboardProps) {
     >
       <div className="container mx-auto px-4 py-6 space-y-6">
         <motion.div variants={itemVariants}>
-          <WelcomeHeader profile={profile} userType={currentUserType} />
+          <WelcomeHeader profile={effectiveProfile} userType={currentUserType} />
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <AchievementBanner profile={profile} />
+          <AchievementBanner profile={effectiveProfile} />
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <QuickActions userType={currentUserType} profile={profile} />
+          <QuickActions userType={currentUserType} profile={effectiveProfile} />
         </motion.div>
 
         <motion.div 
@@ -85,17 +90,17 @@ export function SmartDashboard({ userType, userState }: SmartDashboardProps) {
         >
           <ContextualCard
             userType={currentUserType}
-            profile={profile}
+            profile={effectiveProfile}
             cardType="primary"
           />
           <ContextualCard
             userType={currentUserType}
-            profile={profile}
+            profile={effectiveProfile}
             cardType="secondary"
           />
           <ContextualCard
             userType={currentUserType}
-            profile={profile}
+            profile={effectiveProfile}
             cardType="tertiary"
           />
         </motion.div>
