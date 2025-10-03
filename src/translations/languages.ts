@@ -107,7 +107,26 @@ export const translations = {
     create: "Create",
     update: "Update",
     featured: "Featured",
-    download: "Download"
+    download: "Download",
+    
+    // Homepage Hero
+    platformTagline: "The smart platform to find your home and roommates",
+    saveMoneyTime: "Save time and money",
+    popular: "Popular",
+    searchPlaceholder: "Search city, university or area...",
+    searchStarted: "Search started",
+    searching: "Searching for",
+    findHome: "Find Your Home",
+    findHomeDesc: "Explore verified accommodations near your university",
+    saveUpTo: "Save up to 40%",
+    findRoommate: "Find a Roommate",
+    findRoommateDesc: "AI-powered matching based on your lifestyle",
+    aiMatch: "AI Match 95%",
+    exploreAreas: "Explore Areas",
+    exploreAreasDesc: "Discover neighborhoods and student life",
+    properties: "Properties",
+    students: "Students",
+    satisfaction: "Satisfaction"
   },
   
   it: {
@@ -218,7 +237,26 @@ export const translations = {
     create: "Crea",
     update: "Aggiorna",
     featured: "In Evidenza",
-    download: "Scarica"
+    download: "Scarica",
+    
+    // Homepage Hero
+    platformTagline: "La piattaforma intelligente per trovare casa e coinquilini",
+    saveMoneyTime: "Risparmi tempo e denaro",
+    popular: "Popolare",
+    searchPlaceholder: "Cerca città, università o zona...",
+    searchStarted: "Ricerca avviata",
+    searching: "Ricerca di",
+    findHome: "Trova Casa",
+    findHomeDesc: "Esplora alloggi verificati vicino alla tua università",
+    saveUpTo: "Risparmia fino al 40%",
+    findRoommate: "Trova un Coinquilino",
+    findRoommateDesc: "Matching AI basato sul tuo stile di vita",
+    aiMatch: "AI Match 95%",
+    exploreAreas: "Esplora Zone",
+    exploreAreasDesc: "Scopri quartieri e vita studentesca",
+    properties: "Proprietà",
+    students: "Studenti",
+    satisfaction: "Soddisfazione"
   },
   
   ro: {
@@ -295,7 +333,27 @@ export const translations = {
     edit: "Editează",
     create: "Creează",
     update: "Actualizează",
-    featured: "Recomandat"
+    featured: "Recomandat",
+    download: "Descarcă",
+    
+    // Homepage Hero
+    platformTagline: "Platforma inteligentă pentru a găsi casă și colegi de cameră",
+    saveMoneyTime: "Economisește timp și bani",
+    popular: "Popular",
+    searchPlaceholder: "Caută oraș, universitate sau zonă...",
+    searchStarted: "Căutare începută",
+    searching: "Căutare pentru",
+    findHome: "Găsește Casă",
+    findHomeDesc: "Explorează cazări verificate lângă universitatea ta",
+    saveUpTo: "Economisește până la 40%",
+    findRoommate: "Găsește un Coleg",
+    findRoommateDesc: "Potrivire AI bazată pe stilul tău de viață",
+    aiMatch: "AI Match 95%",
+    exploreAreas: "Explorează Zone",
+    exploreAreasDesc: "Descoperă cartiere și viață studențească",
+    properties: "Proprietăți",
+    students: "Studenți",
+    satisfaction: "Satisfacție"
   },
   
   es: {
@@ -372,7 +430,27 @@ export const translations = {
     edit: "Editar",
     create: "Crear",
     update: "Actualizar",
-    featured: "Destacado"
+    featured: "Destacado",
+    download: "Descargar",
+    
+    // Homepage Hero
+    platformTagline: "La plataforma inteligente para encontrar casa y compañeros",
+    saveMoneyTime: "Ahorra tiempo y dinero",
+    popular: "Popular",
+    searchPlaceholder: "Buscar ciudad, universidad o área...",
+    searchStarted: "Búsqueda iniciada",
+    searching: "Buscando",
+    findHome: "Encuentra Casa",
+    findHomeDesc: "Explora alojamientos verificados cerca de tu universidad",
+    saveUpTo: "Ahorra hasta 40%",
+    findRoommate: "Encuentra Compañero",
+    findRoommateDesc: "Coincidencia IA basada en tu estilo de vida",
+    aiMatch: "IA Match 95%",
+    exploreAreas: "Explorar Áreas",
+    exploreAreasDesc: "Descubre barrios y vida estudiantil",
+    properties: "Propiedades",
+    students: "Estudiantes",
+    satisfaction: "Satisfacción"
   },
   
   fr: {
@@ -449,7 +527,27 @@ export const translations = {
     edit: "Modifier",
     create: "Créer",
     update: "Mettre à Jour",
-    featured: "En Vedette"
+    featured: "En Vedette",
+    download: "Télécharger",
+    
+    // Homepage Hero
+    platformTagline: "La plateforme intelligente pour trouver votre logement et colocataires",
+    saveMoneyTime: "Économisez temps et argent",
+    popular: "Populaire",
+    searchPlaceholder: "Rechercher ville, université ou zone...",
+    searchStarted: "Recherche lancée",
+    searching: "Recherche de",
+    findHome: "Trouver un Logement",
+    findHomeDesc: "Explorez des logements vérifiés près de votre université",
+    saveUpTo: "Économisez jusqu'à 40%",
+    findRoommate: "Trouver un Colocataire",
+    findRoommateDesc: "Correspondance IA basée sur votre style de vie",
+    aiMatch: "IA Match 95%",
+    exploreAreas: "Explorer les Zones",
+    exploreAreasDesc: "Découvrez les quartiers et la vie étudiante",
+    properties: "Propriétés",
+    students: "Étudiants",
+    satisfaction: "Satisfaction"
   },
   
   de: {
@@ -526,6 +624,26 @@ export const translations = {
     edit: "Bearbeiten",
     create: "Erstellen",
     update: "Aktualisieren",
-    featured: "Empfohlen"
+    featured: "Empfohlen",
+    download: "Herunterladen",
+    
+    // Homepage Hero
+    platformTagline: "Die intelligente Plattform, um Ihr Zuhause und Mitbewohner zu finden",
+    saveMoneyTime: "Sparen Sie Zeit und Geld",
+    popular: "Beliebt",
+    searchPlaceholder: "Stadt, Universität oder Gebiet suchen...",
+    searchStarted: "Suche gestartet",
+    searching: "Suche nach",
+    findHome: "Zuhause Finden",
+    findHomeDesc: "Entdecken Sie verifizierte Unterkünfte in der Nähe Ihrer Universität",
+    saveUpTo: "Sparen Sie bis zu 40%",
+    findRoommate: "Mitbewohner Finden",
+    findRoommateDesc: "KI-gestütztes Matching basierend auf Ihrem Lebensstil",
+    aiMatch: "KI Match 95%",
+    exploreAreas: "Gebiete Erkunden",
+    exploreAreasDesc: "Entdecken Sie Stadtteile und Studentenleben",
+    properties: "Immobilien",
+    students: "Studenten",
+    satisfaction: "Zufriedenheit"
   }
 };

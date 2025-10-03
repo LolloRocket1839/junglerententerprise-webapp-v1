@@ -123,9 +123,9 @@ export const HeroLanding = () => {
           </div>
           
           <p className="text-xl md:text-2xl text-white/80 mb-8 font-light leading-relaxed">
-            La piattaforma intelligente per trovare casa e coinquilini
+            {t('platformTagline')}
             <br />
-            <span className="text-emerald-400 font-medium">Risparmi tempo e denaro</span>
+            <span className="text-emerald-400 font-medium">{t('saveMoneyTime')}</span>
           </p>
 
           {/* Smart Search Bar */}
