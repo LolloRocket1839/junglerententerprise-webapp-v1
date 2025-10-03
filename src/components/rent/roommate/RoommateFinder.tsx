@@ -1,13 +1,17 @@
 
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Sparkles } from "lucide-react";
 import QuestionPool from "./QuestionPool";
 import RoommateProfileGrid from "./RoommateProfileGrid";
 import WelcomeScreen from "./WelcomeScreen";
+import { AIMatchResults } from "./AIMatchResults";
 import { useAuth } from "@/hooks/useAuth";
 import { useProfile } from "@/hooks/useProfile";
+import { useAIRoommateMatching } from "@/hooks/useAIRoommateMatching";
 
-type View = "welcome" | "questions" | "matches";
+type View = "welcome" | "questions" | "matches" | "ai-matches";
 
 const RoommateFinder = () => {
   const [currentView, setCurrentView] = useState<View>("welcome");
@@ -15,6 +19,7 @@ const RoommateFinder = () => {
 
   const { session } = useAuth();
   const { data: profile } = useProfile();
+  const { matches, isLoading, findMatches } = useAIRoommateMatching();
 
   const handleStart = () => {
     if (!session) {
@@ -40,6 +45,20 @@ const RoommateFinder = () => {
     setCurrentView("matches");
   };
 
+  const handleAIMatching = async () => {
+    if (!session || !profile?.id) {
+      toast({
+        title: "Profilo Richiesto",
+        description: "Completa il tuo profilo per usare l'AI matching.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setCurrentView("ai-matches");
+    await findMatches(profile.id);
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       {!session && (
@@ -56,6 +75,27 @@ const RoommateFinder = () => {
 
       {session && profile && (
         <>
+          {/* AI Matching Button - Always visible */}
+          {currentView !== "welcome" && (
+            <div className="flex gap-3 justify-center">
+              <Button
+                onClick={() => setCurrentView("welcome")}
+                variant="outline"
+                className="border-white/20 text-white hover:bg-white/10"
+              >
+                ← Torna all'inizio
+              </Button>
+              <Button
+                onClick={handleAIMatching}
+                className="luxury-button bg-gradient-to-r from-primary to-primary/80"
+                disabled={isLoading}
+              >
+                <Sparkles className="w-4 h-4 mr-2" />
+                {isLoading ? "Analisi AI in corso..." : "🧠 Match con AI"}
+              </Button>
+            </div>
+          )}
+
           {currentView === "welcome" && (
             <WelcomeScreen 
               onStart={handleStart} 
@@ -64,6 +104,9 @@ const RoommateFinder = () => {
           )}
           {currentView === "questions" && <QuestionPool />}
           {currentView === "matches" && <RoommateProfileGrid />}
+          {currentView === "ai-matches" && (
+            <AIMatchResults matches={matches} isLoading={isLoading} />
+          )}
         </>
       )}
     </div>

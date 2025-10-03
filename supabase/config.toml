@@ -1,1 +1,4 @@
 project_id = "jqvkodddhilbrbusyvzx"
+
+[functions.ai-roommate-matching]
+verify_jwt = false
