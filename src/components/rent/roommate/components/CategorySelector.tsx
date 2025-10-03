@@ -27,7 +27,11 @@ export const CategorySelector = ({
       {categories.map((category) => (
         <Card
           key={category.id}
-          className={`p-4 cursor-pointer transition-all duration-300 hover:shadow-lg ${
+          className={`p-4 cursor-pointer border
+            shadow-[0_2px_8px_hsl(0_0%_0%_/_0.08)]
+            transition-all duration-[350ms]
+            hover:shadow-[0_16px_32px_hsl(0_0%_0%_/_0.16)] hover:-translate-y-1.5
+            active:scale-[0.96] ${
             selectedCategory === category.id
               ? 'bg-primary/20 border-primary'
               : 'bg-background/50 hover:bg-background/60'

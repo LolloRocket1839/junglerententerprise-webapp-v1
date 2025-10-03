@@ -15,12 +15,12 @@ const SwapHeader = ({ isUploadOpen, setIsUploadOpen, onFilesUploaded }: SwapHead
       <div className="flex gap-2">
         <Button 
           variant="default" 
-          className="glass-button"
+          className="luxury-button"
           onClick={() => setIsUploadOpen(true)}
         >
           Upload Files
         </Button>
-        <Button variant="default" className="glass-button" asChild>
+        <Button variant="default" className="luxury-button" asChild>
           <Link to="/list-room">List New Item</Link>
         </Button>
       </div>

@@ -25,6 +25,24 @@
     --input: 160 20% 20%;
     --ring: 142 76% 36%;
     --radius: 0.75rem;
+
+    /* Luxury Timing Functions */
+    --ease-luxury: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-out-luxury: cubic-bezier(0.33, 1, 0.68, 1);
+    --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --ease-silk: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Shadow System - 6 Levels of Depth */
+    --shadow-1: 0 1px 2px hsl(0 0% 0% / 0.05);
+    --shadow-2: 0 2px 8px hsl(0 0% 0% / 0.08);
+    --shadow-3: 0 8px 16px hsl(0 0% 0% / 0.12);
+    --shadow-4: 0 16px 32px hsl(0 0% 0% / 0.16);
+    --shadow-5: 0 24px 48px hsl(0 0% 0% / 0.20);
+    --shadow-6: 0 32px 64px hsl(0 0% 0% / 0.24);
+
+    /* Luxury Gradients */
+    --gradient-luxury: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 42%));
+    --gradient-subtle: linear-gradient(180deg, hsl(160 20% 5%), hsl(160 20% 7%));
   }
 }
 
@@ -41,31 +59,58 @@
 
 @layer components {
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-lg;
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    box-shadow: var(--shadow-2);
+    transition: all 0.25s var(--ease-silk);
   }
 
   .glass-nav {
-    @apply bg-black/20 backdrop-blur-xl border-b border-white/10 
-           shadow-lg rounded-xl transition-all duration-300 
-           hover:bg-black/30 p-1;
+    @apply bg-black/20 backdrop-blur-xl border-b border-white/10 rounded-xl p-1;
+    box-shadow: var(--shadow-2);
+    transition: all 0.25s var(--ease-silk);
+  }
+  
+  .glass-nav:hover {
+    @apply bg-black/30;
   }
 
   .glass-card {
-    @apply glass rounded-2xl transition-all duration-300 
-           hover:bg-white/10 shadow-xl hover:shadow-2xl 
-           hover:shadow-emerald-500/10;
+    @apply glass rounded-2xl;
+    box-shadow: var(--shadow-3);
+    transition: all 0.35s var(--ease-out-luxury);
+  }
+  
+  .glass-card:hover {
+    @apply bg-white/10;
+    box-shadow: var(--shadow-5);
+    transform: translateY(-4px);
   }
 
   .glass-button {
-    @apply glass rounded-full px-6 py-3 text-sm font-semibold 
-           text-white transition-all duration-300 hover:bg-white/20 
-           active:scale-95 disabled:opacity-50 shadow-lg hover:shadow-xl;
+    @apply glass rounded-full px-6 py-3 text-sm font-semibold text-white disabled:opacity-50;
+    box-shadow: var(--shadow-2);
+    transition: all 0.25s var(--ease-silk);
+  }
+  
+  .glass-button:hover {
+    @apply bg-white/20;
+    box-shadow: var(--shadow-3);
+    transform: translateY(-1px);
+  }
+  
+  .glass-button:active {
+    transform: translateY(0) scale(0.96);
+    box-shadow: var(--shadow-1);
   }
 
   .glass-input {
-    @apply glass rounded-lg px-4 py-2 
-           text-white placeholder-white/40 transition-all duration-300
-           focus:outline-none focus:ring-2 focus:ring-emerald-500/50 shadow-lg;
+    @apply glass rounded-lg px-4 py-2 text-white placeholder-white/40;
+    transition: all 0.25s var(--ease-silk);
+  }
+  
+  .glass-input:focus {
+    @apply outline-none border-primary/50;
+    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
   }
 
   .gradient-text {
@@ -101,19 +146,33 @@
 
   /* Smart Interaction States */
   .interactive-card {
-    @apply glass-premium p-6 rounded-2xl cursor-pointer
-           transition-all duration-300 ease-out
-           hover:shadow-[0_25px_60px_-15px_rgba(52,211,153,0.4)]
-           active:scale-[0.98];
+    @apply glass-premium p-6 rounded-2xl cursor-pointer;
+    box-shadow: var(--shadow-2);
+    transition: all 0.35s var(--ease-out-luxury);
+  }
+  
+  .interactive-card:hover {
+    box-shadow: var(--shadow-5);
+    transform: translateY(-6px);
+  }
+  
+  .interactive-card:active {
+    transform: translateY(-2px) scale(0.98);
+    box-shadow: var(--shadow-3);
   }
 
   /* Progressive Disclosure */
   .disclosure-trigger {
-    @apply transition-all duration-300 overflow-hidden;
+    @apply overflow-hidden;
+    transition: all 0.25s var(--ease-silk);
+  }
+  
+  .disclosure-trigger:hover {
+    @apply bg-white/5;
   }
 
   .disclosure-content {
-    @apply transition-all duration-300 ease-out;
+    transition: all 0.35s var(--ease-out-luxury);
   }
 
   /* Enhanced Animations */
@@ -128,5 +187,21 @@
   .shimmer-effect {
     @apply bg-gradient-to-r from-transparent via-white/10 to-transparent
            bg-[length:1000px_100%] animate-shimmer;
+  }
+  
+  /* Luxury Button States */
+  .luxury-button {
+    box-shadow: var(--shadow-2);
+    transition: all 0.25s var(--ease-silk);
+  }
+  
+  .luxury-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-4);
+  }
+  
+  .luxury-button:active {
+    transform: translateY(0) scale(0.96);
+    box-shadow: var(--shadow-1);
   }
 }
