@@ -15,11 +15,14 @@ export const useAIRoommateMatching = () => {
   const [matches, setMatches] = useState<AIMatch[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const findMatches = async (profileId: string) => {
+  const findMatches = async (profileId: string, isAnonymous: boolean = false) => {
     setIsLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke('ai-roommate-matching', {
-        body: { profileId }
+        body: { 
+          profileId,
+          isAnonymous 
+        }
       });
 
       if (error) throw error;

@@ -22,36 +22,56 @@ serve(async (req) => {
     }
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-    const { profileId } = await req.json();
+    const { profileId, isAnonymous } = await req.json();
 
-    console.log('Processing AI match for profile:', profileId);
+    console.log('Processing AI match for profile:', profileId, 'Anonymous:', isAnonymous);
 
-    // Get user's profile and answers
+    // Get user's profile and answers (works for both authenticated and anonymous)
     const { data: userProfile, error: profileError } = await supabase
       .from('profiles')
       .select('*, roommate_answers(*)')
       .eq('id', profileId)
-      .single();
+      .maybeSingle();
 
-    if (profileError) throw profileError;
+    // For anonymous users, profile might not exist in profiles table
+    // but answers are saved with tempId as profile_id
+    let userAnswers = '';
+    let userInfo = '';
 
-    // Get all other profiles with their answers
+    if (userProfile) {
+      userAnswers = userProfile.roommate_answers?.map((a: any) => a.answer).join(', ') || '';
+      userInfo = `
+        Profile: ${userProfile.first_name || 'Anonymous'} ${userProfile.last_name || 'User'}
+        City: ${userProfile.current_city || 'Not specified'}
+        Budget: ${userProfile.budget_min || 0}-${userProfile.budget_max || 0}
+        Move-in: ${userProfile.move_in_date || 'Flexible'}
+        Answers: ${userAnswers}
+      `;
+    } else {
+      // Anonymous user - get answers directly from roommate_answers table
+      const { data: answers } = await supabase
+        .from('roommate_answers')
+        .select('answer')
+        .eq('profile_id', profileId);
+      
+      userAnswers = answers?.map(a => a.answer).join(', ') || '';
+      userInfo = `
+        Profile: Anonymous User
+        Answers: ${userAnswers}
+      `;
+    }
+
+    if (!userAnswers) {
+      throw new Error('No answers found for this profile. Please answer some questions first.');
+    }
+
+    // Get all other profiles with their answers (for matching)
     const { data: otherProfiles, error: profilesError } = await supabase
       .from('profiles')
       .select('*, roommate_answers(*)')
       .neq('id', profileId);
 
     if (profilesError) throw profilesError;
-
-    // Build AI prompt for semantic matching
-    const userAnswers = userProfile.roommate_answers?.map((a: any) => a.answer).join(', ') || '';
-    const userInfo = `
-      Profile: ${userProfile.first_name} ${userProfile.last_name}
-      City: ${userProfile.current_city}
-      Budget: ${userProfile.budget_min}-${userProfile.budget_max}
-      Move-in: ${userProfile.move_in_date}
-      Answers: ${userAnswers}
-    `;
 
     const matches = [];
 

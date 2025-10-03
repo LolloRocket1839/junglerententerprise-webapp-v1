@@ -83,7 +83,22 @@ export const rentalTranslations = {
     enterMinPrice: "Enter minimum price",
     enterMaxPrice: "Enter maximum price",
     minPriceError: "Minimum price cannot be greater than maximum",
-    maxPriceError: "Maximum price cannot be less than minimum"
+    maxPriceError: "Maximum price cannot be less than minimum",
+    
+    // Roommate Finder
+    backToStart: "Back to Start",
+    aiMatch: "AI Match",
+    aiAnalyzing: "AI Analyzing...",
+    profileRequired: "Profile Required",
+    completeProfileForAI: "Complete your profile to use AI matching",
+    quizComplete: "Quiz Complete! 🎉",
+    coinsEarned: "You've earned {coins} Jungle Coins and maintained a {streak} question streak!",
+    startNewQuiz: "Start New Quiz",
+    questionsCompleted: "questions completed",
+    milestoneReached: "Milestone reached! 🎉",
+    questionsAnswered: "You've answered {count} questions! Keep going!",
+    error: "Error",
+    failedToSave: "Failed to save your answer. Please try again."
   },
   
   it: {
@@ -170,7 +185,22 @@ export const rentalTranslations = {
     enterMinPrice: "Inserisci prezzo minimo",
     enterMaxPrice: "Inserisci prezzo massimo",
     minPriceError: "Il prezzo minimo non può essere maggiore del massimo",
-    maxPriceError: "Il prezzo massimo non può essere minore del minimo"
+    maxPriceError: "Il prezzo massimo non può essere minore del minimo",
+    
+    // Roommate Finder
+    backToStart: "Torna all'inizio",
+    aiMatch: "Match con AI",
+    aiAnalyzing: "Analisi AI in corso...",
+    profileRequired: "Profilo Richiesto",
+    completeProfileForAI: "Completa il tuo profilo per usare l'AI matching",
+    quizComplete: "Quiz Completato! 🎉",
+    coinsEarned: "Hai guadagnato {coins} Jungle Coins e mantenuto una serie di {streak} domande!",
+    startNewQuiz: "Inizia Nuovo Quiz",
+    questionsCompleted: "domande completate",
+    milestoneReached: "Traguardo raggiunto! 🎉",
+    questionsAnswered: "Hai risposto a {count} domande! Continua così!",
+    error: "Errore",
+    failedToSave: "Impossibile salvare la risposta. Riprova."
   },
   
   de: {
@@ -257,7 +287,22 @@ export const rentalTranslations = {
     enterMinPrice: "Mindestpreis eingeben",
     enterMaxPrice: "Höchstpreis eingeben",
     minPriceError: "Der Mindestpreis kann nicht höher als der Höchstpreis sein",
-    maxPriceError: "Der Höchstpreis kann nicht niedriger als der Mindestpreis sein"
+    maxPriceError: "Der Höchstpreis kann nicht niedriger als der Mindestpreis sein",
+    
+    // Roommate Finder
+    backToStart: "Zurück zum Anfang",
+    aiMatch: "KI-Match",
+    aiAnalyzing: "KI-Analyse läuft...",
+    profileRequired: "Profil Erforderlich",
+    completeProfileForAI: "Vervollständigen Sie Ihr Profil, um KI-Matching zu nutzen",
+    quizComplete: "Quiz Abgeschlossen! 🎉",
+    coinsEarned: "Sie haben {coins} Jungle-Münzen verdient und eine Serie von {streak} Fragen beibehalten!",
+    startNewQuiz: "Neues Quiz Starten",
+    questionsCompleted: "Fragen beantwortet",
+    milestoneReached: "Meilenstein erreicht! 🎉",
+    questionsAnswered: "Sie haben {count} Fragen beantwortet! Weiter so!",
+    error: "Fehler",
+    failedToSave: "Antwort konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
   },
   
   ro: {
@@ -344,7 +389,22 @@ export const rentalTranslations = {
     enterMinPrice: "Introduceți prețul minim",
     enterMaxPrice: "Introduceți prețul maxim",
     minPriceError: "Prețul minim nu poate fi mai mare decât maximul",
-    maxPriceError: "Prețul maxim nu poate fi mai mic decât minimul"
+    maxPriceError: "Prețul maxim nu poate fi mai mic decât minimul",
+    
+    // Roommate Finder
+    backToStart: "Înapoi la început",
+    aiMatch: "Match AI",
+    aiAnalyzing: "Analiză AI în curs...",
+    profileRequired: "Profil Necesar",
+    completeProfileForAI: "Completează-ți profilul pentru a folosi matchingul AI",
+    quizComplete: "Chestionar Complet! 🎉",
+    coinsEarned: "Ai câștigat {coins} Monede Jungle și ai menținut o serie de {streak} întrebări!",
+    startNewQuiz: "Începe Chestionar Nou",
+    questionsCompleted: "întrebări completate",
+    milestoneReached: "Piatră de hotar atinsă! 🎉",
+    questionsAnswered: "Ai răspuns la {count} întrebări! Continuă așa!",
+    error: "Eroare",
+    failedToSave: "Nu s-a putut salva răspunsul. Te rog încearcă din nou."
   },
   
   es: {
@@ -431,7 +491,22 @@ export const rentalTranslations = {
     enterMinPrice: "Introduce el precio mínimo",
     enterMaxPrice: "Introduce el precio máximo",
     minPriceError: "El precio mínimo no puede ser mayor que el máximo",
-    maxPriceError: "El precio máximo no puede ser menor que el mínimo"
+    maxPriceError: "El precio máximo no puede ser menor que el mínimo",
+    
+    // Roommate Finder
+    backToStart: "Volver al Inicio",
+    aiMatch: "Match con IA",
+    aiAnalyzing: "Análisis de IA en curso...",
+    profileRequired: "Perfil Requerido",
+    completeProfileForAI: "Completa tu perfil para usar el matching de IA",
+    quizComplete: "¡Quiz Completado! 🎉",
+    coinsEarned: "¡Has ganado {coins} Monedas Jungle y mantenido una racha de {streak} preguntas!",
+    startNewQuiz: "Comenzar Nuevo Quiz",
+    questionsCompleted: "preguntas completadas",
+    milestoneReached: "¡Hito alcanzado! 🎉",
+    questionsAnswered: "¡Has respondido {count} preguntas! ¡Sigue así!",
+    error: "Error",
+    failedToSave: "No se pudo guardar tu respuesta. Por favor, inténtalo de nuevo."
   },
   
   fr: {
@@ -518,6 +593,21 @@ export const rentalTranslations = {
     enterMinPrice: "Entrez le prix minimum",
     enterMaxPrice: "Entrez le prix maximum",
     minPriceError: "Le prix minimum ne peut pas être supérieur au maximum",
-    maxPriceError: "Le prix maximum ne peut pas être inférieur au minimum"
+    maxPriceError: "Le prix maximum ne peut pas être inférieur au minimum",
+    
+    // Roommate Finder
+    backToStart: "Retour au Début",
+    aiMatch: "Match IA",
+    aiAnalyzing: "Analyse IA en cours...",
+    profileRequired: "Profil Requis",
+    completeProfileForAI: "Complétez votre profil pour utiliser le matching IA",
+    quizComplete: "Quiz Terminé! 🎉",
+    coinsEarned: "Vous avez gagné {coins} Pièces Jungle et maintenu une série de {streak} questions!",
+    startNewQuiz: "Commencer un Nouveau Quiz",
+    questionsCompleted: "questions complétées",
+    milestoneReached: "Jalon atteint! 🎉",
+    questionsAnswered: "Vous avez répondu à {count} questions! Continuez!",
+    error: "Erreur",
+    failedToSave: "Impossible de sauvegarder votre réponse. Veuillez réessayer."
   }
 };

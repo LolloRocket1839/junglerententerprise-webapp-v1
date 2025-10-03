@@ -8,6 +8,9 @@ import { QuestionDisplay } from "./components/QuestionDisplay";
 import { supabase } from "@/integrations/supabase/client";
 import { Progress } from "@/components/ui/progress";
 import { Loader2 } from "lucide-react";
+import { useProfile } from "@/hooks/useProfile";
+import { useTemporaryProfile } from "@/hooks/useTemporaryProfile";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type Profile = {
   id: string;
@@ -17,7 +20,7 @@ type Profile = {
 interface Category {
   id: string;
   name: string;
-  description: string;  // Added this required field
+  description: string;
   is_premium: boolean;
 }
 
@@ -27,23 +30,10 @@ const QuestionPool = () => {
   const [streak, setStreak] = useState(0);
   const [coins, setCoins] = useState(0);
   const { toast } = useToast();
+  const { t } = useLanguage();
 
-  const { data: profile } = useQuery({
-    queryKey: ['profile'],
-    queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('No user found');
-
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      if (error) throw error;
-      return data as Profile;
-    }
-  });
+  const { data: profile } = useProfile();
+  const { tempProfile, saveAnswer: saveTempAnswer } = useTemporaryProfile();
 
   const { data: categories, isLoading: loadingCategories } = useQuery({
     queryKey: ['roommate_categories'],
@@ -96,21 +86,28 @@ const QuestionPool = () => {
   });
 
   const handleAnswer = async (answer: string, trait: string) => {
-    if (!questions || !profile) return;
+    if (!questions) return;
     
     const currentQuestion = questions[currentQuestionIndex];
+    const profileId = profile?.id || tempProfile?.tempId;
     
     try {
-      const { error } = await supabase
-        .from('roommate_answers')
-        .insert({
-          profile_id: profile.id,
-          question_id: currentQuestion.id,
-          answer,
-          trait
-        });
-
-      if (error) throw error;
+      // Save answer (works for both authenticated and anonymous users)
+      if (profile?.id) {
+        // Authenticated user - save to database normally
+        const { error } = await supabase
+          .from('roommate_answers')
+          .insert({
+            profile_id: profile.id,
+            question_id: currentQuestion.id,
+            answer,
+            trait
+          });
+        if (error) throw error;
+      } else if (tempProfile) {
+        // Anonymous user - save via temporary profile hook
+        await saveTempAnswer(currentQuestion.id, answer, trait);
+      }
 
       // Update streak and coins
       setStreak(prev => prev + 1);
@@ -120,8 +117,8 @@ const QuestionPool = () => {
       // Show milestone messages
       if ((currentQuestionIndex + 1) % 5 === 0) {
         toast({
-          title: "Milestone reached! 🎉",
-          description: `You've answered ${currentQuestionIndex + 1} questions! Keep going!`,
+          title: t('rentalTranslations.milestoneReached'),
+          description: `${t('rentalTranslations.questionsAnswered').replace('{count}', String(currentQuestionIndex + 1))}`,
         });
       }
 
@@ -131,8 +128,8 @@ const QuestionPool = () => {
     } catch (error) {
       console.error('Error saving answer:', error);
       toast({
-        title: "Error",
-        description: "Failed to save your answer. Please try again.",
+        title: t('rentalTranslations.error'),
+        description: t('rentalTranslations.failedToSave'),
         variant: "destructive"
       });
     }
@@ -167,15 +164,15 @@ const QuestionPool = () => {
         />
       ) : (
         <Card className="p-6 glass-card text-center">
-          <h3 className="text-2xl font-bold mb-4">Quiz Complete! 🎉</h3>
+          <h3 className="text-2xl font-bold mb-4">{t('rentalTranslations.quizComplete')}</h3>
           <p className="text-lg mb-6">
-            You've earned {coins} Jungle Coins and maintained a {streak} question streak!
+            {t('rentalTranslations.coinsEarned').replace('{coins}', String(coins)).replace('{streak}', String(streak))}
           </p>
           <Button onClick={() => {
             setSelectedCategory(null);
             setCurrentQuestionIndex(0);
           }}>
-            Start New Quiz
+            {t('rentalTranslations.startNewQuiz')}
           </Button>
         </Card>
       )}
@@ -184,7 +181,7 @@ const QuestionPool = () => {
         <div className="mt-4">
           <Progress value={progress} className="h-2" />
           <p className="text-sm text-white/60 text-right mt-2">
-            {currentQuestionIndex}/{questions.length} questions completed
+            {currentQuestionIndex}/{questions.length} {t('rentalTranslations.questionsCompleted')}
           </p>
         </div>
       )}
