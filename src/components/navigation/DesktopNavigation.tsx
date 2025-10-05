@@ -76,6 +76,13 @@ export default function DesktopNavigation({ onLanguageChange }: DesktopNavigatio
         {t('referral')}
       </Link>
       <Link 
+        to="/sell" 
+        className="text-base text-white/80 hover:text-white transition-all duration-300 
+                   hover:border-b-2 hover:border-primary font-sans tracking-wide bg-primary/10 px-3 py-1 rounded-full"
+      >
+        💰 Sell
+      </Link>
+      <Link 
         to="/admin" 
         className="text-base text-white/80 hover:text-white transition-all duration-300 
                    hover:border-b-2 hover:border-primary font-sans tracking-wide"

@@ -22,6 +22,7 @@ const ListRoom = lazy(() => import('./pages/ListRoom'));
 const Marketplace = lazy(() => import('./pages/Marketplace'));
 const Admin = lazy(() => import('./pages/Admin'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
+const SellProperty = lazy(() => import('./pages/SellProperty'));
 
 // Create a client
 const queryClient = new QueryClient({
@@ -62,6 +63,7 @@ function App() {
                   <Route path="/list-room" element={<ListRoom />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/sell" element={<SellProperty />} />
                 </Routes>
               </Suspense>
               <MobileTabNavigation />

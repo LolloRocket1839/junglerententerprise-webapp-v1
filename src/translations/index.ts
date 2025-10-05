@@ -1,5 +1,8 @@
+import { dealflowTranslations } from './dealflow';
+
 export const translations = {
   IT: {
+    ...dealflowTranslations.IT,
     // Homepage
     welcome: "Benvenuto su",
     payLessEarnMore: "L'Affitto che paga",
@@ -112,6 +115,7 @@ export const translations = {
     intelligentSearch: "Ricerca intelligente per proprietà, coinquilini e tutto ciò di cui hai bisogno"
   },
   EN: {
+    ...dealflowTranslations.EN,
     // Homepage
     welcome: "Welcome to",
     payLessEarnMore: "Pay less earn more",
@@ -224,6 +228,7 @@ export const translations = {
     intelligentSearch: "Intelligent search for properties, roommates, and everything you need"
   },
   FR: {
+    ...dealflowTranslations.FR,
     // Homepage
     welcome: "Bienvenue sur",
     payLessEarnMore: "Payez moins, gagnez plus",
@@ -336,6 +341,7 @@ export const translations = {
     intelligentSearch: "Recherche intelligente pour propriétés, colocataires et tout ce dont vous avez besoin"
   },
   DE: {
+    ...dealflowTranslations.DE,
     // Homepage
     welcome: "Willkommen bei",
     payLessEarnMore: "Weniger zahlen, mehr verdienen",
