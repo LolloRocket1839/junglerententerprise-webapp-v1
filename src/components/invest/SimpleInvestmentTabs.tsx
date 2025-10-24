@@ -4,6 +4,7 @@ import { Phase2Placeholder } from "@/components/invest/Phase2Placeholder";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 
+// Simple tabs without Radix context issues
 export const SimpleInvestmentTabs = () => {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("opportunities");
