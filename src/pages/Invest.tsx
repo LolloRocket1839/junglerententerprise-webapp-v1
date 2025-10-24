@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLanguage } from "@/contexts/LanguageContext";
 import { StatsSection } from "@/components/invest/StatsSection";
-import { InvestmentTabs } from "@/components/invest/InvestmentTabs";
+import { SimpleInvestmentTabs } from "@/components/invest/SimpleInvestmentTabs";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, DollarSign, Shield, Zap, Users, Building2 } from "lucide-react";
@@ -109,7 +109,7 @@ const Invest = () => {
 
         {/* Enhanced Investment Tabs */}
         <div className="glass-premium rounded-3xl p-6">
-          <InvestmentTabs />
+          <SimpleInvestmentTabs />
         </div>
 
         {/* Call to Action */}
