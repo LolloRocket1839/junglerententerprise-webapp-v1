@@ -2,14 +2,14 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TouristProperty } from '@/types/tourist';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import { Bed, Bath, Users, MapPin, Star } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { stayTranslations } from '@/translations/stay';
 
 interface TouristPropertyCardProps {
-  property: TouristProperty;
-  onSelect: (property: TouristProperty) => void;
+  property: UnifiedProperty;
+  onSelect: (property: UnifiedProperty) => void;
 }
 
 export const TouristPropertyCard = ({ property, onSelect }: TouristPropertyCardProps) => {
@@ -42,10 +42,10 @@ export const TouristPropertyCard = ({ property, onSelect }: TouristPropertyCardP
             className="bg-primary text-white"
             variant="secondary"
           >
-            {t('from')} €{property.price_per_night}/{t('night')}
+            {t('from')} €{property.tourist_price_nightly}/{t('night')}
           </Badge>
           
-          {property.capacity >= 3 && (
+          {property.rooms >= 3 && (
             <Badge 
               className="bg-pink-600/80 text-white"
               variant="secondary"
@@ -66,11 +66,11 @@ export const TouristPropertyCard = ({ property, onSelect }: TouristPropertyCardP
         <div className="grid grid-cols-3 gap-2 mb-4">
           <div className="flex items-center gap-1 text-sm text-gray-300">
             <Users size={14} className="text-gray-400" />
-            <span>{property.capacity} {property.capacity === 1 ? t('guest') : t('guestsPlural')}</span>
+            <span>{property.rooms} {property.rooms === 1 ? t('guest') : t('guestsPlural')}</span>
           </div>
           <div className="flex items-center gap-1 text-sm text-gray-300">
             <Bed size={14} className="text-gray-400" />
-            <span>{property.bedrooms} {property.bedrooms === 1 ? t('room') : t('rooms')}</span>
+            <span>{property.rooms} {property.rooms === 1 ? t('room') : t('rooms')}</span>
           </div>
           <div className="flex items-center gap-1 text-sm text-gray-300">
             <Bath size={14} className="text-gray-400" />
@@ -81,14 +81,14 @@ export const TouristPropertyCard = ({ property, onSelect }: TouristPropertyCardP
         <div className="flex justify-between items-center mt-4 pt-4 border-t border-white/10">
           <div>
             <p className="text-sm text-gray-400">{t('cleaning')}</p>
-            <p className="text-base text-white">€{property.cleaning_fee}</p>
+            <p className="text-base text-white">€{property.cleaning_fee || 0}</p>
           </div>
           <div>
             <div className="flex items-center gap-1 mb-1 justify-end">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
               <span className="text-white text-sm">4.8</span>
             </div>
-            <p className="text-lg font-bold text-green-500">€{property.price_per_night + property.cleaning_fee}</p>
+            <p className="text-lg font-bold text-green-500">€{(property.tourist_price_nightly || 0) + (property.cleaning_fee || 0)}</p>
           </div>
         </div>
       </CardContent>

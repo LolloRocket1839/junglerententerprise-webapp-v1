@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/integrations/supabase/client';
-import { TouristProperty } from '@/types/tourist';
 import { TouristPropertyCard } from '@/components/stay/TouristPropertyCard';
 import { BookingSteps } from '@/components/stay/BookingSteps';
 import { BookingForm } from '@/components/stay/BookingForm';
@@ -15,6 +12,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { stayTranslations } from '@/translations/stay';
+import { useUnifiedProperties, UnifiedProperty } from '@/hooks/useUnifiedProperties';
+import { supabase } from '@/integrations/supabase/client';
 
 const FeatureHighlight = ({ icon, text }: { icon: React.ReactNode; text: string }) => (
   <div className="flex items-center space-x-2 text-white/80">
@@ -28,28 +27,17 @@ const FeatureHighlight = ({ icon, text }: { icon: React.ReactNode; text: string 
 const Stay = () => {
   const { language } = useLanguage();
   const t = (key: string) => stayTranslations[language]?.[key] || key;
-  const [selectedProperty, setSelectedProperty] = useState<TouristProperty | null>(null);
+  const [selectedProperty, setSelectedProperty] = useState<UnifiedProperty | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [bookingData, setBookingData] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({ capacity: 0 });
 
-  const { data: properties, isLoading, error } = useQuery({
-    queryKey: ['tourist-properties'],
-    queryFn: async () => {
-      try {
-        const { data, error } = await supabase
-          .from('tourist_properties')
-          .select('*');
-        
-        if (error) throw error;
-        return data as TouristProperty[];
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-        toast.error(t('errorLoadingProperties'));
-        return [];
-      }
-    },
+  // Fetch unified properties for tourist rentals (tourist_only + hybrid)
+  const { data: properties, isLoading, error } = useUnifiedProperties({
+    usageMode: 'tourist_only', // This will include both tourist_only and hybrid
+    status: 'active',
+    enabled: true,
   });
 
   const filteredProperties = properties?.filter(property => {
@@ -58,22 +46,25 @@ const Stay = () => {
       property.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
       property.city.toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesCapacity = filters.capacity === 0 || property.capacity >= filters.capacity;
+    const matchesCapacity = filters.capacity === 0 || (property.rooms && property.rooms >= filters.capacity);
     
     return matchesSearch && matchesCapacity;
   });
 
-  const handlePropertySelect = (property: TouristProperty) => {
+  const handlePropertySelect = (property: UnifiedProperty) => {
     setSelectedProperty(property);
     setCurrentStep(2);
   };
 
   const handleDateSelection = (dates: { checkIn: Date; checkOut: Date, guests: number }) => {
+    const nights = Math.max(1, Math.floor((dates.checkOut.getTime() - dates.checkIn.getTime()) / (1000 * 60 * 60 * 24)));
+    const pricePerNight = selectedProperty?.tourist_price_nightly || 0;
+    const cleaningFee = selectedProperty?.cleaning_fee || 0;
+    
     setBookingData({
       ...dates,
       propertyId: selectedProperty?.id,
-      totalPrice: selectedProperty ? 
-        (dates.guests * selectedProperty.price_per_night * Math.max(1, Math.floor((dates.checkOut.getTime() - dates.checkIn.getTime()) / (1000 * 60 * 60 * 24))) + selectedProperty.cleaning_fee) : 0
+      totalPrice: (nights * pricePerNight) + cleaningFee
     });
     setCurrentStep(3);
   };
@@ -82,19 +73,30 @@ const Stay = () => {
     try {
       toast.loading(t('loading'));
 
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast.dismiss();
+        toast.error("Devi effettuare il login per prenotare");
+        return;
+      }
+
+      const newBooking = {
+        property_id: selectedProperty?.id,
+        guest_id: user.id,
+        booking_type: 'tourist_short' as const,
+        check_in: bookingData.checkIn.toISOString(),
+        check_out: bookingData.checkOut.toISOString(),
+        number_of_guests: bookingData.guests,
+        total_price: bookingData.totalPrice,
+        special_requests: guestInfo.specialRequests || null,
+        payment_status: 'pending',
+        status: 'pending'
+      };
+
       const { data: booking, error: bookingError } = await supabase
-        .from('tourist_bookings')
-        .insert({
-          property_id: selectedProperty?.id,
-          check_in: bookingData.checkIn.toISOString(),
-          check_out: bookingData.checkOut.toISOString(),
-          number_of_guests: bookingData.guests,
-          total_price: bookingData.totalPrice,
-          guest_name: guestInfo.fullName,
-          guest_email: guestInfo.email,
-          guest_phone: guestInfo.phone,
-          special_requests: guestInfo.specialRequests
-        })
+        .from('unified_bookings')
+        .insert(newBooking)
         .select()
         .single();
 
@@ -315,11 +317,11 @@ const Stay = () => {
                     <div className="flex gap-4 mb-4">
                       <div className="flex items-center gap-1 text-white/80">
                         <Users size={16} />
-                        <span>{selectedProperty.capacity} {selectedProperty.capacity === 1 ? t('guest') : t('guestsPlural')}</span>
+                        <span>{selectedProperty.rooms} {selectedProperty.rooms === 1 ? t('guest') : t('guestsPlural')}</span>
                       </div>
                       <div className="flex items-center gap-1 text-white/80">
                         <Bed size={16} />
-                        <span>{selectedProperty.bedrooms} {selectedProperty.bedrooms === 1 ? t('room') : t('rooms')}</span>
+                        <span>{selectedProperty.rooms} {selectedProperty.rooms === 1 ? t('room') : t('rooms')}</span>
                       </div>
                       <div className="flex items-center gap-1 text-white/80">
                         <Bath size={16} />

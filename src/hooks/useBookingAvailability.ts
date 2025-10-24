@@ -1,11 +1,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { TouristProperty } from "@/types/tourist";
+import { UnifiedProperty } from "@/hooks/useUnifiedProperties";
 import { differenceInDays } from "date-fns";
 
 interface UseBookingAvailabilityProps {
-  property: TouristProperty;
+  property: UnifiedProperty;
   checkIn?: Date;
   checkOut?: Date;
 }
@@ -26,7 +26,7 @@ export function useBookingAvailability({
       
       try {
         const { data, error } = await supabase
-          .from('tourist_bookings')
+          .from('unified_bookings')
           .select('check_in, check_out')
           .eq('property_id', property.id)
           .neq('status', 'canceled')

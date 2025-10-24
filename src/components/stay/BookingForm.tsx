@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { TouristProperty } from "@/types/tourist";
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import { toast } from "sonner";
 import { DateRangePicker } from "./DateRangePicker";
 import { useBookingAvailability } from "@/hooks/useBookingAvailability";
@@ -12,7 +12,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { stayTranslations } from '@/translations/stay';
 
 interface BookingFormProps {
-  property: TouristProperty;
+  property: UnifiedProperty;
   onBook: (dates: { checkIn: Date; checkOut: Date; guests: number }) => void;
 }
 
@@ -57,8 +57,8 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
   // Calculate if we can proceed (has dates and availability check is complete)
   const canProceed = checkIn && checkOut && !isLoading && isAvailable;
 
-  const basePrice = property.price_per_night * nights;
-  const cleaningFee = property.cleaning_fee;
+  const basePrice = (property.tourist_price_nightly || 0) * nights;
+  const cleaningFee = property.cleaning_fee || 0;
   const total = basePrice + cleaningFee;
 
   return (
@@ -86,8 +86,8 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
             <span className="text-white font-medium w-8 text-center">{guests}</span>
             <Button
               type="button"
-              onClick={() => setGuests(Math.min(property.capacity, guests + 1))}
-              disabled={guests >= property.capacity}
+              onClick={() => setGuests(Math.min(property.rooms || 4, guests + 1))}
+              disabled={guests >= (property.rooms || 4)}
               className="h-8 w-8 p-0 rounded-full bg-primary hover:bg-primary/80 border-0 disabled:opacity-30"
             >
               <Plus size={14} />
@@ -99,7 +99,7 @@ export const BookingForm = ({ property, onBook }: BookingFormProps) => {
         {nights > 0 && (
           <div className="p-3 bg-white/5 border border-white/10 rounded-lg">
             <div className="flex justify-between text-sm text-white/70 mb-1">
-              <span>€{property.price_per_night} × {nights} {nights === 1 ? t('night') : t('nights')}</span>
+              <span>€{property.tourist_price_nightly || 0} × {nights} {nights === 1 ? t('night') : t('nights')}</span>
               <span>€{basePrice}</span>
             </div>
             <div className="flex justify-between text-sm text-white/70 mb-2">
