@@ -37,7 +37,7 @@ export function useDealflowSubmit() {
       const { data: { user } } = await supabase.auth.getUser();
 
       // Insert into property_dealflow table
-      const { data: submission, error } = await supabase
+      const { data: submission, error } = await (supabase as any)
         .from('property_dealflow')
         .insert({
           submitter_id: user?.id || null,

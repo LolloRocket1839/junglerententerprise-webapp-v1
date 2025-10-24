@@ -37,14 +37,14 @@ export function DealflowManager() {
 
   const fetchSubmissions = async () => {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .from('property_dealflow')
         .select('*')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setSubmissions(data || []);
-      setFilteredSubmissions(data || []);
+      setSubmissions((data as any) || []);
+      setFilteredSubmissions((data as any) || []);
     } catch (error) {
       console.error('Error fetching dealflow submissions:', error);
     } finally {

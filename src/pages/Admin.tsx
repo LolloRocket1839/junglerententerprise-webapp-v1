@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SimplePropertyManager from '@/components/admin/SimplePropertyManager';
+import { DealflowManager } from '@/components/admin/DealflowManager';
 import { GlassCard } from '@/components/ui/glass-card';
 import { Badge } from '@/components/ui/badge';
-import { Settings, Database, Users, TreePine, Building2, Sparkles, Shield, Activity } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Settings, Database, Users, TreePine, Building2, Sparkles, Shield, Activity, ClipboardList } from 'lucide-react';
 
 const AdminStatCard = ({ icon, title, stat, status }: { 
   icon: React.ReactNode; 
@@ -28,6 +30,8 @@ const AdminStatCard = ({ icon, title, stat, status }: {
 };
 
 const Admin = () => {
+  const [activeTab, setActiveTab] = useState<'properties' | 'dealflow'>('properties');
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a472a] via-[#2d5a3f] to-[#3d6b52] relative overflow-hidden">
       {/* Floating Background Elements */}
@@ -132,8 +136,32 @@ const Admin = () => {
       {/* Admin Panel with Glass Container */}
       <div className="relative z-10">
         <div className="container mx-auto px-4">
+          {/* Tabs */}
+          <div className="flex gap-2 mb-6">
+            <Button
+              onClick={() => setActiveTab('properties')}
+              variant={activeTab === 'properties' ? 'default' : 'outline'}
+              className="gap-2"
+            >
+              <Building2 size={16} />
+              Property Management
+            </Button>
+            <Button
+              onClick={() => setActiveTab('dealflow')}
+              variant={activeTab === 'dealflow' ? 'default' : 'outline'}
+              className="gap-2"
+            >
+              <ClipboardList size={16} />
+              Dealflow
+            </Button>
+          </div>
+          
           <GlassCard className="p-6 rounded-3xl">
-            <SimplePropertyManager />
+            {activeTab === 'properties' ? (
+              <SimplePropertyManager />
+            ) : (
+              <DealflowManager />
+            )}
           </GlassCard>
         </div>
       </div>

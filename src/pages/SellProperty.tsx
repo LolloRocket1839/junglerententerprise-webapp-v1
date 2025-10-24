@@ -63,7 +63,22 @@ export default function SellProperty() {
     const validDocumentUrls = documentUrls.filter(url => url !== null) as string[];
 
     const result = await submitProperty({
-      ...data,
+      contactName: data.contactName!,
+      contactEmail: data.contactEmail!,
+      contactPhone: data.contactPhone,
+      propertyAddress: data.propertyAddress!,
+      propertyCity: data.propertyCity!,
+      propertyPostalCode: data.propertyPostalCode,
+      propertyType: data.propertyType!,
+      sizeSqm: data.sizeSqm,
+      rooms: data.rooms,
+      bathrooms: data.bathrooms,
+      floorNumber: data.floorNumber,
+      askingPrice: data.askingPrice!,
+      currentRentalIncome: data.currentRentalIncome,
+      estimatedValue: data.estimatedValue,
+      description: data.description!,
+      uniqueSellingPoints: data.uniqueSellingPoints,
       images: validImageUrls,
       documents: validDocumentUrls,
     });

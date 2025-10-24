@@ -63,7 +63,7 @@ export function DealflowCard({ submission, onUpdate }: DealflowCardProps) {
 
   const handleUpdate = async () => {
     try {
-      const { error } = await supabase
+      const { error } = await (supabase as any)
         .from('property_dealflow')
         .update({
           status,
