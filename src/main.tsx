@@ -1,5 +1,5 @@
 
-// Force hard refresh - Cache break 2025
+// Force hard refresh - Cache break 2025 v6-FINAL
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
