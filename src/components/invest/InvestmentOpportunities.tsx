@@ -3,22 +3,25 @@ import { Dialog } from "@/components/ui/dialog";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { Property } from './types';
+import { useUnifiedProperties, UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import PropertyCard from './PropertyCard';
 import InvestmentOpportunityDialog from './InvestmentOpportunityDialog';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const InvestmentOpportunities = () => {
-  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+  const [selectedProperty, setSelectedProperty] = useState<UnifiedProperty | null>(null);
   const [showDetails, setShowDetails] = useState(false);
 
+  // Fetch properties available for investment (with investment_goal > 0)
   const { data: properties, isLoading, error } = useQuery({
     queryKey: ['investment-properties'],
     queryFn: async () => {
-      console.log('[InvestmentOpportunities] Fetching properties from hubs table...');
+      console.log('[InvestmentOpportunities] Fetching properties from unified_properties...');
       const { data, error } = await supabase
-        .from('hubs')
+        .from('unified_properties')
         .select('*')
+        .eq('status', 'active')
+        .gt('investment_goal', 0)
         .order('created_at', { ascending: false });
 
       if (error) {
@@ -27,13 +30,13 @@ const InvestmentOpportunities = () => {
       }
 
       console.log('[InvestmentOpportunities] Fetched properties:', data?.length || 0);
-      return data as Property[];
+      return data as UnifiedProperty[];
     },
     retry: 1,
     retryDelay: 1000
   });
 
-  const handlePropertyClick = (property: Property) => {
+  const handlePropertyClick = (property: UnifiedProperty) => {
     console.log("Selected property:", property);
     setSelectedProperty(property);
     setShowDetails(true);
@@ -64,16 +67,30 @@ const InvestmentOpportunities = () => {
               key={i}
               property={{
                 id: i.toString(),
-                name: '',
-                location: '',
+                title: '',
+                address: '',
+                city: '',
                 description: '',
-                price_per_night: 0,
-                amenities: [],
                 images: [],
-                rating: null,
-                reviews_count: 0,
                 investment_goal: 100000,
-                amount_raised: 0
+                amount_raised: 0,
+                investor_share_percentage: 0,
+                tokens_issued: 0,
+                status: 'active',
+                source: 'direct',
+                rooms: 0,
+                has_kitchen: false,
+                has_living_room: false,
+                has_balcony: false,
+                is_furnished: false,
+                appliances: [],
+                amenities: [],
+                utilities: [],
+                internet_available: false,
+                utilities_included: false,
+                usage_mode: 'hybrid',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
               }}
               onInvest={handlePropertyClick}
               onInfo={handlePropertyClick}

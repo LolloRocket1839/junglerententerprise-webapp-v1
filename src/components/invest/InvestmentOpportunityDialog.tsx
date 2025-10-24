@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Property } from './types';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import InvestmentHeader from './InvestmentHeader';
 import InvestmentContent from './InvestmentContent';
 import InvestmentFooter from './InvestmentFooter';
 
 interface InvestmentOpportunityDialogProps {
-  property: Property;
+  property: UnifiedProperty;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onInvest: (amount: number) => void;
@@ -34,8 +34,8 @@ const InvestmentOpportunityDialog: React.FC<InvestmentOpportunityDialogProps> = 
       <DialogContent className="max-w-6xl w-full bg-gradient-to-br from-black/95 to-green-950/95 backdrop-blur-xl border border-white/10 p-0 gap-0 max-h-[90vh] overflow-y-auto">
         <div className="flex flex-col min-h-[90vh]">
           <InvestmentHeader 
-            propertyName={property.name}
-            location={property.location}
+            propertyName={property.title}
+            location={`${property.address}, ${property.city}`}
           />
           
           <div className="flex-1 overflow-y-auto">

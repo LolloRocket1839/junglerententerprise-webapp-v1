@@ -18,11 +18,11 @@ serve(async (req) => {
   }
 
   try {
-    const { amount, hub_id } = await req.json();
+    const { amount, property_id } = await req.json();
     
-    // Validate hub_id is a valid UUID
-    if (!hub_id || !isValidUUID(hub_id)) {
-      throw new Error('Invalid hub ID format');
+    // Validate property_id is a valid UUID
+    if (!property_id || !isValidUUID(property_id)) {
+      throw new Error('Invalid property ID format');
     }
 
     // Validate amount is a valid number
@@ -54,7 +54,7 @@ serve(async (req) => {
       .from('investments')
       .insert({
         profile_id: user.id,
-        hub_id: hub_id,
+        property_id: property_id,
         amount: parsedAmount,
         tokens: Math.floor(parsedAmount / 1000),
         status: 'pending',

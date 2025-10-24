@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Info, ImageIcon, EuroIcon } from 'lucide-react';
-import { Property } from './types';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import ProgressBar from './ProgressBar';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { investTranslations } from '@/translations/invest';
 
 interface PropertyCardProps {
-  property: Property;
-  onInvest: (property: Property) => void;
-  onInfo: (property: Property) => void;
+  property: UnifiedProperty;
+  onInvest: (property: UnifiedProperty) => void;
+  onInfo: (property: UnifiedProperty) => void;
   className?: string;
 }
 
@@ -42,7 +42,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
           <>
             <img
               src={property.images[currentImageIndex]}
-              alt={`${property.name} - ${currentImageIndex === 0 ? t('exterior') : t('interior')}`}
+              alt={`${property.title} - ${currentImageIndex === 0 ? t('exterior') : t('interior')}`}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               loading="lazy"
             />
@@ -64,10 +64,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
       </div>
       <div className="p-6 space-y-6">
         <div>
-          <h3 className="text-lg font-semibold text-white">{property.name}</h3>
-          <p className="text-sm text-white/60">{property.location}</p>
+          <h3 className="text-lg font-semibold text-white">{property.title}</h3>
+          <p className="text-sm text-white/60">{property.city}</p>
         </div>
-        <p className="text-sm text-white/80 line-clamp-2">{t(property.description)}</p>
+        <p className="text-sm text-white/80 line-clamp-2">{property.description}</p>
         
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
@@ -79,7 +79,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
           <div className="text-right">
             <p className="text-xs text-white/60">{t('expectedROI')}</p>
             <p className="text-base font-semibold text-primary">
-              {property.rating ? `${property.rating}%` : t('tbd')}
+              {property.investor_share_percentage ? `${property.investor_share_percentage}%` : t('tbd')}
             </p>
           </div>
         </div>

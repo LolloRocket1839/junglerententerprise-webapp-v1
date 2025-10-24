@@ -1,5 +1,5 @@
 import React from 'react';
-import { Property } from './types';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PropertyGallery from './PropertyGallery';
 import PropertyStats from './PropertyStats';
@@ -12,7 +12,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { investTranslations } from '@/translations/invest';
 
 interface InvestmentContentProps {
-  property: Property;
+  property: UnifiedProperty;
   currentImageIndex: number;
   onToggleImage: () => void;
   investmentAmount: number;
@@ -32,7 +32,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
   const t = (key: string) => investTranslations[language]?.[key] || key;
   
   const calculateROI = (amount: number) => {
-    return ((property.rating || 8) / 100 * amount).toFixed(2);
+    return ((property.investor_share_percentage || 8) / 100 * amount).toFixed(2);
   };
 
   const calculateUnits = (amount: number) => {
@@ -59,7 +59,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
         <div className="glass-card p-6 space-y-6 shadow-xl backdrop-blur-2xl">
           <div className="space-y-4">
             <h3 className="text-3xl font-bold text-white tracking-tight antialiased">
-              {property.name}
+              {property.title}
             </h3>
             <p className="text-lg text-white/90 leading-relaxed font-medium antialiased">
               {property.description}
@@ -69,8 +69,8 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
           <PropertyStats
             key={language}
             units={12}
-            reviewsCount={property.reviews_count || 0}
-            rating={property.rating || 8}
+            reviewsCount={0}
+            rating={property.investor_share_percentage || 8}
           />
           
           <div className="pt-4">
@@ -120,7 +120,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
                 onAmountChange={setInvestmentAmount}
                 minInvestment={100}
                 maxInvestment={property.investment_goal}
-                roi={property.rating || 8}
+                roi={property.investor_share_percentage || 8}
                 onInvest={onInvest}
               />
 

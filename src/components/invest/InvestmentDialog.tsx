@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Property } from './types';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,7 +20,7 @@ import InvestmentSummaryBox from './InvestmentSummaryBox';
 import InvestmentSuccessNotification from './InvestmentSuccessNotification';
 
 interface InvestmentDialogProps {
-  property: Property;
+  property: UnifiedProperty;
   investmentAmount: string;
   setInvestmentAmount: (amount: string) => void;
   onClose: () => void;
@@ -79,7 +79,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
       const response = await supabase.functions.invoke('create-checkout', {
         body: {
           amount: parseFloat(investmentAmount),
-          hub_id: property.id
+          property_id: property.id
         }
       });
 
@@ -111,7 +111,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
     return (
       <InvestmentSuccessNotification
         amount={investmentAmount}
-        propertyName={property.name}
+        propertyName={property.title}
       />
     );
   }
@@ -120,7 +120,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
     <DialogContent className="sm:max-w-[425px] bg-gradient-to-br from-[#1a2e2a] to-[#2a3f35] backdrop-blur-xl border border-white/10">
       <DialogHeader className="space-y-4">
         <DialogTitle className="text-3xl font-bold tracking-tight text-white drop-shadow-xl">
-          Investi in {property.name}
+          Investi in {property.title}
         </DialogTitle>
         <DialogDescription className="text-lg text-gray-200 font-medium border-b border-white/20 pb-4">
           Inserisci l'importo che desideri investire in questa proprietà.
@@ -161,7 +161,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
 
         <InvestmentSummaryBox
           amount={investmentAmount}
-          roi={property.rating?.toString() || "0"}
+          roi={property.investor_share_percentage?.toString() || "0"}
           estimatedDate={formattedDate}
         />
 
