@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import SimplePropertyManager from '@/components/admin/SimplePropertyManager';
 import { DealflowManager } from '@/components/admin/DealflowManager';
+import { RevenueTracker } from '@/components/admin/RevenueTracker';
 import { GlassCard } from '@/components/ui/glass-card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Settings, Database, Users, TreePine, Building2, Sparkles, Shield, Activity, ClipboardList } from 'lucide-react';
+import { Settings, Database, Users, TreePine, Building2, Sparkles, Shield, Activity, ClipboardList, DollarSign } from 'lucide-react';
 
 const AdminStatCard = ({ icon, title, stat, status }: { 
   icon: React.ReactNode; 
@@ -30,7 +31,7 @@ const AdminStatCard = ({ icon, title, stat, status }: {
 };
 
 const Admin = () => {
-  const [activeTab, setActiveTab] = useState<'properties' | 'dealflow'>('properties');
+  const [activeTab, setActiveTab] = useState<'properties' | 'dealflow' | 'revenue'>('properties');
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a472a] via-[#2d5a3f] to-[#3d6b52] relative overflow-hidden">
@@ -154,14 +155,20 @@ const Admin = () => {
               <ClipboardList size={16} />
               Dealflow
             </Button>
+            <Button
+              onClick={() => setActiveTab('revenue')}
+              variant={activeTab === 'revenue' ? 'default' : 'outline'}
+              className="gap-2"
+            >
+              <DollarSign size={16} />
+              Revenue & Returns
+            </Button>
           </div>
           
           <GlassCard className="p-6 rounded-3xl">
-            {activeTab === 'properties' ? (
-              <SimplePropertyManager />
-            ) : (
-              <DealflowManager />
-            )}
+            {activeTab === 'properties' && <SimplePropertyManager />}
+            {activeTab === 'dealflow' && <DealflowManager />}
+            {activeTab === 'revenue' && <RevenueTracker />}
           </GlassCard>
         </div>
       </div>
