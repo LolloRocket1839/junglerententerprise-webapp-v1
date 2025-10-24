@@ -30,6 +30,72 @@ export function useDealflowSubmit() {
   const { toast } = useToast();
   const { t } = useLanguage();
 
+  const convertToUnifiedProperty = async (dealflowId: string, usageMode: 'student_only' | 'tourist_only' | 'hybrid' = 'hybrid') => {
+    setIsSubmitting(true);
+    try {
+      // Fetch the dealflow submission
+      const { data: dealflow, error: fetchError } = await (supabase as any)
+        .from('property_dealflow')
+        .select('*')
+        .eq('id', dealflowId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      // Create unified property
+      const { data: property, error: insertError } = await supabase
+        .from('unified_properties')
+        .insert({
+          source: 'dealflow',
+          dealflow_id: dealflowId,
+          status: 'active',
+          title: `${dealflow.property_type} in ${dealflow.property_city}`,
+          description: dealflow.description,
+          address: dealflow.property_address,
+          city: dealflow.property_city,
+          postal_code: dealflow.property_postal_code,
+          images: dealflow.images || [],
+          size_sqm: dealflow.size_sqm,
+          rooms: dealflow.rooms || 1,
+          bathrooms: dealflow.bathrooms || 1,
+          floor_number: dealflow.floor_number,
+          usage_mode: usageMode,
+          current_value: dealflow.estimated_value,
+          acquisition_cost: dealflow.asking_price,
+          // Set default prices based on usage mode
+          student_price_monthly: usageMode !== 'tourist_only' ? dealflow.current_rental_income || null : null,
+          tourist_price_nightly: usageMode !== 'student_only' ? null : null,
+        })
+        .select()
+        .single();
+
+      if (insertError) throw insertError;
+
+      // Update dealflow status
+      await (supabase as any)
+        .from('property_dealflow')
+        .update({ status: 'converted' })
+        .eq('id', dealflowId);
+
+      toast({
+        title: "Property Created",
+        description: "Dealflow submission converted to unified property successfully",
+      });
+
+      return { success: true, propertyId: property.id };
+    } catch (error) {
+      console.error('Error converting to unified property:', error);
+      toast({
+        title: "Conversion Failed",
+        description: "Failed to convert dealflow to property",
+        variant: 'destructive',
+      });
+      return { success: false };
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const submitProperty = async (data: DealflowSubmission) => {
     setIsSubmitting(true);
     try {
@@ -136,6 +202,7 @@ export function useDealflowSubmit() {
 
   return {
     submitProperty,
+    convertToUnifiedProperty,
     uploadImage,
     uploadDocument,
     isSubmitting,
