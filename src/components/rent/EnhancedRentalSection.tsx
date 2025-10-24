@@ -57,16 +57,17 @@ const EnhancedRentalSection = () => {
       if (selectedCity) {
         try {
           let query = supabase
-            .from('student_properties')
+            .from('unified_properties')
             .select('*')
             .eq('city', selectedCity)
-            .eq('current_status', 'available');
+            .eq('status', 'active')
+            .in('usage_mode', ['student_only', 'hybrid']);
 
           if (searchParams.minPrice) {
-            query = query.gte('discounted_price_monthly', parseInt(searchParams.minPrice));
+            query = query.gte('student_price_monthly', parseInt(searchParams.minPrice));
           }
           if (searchParams.maxPrice) {
-            query = query.lte('discounted_price_monthly', parseInt(searchParams.maxPrice));
+            query = query.lte('student_price_monthly', parseInt(searchParams.maxPrice));
           }
           if (searchParams.roomType) {
             query = query.eq('rooms', parseInt(searchParams.roomType));

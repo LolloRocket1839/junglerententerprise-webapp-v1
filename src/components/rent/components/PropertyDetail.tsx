@@ -6,6 +6,7 @@ import { Heart, MapPin, Home, Calendar, CheckCircle, Phone, Key } from 'lucide-r
 import { Application } from '../types';
 import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
+import { getMonthlyPrice, getMarketPrice, getDiscountPercentage, getAvailabilityStart, getDepositAmount } from '@/utils/propertyAdapter';
 
 interface PropertyDetailProps {
   property: UnifiedProperty;
@@ -32,6 +33,12 @@ export const PropertyDetail = ({
   const handleCallClick = () => {
     window.location.href = `tel:${phoneNumber}`;
   };
+
+  const monthlyPrice = getMonthlyPrice(property);
+  const marketPrice = getMarketPrice(property);
+  const discountPercentage = getDiscountPercentage(property);
+  const availabilityStart = getAvailabilityStart(property);
+  const depositAmount = getDepositAmount(property);
 
   return (
     <div className="max-w-6xl mx-auto animate-fade-in">
@@ -60,10 +67,10 @@ export const PropertyDetail = ({
               >
                 <Heart className={`h-5 w-5 ${isFavorite ? 'fill-red-500 text-red-500' : ''}`} />
               </Button>
-              {property.discount_percentage > 0 && (
+              {discountPercentage > 0 && (
                 <div className="absolute top-4 left-4">
                   <Badge className="bg-green-500 text-white">
-                    -{property.discount_percentage}%
+                    -{discountPercentage}%
                   </Badge>
                 </div>
               )}
@@ -102,7 +109,7 @@ export const PropertyDetail = ({
                 <div className="glass p-3 rounded text-center">
                   <Calendar className="w-5 h-5 text-primary mx-auto mb-1" />
                   <span className="text-white text-sm font-semibold">
-                    {new Date(property.availability_start).toLocaleDateString('it-IT', {month: 'short', day: 'numeric'})}
+                    {new Date(availabilityStart).toLocaleDateString('it-IT', {month: 'short', day: 'numeric'})}
                   </span>
                   <span className="block text-white/60 text-xs">Disponibile dal</span>
                 </div>
@@ -142,19 +149,19 @@ export const PropertyDetail = ({
             <div className="space-y-3 mb-6">
               <div className="flex justify-between text-white/80">
                 <span>Prezzo di mercato</span>
-                <span className="line-through">€{property.market_price_monthly}/mese</span>
+                <span className="line-through">€{marketPrice}/mese</span>
               </div>
               <div className="flex justify-between text-white font-bold text-lg">
                 <span>Prezzo scontato</span>
-                <span>€{property.discounted_price_monthly}/mese</span>
+                <span>€{monthlyPrice}/mese</span>
               </div>
               <div className="flex justify-between text-green-500">
                 <span>Risparmio</span>
-                <span>€{property.market_price_monthly - property.discounted_price_monthly}/mese</span>
+                <span>€{marketPrice - monthlyPrice}/mese</span>
               </div>
               <div className="pt-3 border-t border-white/10 flex justify-between text-white/80">
                 <span>Cauzione</span>
-                <span>€{property.discounted_price_monthly * 2}</span>
+                <span>€{depositAmount}</span>
               </div>
             </div>
             

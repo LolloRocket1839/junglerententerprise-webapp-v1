@@ -6,6 +6,7 @@ import { Heart, MapPin, Home, Calendar, CheckCircle, Phone, Key, Bed, Bath, Wifi
 import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import { useState } from "react";
+import { getMonthlyPrice, getMarketPrice, getDiscountPercentage, getAvailabilityStart, getDepositAmount, getCurrentStatus } from '@/utils/propertyAdapter';
 
 interface PropertyDetailDialogProps {
   property: UnifiedProperty | null;
@@ -29,6 +30,12 @@ export const PropertyDetailDialog = ({
   if (!property) return null;
 
   const phoneNumber = "+393319053037";
+  const monthlyPrice = getMonthlyPrice(property);
+  const marketPrice = getMarketPrice(property);
+  const discountPercentage = getDiscountPercentage(property);
+  const availabilityStart = getAvailabilityStart(property);
+  const depositAmount = getDepositAmount(property);
+  const currentStatus = getCurrentStatus(property);
 
   const handleCallClick = () => {
     window.location.href = `tel:${phoneNumber}`;
@@ -67,9 +74,9 @@ export const PropertyDetailDialog = ({
                 alt={property.title}
                 className="w-full h-full object-cover"
               />
-              {property.discount_percentage > 0 && (
+              {discountPercentage > 0 && (
                 <Badge className="absolute top-4 left-4 bg-green-500 text-white">
-                  -{property.discount_percentage}% SCONTO
+                  -{discountPercentage}% SCONTO
                 </Badge>
               )}
             </div>
@@ -166,14 +173,14 @@ export const PropertyDetailDialog = ({
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Prezzo di mercato</p>
                   <p className="text-lg line-through text-muted-foreground">
-                    €{property.market_price_monthly}/mese
+                    €{marketPrice}/mese
                   </p>
                 </div>
                 
                 <div>
                   <p className="text-sm text-muted-foreground mb-1">Prezzo Jungle Rent</p>
                   <p className="text-3xl font-bold text-primary">
-                    €{property.discounted_price_monthly}
+                    €{monthlyPrice}
                     <span className="text-sm font-normal text-muted-foreground">/mese</span>
                   </p>
                 </div>
@@ -182,13 +189,13 @@ export const PropertyDetailDialog = ({
                   <div className="flex justify-between text-sm mb-2">
                     <span className="text-muted-foreground">Risparmio mensile</span>
                     <span className="font-semibold text-green-500">
-                      €{property.market_price_monthly - property.discounted_price_monthly}
+                      €{marketPrice - monthlyPrice}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm mb-2">
                     <span className="text-muted-foreground">Cauzione richiesta</span>
                     <span className="font-semibold">
-                      €{property.deposit_amount || property.discounted_price_monthly * 2}
+                      €{depositAmount}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
@@ -204,15 +211,15 @@ export const PropertyDetailDialog = ({
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Calendar className="w-4 h-4" />
                   <span>
-                    Disponibile dal {new Date(property.availability_start).toLocaleDateString('it-IT', {
+                    Disponibile dal {new Date(availabilityStart).toLocaleDateString('it-IT', {
                       day: 'numeric',
                       month: 'long',
                       year: 'numeric'
                     })}
                   </span>
                 </div>
-                <Badge variant={property.current_status === 'available' ? 'default' : 'secondary'}>
-                  {property.current_status === 'available' ? 'Disponibile' : 'Non disponibile'}
+                <Badge variant={currentStatus === 'active' ? 'default' : 'secondary'}>
+                  {currentStatus === 'active' ? 'Disponibile' : 'Non disponibile'}
                 </Badge>
               </div>
 
@@ -221,7 +228,7 @@ export const PropertyDetailDialog = ({
                   className="w-full"
                   size="lg"
                   onClick={() => onBooking(property)}
-                  disabled={property.current_status !== 'available'}
+                  disabled={currentStatus !== 'active'}
                 >
                   <Key className="mr-2 h-5 w-5" />
                   Affitta ora
