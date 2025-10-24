@@ -4,15 +4,15 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Heart, MapPin, Home, Calendar, CheckCircle, Phone, Key } from 'lucide-react';
 import { Application } from '../types';
-import { StudentProperty } from '@/types/rental';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 
 interface PropertyDetailProps {
-  property: StudentProperty;
+  property: UnifiedProperty;
   isFavorite: boolean;
   onFavoriteToggle: (id: string) => void;
   onBack: () => void;
-  onApply: (property: StudentProperty) => void;
+  onApply: (property: UnifiedProperty) => void;
   applications: Application[];
 }
 

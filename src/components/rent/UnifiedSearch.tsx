@@ -10,8 +10,7 @@ import { toast } from '@/components/ui/use-toast';
 import { SmartRecommendations } from '@/components/smart/SmartRecommendations';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { PropertyList } from './components/PropertyList';
-import { supabase } from '@/integrations/supabase/client';
-import { StudentProperty } from '@/types/rental';
+import { useUnifiedProperties, UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import { PropertyDetailDialog } from './components/dialogs/PropertyDetailDialog';
 import { BookingDialog } from './components/dialogs/BookingDialog';
 
@@ -34,17 +33,23 @@ export const UnifiedSearch = ({ initialTab = 'property', searchQuery = '' }: Uni
     moveInDate: '',
   });
   const [showFilters, setShowFilters] = useState(false);
-  const [searchResults, setSearchResults] = useState<StudentProperty[]>([]);
+  const [filteredResults, setFilteredResults] = useState<UnifiedProperty[]>([]);
   const [showResults, setShowResults] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
+  
+  // Fetch unified properties for student rentals (student_only + hybrid)
+  const { data: allProperties = [], isLoading: isLoadingProperties } = useUnifiedProperties({
+    usageMode: 'student_only', // This will include both student_only and hybrid
+    status: 'active',
+    enabled: true,
+  });
 
   // Smart recommendation logic
   const shouldRecommendRoommate = (params: SearchParams) => {
     return params.roomType === '' || params.roomType === '2' || params.roomType === '3' || params.roomType === '4';
   };
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     if (!searchParams.city || !searchParams.university) {
       toast({
         title: "Inserisci i dati richiesti",
@@ -54,72 +59,62 @@ export const UnifiedSearch = ({ initialTab = 'property', searchQuery = '' }: Uni
       return;
     }
 
-    setIsSearching(true);
     console.log('[UnifiedSearch] Searching with params:', searchParams);
 
-    try {
-      let query = supabase
-        .from('student_properties')
-        .select('*')
-        .eq('city', searchParams.city)
-        .eq('current_status', 'available');
+    // Filter properties based on search criteria
+    let filtered = allProperties.filter(property => property.city === searchParams.city);
 
-      // Apply price filters
-      if (searchParams.minPrice) {
-        query = query.gte('discounted_price_monthly', parseFloat(searchParams.minPrice));
-      }
-      if (searchParams.maxPrice) {
-        query = query.lte('discounted_price_monthly', parseFloat(searchParams.maxPrice));
-      }
-
-      // Apply room type filter
-      if (searchParams.roomType) {
-        query = query.eq('rooms', parseInt(searchParams.roomType));
-      }
-
-      const { data, error } = await query.order('discounted_price_monthly', { ascending: true });
-
-      if (error) {
-        console.error('[UnifiedSearch] Error fetching properties:', error);
-        throw error;
-      }
-
-      console.log('[UnifiedSearch] Found properties:', data?.length || 0);
-      setSearchResults(data as StudentProperty[] || []);
-      setShowResults(true);
-
-      // Smart suggestion for roommate
-      if (searchMode === 'property' && shouldRecommendRoommate(searchParams)) {
-        toast({
-          title: "💡 Suggerimento intelligente",
-          description: "Stai cercando una casa condivisa? Potresti trovare prima un coinquilino!",
-          action: (
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => setSearchMode('smart')}
-              className="bg-white/10 border-white/20 text-white hover:bg-white/20"
-            >
-              Trova Coinquilino
-            </Button>
-          )
-        });
-      }
-
-      toast({
-        title: "Ricerca completata",
-        description: `${data?.length || 0} alloggi trovati`,
-      });
-    } catch (error) {
-      console.error('[UnifiedSearch] Search error:', error);
-      toast({
-        title: "Errore nella ricerca",
-        description: "Si è verificato un errore durante la ricerca. Riprova.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSearching(false);
+    // Apply price filters
+    if (searchParams.minPrice) {
+      const minPrice = parseFloat(searchParams.minPrice);
+      filtered = filtered.filter(p => 
+        p.student_price_monthly && p.student_price_monthly >= minPrice
+      );
     }
+    if (searchParams.maxPrice) {
+      const maxPrice = parseFloat(searchParams.maxPrice);
+      filtered = filtered.filter(p => 
+        p.student_price_monthly && p.student_price_monthly <= maxPrice
+      );
+    }
+
+    // Apply room type filter
+    if (searchParams.roomType) {
+      const rooms = parseInt(searchParams.roomType);
+      filtered = filtered.filter(p => p.rooms === rooms);
+    }
+
+    // Sort by price
+    filtered.sort((a, b) => 
+      (a.student_price_monthly || 0) - (b.student_price_monthly || 0)
+    );
+
+    console.log('[UnifiedSearch] Found properties:', filtered.length);
+    setFilteredResults(filtered);
+    setShowResults(true);
+
+    // Smart suggestion for roommate
+    if (searchMode === 'property' && shouldRecommendRoommate(searchParams)) {
+      toast({
+        title: "💡 Suggerimento intelligente",
+        description: "Stai cercando una casa condivisa? Potresti trovare prima un coinquilino!",
+        action: (
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={() => setSearchMode('smart')}
+            className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+          >
+            Trova Coinquilino
+          </Button>
+        )
+      });
+    }
+
+    toast({
+      title: "Ricerca completata",
+      description: `${filtered.length} alloggi trovati`,
+    });
   };
 
   const handleFavoriteToggle = (id: string) => {
@@ -128,17 +123,17 @@ export const UnifiedSearch = ({ initialTab = 'property', searchQuery = '' }: Uni
     );
   };
 
-  const [selectedProperty, setSelectedProperty] = useState<StudentProperty | null>(null);
+  const [selectedProperty, setSelectedProperty] = useState<UnifiedProperty | null>(null);
   const [showPropertyDetail, setShowPropertyDetail] = useState(false);
   const [showBookingDialog, setShowBookingDialog] = useState(false);
 
-  const handlePropertySelect = (property: StudentProperty) => {
+  const handlePropertySelect = (property: UnifiedProperty) => {
     console.log('[UnifiedSearch] Property selected:', property);
     setSelectedProperty(property);
     setShowPropertyDetail(true);
   };
 
-  const handleBooking = (property: StudentProperty) => {
+  const handleBooking = (property: UnifiedProperty) => {
     setShowPropertyDetail(false);
     setSelectedProperty(property);
     setShowBookingDialog(true);
@@ -250,12 +245,13 @@ export const UnifiedSearch = ({ initialTab = 'property', searchQuery = '' }: Uni
 
           {searchMode === 'property' && showResults && (
             <PropertyList
-              properties={searchResults}
+              properties={filteredResults}
               selectedCity={searchParams.city}
               favorites={favorites}
               onFavoriteToggle={handleFavoriteToggle}
               onPropertySelect={handlePropertySelect}
               onBackToSearch={handleBackToSearch}
+              isLoading={isLoadingProperties}
             />
           )}
 

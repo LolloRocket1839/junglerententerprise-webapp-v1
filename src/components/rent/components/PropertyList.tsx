@@ -1,16 +1,17 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Loader2 } from 'lucide-react';
 import { PropertyCard } from './PropertyCard';
-import { StudentProperty } from '@/types/rental';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 
 interface PropertyListProps {
-  properties: StudentProperty[];
+  properties: UnifiedProperty[];
   selectedCity: string;
   favorites: string[];
   onFavoriteToggle: (id: string) => void;
-  onPropertySelect: (property: StudentProperty) => void;
+  onPropertySelect: (property: UnifiedProperty) => void;
   onBackToSearch: () => void;
+  isLoading?: boolean;
 }
 
 export const PropertyList = ({
@@ -19,8 +20,20 @@ export const PropertyList = ({
   favorites,
   onFavoriteToggle,
   onPropertySelect,
-  onBackToSearch
+  onBackToSearch,
+  isLoading = false
 }: PropertyListProps) => {
+  if (isLoading) {
+    return (
+      <div className="max-w-6xl mx-auto animate-fade-in">
+        <div className="flex items-center justify-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-white/60" />
+          <span className="ml-3 text-white/60">Caricamento proprietà...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto animate-fade-in">
       <div className="flex items-center justify-between mb-6">

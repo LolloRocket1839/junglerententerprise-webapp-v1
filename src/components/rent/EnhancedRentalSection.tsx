@@ -8,7 +8,7 @@ import { PropertyList } from './components/PropertyList';
 import { PropertyDetail } from './components/PropertyDetail';
 import { mockProperties } from './data/mockData';
 import { SearchParams, Application } from './types';
-import { StudentProperty } from '@/types/rental';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 
 const EnhancedRentalSection = () => {
   const [searchParams, setSearchParams] = useState<SearchParams>({
@@ -21,9 +21,9 @@ const EnhancedRentalSection = () => {
   });
   const [activeTab, setActiveTab] = useState('search');
   const [selectedCity, setSelectedCity] = useState('');
-  const [filteredProperties, setFilteredProperties] = useState<StudentProperty[]>([]);
+  const [filteredProperties, setFilteredProperties] = useState<UnifiedProperty[]>([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedProperty, setSelectedProperty] = useState<StudentProperty | null>(null);
+  const [selectedProperty, setSelectedProperty] = useState<UnifiedProperty | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [viewedProperties, setViewedProperties] = useState<string[]>([]);
   const [applications, setApplications] = useState<Application[]>([]);
@@ -74,7 +74,7 @@ const EnhancedRentalSection = () => {
 
           const { data, error } = await query;
           if (error) throw error;
-          setFilteredProperties((data as StudentProperty[]) || []);
+          setFilteredProperties((data as UnifiedProperty[]) || []);
         } catch (error) {
           console.error('Error fetching properties:', error);
           setFilteredProperties([]);
@@ -103,7 +103,7 @@ const EnhancedRentalSection = () => {
     });
   };
 
-  const handlePropertySelect = (property: StudentProperty) => {
+  const handlePropertySelect = (property: UnifiedProperty) => {
     setSelectedProperty(property);
     setActiveTab('property');
     if (!viewedProperties.includes(property.id)) {
@@ -127,7 +127,7 @@ const EnhancedRentalSection = () => {
     }
   };
 
-  const handleApply = (property: StudentProperty) => {
+  const handleApply = (property: UnifiedProperty) => {
     if (applications.some(app => app.property_id === property.id)) {
       toast({
         title: "Hai già fatto domanda",

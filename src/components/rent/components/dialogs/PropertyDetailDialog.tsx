@@ -3,15 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Heart, MapPin, Home, Calendar, CheckCircle, Phone, Key, Bed, Bath, Wifi, Utensils } from 'lucide-react';
-import { StudentProperty } from '@/types/rental';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import ImageWithFallback from "@/components/ui/ImageWithFallback";
 import { useState } from "react";
 
 interface PropertyDetailDialogProps {
-  property: StudentProperty | null;
+  property: UnifiedProperty | null;
   isOpen: boolean;
   onClose: () => void;
-  onBooking: (property: StudentProperty) => void;
+  onBooking: (property: UnifiedProperty) => void;
   isFavorite: boolean;
   onFavoriteToggle: (id: string) => void;
 }

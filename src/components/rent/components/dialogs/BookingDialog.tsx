@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { StudentProperty } from '@/types/rental';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -16,7 +16,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 
 interface BookingDialogProps {
-  property: StudentProperty | null;
+  property: UnifiedProperty | null;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -46,7 +46,7 @@ export const BookingDialog = ({
   const calculateTotal = () => {
     if (!moveInDate || !moveOutDate) return 0;
     const months = Math.ceil((moveOutDate.getTime() - moveInDate.getTime()) / (1000 * 60 * 60 * 24 * 30));
-    const monthlyRate = property.discounted_price_monthly;
+    const monthlyRate = property.student_price_monthly || 0;
     
     if (paymentPlan === 'annual') return monthlyRate * 12 * 0.9; // 10% discount
     if (paymentPlan === 'semester') return monthlyRate * 6 * 0.95; // 5% discount
@@ -168,13 +168,13 @@ export const BookingDialog = ({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="monthly">
-                    Mensile - €{property.discounted_price_monthly}/mese
+                    Mensile - €{property.student_price_monthly}/mese
                   </SelectItem>
                   <SelectItem value="semester">
-                    Semestrale - €{(property.discounted_price_monthly * 6 * 0.95).toFixed(0)} (5% sconto)
+                    Semestrale - €{((property.student_price_monthly || 0) * 6 * 0.95).toFixed(0)} (5% sconto)
                   </SelectItem>
                   <SelectItem value="annual">
-                    Annuale - €{(property.discounted_price_monthly * 12 * 0.9).toFixed(0)} (10% sconto)
+                    Annuale - €{((property.student_price_monthly || 0) * 12 * 0.9).toFixed(0)} (10% sconto)
                   </SelectItem>
                 </SelectContent>
               </Select>
@@ -185,7 +185,7 @@ export const BookingDialog = ({
                 <p className="text-sm text-muted-foreground mb-1">Totale stimato</p>
                 <p className="text-2xl font-bold text-primary">€{calculateTotal().toFixed(2)}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  + €{property.deposit_amount || property.discounted_price_monthly * 2} di cauzione
+                  + €{property.deposit_amount || (property.student_price_monthly || 0) * 2} di cauzione
                 </p>
               </div>
             )}
