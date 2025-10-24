@@ -387,6 +387,7 @@ export type Database = {
           payment_id: string | null
           payment_status: string
           profile_id: string | null
+          property_id: string | null
           status: string
           tokens: number
           updated_at: string
@@ -399,6 +400,7 @@ export type Database = {
           payment_id?: string | null
           payment_status?: string
           profile_id?: string | null
+          property_id?: string | null
           status?: string
           tokens: number
           updated_at?: string
@@ -411,6 +413,7 @@ export type Database = {
           payment_id?: string | null
           payment_status?: string
           profile_id?: string | null
+          property_id?: string | null
           status?: string
           tokens?: number
           updated_at?: string
@@ -428,6 +431,20 @@ export type Database = {
             columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "investments_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "hubs_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "investments_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "unified_properties"
             referencedColumns: ["id"]
           },
         ]
@@ -1116,6 +1133,93 @@ export type Database = {
             columns: ["property_id"]
             isOneToOne: false
             referencedRelation: "student_properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      property_revenue_tracking: {
+        Row: {
+          created_at: string
+          id: string
+          insurance: number | null
+          investor_distribution: number | null
+          jungle_rent_share: number | null
+          maintenance: number | null
+          management_fees: number | null
+          mortgage_payment: number | null
+          net_income: number | null
+          other_revenue: number | null
+          period_end: string
+          period_start: string
+          platform_fees: number | null
+          property_id: string
+          property_tax: number | null
+          student_revenue: number | null
+          total_expenses: number | null
+          total_revenue: number | null
+          tourist_revenue: number | null
+          updated_at: string
+          utilities: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          insurance?: number | null
+          investor_distribution?: number | null
+          jungle_rent_share?: number | null
+          maintenance?: number | null
+          management_fees?: number | null
+          mortgage_payment?: number | null
+          net_income?: number | null
+          other_revenue?: number | null
+          period_end: string
+          period_start: string
+          platform_fees?: number | null
+          property_id: string
+          property_tax?: number | null
+          student_revenue?: number | null
+          total_expenses?: number | null
+          total_revenue?: number | null
+          tourist_revenue?: number | null
+          updated_at?: string
+          utilities?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          insurance?: number | null
+          investor_distribution?: number | null
+          jungle_rent_share?: number | null
+          maintenance?: number | null
+          management_fees?: number | null
+          mortgage_payment?: number | null
+          net_income?: number | null
+          other_revenue?: number | null
+          period_end?: string
+          period_start?: string
+          platform_fees?: number | null
+          property_id?: string
+          property_tax?: number | null
+          student_revenue?: number | null
+          total_expenses?: number | null
+          total_revenue?: number | null
+          tourist_revenue?: number | null
+          updated_at?: string
+          utilities?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "property_revenue_tracking_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "hubs_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "property_revenue_tracking_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "unified_properties"
             referencedColumns: ["id"]
           },
         ]
@@ -2408,6 +2512,250 @@ export type Database = {
           },
         ]
       }
+      unified_bookings: {
+        Row: {
+          academic_year: string | null
+          booking_type: Database["public"]["Enums"]["booking_type"]
+          check_in: string
+          check_out: string
+          created_at: string
+          guest_id: string
+          id: string
+          number_of_guests: number | null
+          payment_status: string
+          property_id: string
+          special_requests: string | null
+          status: string
+          student_id_number: string | null
+          total_price: number
+          university: string | null
+          updated_at: string
+        }
+        Insert: {
+          academic_year?: string | null
+          booking_type: Database["public"]["Enums"]["booking_type"]
+          check_in: string
+          check_out: string
+          created_at?: string
+          guest_id: string
+          id?: string
+          number_of_guests?: number | null
+          payment_status?: string
+          property_id: string
+          special_requests?: string | null
+          status?: string
+          student_id_number?: string | null
+          total_price: number
+          university?: string | null
+          updated_at?: string
+        }
+        Update: {
+          academic_year?: string | null
+          booking_type?: Database["public"]["Enums"]["booking_type"]
+          check_in?: string
+          check_out?: string
+          created_at?: string
+          guest_id?: string
+          id?: string
+          number_of_guests?: number | null
+          payment_status?: string
+          property_id?: string
+          special_requests?: string | null
+          status?: string
+          student_id_number?: string | null
+          total_price?: number
+          university?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "unified_bookings_guest_id_fkey"
+            columns: ["guest_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "unified_bookings_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "hubs_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "unified_bookings_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "unified_properties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      unified_properties: {
+        Row: {
+          academic_year_end: string | null
+          academic_year_start: string | null
+          acquisition_cost: number | null
+          address: string
+          amenities: string[] | null
+          amount_raised: number
+          appliances: string[] | null
+          bathrooms: number | null
+          check_in_time: string | null
+          check_out_time: string | null
+          city: string
+          cleaning_fee: number | null
+          created_at: string
+          current_value: number | null
+          dealflow_id: string | null
+          deposit_amount: number | null
+          description: string | null
+          estimated_utilities_cost: number | null
+          floor_number: number | null
+          floor_plan_url: string | null
+          has_balcony: boolean | null
+          has_kitchen: boolean | null
+          has_living_room: boolean | null
+          id: string
+          images: string[] | null
+          internet_available: boolean | null
+          internet_speed: number | null
+          investment_goal: number
+          investor_share_percentage: number | null
+          is_furnished: boolean | null
+          latitude: number | null
+          legacy_hub_id: string | null
+          legacy_student_id: string | null
+          longitude: number | null
+          min_stay_nights: number | null
+          postal_code: string | null
+          renovation_cost: number | null
+          rooms: number
+          size_sqm: number | null
+          source: Database["public"]["Enums"]["property_source"]
+          status: string
+          student_price_monthly: number | null
+          summer_period_end: string | null
+          summer_period_start: string | null
+          title: string
+          tokens_issued: number | null
+          tourist_price_nightly: number | null
+          updated_at: string
+          usage_mode: Database["public"]["Enums"]["usage_mode"]
+          utilities: string[] | null
+          utilities_included: boolean | null
+          virtual_tour_url: string | null
+        }
+        Insert: {
+          academic_year_end?: string | null
+          academic_year_start?: string | null
+          acquisition_cost?: number | null
+          address: string
+          amenities?: string[] | null
+          amount_raised?: number
+          appliances?: string[] | null
+          bathrooms?: number | null
+          check_in_time?: string | null
+          check_out_time?: string | null
+          city: string
+          cleaning_fee?: number | null
+          created_at?: string
+          current_value?: number | null
+          dealflow_id?: string | null
+          deposit_amount?: number | null
+          description?: string | null
+          estimated_utilities_cost?: number | null
+          floor_number?: number | null
+          floor_plan_url?: string | null
+          has_balcony?: boolean | null
+          has_kitchen?: boolean | null
+          has_living_room?: boolean | null
+          id?: string
+          images?: string[] | null
+          internet_available?: boolean | null
+          internet_speed?: number | null
+          investment_goal?: number
+          investor_share_percentage?: number | null
+          is_furnished?: boolean | null
+          latitude?: number | null
+          legacy_hub_id?: string | null
+          legacy_student_id?: string | null
+          longitude?: number | null
+          min_stay_nights?: number | null
+          postal_code?: string | null
+          renovation_cost?: number | null
+          rooms: number
+          size_sqm?: number | null
+          source?: Database["public"]["Enums"]["property_source"]
+          status?: string
+          student_price_monthly?: number | null
+          summer_period_end?: string | null
+          summer_period_start?: string | null
+          title: string
+          tokens_issued?: number | null
+          tourist_price_nightly?: number | null
+          updated_at?: string
+          usage_mode?: Database["public"]["Enums"]["usage_mode"]
+          utilities?: string[] | null
+          utilities_included?: boolean | null
+          virtual_tour_url?: string | null
+        }
+        Update: {
+          academic_year_end?: string | null
+          academic_year_start?: string | null
+          acquisition_cost?: number | null
+          address?: string
+          amenities?: string[] | null
+          amount_raised?: number
+          appliances?: string[] | null
+          bathrooms?: number | null
+          check_in_time?: string | null
+          check_out_time?: string | null
+          city?: string
+          cleaning_fee?: number | null
+          created_at?: string
+          current_value?: number | null
+          dealflow_id?: string | null
+          deposit_amount?: number | null
+          description?: string | null
+          estimated_utilities_cost?: number | null
+          floor_number?: number | null
+          floor_plan_url?: string | null
+          has_balcony?: boolean | null
+          has_kitchen?: boolean | null
+          has_living_room?: boolean | null
+          id?: string
+          images?: string[] | null
+          internet_available?: boolean | null
+          internet_speed?: number | null
+          investment_goal?: number
+          investor_share_percentage?: number | null
+          is_furnished?: boolean | null
+          latitude?: number | null
+          legacy_hub_id?: string | null
+          legacy_student_id?: string | null
+          longitude?: number | null
+          min_stay_nights?: number | null
+          postal_code?: string | null
+          renovation_cost?: number | null
+          rooms?: number
+          size_sqm?: number | null
+          source?: Database["public"]["Enums"]["property_source"]
+          status?: string
+          student_price_monthly?: number | null
+          summer_period_end?: string | null
+          summer_period_start?: string | null
+          title?: string
+          tokens_issued?: number | null
+          tourist_price_nightly?: number | null
+          updated_at?: string
+          usage_mode?: Database["public"]["Enums"]["usage_mode"]
+          utilities?: string[] | null
+          utilities_included?: boolean | null
+          virtual_tour_url?: string | null
+        }
+        Relationships: []
+      }
       universities: {
         Row: {
           address: string
@@ -2559,7 +2907,54 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      hubs_view: {
+        Row: {
+          amenities: string[] | null
+          amount_raised: number | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          images: string[] | null
+          investment_goal: number | null
+          location: string | null
+          name: string | null
+          price_per_night: number | null
+          rating: number | null
+          reviews_count: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          amenities?: string[] | null
+          amount_raised?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          images?: string[] | null
+          investment_goal?: number | null
+          location?: string | null
+          name?: string | null
+          price_per_night?: number | null
+          rating?: never
+          reviews_count?: never
+          updated_at?: string | null
+        }
+        Update: {
+          amenities?: string[] | null
+          amount_raised?: number | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          images?: string[] | null
+          investment_goal?: number | null
+          location?: string | null
+          name?: string | null
+          price_per_night?: number | null
+          rating?: never
+          reviews_count?: never
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       add_jungle_coins: {
@@ -2577,11 +2972,11 @@ export type Database = {
         Returns: string
       }
       get_current_user_role: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: Database["public"]["Enums"]["app_role"]
       }
       get_public_profile_summaries: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           avatar_url: string
           bio: string
@@ -2612,6 +3007,7 @@ export type Database = {
     Enums: {
       app_role: "student" | "tourist" | "investor" | "admin"
       booking_status: "pending" | "confirmed" | "canceled" | "completed"
+      booking_type: "student_academic" | "tourist_short"
       contract_status:
         | "draft"
         | "pending_signature"
@@ -2623,6 +3019,11 @@ export type Database = {
       document_verification_status: "pending" | "approved" | "rejected"
       kyc_status: "pending" | "approved" | "rejected"
       payment_status: "pending" | "partial" | "complete" | "refunded"
+      property_source:
+        | "dealflow"
+        | "direct"
+        | "migrated_hub"
+        | "migrated_student"
       property_status: "available" | "reserved" | "occupied" | "maintenance"
       revenue_source: "student" | "tourist"
       tourist_property_status: "available" | "booked" | "maintenance"
@@ -2634,6 +3035,7 @@ export type Database = {
         | "deposit"
         | "withdrawal"
       transition_status: "planned" | "in_progress" | "completed"
+      usage_mode: "student_only" | "tourist_only" | "hybrid"
       user_type: "investor" | "student" | "tourist"
       verification_status: "pending" | "verified" | "rejected"
     }
@@ -2765,6 +3167,7 @@ export const Constants = {
     Enums: {
       app_role: ["student", "tourist", "investor", "admin"],
       booking_status: ["pending", "confirmed", "canceled", "completed"],
+      booking_type: ["student_academic", "tourist_short"],
       contract_status: [
         "draft",
         "pending_signature",
@@ -2777,6 +3180,12 @@ export const Constants = {
       document_verification_status: ["pending", "approved", "rejected"],
       kyc_status: ["pending", "approved", "rejected"],
       payment_status: ["pending", "partial", "complete", "refunded"],
+      property_source: [
+        "dealflow",
+        "direct",
+        "migrated_hub",
+        "migrated_student",
+      ],
       property_status: ["available", "reserved", "occupied", "maintenance"],
       revenue_source: ["student", "tourist"],
       tourist_property_status: ["available", "booked", "maintenance"],
@@ -2789,6 +3198,7 @@ export const Constants = {
         "withdrawal",
       ],
       transition_status: ["planned", "in_progress", "completed"],
+      usage_mode: ["student_only", "tourist_only", "hybrid"],
       user_type: ["investor", "student", "tourist"],
       verification_status: ["pending", "verified", "rejected"],
     },
