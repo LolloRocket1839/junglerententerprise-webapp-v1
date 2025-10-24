@@ -18,10 +18,22 @@ export const useInvestmentStatsSubscription = (refetchStats: () => void) => {
           {
             event: '*',
             schema: 'public',
-            table: 'hubs'
+            table: 'unified_properties'
           },
           () => {
             console.log('Received realtime update, refetching stats...');
+            refetchStats();
+          }
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: '*',
+            schema: 'public',
+            table: 'investments'
+          },
+          () => {
+            console.log('Received investment update, refetching stats...');
             refetchStats();
           }
         )

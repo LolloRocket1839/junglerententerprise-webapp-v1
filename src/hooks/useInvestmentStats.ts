@@ -8,13 +8,18 @@ export const useInvestmentStats = () => {
     queryKey: ['investment-stats'],
     queryFn: async () => {
       try {
+        // Fetch investment properties from unified_properties
         const {
-          data: hubs,
-          error: hubsError
-        } = await supabase.from('hubs').select('*');
+          data: properties,
+          error: propertiesError
+        } = await supabase
+          .from('unified_properties')
+          .select('*')
+          .eq('status', 'active')
+          .gt('investment_goal', 0);
         
-        if (hubsError) {
-          console.error('Error fetching hubs:', hubsError);
+        if (propertiesError) {
+          console.error('Error fetching investment properties:', propertiesError);
           toast.error("Impossibile caricare le statistiche degli investimenti");
           return {
             totalProperties: 0,
@@ -23,13 +28,26 @@ export const useInvestmentStats = () => {
           };
         }
 
-        const totalProperties = hubs?.length || 0;
-        const averageRoi = hubs?.reduce((acc, hub) => acc + (hub.rating || 0), 0) / totalProperties || 0;
+        // Fetch total investors count
+        const {
+          data: investments,
+          error: investmentsError
+        } = await supabase
+          .from('investments')
+          .select('profile_id', { count: 'exact', head: false });
+
+        if (investmentsError) {
+          console.error('Error fetching investments:', investmentsError);
+        }
+
+        const totalProperties = properties?.length || 0;
+        const averageRoi = properties?.reduce((acc, prop) => acc + (prop.investor_share_percentage || 0), 0) / totalProperties || 0;
+        const uniqueInvestors = investments ? new Set(investments.map(inv => inv.profile_id)).size : 0;
         
         return {
           totalProperties,
           averageRoi: `${averageRoi.toFixed(1)}%`,
-          activeInvestors: '1.2K'
+          activeInvestors: uniqueInvestors > 0 ? uniqueInvestors.toString() : '0'
         };
       } catch (error) {
         console.error('Error in stats query:', error);
