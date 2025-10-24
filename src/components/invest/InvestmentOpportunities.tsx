@@ -15,6 +15,7 @@ const InvestmentOpportunities = () => {
   // Fetch properties available for investment (with investment_goal > 0)
   const { data: properties, isLoading, error } = useQuery({
     queryKey: ['investment-properties'],
+    throwOnError: false,
     queryFn: async () => {
       console.log('[InvestmentOpportunities] Fetching properties from unified_properties...');
       const { data, error } = await supabase

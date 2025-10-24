@@ -6,6 +6,7 @@ import { toast } from "sonner";
 export const useInvestmentStats = () => {
   return useQuery({
     queryKey: ['investment-stats'],
+    throwOnError: false,
     queryFn: async () => {
       try {
         // Fetch investment properties from unified_properties
