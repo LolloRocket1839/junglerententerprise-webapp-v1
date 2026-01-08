@@ -12,6 +12,7 @@ export type ViewType =
   | "notifications"
   | "rent"
   | "invest"
+  | "portfolio"
   | "admin"
   | "admin-users"
   | "browse"

@@ -17,6 +17,7 @@ import { AdminPropertiesView } from '@/components/views/AdminPropertiesView';
 import { AdminUsersView } from '@/components/views/AdminUsersView';
 import { AdminApplicationsView } from '@/components/views/AdminApplicationsView';
 import { AdminBookingsView } from '@/components/views/AdminBookingsView';
+import Invest from '@/pages/Invest';
 import type { UserMode, AdminMode, ViewType } from '@/lib/types';
 import './App.css';
 
@@ -85,8 +86,12 @@ function App() {
               {activeView === "applications" && userMode === "administrator" && <AdminApplicationsView />}
               {activeView === "bookings" && userMode === "administrator" && <AdminBookingsView />}
               
+              {/* Investor specific views */}
+              {activeView === "invest" && userMode === "investor" && <Invest />}
+              {activeView === "portfolio" && userMode === "investor" && <Invest />}
+              
               {/* Placeholder for other views */}
-              {!["dashboard", "admin", "properties", "admin-users", "applications", "bookings"].includes(activeView) && (
+              {!["dashboard", "admin", "properties", "admin-users", "applications", "bookings", "invest", "portfolio"].includes(activeView) && (
                 <div className="text-center py-20 animate-fade-in">
                   <h2 className="text-2xl font-bold text-foreground mb-4">
                     {activeView.charAt(0).toUpperCase() + activeView.slice(1).replace("-", " ")}

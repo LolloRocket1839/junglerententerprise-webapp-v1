@@ -28,9 +28,8 @@ export function JungleNavigation({ userMode, activeView, onViewChange }: JungleN
       case "investor":
         return [
           { id: "dashboard" as ViewType, label: "Dashboard", icon: LayoutDashboard },
-          { id: "properties" as ViewType, label: "Proprietà", icon: Building2 },
           { id: "invest" as ViewType, label: "Investi", icon: TrendingUp },
-          { id: "payments" as ViewType, label: "Pagamenti", icon: CreditCard },
+          { id: "portfolio" as ViewType, label: "Portfolio", icon: Building2 },
           { id: "messages" as ViewType, label: "Messaggi", icon: MessageSquare },
         ];
       case "student":
