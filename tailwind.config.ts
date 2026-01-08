@@ -133,7 +133,7 @@ export default {
   					transform: 'rotate(-5deg) translateY(15px)'
   				}
   			},
-  			'wave': {
+  			wave: {
   				'0%, 100%': {
   					transform: 'translateY(0)'
   				},
@@ -141,7 +141,7 @@ export default {
   					transform: 'translateY(-5px)'
   				}
   			},
-  			'growth': {
+  			growth: {
   				from: {
   					transform: 'scale(0) translateY(10px)',
   					opacity: '0'
@@ -167,7 +167,7 @@ export default {
   					opacity: '0.7'
   				}
   			},
-  			'shimmer': {
+  			shimmer: {
   				'0%': {
   					backgroundPosition: '-1000px 0'
   				},
@@ -175,7 +175,7 @@ export default {
   					backgroundPosition: '1000px 0'
   				}
   			},
-  			'shake': {
+  			shake: {
   				'0%, 100%': {
   					transform: 'translateX(0)'
   				},
@@ -214,12 +214,12 @@ export default {
   			'gradient-slow': 'gradient-slow 15s cubic-bezier(0.4, 0, 0.2, 1) infinite',
   			'scale-in': 'scale-in 0.25s cubic-bezier(0.33, 1, 0.68, 1)',
   			'leaf-float': 'leaf-float 6s cubic-bezier(0.4, 0, 0.2, 1) infinite',
-  			'wave': 'wave 3s cubic-bezier(0.4, 0, 0.2, 1) infinite',
-  			'growth': 'growth 0.5s cubic-bezier(0.4, 0.0, 0.2, 1)',
+  			wave: 'wave 3s cubic-bezier(0.4, 0, 0.2, 1) infinite',
+  			growth: 'growth 0.5s cubic-bezier(0.4, 0.0, 0.2, 1)',
   			'magnetic-hover': 'magnetic-hover 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   			'pulse-gentle': 'pulse-gentle 2s cubic-bezier(0.4, 0, 0.2, 1) infinite',
-  			'shimmer': 'shimmer 2s linear infinite',
-  			'shake': 'shake 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s 2',
+  			shimmer: 'shimmer 2s linear infinite',
+  			shake: 'shake 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0s 2',
   			'slide-in': 'slide-in 0.35s cubic-bezier(0.33, 1, 0.68, 1)',
   			'haptic-flash': 'haptic-flash 0.15s cubic-bezier(0.4, 0, 0.2, 1)'
   		},
