@@ -33,61 +33,28 @@ export default function DesktopNavigation({ onLanguageChange }: DesktopNavigatio
   return (
     <div className="hidden md:flex items-center space-x-6">
       <Link 
-        to="/properties" 
-        className="text-base text-white/90 hover:text-white transition-all duration-300 
-                   hover:border-b-2 hover:border-primary font-sans tracking-wide font-semibold
-                   bg-primary/20 px-3 py-1 rounded-full border border-primary/30"
-      >
-        🏠 Tutte le Proprietà
-      </Link>
-      <Link 
         to="/invest" 
-        className="text-base text-white/80 hover:text-white transition-all duration-300 
-                   hover:border-b-2 hover:border-primary font-sans tracking-wide"
+        className="text-sm text-foreground/80 hover:text-primary transition-all duration-300 font-medium"
       >
-        {t('invest')}
-      </Link>
-      <Link 
-        to="/rent" 
-        className="text-base text-white/80 hover:text-white transition-all duration-300 
-                   hover:border-b-2 hover:border-primary font-sans tracking-wide"
-      >
-        {t('rent')}
-      </Link>
-      <Link 
-        to="/marketplace" 
-        className="text-base text-white/80 hover:text-white transition-all duration-300 
-                   hover:border-b-2 hover:border-primary font-sans tracking-wide"
-      >
-        {t('marketplace')}
-      </Link>
-      <Link 
-        to="/stay" 
-        className="text-base text-white/80 hover:text-white transition-all duration-300 
-                   hover:border-b-2 hover:border-primary font-sans tracking-wide"
-      >
-        {t('stay')}
-      </Link>
-      <Link 
-        to="/referral" 
-        className="text-base text-white/80 hover:text-white transition-all duration-300 
-                   hover:border-b-2 hover:border-primary font-sans tracking-wide"
-      >
-        {t('referral')}
+        Per Investitori
       </Link>
       <Link 
         to="/sell" 
-        className="text-base text-white/80 hover:text-white transition-all duration-300 
-                   hover:border-b-2 hover:border-primary font-sans tracking-wide bg-primary/10 px-3 py-1 rounded-full"
+        className="text-sm text-foreground/80 hover:text-primary transition-all duration-300 font-medium"
       >
-        💰 Sell
+        Vendi Immobile
       </Link>
       <Link 
-        to="/admin" 
-        className="text-base text-white/80 hover:text-white transition-all duration-300 
-                   hover:border-b-2 hover:border-primary font-sans tracking-wide"
+        to="/rent" 
+        className="text-sm text-foreground/80 hover:text-primary transition-all duration-300 font-medium"
       >
-        Admin
+        Per Studenti
+      </Link>
+      <Link 
+        to="/stay" 
+        className="text-sm text-foreground/80 hover:text-primary transition-all duration-300 font-medium"
+      >
+        Soggiorni
       </Link>
 
       <DropdownMenu>
@@ -95,7 +62,7 @@ export default function DesktopNavigation({ onLanguageChange }: DesktopNavigatio
           <Button
             variant="ghost"
             size="sm"
-            className="flex items-center gap-2 text-white/80 hover:text-white"
+            className="flex items-center gap-2 text-foreground/80 hover:text-primary"
           >
             <Globe className="w-4 h-4" />
             {language}
@@ -114,6 +81,13 @@ export default function DesktopNavigation({ onLanguageChange }: DesktopNavigatio
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <Button 
+        asChild
+        className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-6"
+      >
+        <Link to="/auth">Accedi</Link>
+      </Button>
     </div>
   );
 }
