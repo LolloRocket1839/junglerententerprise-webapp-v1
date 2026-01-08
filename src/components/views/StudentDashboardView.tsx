@@ -15,14 +15,15 @@ import {
   CheckCircle2,
   AlertCircle
 } from "lucide-react";
-import { mockLeaseInfo, mockRentPayments, mockRentBreakdown } from "@/lib/mock-data";
+import { leaseInfo, rentPayments, rentBreakdowns, properties } from "@/lib/mock-data";
 
 export function StudentDashboardView() {
-  const lease = mockLeaseInfo;
-  const payments = mockRentPayments.slice(0, 3);
-  const breakdown = mockRentBreakdown;
+  const lease = leaseInfo[0];
+  const property = properties.find(p => p.id === lease?.propertyId);
+  const payments = rentPayments.slice(0, 3);
+  const breakdown = rentBreakdowns[1];
 
-  const nextPayment = payments.find(p => p.status === "pending");
+  const nextPayment = payments.find(p => p.status === "due");
   const paidPayments = payments.filter(p => p.status === "paid").length;
   const totalPayments = 12;
 
@@ -56,10 +57,10 @@ export function StudentDashboardView() {
             <div className="flex-1">
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h2 className="text-xl font-semibold">{lease.propertyName}</h2>
+                  <h2 className="text-xl font-semibold">{property?.name || "Appartamento"}</h2>
                   <p className="text-muted-foreground flex items-center gap-1">
                     <MapPin className="h-4 w-4" />
-                    {lease.address}
+                    {property?.address || "Torino"}
                   </p>
                 </div>
                 <Badge className="bg-green-100 text-green-700 border-green-200">
@@ -70,19 +71,19 @@ export function StudentDashboardView() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                 <div>
                   <p className="text-sm text-muted-foreground">Canone Mensile</p>
-                  <p className="font-semibold">€{lease.monthlyRent}/mese</p>
+                  <p className="font-semibold">€{lease?.monthlyRent || 450}/mese</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Inizio Contratto</p>
-                  <p className="font-semibold">{lease.startDate}</p>
+                  <p className="font-semibold">{lease?.startDate || "2025-09-01"}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Fine Contratto</p>
-                  <p className="font-semibold">{lease.endDate}</p>
+                  <p className="font-semibold">{lease?.endDate || "2026-06-30"}</p>
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Camera</p>
-                  <p className="font-semibold">{lease.roomType}</p>
+                  <p className="font-semibold">{property?.type || "Studio"}</p>
                 </div>
               </div>
             </div>
@@ -175,9 +176,9 @@ export function StudentDashboardView() {
                   <div className={`p-2 rounded-full ${
                     payment.status === "paid" 
                       ? "bg-green-100 text-green-600" 
-                      : payment.status === "pending"
+                      : payment.status === "due"
                       ? "bg-amber-100 text-amber-600"
-                      : "bg-red-100 text-red-600"
+                      : "bg-muted text-muted-foreground"
                   }`}>
                     {payment.status === "paid" ? (
                       <CheckCircle2 className="h-4 w-4" />
@@ -186,7 +187,7 @@ export function StudentDashboardView() {
                     )}
                   </div>
                   <div>
-                    <p className="font-medium">{payment.description}</p>
+                    <p className="font-medium">{payment.month}</p>
                     <p className="text-sm text-muted-foreground">{payment.dueDate}</p>
                   </div>
                 </div>
@@ -195,11 +196,11 @@ export function StudentDashboardView() {
                   <Badge variant="outline" className={`text-xs ${
                     payment.status === "paid" 
                       ? "border-green-200 text-green-700" 
-                      : payment.status === "pending"
+                      : payment.status === "due"
                       ? "border-amber-200 text-amber-700"
-                      : "border-red-200 text-red-700"
+                      : "border-muted text-muted-foreground"
                   }`}>
-                    {payment.status === "paid" ? "Pagato" : payment.status === "pending" ? "In attesa" : "Scaduto"}
+                    {payment.status === "paid" ? "Pagato" : payment.status === "due" ? "Da pagare" : "Prossimo"}
                   </Badge>
                 </div>
               </div>

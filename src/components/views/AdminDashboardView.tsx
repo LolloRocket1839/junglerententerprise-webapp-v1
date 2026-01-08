@@ -16,12 +16,22 @@ import {
   FileText,
   MessageSquare
 } from "lucide-react";
-import { mockPlatformAnalytics, mockProperties, mockApplications, mockBookings } from "@/lib/mock-data";
+import { platformAnalytics, properties, applications, bookings } from "@/lib/mock-data";
 
 export function AdminDashboardView() {
-  const analytics = mockPlatformAnalytics;
-  const pendingApplications = mockApplications.filter(a => a.status === "pending").slice(0, 3);
-  const recentBookings = mockBookings.slice(0, 3);
+  const analytics = {
+    ...platformAnalytics,
+    totalProperties: properties.length,
+    pendingApplications: applications.filter(a => a.status === "pending").length,
+    pendingPayments: 6,
+    pendingPaymentsAmount: 2700,
+    occupancyRate: 91,
+    activeBookings: bookings.length,
+    pendingBookings: bookings.filter(b => b.status === "pending").length,
+    monthlyRevenue: platformAnalytics.totalRevenue / 12,
+  };
+  const pendingApplications = applications.filter(a => a.status === "pending").slice(0, 3);
+  const recentBookings = bookings.slice(0, 3);
 
   const quickStats = [
     { 
@@ -148,28 +158,31 @@ export function AdminDashboardView() {
             </div>
           </CardHeader>
           <CardContent className="space-y-3">
-            {pendingApplications.map((app) => (
-              <div 
-                key={app.id}
-                className="flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Users className="h-5 w-5 text-primary" />
+            {pendingApplications.map((app) => {
+              const appProperty = properties.find(p => p.id === app.propertyId);
+              return (
+                <div 
+                  key={app.id}
+                  className="flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                      <Users className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="font-medium">{app.applicant}</p>
+                      <p className="text-sm text-muted-foreground">{appProperty?.name || "Proprietà"}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium">{app.studentName}</p>
-                    <p className="text-sm text-muted-foreground">{app.propertyName}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="border-amber-200 text-amber-700">
-                    In attesa
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="border-amber-200 text-amber-700">
+                      In attesa
                   </Badge>
-                  <Button size="sm" variant="outline">Rivedi</Button>
+                    <Button size="sm" variant="outline">Rivedi</Button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </CardContent>
         </Card>
 
@@ -198,14 +211,14 @@ export function AdminDashboardView() {
                     <Calendar className="h-5 w-5 text-accent" />
                   </div>
                   <div>
-                    <p className="font-medium">{booking.guestName}</p>
+                    <p className="font-medium">{booking.guest}</p>
                     <p className="text-sm text-muted-foreground">
                       {booking.checkIn} - {booking.checkOut}
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold">€{booking.totalPrice}</p>
+                  <p className="font-semibold">€{booking.total}</p>
                   <Badge 
                     variant="outline" 
                     className={

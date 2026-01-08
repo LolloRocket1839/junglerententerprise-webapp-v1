@@ -14,12 +14,22 @@ import {
   ChevronRight,
   Euro
 } from "lucide-react";
-import { mockProperties, mockInvestorStats } from "@/lib/mock-data";
+import { properties } from "@/lib/mock-data";
+
+// Investor stats derived from properties
+const investorStats = {
+  totalInvested: 25000,
+  totalReturns: 2125,
+  propertiesCount: 3,
+  activeProperties: 3,
+  averageROI: 8.5,
+  pendingDividends: 245,
+};
 
 export function InvestorDashboardView() {
-  const stats = mockInvestorStats;
+  const stats = investorStats;
   
-  const portfolioProperties = mockProperties.slice(0, 3);
+  const portfolioProperties = properties.slice(0, 3);
   
   const recentActivity = [
     { type: "dividend", amount: 245.00, property: "Via Roma 45", date: "2 giorni fa" },
@@ -150,15 +160,15 @@ export function InvestorDashboardView() {
                   <p className="text-sm text-muted-foreground">{property.address}</p>
                   <div className="flex items-center gap-2 mt-1">
                     <Badge variant="outline" className="text-xs">
-                      {property.currentMode === "student" ? "Studenti" : "Turisti"}
+                      {property.currentMode === "student" ? "Studenti" : property.currentMode === "tourist" ? "Turisti" : "Ibrido"}
                     </Badge>
                     <span className="text-xs text-muted-foreground">
-                      Occupazione: {property.occupancyRate}%
+                      Occupazione: {property.occupancy}%
                     </span>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold text-green-600">+{property.annualYield}%</p>
+                  <p className="font-semibold text-green-600">+{((property.noi / property.price) * 100).toFixed(1)}%</p>
                   <p className="text-sm text-muted-foreground">annuo</p>
                 </div>
               </div>
