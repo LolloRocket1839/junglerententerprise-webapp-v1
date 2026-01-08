@@ -13,11 +13,11 @@ import {
   Users,
   Bed
 } from "lucide-react";
-import { mockBookings, mockProperties } from "@/lib/mock-data";
+import { bookings, properties } from "@/lib/mock-data";
 
 export function TouristDashboardView() {
-  const upcomingBookings = mockBookings.filter(b => b.status === "confirmed").slice(0, 2);
-  const featuredProperties = mockProperties.filter(p => p.currentMode === "tourist").slice(0, 3);
+  const upcomingBookings = bookings.filter(b => b.status === "confirmed").slice(0, 2);
+  const featuredProperties = properties.filter(p => p.currentMode === "tourist" || p.currentMode === "hybrid").slice(0, 3);
 
   const popularDestinations = [
     { city: "Torino", properties: 24, avgPrice: 85 },
@@ -95,36 +95,39 @@ export function TouristDashboardView() {
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 gap-4">
-              {upcomingBookings.map((booking) => (
-                <div 
-                  key={booking.id}
-                  className="flex gap-4 p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer"
-                >
-                  <div className="w-24 h-24 bg-muted rounded-lg flex items-center justify-center">
-                    <Bed className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold">{booking.propertyName}</h3>
-                    <p className="text-sm text-muted-foreground flex items-center gap-1">
-                      <MapPin className="h-3 w-3" />
-                      {booking.address}
-                    </p>
-                    <div className="flex items-center gap-4 mt-2 text-sm">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        {booking.checkIn} - {booking.checkOut}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Users className="h-3 w-3" />
-                        {booking.guests} ospiti
-                      </span>
+              {upcomingBookings.map((booking) => {
+                const bookingProperty = properties.find(p => p.id === booking.propertyId);
+                return (
+                  <div 
+                    key={booking.id}
+                    className="flex gap-4 p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer"
+                  >
+                    <div className="w-24 h-24 bg-muted rounded-lg flex items-center justify-center">
+                      <Bed className="h-8 w-8 text-muted-foreground" />
                     </div>
-                    <Badge className="mt-2 bg-green-100 text-green-700 border-green-200">
-                      Confermata
-                    </Badge>
+                    <div className="flex-1">
+                      <h3 className="font-semibold">{bookingProperty?.name || "Proprietà"}</h3>
+                      <p className="text-sm text-muted-foreground flex items-center gap-1">
+                        <MapPin className="h-3 w-3" />
+                        {bookingProperty?.address || "Torino"}
+                      </p>
+                      <div className="flex items-center gap-4 mt-2 text-sm">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="h-3 w-3" />
+                          {booking.checkIn} - {booking.checkOut}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Users className="h-3 w-3" />
+                          {booking.guestCount} ospiti
+                        </span>
+                      </div>
+                      <Badge className="mt-2 bg-green-100 text-green-700 border-green-200">
+                        Confermata
+                      </Badge>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </CardContent>
         </Card>
@@ -191,24 +194,22 @@ export function TouristDashboardView() {
                     <h3 className="font-semibold">{property.name}</h3>
                     <p className="text-sm text-muted-foreground flex items-center gap-1">
                       <MapPin className="h-3 w-3" />
-                      {property.city}
+                      {property.address.split(',')[1]?.trim() || "Torino"}
                     </p>
                   </div>
                   <div className="flex items-center gap-1 text-sm">
                     <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-                    <span className="font-medium">{property.rating}</span>
+                    <span className="font-medium">4.8</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                  <span>{property.beds} letti</span>
+                  <span>{property.bedrooms} camere</span>
                   <span>•</span>
-                  <span>{property.baths} bagni</span>
-                  <span>•</span>
-                  <span>{property.sqm}m²</span>
+                  <span>{property.amenities.length} servizi</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="font-semibold">
-                    €{property.pricePerNight}
+                    €{property.nightlyRate}
                     <span className="text-sm font-normal text-muted-foreground">/notte</span>
                   </p>
                   <Button size="sm" variant="outline">Prenota</Button>
