@@ -1,68 +1,78 @@
-// Cache-busting FULL refresh - Build 2025.6-PRODUCTION
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { Suspense, lazy } from 'react';
-import { LanguageProvider } from './contexts/LanguageContext';
-import { AuthProvider } from './contexts/AuthProvider';
 import { ErrorBoundary } from './components/ErrorBoundary';
-import MainNavigation from './components/navigation/MainNavigation';
-import { MobileTabNavigation } from './components/mobile/MobileTabNavigation';
 import { Toaster } from "@/components/ui/toaster";
-import { DemoBanner } from '@/components/ui/demo-banner';
 import { queryClient } from '@/lib/react-query';
+import { JungleLanguageProvider } from '@/lib/language-context';
+import { JungleHeader } from '@/components/jungle/JungleHeader';
+import { JungleNavigation } from '@/components/jungle/JungleNavigation';
+import { JungleFooter } from '@/components/jungle/JungleFooter';
+import { LandingView } from '@/components/views/LandingView';
+import { DashboardView } from '@/components/views/DashboardView';
+import type { UserMode, AdminMode, ViewType } from '@/lib/types';
 import './App.css';
 
-// Lazy load route components for code splitting
-const Index = lazy(() => import('./pages/Index'));
-const Invest = lazy(() => import('./pages/Invest'));
-const Rent = lazy(() => import('./pages/Rent'));
-const Stay = lazy(() => import('./pages/Stay'));
-const Referral = lazy(() => import('./pages/Referral'));
-const Properties = lazy(() => import('./pages/Properties'));
-const ListRoom = lazy(() => import('./pages/ListRoom'));
-const Marketplace = lazy(() => import('./pages/Marketplace'));
-const Admin = lazy(() => import('./pages/Admin'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const SellProperty = lazy(() => import('./pages/SellProperty'));
-
-// Loading fallback component
-const PageLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-background">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
-  </div>
-);
-
 function App() {
-  console.log('[App] Rendering app...');
-  
+  const [userMode, setUserMode] = useState<UserMode | AdminMode | null>(null);
+  const [activeView, setActiveView] = useState<ViewType>("dashboard");
+
+  const handleModeChange = (mode: UserMode | AdminMode | null) => {
+    setUserMode(mode);
+    if (mode === "administrator") {
+      setActiveView("admin");
+    } else {
+      setActiveView("dashboard");
+    }
+  };
+
+  // If no userMode selected, show landing page
+  if (!userMode) {
+    return (
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <JungleLanguageProvider>
+            <LandingView onSelectMode={handleModeChange} />
+            <Toaster />
+          </JungleLanguageProvider>
+        </QueryClientProvider>
+      </ErrorBoundary>
+    );
+  }
+
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <LanguageProvider>
-            <Router>
-              <MainNavigation />
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/properties" element={<Properties />} />
-                  <Route path="/invest" element={<Invest />} />
-                  <Route path="/rent" element={<Rent />} />
-                  <Route path="/stay" element={<Stay />} />
-                  <Route path="/referral" element={<Referral />} />
-                  <Route path="/marketplace" element={<Marketplace />} />
-                  <Route path="/list-room" element={<ListRoom />} />
-                  <Route path="/admin" element={<Admin />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/sell" element={<SellProperty />} />
-                </Routes>
-              </Suspense>
-              <MobileTabNavigation />
-              <DemoBanner />
-              <Toaster />
-            </Router>
-          </LanguageProvider>
-        </AuthProvider>
+        <JungleLanguageProvider>
+          <div className="min-h-screen bg-background flex flex-col">
+            <JungleHeader userMode={userMode} onModeChange={handleModeChange} />
+            <JungleNavigation 
+              userMode={userMode} 
+              activeView={activeView} 
+              onViewChange={setActiveView} 
+            />
+            
+            <main className="flex-1 container mx-auto px-4 py-6">
+              {/* Dashboard views */}
+              {activeView === "dashboard" && <DashboardView />}
+              {activeView === "admin" && <DashboardView />}
+              
+              {/* Placeholder for other views */}
+              {!["dashboard", "admin"].includes(activeView) && (
+                <div className="text-center py-20">
+                  <h2 className="text-2xl font-bold text-foreground mb-4">
+                    {activeView.charAt(0).toUpperCase() + activeView.slice(1).replace("-", " ")}
+                  </h2>
+                  <p className="text-muted-foreground">
+                    Questa vista sarà implementata nel prossimo step.
+                  </p>
+                </div>
+              )}
+            </main>
+
+            <JungleFooter />
+          </div>
+          <Toaster />
+        </JungleLanguageProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );
