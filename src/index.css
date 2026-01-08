@@ -1,30 +1,30 @@
-
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 160 20% 5%;
-    --foreground: 0 0% 100%;
-    --card: 160 20% 10%;
-    --card-foreground: 0 0% 100%;
-    --popover: 160 20% 10%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 142 76% 36%;
+    --background: 44 65% 90%;
+    --foreground: 0 0% 9%;
+    --card: 42 60% 92%;
+    --card-foreground: 0 0% 9%;
+    --popover: 42 60% 92%;
+    --popover-foreground: 0 0% 9%;
+    --primary: 150 45% 18%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 100%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 160 20% 20%;
-    --muted-foreground: 0 0% 80%;
-    --accent: 142 76% 36%;
-    --accent-foreground: 0 0% 100%;
+    --secondary: 40 55% 88%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 40 55% 88%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 40 55% 88%;
+    --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 160 20% 20%;
-    --input: 160 20% 20%;
-    --ring: 142 76% 36%;
-    --radius: 0.75rem;
+    --destructive-foreground: 0 0% 98%;
+    --border: 40 50% 83%;
+    --input: 40 50% 83%;
+    --ring: 150 45% 18%;
+    --radius: 0.5rem;
 
     /* Luxury Timing Functions */
     --ease-luxury: cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -42,7 +42,70 @@
 
     /* Luxury Gradients */
     --gradient-luxury: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 76% 42%));
-    --gradient-subtle: linear-gradient(180deg, hsl(160 20% 5%), hsl(160 20% 7%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 98%) 100%);
+    --cream: 44 65% 90%;
+    --gradient-jungle-blog: linear-gradient(
+      180deg,
+      hsl(44 65% 90%) 0%,
+      hsl(40 55% 93%) 30%,
+      hsl(42 60% 92%) 50%,
+      hsl(40 55% 93%) 70%,
+      hsl(44 65% 90%) 100%
+    );
+    --gradient-jungle-footer: linear-gradient(
+      180deg,
+      hsl(44 65% 90%) 0%,
+      hsl(42 60% 92%) 30%,
+      hsl(40 55% 93%) 60%,
+      hsl(42 60% 92%) 85%,
+      hsl(44 65% 90%) 100%
+    );
+    --gradient-jungle-hero: linear-gradient(
+      180deg,
+      hsl(40 55% 93%) 0%,
+      hsl(44 65% 90%) 50%,
+      hsl(42 60% 92%) 100%
+    );
+    --gradient-jungle-section: linear-gradient(
+      180deg,
+      transparent 0%,
+      hsl(42 60% 92% / 0.5) 20%,
+      hsl(40 55% 93% / 0.8) 50%,
+      hsl(42 60% 92% / 0.5) 80%,
+      transparent 100%
+    );
+    --gradient-jungle-vertical: linear-gradient(
+      180deg,
+      hsl(44 65% 90%) 0%,
+      hsl(42 60% 92%) 25%,
+      hsl(40 55% 93%) 50%,
+      hsl(42 60% 92%) 75%,
+      hsl(44 65% 90%) 100%
+    );
+    --shadow-button: 0 2px 8px hsla(150, 45%, 18%, 0.2);
+    --shadow-button-hover: 0 4px 12px hsla(150, 45%, 18%, 0.3);
+    --shadow-card: 0 2px 8px hsla(0, 0%, 0%, 0.08);
+    --shadow-card-hover: 0 4px 16px hsla(0, 0%, 0%, 0.12);
+    --shadow-focus: 0 0 0 2px hsl(28 24% 100%), 0 0 0 4px hsl(150 45% 18%);
+    --shadow-minimal: 0 1px 3px hsla(0, 0%, 0%, 0.08);
+    --shadow-soft: 0 2px 15px -3px hsla(37, 20%, 15%, 0.07), 0 10px 20px -2px hsla(37, 20%, 15%, 0.04);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dark {
+    --gradient-investor-premium: linear-gradient(135deg, hsl(40 85% 55%) 0%, hsl(30 45% 48%) 100%);
+    --investor-bronze: 30 45% 48%;
+    --investor-champagne: 45 60% 85%;
+    --investor-gold: 40 85% 55%;
+    --investor-navy: 215 25% 25%;
+    --shadow-investor-card: 0 8px 32px hsla(40, 85%, 55%, 0.15);
+    --shadow-investor-hover: 0 16px 48px hsla(40, 85%, 55%, 0.25);
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -50,7 +113,7 @@
   * {
     @apply border-border antialiased;
   }
-  
+
   body {
     @apply bg-[#1a472a] text-white font-sans selection:bg-emerald-500/30;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -69,7 +132,7 @@
     box-shadow: var(--shadow-2);
     transition: all 0.25s var(--ease-silk);
   }
-  
+
   .glass-nav:hover {
     @apply bg-black/30;
   }
@@ -79,7 +142,7 @@
     box-shadow: var(--shadow-3);
     transition: all 0.35s var(--ease-out-luxury);
   }
-  
+
   .glass-card:hover {
     @apply bg-white/10;
     box-shadow: var(--shadow-5);
@@ -91,13 +154,13 @@
     box-shadow: var(--shadow-2);
     transition: all 0.25s var(--ease-silk);
   }
-  
+
   .glass-button:hover {
     @apply bg-white/20;
     box-shadow: var(--shadow-3);
     transform: translateY(-1px);
   }
-  
+
   .glass-button:active {
     transform: translateY(0) scale(0.96);
     box-shadow: var(--shadow-1);
@@ -107,7 +170,7 @@
     @apply glass rounded-lg px-4 py-2 text-white placeholder-white/40;
     transition: all 0.25s var(--ease-silk);
   }
-  
+
   .glass-input:focus {
     @apply outline-none border-primary/50;
     box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
@@ -150,12 +213,12 @@
     box-shadow: var(--shadow-2);
     transition: all 0.35s var(--ease-out-luxury);
   }
-  
+
   .interactive-card:hover {
     box-shadow: var(--shadow-5);
     transform: translateY(-6px);
   }
-  
+
   .interactive-card:active {
     transform: translateY(-2px) scale(0.98);
     box-shadow: var(--shadow-3);
@@ -166,7 +229,7 @@
     @apply overflow-hidden;
     transition: all 0.25s var(--ease-silk);
   }
-  
+
   .disclosure-trigger:hover {
     @apply bg-white/5;
   }
@@ -188,18 +251,18 @@
     @apply bg-gradient-to-r from-transparent via-white/10 to-transparent
            bg-[length:1000px_100%] animate-shimmer;
   }
-  
+
   /* Luxury Button States */
   .luxury-button {
     box-shadow: var(--shadow-2);
     transition: all 0.25s var(--ease-silk);
   }
-  
+
   .luxury-button:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-4);
   }
-  
+
   .luxury-button:active {
     transform: translateY(0) scale(0.96);
     box-shadow: var(--shadow-1);
