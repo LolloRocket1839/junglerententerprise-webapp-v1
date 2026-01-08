@@ -1,5 +1,6 @@
 import { useState } from "react";
 import InvestmentOpportunities from "@/components/invest/InvestmentOpportunities";
+import { MyInvestments } from "@/components/invest/MyInvestments";
 import { Phase2Placeholder } from "@/components/invest/Phase2Placeholder";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
@@ -42,7 +43,7 @@ export const SimpleInvestmentTabs = () => {
       {/* Tab Content */}
       <div className="focus:outline-none">
         {activeTab === "opportunities" && <InvestmentOpportunities />}
-        {activeTab === "my-investments" && <Phase2Placeholder />}
+        {activeTab === "my-investments" && <MyInvestments />}
         {activeTab === "tokenization" && <Phase2Placeholder />}
         {activeTab === "analytics" && <Phase2Placeholder />}
       </div>
