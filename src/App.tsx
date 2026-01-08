@@ -13,6 +13,10 @@ import { InvestorDashboardView } from '@/components/views/InvestorDashboardView'
 import { StudentDashboardView } from '@/components/views/StudentDashboardView';
 import { TouristDashboardView } from '@/components/views/TouristDashboardView';
 import { AdminDashboardView } from '@/components/views/AdminDashboardView';
+import { AdminPropertiesView } from '@/components/views/AdminPropertiesView';
+import { AdminUsersView } from '@/components/views/AdminUsersView';
+import { AdminApplicationsView } from '@/components/views/AdminApplicationsView';
+import { AdminBookingsView } from '@/components/views/AdminBookingsView';
 import type { UserMode, AdminMode, ViewType } from '@/lib/types';
 import './App.css';
 
@@ -75,8 +79,14 @@ function App() {
               {/* Dashboard views based on user mode */}
               {(activeView === "dashboard" || activeView === "admin") && renderDashboard()}
               
+              {/* Admin specific views */}
+              {activeView === "properties" && userMode === "administrator" && <AdminPropertiesView />}
+              {activeView === "admin-users" && userMode === "administrator" && <AdminUsersView />}
+              {activeView === "applications" && userMode === "administrator" && <AdminApplicationsView />}
+              {activeView === "bookings" && userMode === "administrator" && <AdminBookingsView />}
+              
               {/* Placeholder for other views */}
-              {!["dashboard", "admin"].includes(activeView) && (
+              {!["dashboard", "admin", "properties", "admin-users", "applications", "bookings"].includes(activeView) && (
                 <div className="text-center py-20 animate-fade-in">
                   <h2 className="text-2xl font-bold text-foreground mb-4">
                     {activeView.charAt(0).toUpperCase() + activeView.slice(1).replace("-", " ")}
