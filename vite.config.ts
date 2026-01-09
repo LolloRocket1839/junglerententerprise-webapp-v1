@@ -1,4 +1,4 @@
-// Cache bust: 2025-01-09-v2
+// Cache bust: 2025-01-09-v3
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -24,11 +24,16 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-    }
+    },
+    dedupe: ['react', 'react-dom', 'react-router-dom']
   },
   build: {
     sourcemap: true,
     outDir: 'dist',
     assetsDir: 'assets'
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom'],
+    force: true
   }
 });
