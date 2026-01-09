@@ -1,5 +1,5 @@
 
-// Force hard refresh - Cache break 2025 v7-ROUTER
+// Force hard refresh - Cache break 2025 v8-CLEARCACHE
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
