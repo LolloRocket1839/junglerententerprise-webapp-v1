@@ -1,30 +1,44 @@
 
-// Force hard refresh - Cache break 2025 v8-CLEARCACHE
+// Force hard refresh - Cache break 2025 v9-FULLPURGE
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
 
-// Register service worker for PWA (disabled aggressive caching to avoid stale bundles)
+// Aggressive cache cleanup + SW registration
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      // Unregister any existing SW to prevent stale cached JS causing runtime mismatches
+      const hadController = !!navigator.serviceWorker.controller;
+      
+      // Unregister all existing SWs
       const regs = await navigator.serviceWorker.getRegistrations();
       await Promise.all(regs.map((r) => r.unregister()));
 
+      // Purge all cache storage
+      const cacheKeys = await caches.keys();
+      await Promise.all(cacheKeys.map((k) => caches.delete(k)));
+
+      // One-time hard reload if we were controlled by old SW
+      if (hadController && !sessionStorage.getItem('sw_cleaned')) {
+        sessionStorage.setItem('sw_cleaned', '1');
+        location.reload();
+        return;
+      }
+
+      // Register fresh SW with no caching
       const registration = await navigator.serviceWorker.register('/sw.js', {
         updateViaCache: 'none',
       });
       await registration.update();
       console.log('SW registered (fresh): ', registration);
-    } catch (registrationError) {
-      console.log('SW registration failed: ', registrationError);
+    } catch (err) {
+      console.log('SW setup failed: ', err);
     }
   });
 }
 
-// Assicurati che tutti gli handlers vengano puliti correttamente
+// Cleanup handlers
 const cleanupHandlers = new Set<() => void>();
 
 window.addEventListener('beforeunload', () => {
@@ -37,7 +51,6 @@ if (!root) throw new Error('Root element not found');
 
 const appRoot = createRoot(root);
 
-// Gestisci il cleanup quando l'app viene smontata
 try {
   appRoot.render(
     <BrowserRouter>
@@ -45,8 +58,7 @@ try {
     </BrowserRouter>
   );
 } catch (error) {
-  console.error('Errore durante il rendering:', error);
+  console.error('Render error:', error);
 }
 
-// Esporta cleanupHandlers per uso globale
 window.cleanupHandlers = cleanupHandlers;
