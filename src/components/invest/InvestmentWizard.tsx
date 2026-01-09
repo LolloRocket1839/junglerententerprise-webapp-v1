@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Check, PiggyBank, Wallet, Send, Sparkles } from "lucide-react";
+import { ArrowLeft, Check, PiggyBank, Wallet, Send, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -56,7 +56,7 @@ export const InvestmentWizard = ({ open, onOpenChange, initialAmount = 10000 }: 
   };
 
   const handleNext = () => {
-    if (step < 3) {
+    if (step < 2) {
       setStep(step + 1);
     }
   };
@@ -75,7 +75,6 @@ export const InvestmentWizard = ({ open, onOpenChange, initialAmount = 10000 }: 
 
     setIsSubmitting(true);
     try {
-      // Save to investment_waitlist table
       const { error } = await supabase.from('investment_waitlist').insert({
         name: formData.name,
         email: formData.email,
@@ -99,39 +98,32 @@ export const InvestmentWizard = ({ open, onOpenChange, initialAmount = 10000 }: 
 
   const handleClose = () => {
     onOpenChange(false);
-    // Reset state after close animation
     setTimeout(() => {
       setStep(1);
       setIsSuccess(false);
       setFormData({ name: '', email: '', phone: '' });
-    }, 300);
-  };
-
-  const stepVariants = {
-    enter: { opacity: 0, x: 20 },
-    center: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -20 }
+    }, 200);
   };
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-lg p-0 overflow-hidden">
-        {/* Progress Indicator */}
-        <div className="px-6 pt-6 pb-4 border-b bg-muted/30">
-          <div className="flex items-center justify-center gap-3">
-            {[1, 2, 3].map((s) => (
+      <DialogContent className="sm:max-w-md p-0 overflow-hidden">
+        {/* Progress Indicator - 2 steps */}
+        <div className="px-4 md:px-6 pt-4 md:pt-5 pb-3 border-b bg-muted/30">
+          <div className="flex items-center justify-center gap-2">
+            {[1, 2].map((s) => (
               <div key={s} className="flex items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-200 ${
                     step >= s 
                       ? 'bg-primary text-primary-foreground' 
                       : 'bg-muted text-muted-foreground'
                   }`}
                 >
-                  {step > s ? <Check className="w-5 h-5" /> : s}
+                  {step > s ? <Check className="w-4 h-4" /> : s}
                 </div>
-                {s < 3 && (
-                  <div className={`w-12 h-1 mx-2 rounded transition-colors duration-300 ${
+                {s < 2 && (
+                  <div className={`w-16 md:w-20 h-0.5 mx-2 rounded transition-colors duration-200 ${
                     step > s ? 'bg-primary' : 'bg-muted'
                   }`} />
                 )}
@@ -141,67 +133,67 @@ export const InvestmentWizard = ({ open, onOpenChange, initialAmount = 10000 }: 
         </div>
 
         {/* Content */}
-        <div className="p-6 min-h-[400px]">
+        <div className="p-4 md:p-6 min-h-[320px] md:min-h-[360px]">
           <AnimatePresence mode="wait">
             {isSuccess ? (
               <motion.div
                 key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center h-full py-12 text-center"
+                transition={{ duration: 0.2 }}
+                className="flex flex-col items-center justify-center h-full py-8 text-center"
               >
-                <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mb-6">
-                  <Sparkles className="w-10 h-10 text-green-500" />
+                <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mb-4">
+                  <Sparkles className="w-8 h-8 text-green-500" />
                 </div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">
+                <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">
                   {t('wizardSuccess')}
                 </h2>
-                <p className="text-muted-foreground mb-8 max-w-sm">
+                <p className="text-sm text-muted-foreground mb-6 max-w-xs">
                   {t('wizardSuccessMessage')}
                 </p>
-                <div className="space-y-2 text-sm bg-muted/50 rounded-lg p-4 w-full max-w-xs">
+                <div className="space-y-1.5 text-sm bg-muted/50 rounded-lg p-3 w-full max-w-xs">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">{t('wizardYouInvest')}:</span>
+                    <span className="text-muted-foreground">Investimento:</span>
                     <span className="font-semibold">{formatCurrency(investmentAmount)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">{t('wizardYouSave')}:</span>
+                    <span className="text-muted-foreground">Risparmi:</span>
                     <span className="font-semibold text-green-600">{formatCurrency(calculations.deduction)}</span>
                   </div>
-                  <div className="flex justify-between pt-2 border-t">
-                    <span className="text-muted-foreground">{t('wizardNetCost')}:</span>
+                  <div className="flex justify-between pt-1.5 border-t">
+                    <span className="text-muted-foreground">Costo netto:</span>
                     <span className="font-bold text-primary">{formatCurrency(calculations.netCost)}</span>
                   </div>
                 </div>
-                <Button onClick={handleClose} className="mt-8">
+                <Button onClick={handleClose} className="mt-6 h-10">
                   Chiudi
                 </Button>
               </motion.div>
             ) : (
               <>
-                {/* Step 1: Choose Amount */}
+                {/* Step 1: Investment Amount + Savings Preview */}
                 {step === 1 && (
                   <motion.div
                     key="step1"
-                    variants={stepVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.3 }}
-                    className="space-y-6"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.2 }}
+                    className="space-y-5"
                   >
-                    <div className="text-center mb-8">
-                      <h2 className="text-2xl font-bold text-foreground mb-2">
-                        {t('wizardStep1Title')}
+                    <div className="text-center">
+                      <h2 className="text-xl md:text-2xl font-bold text-foreground mb-1">
+                        Quanto vuoi investire?
                       </h2>
-                      <p className="text-muted-foreground">
-                        {t('wizardStep1Subtitle')}
+                      <p className="text-sm text-muted-foreground">
+                        Scegli l'importo e vedi il risparmio IRPEF
                       </p>
                     </div>
 
-                    <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8 text-center">
-                      <p className="text-sm text-muted-foreground mb-2">{t('wizardInvestmentLabel')}</p>
-                      <p className="text-5xl font-bold text-primary mb-6">
+                    {/* Amount Display + Slider */}
+                    <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl p-4 md:p-5 text-center">
+                      <p className="text-4xl md:text-5xl font-bold text-primary mb-4">
                         {formatCurrency(investmentAmount)}
                       </p>
                       <Slider
@@ -210,160 +202,113 @@ export const InvestmentWizard = ({ open, onOpenChange, initialAmount = 10000 }: 
                         max={200000}
                         min={MIN_INVESTMENT}
                         step={500}
-                        className="py-4"
+                        className="py-3"
                       />
-                      <div className="flex justify-between text-xs text-muted-foreground mt-2">
+                      <div className="flex justify-between text-xs text-muted-foreground mt-1">
                         <span>€500</span>
-                        <span>€100.000</span>
-                        <span>€200.000</span>
+                        <span>€100k</span>
+                        <span>€200k</span>
                       </div>
                     </div>
 
-                    <p className="text-center text-sm text-muted-foreground">
-                      {t('wizardMinInvestment')}
-                    </p>
+                    {/* Savings Preview Cards */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <motion.div
+                        key={calculations.deduction}
+                        initial={{ opacity: 0.8 }}
+                        animate={{ opacity: 1 }}
+                        className="bg-green-500/5 rounded-lg p-3 text-center border border-green-500/10"
+                      >
+                        <PiggyBank className="w-5 h-5 text-green-600 mx-auto mb-1.5" />
+                        <p className="text-xs text-muted-foreground">Risparmi</p>
+                        <p className="text-lg md:text-xl font-bold text-green-600">
+                          {formatCurrency(calculations.deduction)}
+                        </p>
+                        <p className="text-[10px] text-green-600/70">65% IRPEF</p>
+                      </motion.div>
+
+                      <motion.div
+                        key={calculations.netCost}
+                        initial={{ opacity: 0.8 }}
+                        animate={{ opacity: 1 }}
+                        className="bg-primary/5 rounded-lg p-3 text-center border border-primary/10"
+                      >
+                        <Wallet className="w-5 h-5 text-primary mx-auto mb-1.5" />
+                        <p className="text-xs text-muted-foreground">Paghi solo</p>
+                        <p className="text-lg md:text-xl font-bold text-primary">
+                          {formatCurrency(calculations.netCost)}
+                        </p>
+                        <p className="text-[10px] text-primary/70">costo netto</p>
+                      </motion.div>
+                    </div>
                   </motion.div>
                 )}
 
-                {/* Step 2: Tax Savings */}
+                {/* Step 2: Contact Form */}
                 {step === 2 && (
                   <motion.div
                     key="step2"
-                    variants={stepVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.3 }}
-                    className="space-y-6"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.2 }}
+                    className="space-y-4"
                   >
-                    <div className="text-center mb-8">
-                      <h2 className="text-2xl font-bold text-foreground mb-2">
-                        {t('wizardStep2Title')}
+                    <div className="text-center">
+                      <h2 className="text-xl md:text-2xl font-bold text-foreground mb-1">
+                        I tuoi dati
                       </h2>
-                      <p className="text-muted-foreground">
-                        {t('wizardStep2Subtitle')}
+                      <p className="text-sm text-muted-foreground">
+                        Ti contatteremo per la campagna
                       </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="bg-gradient-to-br from-green-500/10 to-green-500/5 rounded-2xl p-6 text-center border border-green-500/20"
-                      >
-                        <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-4">
-                          <PiggyBank className="w-6 h-6 text-green-600" />
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-1">{t('wizardYouSave')}</p>
-                        <p className="text-3xl font-bold text-green-600">
-                          {formatCurrency(calculations.deduction)}
-                        </p>
-                        <p className="text-xs text-green-600/70 mt-1">65% IRPEF</p>
-                      </motion.div>
-
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-2xl p-6 text-center border border-primary/20"
-                      >
-                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                          <Wallet className="w-6 h-6 text-primary" />
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-1">{t('netCost')}</p>
-                        <p className="text-3xl font-bold text-primary">
-                          {formatCurrency(calculations.netCost)}
-                        </p>
-                        <p className="text-xs text-primary/70 mt-1">{t('wizardNetCost')}</p>
-                      </motion.div>
-                    </div>
-
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.3 }}
-                      className="bg-muted/50 rounded-xl p-4 text-center"
-                    >
-                      <p className="text-sm text-foreground">
-                        Investendo <span className="font-bold">{formatCurrency(investmentAmount)}</span>, 
-                        risparmierai <span className="font-bold text-green-600">{formatCurrency(calculations.deduction)}</span> in IRPEF.
-                        Il costo effettivo sarà solo <span className="font-bold text-primary">{formatCurrency(calculations.netCost)}</span>.
-                      </p>
-                    </motion.div>
-                  </motion.div>
-                )}
-
-                {/* Step 3: Contact Form */}
-                {step === 3 && (
-                  <motion.div
-                    key="step3"
-                    variants={stepVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.3 }}
-                    className="space-y-6"
-                  >
-                    <div className="text-center mb-8">
-                      <h2 className="text-2xl font-bold text-foreground mb-2">
-                        {t('wizardStep3Title')}
-                      </h2>
-                      <p className="text-muted-foreground">
-                        {t('wizardStep3Subtitle')}
-                      </p>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="wizard-name">{t('wizardNameLabel')} *</Label>
+                    <div className="space-y-3">
+                      <div className="space-y-1.5">
+                        <Label htmlFor="wizard-name" className="text-sm">Nome completo *</Label>
                         <Input
                           id="wizard-name"
                           placeholder="Mario Rossi"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="h-12"
+                          className="h-11"
                         />
                       </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="wizard-email">{t('wizardEmailLabel')} *</Label>
+                      <div className="space-y-1.5">
+                        <Label htmlFor="wizard-email" className="text-sm">Email *</Label>
                         <Input
                           id="wizard-email"
                           type="email"
                           placeholder="mario.rossi@email.com"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="h-12"
+                          className="h-11"
                         />
                       </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="wizard-phone">{t('wizardPhoneLabel')}</Label>
+                      <div className="space-y-1.5">
+                        <Label htmlFor="wizard-phone" className="text-sm">Telefono (opzionale)</Label>
                         <Input
                           id="wizard-phone"
                           type="tel"
                           placeholder="+39 123 456 7890"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="h-12"
+                          className="h-11"
                         />
                       </div>
                     </div>
 
                     {/* Summary */}
-                    <div className="bg-muted/50 rounded-xl p-4 space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">{t('wizardYouInvest')}:</span>
+                    <div className="bg-muted/50 rounded-lg p-3 text-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-muted-foreground">Investimento:</span>
                         <span className="font-semibold">{formatCurrency(investmentAmount)}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">{t('wizardYouSave')}:</span>
+                      <div className="flex justify-between items-center mt-1">
+                        <span className="text-muted-foreground">Risparmio IRPEF:</span>
                         <span className="font-semibold text-green-600">{formatCurrency(calculations.deduction)}</span>
-                      </div>
-                      <div className="flex justify-between pt-2 border-t">
-                        <span className="text-muted-foreground">{t('wizardNetCost')}:</span>
-                        <span className="font-bold text-primary">{formatCurrency(calculations.netCost)}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -375,29 +320,28 @@ export const InvestmentWizard = ({ open, onOpenChange, initialAmount = 10000 }: 
 
         {/* Footer Navigation */}
         {!isSuccess && (
-          <div className="px-6 pb-6 pt-4 border-t bg-muted/30 flex justify-between">
+          <div className="px-4 md:px-6 pb-4 md:pb-5 pt-3 border-t bg-muted/30 flex justify-between gap-3">
             {step > 1 ? (
-              <Button variant="outline" onClick={handleBack} className="gap-2">
+              <Button variant="outline" onClick={handleBack} className="gap-1.5 h-10">
                 <ArrowLeft className="w-4 h-4" />
-                {t('wizardBack')}
+                Indietro
               </Button>
             ) : (
               <div />
             )}
 
-            {step < 3 ? (
-              <Button onClick={handleNext} className="gap-2">
-                {t('wizardNext')}
-                <ArrowRight className="w-4 h-4" />
+            {step === 1 ? (
+              <Button onClick={handleNext} className="h-10 px-6">
+                Continua
               </Button>
             ) : (
               <Button 
                 onClick={handleSubmit} 
                 disabled={isSubmitting || !formData.name || !formData.email}
-                className="gap-2 bg-green-600 hover:bg-green-700"
+                className="gap-1.5 h-10 bg-green-600 hover:bg-green-700"
               >
                 <Send className="w-4 h-4" />
-                {isSubmitting ? 'Invio...' : t('wizardSubmit')}
+                {isSubmitting ? 'Invio...' : 'Invia Richiesta'}
               </Button>
             )}
           </div>
