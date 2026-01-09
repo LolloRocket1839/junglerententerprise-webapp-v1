@@ -2,6 +2,7 @@ import React from 'react';
 import { useLanguage } from "@/contexts/LanguageContext";
 import { StatsSection } from "@/components/invest/StatsSection";
 import { SimpleInvestmentTabs } from "@/components/invest/SimpleInvestmentTabs";
+import { TaxBenefitsSection } from "@/components/invest/TaxBenefitsSection";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Users } from "lucide-react";
@@ -83,6 +84,9 @@ const Invest = () => {
             />
           ))}
         </div>
+
+        {/* Tax Benefits Section */}
+        <TaxBenefitsSection />
 
         {/* Stats Section */}
         <div className="bg-muted/50 rounded-2xl p-6">

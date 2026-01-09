@@ -108,7 +108,23 @@ export const translations = {
     
     // Rent page
     findIdealHome: "Trova la Casa Ideale",
-    intelligentSearch: "Ricerca intelligente per proprietà, coinquilini e tutto ciò di cui hai bisogno"
+    intelligentSearch: "Ricerca intelligente per proprietà, coinquilini e tutto ciò di cui hai bisogno",
+    
+    // Tax Benefits
+    taxBenefitsTitle: "Vantaggi Fiscali dell'Investimento",
+    taxBenefitsSubtitle: "Approfitta delle agevolazioni fiscali italiane per gli investimenti in startup innovative",
+    taxBenefits2025: "Agevolazioni 2025",
+    irpefDeduction: "Detrazione IRPEF 65%",
+    irpefDeductionDesc: "Recupera fino al 65% del tuo investimento come detrazione fiscale",
+    irpefExample: "Investendo €10.000 risparmi €6.500 di IRPEF",
+    taxCredit: "Credito d'Imposta",
+    taxCreditDesc: "Le eccedenze si trasformano in credito utilizzabile in compensazione F24",
+    annualLimit: "Limite Annuo €100.000",
+    annualLimitDesc: "Fino a €100.000 di investimenti agevolabili ogni anno fiscale",
+    italianLaw: "Normativa Italiana",
+    italianLawDesc: "Art. 29-bis DL 179/2012 - Legge 193/2024 (Legge Startup)",
+    taxDisclaimer: "Le informazioni fiscali sono fornite a scopo informativo. Consulta un professionista per la tua situazione specifica.",
+    learnMore: "Scopri di più"
   },
   EN: {
     ...dealflowTranslations.EN,
@@ -221,7 +237,23 @@ export const translations = {
     
     // Rent page
     findIdealHome: "Find Your Ideal Home",
-    intelligentSearch: "Intelligent search for properties, roommates, and everything you need"
+    intelligentSearch: "Intelligent search for properties, roommates, and everything you need",
+    
+    // Tax Benefits
+    taxBenefitsTitle: "Investment Tax Benefits",
+    taxBenefitsSubtitle: "Take advantage of Italian tax incentives for investments in innovative startups",
+    taxBenefits2025: "2025 Benefits",
+    irpefDeduction: "65% IRPEF Deduction",
+    irpefDeductionDesc: "Recover up to 65% of your investment as a tax deduction",
+    irpefExample: "Investing €10,000 saves you €6,500 in IRPEF",
+    taxCredit: "Tax Credit",
+    taxCreditDesc: "Excess amounts become usable credit in F24 compensation",
+    annualLimit: "Annual Limit €100,000",
+    annualLimitDesc: "Up to €100,000 in tax-advantaged investments per fiscal year",
+    italianLaw: "Italian Law",
+    italianLawDesc: "Art. 29-bis DL 179/2012 - Law 193/2024 (Startup Law)",
+    taxDisclaimer: "Tax information is provided for informational purposes. Consult a professional for your specific situation.",
+    learnMore: "Learn more"
   },
   FR: {
     ...dealflowTranslations.FR,
@@ -334,7 +366,23 @@ export const translations = {
     
     // Rent page
     findIdealHome: "Trouvez Votre Maison Idéale",
-    intelligentSearch: "Recherche intelligente pour propriétés, colocataires et tout ce dont vous avez besoin"
+    intelligentSearch: "Recherche intelligente pour propriétés, colocataires et tout ce dont vous avez besoin",
+    
+    // Tax Benefits
+    taxBenefitsTitle: "Avantages Fiscaux de l'Investissement",
+    taxBenefitsSubtitle: "Profitez des incitations fiscales italiennes pour les investissements dans les startups innovantes",
+    taxBenefits2025: "Avantages 2025",
+    irpefDeduction: "Déduction IRPEF 65%",
+    irpefDeductionDesc: "Récupérez jusqu'à 65% de votre investissement en déduction fiscale",
+    irpefExample: "En investissant 10 000 €, vous économisez 6 500 € d'IRPEF",
+    taxCredit: "Crédit d'Impôt",
+    taxCreditDesc: "Les excédents deviennent un crédit utilisable en compensation F24",
+    annualLimit: "Limite Annuelle €100.000",
+    annualLimitDesc: "Jusqu'à 100 000 € d'investissements avantageux par année fiscale",
+    italianLaw: "Législation Italienne",
+    italianLawDesc: "Art. 29-bis DL 179/2012 - Loi 193/2024 (Loi Startup)",
+    taxDisclaimer: "Les informations fiscales sont fournies à titre informatif. Consultez un professionnel pour votre situation spécifique.",
+    learnMore: "En savoir plus"
   },
   DE: {
     ...dealflowTranslations.DE,
@@ -447,6 +495,22 @@ export const translations = {
     
     // Rent page
     findIdealHome: "Finden Sie Ihr Ideales Zuhause",
-    intelligentSearch: "Intelligente Suche nach Immobilien, Mitbewohnern und allem was Sie brauchen"
+    intelligentSearch: "Intelligente Suche nach Immobilien, Mitbewohnern und allem was Sie brauchen",
+    
+    // Tax Benefits
+    taxBenefitsTitle: "Steuerliche Vorteile der Investition",
+    taxBenefitsSubtitle: "Nutzen Sie italienische Steueranreize für Investitionen in innovative Startups",
+    taxBenefits2025: "Vorteile 2025",
+    irpefDeduction: "65% IRPEF-Abzug",
+    irpefDeductionDesc: "Erhalten Sie bis zu 65% Ihrer Investition als Steuerabzug zurück",
+    irpefExample: "Bei einer Investition von 10.000 € sparen Sie 6.500 € IRPEF",
+    taxCredit: "Steuergutschrift",
+    taxCreditDesc: "Überschüsse werden zu nutzbaren Gutschriften in F24-Kompensation",
+    annualLimit: "Jahresgrenze €100.000",
+    annualLimitDesc: "Bis zu 100.000 € steuerbegünstigte Investitionen pro Steuerjahr",
+    italianLaw: "Italienisches Recht",
+    italianLawDesc: "Art. 29-bis DL 179/2012 - Gesetz 193/2024 (Startup-Gesetz)",
+    taxDisclaimer: "Steuerinformationen dienen nur zu Informationszwecken. Konsultieren Sie einen Fachmann für Ihre spezifische Situation.",
+    learnMore: "Mehr erfahren"
   }
 };
