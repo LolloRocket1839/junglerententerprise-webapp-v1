@@ -153,7 +153,7 @@ const InvestmentDialog: React.FC<InvestmentDialogProps> = ({
                      shadow-xl transition-all duration-200 h-12"
           />
           <p className="text-sm font-semibold text-emerald-400 drop-shadow-lg">
-            Riceverai {investmentAmount ? Math.floor(parseFloat(investmentAmount) / 1000) : 0} token
+            Riceverai {investmentAmount ? Math.floor(parseFloat(investmentAmount) / 1000) : 0} Jungle Seeds
           </p>
         </div>
 
