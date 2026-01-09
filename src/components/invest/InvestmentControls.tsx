@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Slider } from "@/components/ui/slider";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Clock, Users } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
 import InvestmentInput from './InvestmentInput';
-import InvestmentConfirmationDialog from './InvestmentConfirmationDialog';
 import QuickAmountButtons from './QuickAmountButtons';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { investTranslations } from '@/translations/invest';
@@ -27,12 +27,11 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   roi,
   onInvest
 }) => {
-  const { language } = useLanguage();
-  const t = (key: string) => investTranslations[language]?.[key] || key;
+  const { language, t: globalT } = useLanguage();
+  const t = (key: string) => investTranslations[language]?.[key] || globalT(key) || key;
   
   const [inputValue, setInputValue] = useState(amount.toString());
   const [error, setError] = useState<string | null>(null);
-  const [showConfirmation, setShowConfirmation] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
@@ -98,24 +97,23 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
     return ((roi / 100) * amount).toFixed(2);
   };
 
-  const handleInvestClick = () => {
-    setShowConfirmation(true);
-  };
-
-  const handleConfirmInvestment = () => {
-    setShowConfirmation(false);
-    onInvest();
-  };
-
   const progressPercentage = (amount / maxInvestment) * 100;
 
   return (
     <div className="space-y-5 sm:space-y-6 animate-fade-in">
+      {/* Coming Soon Badge */}
+      <div className="flex items-center justify-center gap-2">
+        <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/30 px-4 py-2">
+          <Clock className="w-4 h-4 mr-2" />
+          {t('comingSoon')}
+        </Badge>
+      </div>
+
       <div className="space-y-4">
         <label className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight antialiased block 
                          bg-gradient-to-r from-white via-white/90 to-white bg-clip-text 
                          drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-          {t('investmentAmount')}
+          {t('yourInterest')}
         </label>
         
         <div className="flex flex-col gap-4">
@@ -179,9 +177,9 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
             </div>
           </div>
 
-          {/* Invest button - large touch target */}
+          {/* Join Waitlist button - large touch target */}
           <Button 
-            onClick={handleInvestClick}
+            onClick={onInvest}
             disabled={!!error || amount < minInvestment}
             className="w-full h-14 sm:h-16 text-base sm:text-lg lg:text-xl font-extrabold bg-gradient-to-r from-green-500 to-green-600 
                      active:scale-[0.98] hover:scale-[1.02] hover:shadow-xl transition-all duration-200 
@@ -190,19 +188,16 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
                      text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]
                      uppercase"
           >
-            {t('investNow')}
+            <Users className="w-5 h-5 mr-2" />
+            {t('joinWaitlist')}
           </Button>
+
+          {/* Info text */}
+          <p className="text-center text-xs sm:text-sm text-white/60">
+            {t('waitlistSubtitle')}
+          </p>
         </div>
       </div>
-
-      <InvestmentConfirmationDialog
-        open={showConfirmation}
-        onOpenChange={setShowConfirmation}
-        amount={amount}
-        units={parseFloat(calculateUnits(amount))}
-        expectedReturn={`€${calculateExpectedReturn(amount)}`}
-        onConfirm={handleConfirmInvestment}
-      />
     </div>
   );
 };

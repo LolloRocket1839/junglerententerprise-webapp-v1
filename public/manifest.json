@@ -10,25 +10,11 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "/jungle-rent-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["business", "real-estate", "lifestyle"],
-  "screenshots": [
-    {
-      "src": "/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png",
-      "sizes": "540x720",
-      "type": "image/png",
-      "form_factor": "narrow"
-    }
-  ]
+  "categories": ["business", "real-estate", "lifestyle"]
 }

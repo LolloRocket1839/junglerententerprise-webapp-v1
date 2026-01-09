@@ -103,8 +103,8 @@ export function useNotifications() {
         if (permission === 'granted') {
           const notification = new Notification(title, {
             body,
-            icon: '/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png',
-            badge: '/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png',
+            icon: '/jungle-rent-logo.svg',
+            badge: '/jungle-rent-logo.svg',
             data
           });
           
