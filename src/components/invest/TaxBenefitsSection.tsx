@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Percent, Receipt, Coins, Scale, Info, ExternalLink } from "lucide-react";
+import { TaxCalculator } from "./TaxCalculator";
 
 interface BenefitCardProps {
   icon: React.ReactNode;
@@ -84,11 +85,19 @@ export const TaxBenefitsSection = () => {
           </a>
         </div>
 
-        {/* Benefits Grid */}
-        <div className="grid md:grid-cols-2 gap-4 mb-6">
-          {benefits.map((benefit, index) => (
-            <BenefitCard key={index} {...benefit} />
-          ))}
+        {/* Main Content: Benefits + Calculator */}
+        <div className="grid lg:grid-cols-3 gap-6 mb-6">
+          {/* Benefits Grid */}
+          <div className="lg:col-span-2 grid md:grid-cols-2 gap-4">
+            {benefits.map((benefit, index) => (
+              <BenefitCard key={index} {...benefit} />
+            ))}
+          </div>
+
+          {/* Tax Calculator */}
+          <div className="lg:col-span-1">
+            <TaxCalculator />
+          </div>
         </div>
 
         {/* Disclaimer */}

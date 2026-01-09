@@ -124,7 +124,15 @@ export const translations = {
     italianLaw: "Normativa Italiana",
     italianLawDesc: "Art. 29-bis DL 179/2012 - Legge 193/2024 (Legge Startup)",
     taxDisclaimer: "Le informazioni fiscali sono fornite a scopo informativo. Consulta un professionista per la tua situazione specifica.",
-    learnMore: "Scopri di più"
+    learnMore: "Scopri di più",
+    
+    // Tax Calculator
+    taxCalculatorTitle: "Calcola il Tuo Risparmio",
+    investmentAmountLabel: "Importo dell'Investimento",
+    taxSavings: "Risparmio IRPEF",
+    netCost: "Costo Netto",
+    effectiveDeduction: "Detrazione Effettiva",
+    overLimitWarning: "Attenzione: {amount} supera il limite annuo di €100.000 e non sarà detraibile al 65%."
   },
   EN: {
     ...dealflowTranslations.EN,
@@ -253,7 +261,15 @@ export const translations = {
     italianLaw: "Italian Law",
     italianLawDesc: "Art. 29-bis DL 179/2012 - Law 193/2024 (Startup Law)",
     taxDisclaimer: "Tax information is provided for informational purposes. Consult a professional for your specific situation.",
-    learnMore: "Learn more"
+    learnMore: "Learn more",
+    
+    // Tax Calculator
+    taxCalculatorTitle: "Calculate Your Savings",
+    investmentAmountLabel: "Investment Amount",
+    taxSavings: "IRPEF Savings",
+    netCost: "Net Cost",
+    effectiveDeduction: "Effective Deduction",
+    overLimitWarning: "Warning: {amount} exceeds the annual limit of €100,000 and will not be deductible at 65%."
   },
   FR: {
     ...dealflowTranslations.FR,
@@ -382,7 +398,15 @@ export const translations = {
     italianLaw: "Législation Italienne",
     italianLawDesc: "Art. 29-bis DL 179/2012 - Loi 193/2024 (Loi Startup)",
     taxDisclaimer: "Les informations fiscales sont fournies à titre informatif. Consultez un professionnel pour votre situation spécifique.",
-    learnMore: "En savoir plus"
+    learnMore: "En savoir plus",
+    
+    // Tax Calculator
+    taxCalculatorTitle: "Calculez Vos Économies",
+    investmentAmountLabel: "Montant de l'Investissement",
+    taxSavings: "Économies IRPEF",
+    netCost: "Coût Net",
+    effectiveDeduction: "Déduction Effective",
+    overLimitWarning: "Attention: {amount} dépasse la limite annuelle de 100 000 € et ne sera pas déductible à 65%."
   },
   DE: {
     ...dealflowTranslations.DE,
@@ -511,6 +535,14 @@ export const translations = {
     italianLaw: "Italienisches Recht",
     italianLawDesc: "Art. 29-bis DL 179/2012 - Gesetz 193/2024 (Startup-Gesetz)",
     taxDisclaimer: "Steuerinformationen dienen nur zu Informationszwecken. Konsultieren Sie einen Fachmann für Ihre spezifische Situation.",
-    learnMore: "Mehr erfahren"
+    learnMore: "Mehr erfahren",
+    
+    // Tax Calculator
+    taxCalculatorTitle: "Berechnen Sie Ihre Ersparnisse",
+    investmentAmountLabel: "Investitionsbetrag",
+    taxSavings: "IRPEF-Ersparnis",
+    netCost: "Nettokosten",
+    effectiveDeduction: "Effektiver Abzug",
+    overLimitWarning: "Achtung: {amount} überschreitet die Jahresgrenze von 100.000 € und ist nicht zu 65% abzugsfähig."
   }
 };
