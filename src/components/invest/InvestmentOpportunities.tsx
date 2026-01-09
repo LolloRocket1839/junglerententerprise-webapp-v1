@@ -8,6 +8,8 @@ import { useCreateInvestment } from '@/hooks/useCreateInvestment';
 import PropertyCard from './PropertyCard';
 import InvestmentOpportunityDialog from './InvestmentOpportunityDialog';
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Building2, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const InvestmentOpportunities = () => {
@@ -17,7 +19,7 @@ const InvestmentOpportunities = () => {
   const createInvestment = useCreateInvestment();
 
   // Fetch properties available for investment (with investment_goal > 0)
-  const { data: properties, isLoading, error } = useQuery({
+  const { data: properties, isLoading, error, refetch, isRefetching } = useQuery({
     queryKey: ['investment-properties'],
     throwOnError: false,
     queryFn: async () => {
@@ -47,60 +49,67 @@ const InvestmentOpportunities = () => {
     setShowDetails(true);
   };
 
+  const handleRefresh = async () => {
+    await refetch();
+    toast.success("Opportunità aggiornate");
+  };
+
   return (
-    <div className="space-y-6 p-4 md:p-6">
+    <div className="space-y-4 sm:space-y-6 p-4 sm:p-6">
+      {/* Header with refresh button */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl sm:text-2xl font-bold text-white">Opportunità di Investimento</h2>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleRefresh}
+          disabled={isRefetching}
+          className="h-10 w-10 touch-manipulation"
+        >
+          <RefreshCw className={`h-5 w-5 ${isRefetching ? 'animate-spin' : ''}`} />
+        </Button>
+      </div>
+
       {error && (
         <Alert variant="destructive" className="mb-4">
           <AlertDescription>
-            Failed to load investment opportunities. Please try again later.
+            Impossibile caricare le opportunità. Riprova più tardi.
           </AlertDescription>
         </Alert>
       )}
 
+      {/* Empty state */}
       {!isLoading && properties?.length === 0 && (
-        <Alert className="mb-4">
-          <AlertDescription>
-            No investment opportunities available at the moment. Check back soon!
-          </AlertDescription>
-        </Alert>
+        <div className="flex flex-col items-center justify-center py-12 sm:py-16 text-center">
+          <div className="p-4 rounded-full bg-white/5 mb-4">
+            <Building2 className="w-12 h-12 text-white/40" />
+          </div>
+          <h3 className="text-lg font-semibold text-white mb-2">
+            Nessuna opportunità disponibile
+          </h3>
+          <p className="text-sm text-white/60 max-w-sm">
+            Al momento non ci sono proprietà disponibili per l'investimento. Torna presto per nuove opportunità!
+          </p>
+        </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      {/* Property grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {isLoading ? (
+          // Loading skeletons optimized for mobile
           [1, 2, 3].map((i) => (
-            <PropertyCard
-              key={i}
-              property={{
-                id: i.toString(),
-                title: '',
-                address: '',
-                city: '',
-                description: '',
-                images: [],
-                investment_goal: 100000,
-                amount_raised: 0,
-                investor_share_percentage: 0,
-                tokens_issued: 0,
-                status: 'active',
-                source: 'direct',
-                rooms: 0,
-                has_kitchen: false,
-                has_living_room: false,
-                has_balcony: false,
-                is_furnished: false,
-                appliances: [],
-                amenities: [],
-                utilities: [],
-                internet_available: false,
-                utilities_included: false,
-                usage_mode: 'hybrid',
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString()
-              }}
-              onInvest={handlePropertyClick}
-              onInfo={handlePropertyClick}
-              className="glass-card backdrop-blur-md bg-black/40 border-white/10 animate-pulse"
-            />
+            <div key={i} className="glass-card backdrop-blur-md bg-black/40 border-white/10 rounded-lg overflow-hidden">
+              <Skeleton className="aspect-[4/3] sm:aspect-video w-full" />
+              <div className="p-4 sm:p-6 space-y-4">
+                <Skeleton className="h-5 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-16 w-full" />
+                <div className="flex gap-3">
+                  <Skeleton className="h-12 flex-1" />
+                  <Skeleton className="h-12 w-12" />
+                </div>
+              </div>
+            </div>
           ))
         ) : (
           properties?.map((property) => (

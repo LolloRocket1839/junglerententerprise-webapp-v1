@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import InvestmentInput from './InvestmentInput';
 import InvestmentConfirmationDialog from './InvestmentConfirmationDialog';
+import QuickAmountButtons from './QuickAmountButtons';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { investTranslations } from '@/translations/invest';
 
@@ -82,6 +83,12 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
     setTimeout(() => setShowTooltip(false), 1000);
   };
 
+  const handleQuickAmountSelect = (selectedAmount: number) => {
+    setError(null);
+    onAmountChange(selectedAmount);
+    setInputValue(selectedAmount.toString());
+  };
+
   const calculateUnits = (amount: number) => {
     const units = amount / 100;
     return Number.isInteger(units) ? units.toString() : units.toFixed(2);
@@ -103,15 +110,23 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
   const progressPercentage = (amount / maxInvestment) * 100;
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-5 sm:space-y-6 animate-fade-in">
       <div className="space-y-4">
-        <label className="text-3xl font-bold text-white tracking-tight antialiased block 
+        <label className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight antialiased block 
                          bg-gradient-to-r from-white via-white/90 to-white bg-clip-text 
                          drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
           {t('investmentAmount')}
         </label>
         
         <div className="flex flex-col gap-4">
+          {/* Quick amount buttons - prominent on mobile */}
+          <QuickAmountButtons
+            onSelect={handleQuickAmountSelect}
+            selectedAmount={amount}
+            maxAmount={maxInvestment}
+            minAmount={minInvestment}
+          />
+
           <InvestmentInput
             value={inputValue}
             onChange={handleInputChange}
@@ -125,9 +140,10 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
             </Alert>
           )}
           
-          <div className="relative pt-6 pb-2">
+          {/* Slider with larger touch target on mobile */}
+          <div className="relative pt-4 sm:pt-6 pb-2">
             {showTooltip && (
-              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded text-sm">
+              <div className="absolute -top-4 sm:-top-6 left-1/2 transform -translate-x-1/2 bg-black/80 text-white px-3 py-1.5 rounded text-sm font-medium">
                 €{amount.toLocaleString()}
               </div>
             )}
@@ -137,38 +153,40 @@ const InvestmentControls: React.FC<InvestmentControlsProps> = ({
               max={maxInvestment}
               min={minInvestment}
               step={100}
-              className="relative z-10"
+              className="relative z-10 touch-manipulation [&_[role=slider]]:h-6 [&_[role=slider]]:w-6 sm:[&_[role=slider]]:h-5 sm:[&_[role=slider]]:w-5"
             />
             <div 
               className="absolute inset-y-0 left-0 bg-gradient-to-r from-green-400 to-green-600 rounded-full transition-all duration-300 ease-out"
               style={{ 
                 width: `${progressPercentage}%`,
                 height: '2px',
-                top: '24px'
+                top: '20px'
               }}
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6 glass-card backdrop-blur-xl">
+          {/* Summary cards */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 p-4 sm:p-6 glass-card backdrop-blur-xl">
             <div>
-              <span className="block text-sm font-medium text-gray-300 mb-2">{t('unitsPurchased')}</span>
-              <span className="text-2xl font-bold text-white tracking-tight drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] bg-gradient-to-r from-white via-white/90 to-white bg-clip-text">
-                {calculateUnits(amount)} {t('units')}
+              <span className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">{t('unitsPurchased')}</span>
+              <span className="text-lg sm:text-xl lg:text-2xl font-bold text-white tracking-tight drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+                {calculateUnits(amount)} <span className="text-sm sm:text-base font-medium">{t('units')}</span>
               </span>
             </div>
             <div>
-              <span className="block text-sm font-medium text-gray-300 mb-2">{t('estimatedAnnualReturn')}</span>
-              <span className="text-xl font-semibold text-green-500 tracking-tight shadow-sm">€{calculateExpectedReturn(amount)}</span>
+              <span className="block text-xs sm:text-sm font-medium text-gray-300 mb-1 sm:mb-2">{t('estimatedAnnualReturn')}</span>
+              <span className="text-lg sm:text-xl font-semibold text-green-500 tracking-tight">€{calculateExpectedReturn(amount)}</span>
             </div>
           </div>
 
+          {/* Invest button - large touch target */}
           <Button 
             onClick={handleInvestClick}
             disabled={!!error || amount < minInvestment}
-            className="w-full py-8 text-xl font-extrabold bg-gradient-to-r from-green-500 to-green-600 
-                     hover:scale-105 hover:shadow-xl transition-all duration-300 
+            className="w-full h-14 sm:h-16 text-base sm:text-lg lg:text-xl font-extrabold bg-gradient-to-r from-green-500 to-green-600 
+                     active:scale-[0.98] hover:scale-[1.02] hover:shadow-xl transition-all duration-200 
                      disabled:opacity-50 disabled:hover:scale-100 
-                     shadow-xl px-8 tracking-wide
+                     shadow-xl tracking-wide touch-manipulation
                      text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]
                      uppercase"
           >
