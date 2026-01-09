@@ -42,12 +42,10 @@ export const useInvestmentStats = () => {
         }
 
         const totalProperties = properties?.length || 0;
-        const averageRoi = properties?.reduce((acc, prop) => acc + (prop.investor_share_percentage || 0), 0) / totalProperties || 0;
         const uniqueInvestors = investments ? new Set(investments.map(inv => inv.profile_id)).size : 0;
         
         return {
           totalProperties,
-          averageRoi: `${averageRoi.toFixed(1)}%`,
           activeInvestors: uniqueInvestors > 0 ? uniqueInvestors.toString() : '0'
         };
       } catch (error) {

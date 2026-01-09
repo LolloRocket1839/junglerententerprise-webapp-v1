@@ -20,7 +20,6 @@ export interface InvestmentStats {
   totalInvested: number;
   totalTokens: number;
   propertiesCount: number;
-  averageROI: number;
 }
 
 export const useUserInvestments = () => {
@@ -102,18 +101,11 @@ export const useInvestmentStats = () => {
       const totalInvested = investments.reduce((sum, inv) => sum + (inv.amount || 0), 0);
       const totalTokens = investments.reduce((sum, inv) => sum + (inv.tokens || 0), 0);
       const uniqueProperties = new Set(investments.map(inv => inv.property_id)).size;
-      
-      const avgROI = investments.length > 0
-        ? investments.reduce((sum, inv: any) => 
-            sum + (inv.unified_properties?.investor_share_percentage || 70), 0
-          ) / investments.length
-        : 0;
 
       return {
         totalInvested,
         totalTokens,
         propertiesCount: uniqueProperties,
-        averageROI: avgROI,
       } as InvestmentStats;
     },
   });
