@@ -32,7 +32,6 @@ export function InvestorDashboardView({ onViewChange }: InvestorDashboardViewPro
     totalInvested: portfolio?.totalInvested || 0,
     totalReturns: portfolio?.totalReturns || 0,
     propertiesCount: portfolio?.propertiesCount || 0,
-    averageROI: portfolio?.averageROI || 8.5,
   };
 
   const investments = portfolio?.investments || [];
@@ -81,7 +80,7 @@ export function InvestorDashboardView({ onViewChange }: InvestorDashboardViewPro
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <Card className="jungle-card">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
@@ -92,10 +91,6 @@ export function InvestorDashboardView({ onViewChange }: InvestorDashboardViewPro
                 <p className="text-sm text-muted-foreground">Valore Portafoglio</p>
                 <p className="text-xl font-bold">€{stats.totalInvested.toLocaleString()}</p>
               </div>
-            </div>
-            <div className="flex items-center gap-1 mt-2 text-sm text-green-600">
-              <ArrowUpRight className="h-4 w-4" />
-              +12.5% questo mese
             </div>
           </CardContent>
         </Card>
@@ -113,23 +108,6 @@ export function InvestorDashboardView({ onViewChange }: InvestorDashboardViewPro
             </div>
             <p className="text-sm text-muted-foreground mt-2">
               {stats.propertiesCount} attive
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="jungle-card">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-100 rounded-lg">
-                <PieChart className="h-5 w-5 text-amber-600" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">ROI Medio</p>
-                <p className="text-xl font-bold">{stats.averageROI}%</p>
-              </div>
-            </div>
-            <p className="text-sm text-muted-foreground mt-2">
-              vs 3.5% mercato
             </p>
           </CardContent>
         </Card>
@@ -189,10 +167,9 @@ export function InvestorDashboardView({ onViewChange }: InvestorDashboardViewPro
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-semibold text-green-600">
-                      +{investment.property?.investor_share_percentage || 8.5}%
+                    <p className="text-sm text-muted-foreground">
+                      {investment.tokens} token
                     </p>
-                    <p className="text-sm text-muted-foreground">annuo</p>
                   </div>
                 </div>
               ))

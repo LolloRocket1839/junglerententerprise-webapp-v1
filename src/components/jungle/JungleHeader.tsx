@@ -59,9 +59,11 @@ export function JungleHeader({ userMode, onModeChange }: JungleHeaderProps) {
             onClick={() => onModeChange(null)}
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">JR</span>
-            </div>
+            <img 
+              src="/jungle-rent-logo.svg" 
+              alt="Jungle Rent" 
+              className="h-8 w-auto"
+            />
             <span className="font-serif font-bold text-xl text-foreground hidden sm:inline">
               Jungle Rent
             </span>
