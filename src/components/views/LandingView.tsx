@@ -165,17 +165,7 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
             </Card>
           </div>
 
-          {/* Admin Link */}
-          <div className="text-center mt-8">
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="text-muted-foreground"
-              onClick={() => onSelectMode("administrator")}
-            >
-              Accesso Amministratori
-            </Button>
-          </div>
+          {/* Removed Admin Link - managed via Lovable */}
         </div>
       </section>
 

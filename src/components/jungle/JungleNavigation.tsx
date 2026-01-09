@@ -47,16 +47,7 @@ export function JungleNavigation({ userMode, activeView, onViewChange }: JungleN
           { id: "bookings" as ViewType, label: "Prenotazioni", icon: Calendar },
           { id: "messages" as ViewType, label: "Messaggi", icon: MessageSquare },
         ];
-      case "administrator":
-        return [
-          { id: "admin" as ViewType, label: "Dashboard", icon: LayoutDashboard },
-          { id: "properties" as ViewType, label: "Proprietà", icon: Building2 },
-          { id: "admin-users" as ViewType, label: "Utenti", icon: Users },
-          { id: "applications" as ViewType, label: "Candidature", icon: ClipboardList },
-          { id: "bookings" as ViewType, label: "Prenotazioni", icon: Calendar },
-          { id: "payments" as ViewType, label: "Pagamenti", icon: CreditCard },
-          { id: "messages" as ViewType, label: "Messaggi", icon: MessageSquare },
-        ];
+      // Administrator mode removed - managed via Lovable
       default:
         return [];
     }
