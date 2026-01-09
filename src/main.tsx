@@ -1,6 +1,7 @@
 
-// Force hard refresh - Cache break 2025 v6-FINAL
+// Force hard refresh - Cache break 2025 v7-ROUTER
 import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
 
@@ -32,7 +33,11 @@ const appRoot = createRoot(root);
 
 // Gestisci il cleanup quando l'app viene smontata
 try {
-  appRoot.render(<App />);
+  appRoot.render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
 } catch (error) {
   console.error('Errore durante il rendering:', error);
 }
