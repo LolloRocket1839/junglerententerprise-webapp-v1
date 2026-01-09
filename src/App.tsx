@@ -13,6 +13,13 @@ import { InvestorDashboardView } from '@/components/views/InvestorDashboardView'
 import { InvestorPortfolioView } from '@/components/views/InvestorPortfolioView';
 import { StudentDashboardView } from '@/components/views/StudentDashboardView';
 import { TouristDashboardView } from '@/components/views/TouristDashboardView';
+import { MessagesView } from '@/components/views/MessagesView';
+import { NotificationsView } from '@/components/views/NotificationsView';
+import { StudentBrowseView } from '@/components/views/StudentBrowseView';
+import { StudentApplicationsView } from '@/components/views/StudentApplicationsView';
+import { StudentRentView } from '@/components/views/StudentRentView';
+import { TouristBrowseView } from '@/components/views/TouristBrowseView';
+import { TouristBookingsView } from '@/components/views/TouristBookingsView';
 import Invest from '@/pages/Invest';
 import type { UserMode, AdminMode, ViewType } from '@/lib/types';
 import './App.css';
@@ -74,8 +81,21 @@ function App() {
               {activeView === "invest" && userMode === "investor" && <Invest />}
               {activeView === "portfolio" && userMode === "investor" && <InvestorPortfolioView />}
               
-              {/* Placeholder for other views */}
-              {!["dashboard", "invest", "portfolio"].includes(activeView) && (
+              {/* Student specific views */}
+              {activeView === "browse" && userMode === "student" && <StudentBrowseView />}
+              {activeView === "applications" && userMode === "student" && <StudentApplicationsView />}
+              {activeView === "rent" && userMode === "student" && <StudentRentView />}
+              
+              {/* Tourist specific views */}
+              {activeView === "browse" && userMode === "tourist" && <TouristBrowseView />}
+              {activeView === "bookings" && userMode === "tourist" && <TouristBookingsView />}
+              
+              {/* Common views */}
+              {activeView === "messages" && <MessagesView userMode={userMode} />}
+              {activeView === "notifications" && <NotificationsView />}
+              
+              {/* Placeholder for remaining views */}
+              {!["dashboard", "invest", "portfolio", "browse", "applications", "rent", "bookings", "messages", "notifications"].includes(activeView) && (
                 <div className="text-center py-20 animate-fade-in">
                   <h2 className="text-2xl font-bold text-foreground mb-4">
                     {activeView.charAt(0).toUpperCase() + activeView.slice(1).replace("-", " ")}
