@@ -1,37 +1,38 @@
 
-// Force hard refresh - Cache break 2025 v9-FULLPURGE
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import './index.css';
 
-// Aggressive cache cleanup + SW registration
+// Determine if we're in production (custom domain, not preview/dev)
+const isProduction = !import.meta.env.DEV && 
+  !window.location.hostname.includes('lovableproject.com') &&
+  !window.location.hostname.includes('localhost') &&
+  !window.location.hostname.includes('127.0.0.1');
+
+// Service Worker: only register in production, cleanup in dev/preview
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
     try {
-      const hadController = !!navigator.serviceWorker.controller;
-      
-      // Unregister all existing SWs
-      const regs = await navigator.serviceWorker.getRegistrations();
-      await Promise.all(regs.map((r) => r.unregister()));
-
-      // Purge all cache storage
-      const cacheKeys = await caches.keys();
-      await Promise.all(cacheKeys.map((k) => caches.delete(k)));
-
-      // One-time hard reload if we were controlled by old SW
-      if (hadController && !sessionStorage.getItem('sw_cleaned')) {
-        sessionStorage.setItem('sw_cleaned', '1');
-        location.reload();
-        return;
+      if (isProduction) {
+        // Production: register SW for offline/performance
+        const registration = await navigator.serviceWorker.register('/sw.js', {
+          updateViaCache: 'none',
+        });
+        await registration.update();
+        console.log('SW registered (production): ', registration);
+      } else {
+        // Dev/Preview: unregister all SWs and clear caches
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map((r) => r.unregister()));
+        
+        const cacheKeys = await caches.keys();
+        await Promise.all(cacheKeys.map((k) => caches.delete(k)));
+        
+        if (regs.length > 0 || cacheKeys.length > 0) {
+          console.log('SW/cache cleaned (dev/preview mode)');
+        }
       }
-
-      // Register fresh SW with no caching
-      const registration = await navigator.serviceWorker.register('/sw.js', {
-        updateViaCache: 'none',
-      });
-      await registration.update();
-      console.log('SW registered (fresh): ', registration);
     } catch (err) {
       console.log('SW setup failed: ', err);
     }
