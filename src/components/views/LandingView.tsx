@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, GraduationCap, Plane, Building2, ArrowRight, Shield, Users, Percent } from "lucide-react";
+import { TrendingUp, GraduationCap, Plane, Building2, ArrowRight, Shield, Users, Clock } from "lucide-react";
 import type { UserMode, AdminMode } from "@/lib/types";
 
 interface LandingViewProps {
@@ -20,9 +20,9 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
             {/* Logo */}
             <div className="flex items-center justify-center gap-3 mb-8">
               <img 
-                src="/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png" 
+                src="/jungle-rent-logo.svg" 
                 alt="Jungle Rent" 
-                className="w-20 h-20 rounded-2xl"
+                className="w-20 h-20"
               />
             </div>
 
@@ -42,16 +42,16 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
 
             <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Percent className="h-4 w-4 text-primary" />
-                <span>8.5% rendimento annuo</span>
+                <Clock className="h-4 w-4 text-primary" />
+                <span>Campagna in arrivo</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Users className="h-4 w-4 text-primary" />
-                <span>1,247 utenti attivi</span>
+                <span>Unisciti alla waitlist</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Building2 className="h-4 w-4 text-primary" />
-                <span>3 proprietà a Torino</span>
+                <span>Proprietà a Torino</span>
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
                   Investitore
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Investi in immobili studenteschi con rendimenti stabili del 7-9% annuo.
+                  Investi in immobili studenteschi con rendimenti stabili e agevolazioni fiscali.
                 </p>
                 <ul className="text-sm text-muted-foreground space-y-2 mb-6">
                   <li className="flex items-center gap-2">
@@ -80,7 +80,7 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-primary">✓</span>
-                    Rendimenti trimestrali
+                    Detrazione IRPEF 65%
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-primary">✓</span>
@@ -88,7 +88,7 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
                   </li>
                 </ul>
                 <Button className="w-full group-hover:bg-primary/90">
-                  Inizia a Investire
+                  Mostra Interesse
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </div>
@@ -107,12 +107,12 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
                   Studente
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Trova il tuo alloggio ideale vicino all'università con il 25% di sconto.
+                  Trova il tuo alloggio ideale vicino all'università con sconti dedicati.
                 </p>
                 <ul className="text-sm text-muted-foreground space-y-2 mb-6">
                   <li className="flex items-center gap-2">
                     <span className="text-primary">✓</span>
-                    25% sconto garantito
+                    Sconti studenti
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="text-primary">✓</span>
@@ -166,8 +166,6 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
               </div>
             </Card>
           </div>
-
-          {/* Removed Admin Link - managed via Lovable */}
         </div>
       </section>
 
@@ -185,7 +183,7 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-2">Modello Dual-Revenue</h3>
               <p className="text-muted-foreground">
-                Affitti a studenti durante l'anno accademico (9 mesi) e soggiorni turistici durante le vacanze (3 mesi).
+                Affitti a studenti durante l'anno accademico e soggiorni turistici durante le vacanze.
               </p>
             </div>
             
@@ -193,9 +191,9 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
               <div className="w-12 h-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold mx-auto mb-4">
                 2
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">Sconto 25% Studenti</h3>
+              <h3 className="text-xl font-semibold text-foreground mb-2">Sconti Studenti</h3>
               <p className="text-muted-foreground">
-                Gli studenti pagano il 25% in meno rispetto al mercato grazie ai rendimenti turistici estivi.
+                Gli studenti pagano meno rispetto al mercato grazie ai rendimenti turistici estivi.
               </p>
             </div>
             
@@ -205,7 +203,7 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
               </div>
               <h3 className="text-xl font-semibold text-foreground mb-2">Rendimenti Stabili</h3>
               <p className="text-muted-foreground">
-                Gli investitori ricevono rendimenti trimestrali del 7-9% annuo con occupazione media del 95%.
+                Gli investitori ricevono rendimenti trimestrali con occupazione elevata garantita.
               </p>
             </div>
           </div>

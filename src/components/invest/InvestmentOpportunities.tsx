@@ -126,16 +126,9 @@ const InvestmentOpportunities = () => {
           property={selectedProperty}
           open={showDetails}
           onOpenChange={setShowDetails}
-          onInvest={async (amount) => {
-            if (!session) {
-              toast.error("Devi effettuare il login per investire");
-              return;
-            }
-            
-            await createInvestment.mutateAsync({
-              propertyId: selectedProperty.id,
-              amount,
-            });
+          onInvest={() => {
+            // Waitlist system - no payment needed
+            toast.success("Grazie per il tuo interesse!");
             setShowDetails(false);
           }}
         />

@@ -60,9 +60,9 @@ export function JungleHeader({ userMode, onModeChange }: JungleHeaderProps) {
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
             <img 
-              src="/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png" 
+              src="/jungle-rent-logo.svg" 
               alt="Jungle Rent" 
-              className="h-8 w-auto rounded"
+              className="h-8 w-auto"
             />
             <span className="font-serif font-bold text-xl text-foreground hidden sm:inline">
               Jungle Rent

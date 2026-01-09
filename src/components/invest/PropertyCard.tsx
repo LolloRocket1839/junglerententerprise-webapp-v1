@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Info, ImageIcon, EuroIcon } from 'lucide-react';
+import { ArrowRight, Info, ImageIcon, EuroIcon, Users, Clock } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
 import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
 import ProgressBar from './ProgressBar';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { investTranslations } from '@/translations/invest';
+import { useWaitlistCount } from '@/hooks/useWaitlist';
 
 // Import local property images
 import propertyExterior1 from '@/assets/invest-property-exterior-1.jpg';
@@ -30,9 +32,10 @@ interface PropertyCardProps {
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo, className }) => {
-  const { language } = useLanguage();
-  const t = (key: string) => investTranslations[language]?.[key] || key;
+  const { language, t: globalT } = useLanguage();
+  const t = (key: string) => investTranslations[language]?.[key] || globalT(key) || key;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const { data: waitlistCount } = useWaitlistCount(property.id);
 
   const getPropertyImages = () => {
     if (property.images && property.images.length > 0) {
@@ -82,8 +85,17 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
                 <ImageIcon className="w-5 h-5 sm:w-4 sm:h-4" />
               </Button>
             )}
-            <div className="absolute top-3 left-3 bg-background/90 px-3 py-1.5 rounded-full text-xs sm:text-sm text-foreground font-medium">
-              {currentImageIndex === 0 ? t('exterior') : t('interior')}
+            <div className="absolute top-3 left-3 flex gap-2">
+              <Badge className="bg-amber-500/90 text-white border-amber-600/50">
+                <Clock className="w-3 h-3 mr-1" />
+                {t('comingSoon')}
+              </Badge>
+              {waitlistCount !== undefined && waitlistCount > 0 && (
+                <Badge className="bg-primary/90 text-white border-primary/50">
+                  <Users className="w-3 h-3 mr-1" />
+                  {waitlistCount}
+                </Badge>
+              )}
             </div>
           </>
         ) : (
@@ -135,12 +147,12 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
               onInvest(property);
             }}
           >
-            {t('investNow')}
+            {t('joinWaitlist')}
             <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
           </Button>
           <Button 
             variant="outline" 
-            size="icon" 
+            size="icon"
             className="h-12 w-12 sm:h-11 sm:w-11 touch-manipulation"
             onClick={(e) => {
               e.stopPropagation();

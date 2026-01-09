@@ -132,7 +132,21 @@ export const translations = {
     taxSavings: "Risparmio IRPEF",
     netCost: "Costo Netto",
     effectiveDeduction: "Detrazione Effettiva",
-    overLimitWarning: "Attenzione: {amount} supera il limite annuo di €100.000 e non sarà detraibile al 65%."
+    overLimitWarning: "Attenzione: {amount} supera il limite annuo di €100.000 e non sarà detraibile al 65%.",
+    
+    // Waitlist
+    waitlistTitle: "Iscriviti alla Waitlist",
+    waitlistSubtitle: "Sii tra i primi a investire quando apriremo la campagna",
+    joinWaitlist: "Mostra Interesse",
+    alreadyOnWaitlist: "Già iscritto",
+    peopleInterested: "interessati",
+    comingSoon: "Prossimamente",
+    waitlistSuccess: "Iscrizione completata!",
+    waitlistSuccessMessage: "Ti contatteremo quando la campagna sarà attiva",
+    yourInterest: "Il tuo interesse",
+    waitlistEmail: "Email",
+    waitlistPhone: "Telefono (opzionale)",
+    waitlistName: "Nome e Cognome"
   },
   EN: {
     ...dealflowTranslations.EN,
@@ -269,7 +283,21 @@ export const translations = {
     taxSavings: "IRPEF Savings",
     netCost: "Net Cost",
     effectiveDeduction: "Effective Deduction",
-    overLimitWarning: "Warning: {amount} exceeds the annual limit of €100,000 and will not be deductible at 65%."
+    overLimitWarning: "Warning: {amount} exceeds the annual limit of €100,000 and will not be deductible at 65%.",
+    
+    // Waitlist
+    waitlistTitle: "Join the Waitlist",
+    waitlistSubtitle: "Be among the first to invest when we launch the campaign",
+    joinWaitlist: "Show Interest",
+    alreadyOnWaitlist: "Already on waitlist",
+    peopleInterested: "interested",
+    comingSoon: "Coming Soon",
+    waitlistSuccess: "Registration complete!",
+    waitlistSuccessMessage: "We will contact you when the campaign is active",
+    yourInterest: "Your interest",
+    waitlistEmail: "Email",
+    waitlistPhone: "Phone (optional)",
+    waitlistName: "Full Name"
   },
   FR: {
     ...dealflowTranslations.FR,
@@ -406,7 +434,21 @@ export const translations = {
     taxSavings: "Économies IRPEF",
     netCost: "Coût Net",
     effectiveDeduction: "Déduction Effective",
-    overLimitWarning: "Attention: {amount} dépasse la limite annuelle de 100 000 € et ne sera pas déductible à 65%."
+    overLimitWarning: "Attention: {amount} dépasse la limite annuelle de 100 000 € et ne sera pas déductible à 65%.",
+    
+    // Waitlist
+    waitlistTitle: "Rejoindre la Liste d'Attente",
+    waitlistSubtitle: "Soyez parmi les premiers à investir lors du lancement de la campagne",
+    joinWaitlist: "Manifester l'Intérêt",
+    alreadyOnWaitlist: "Déjà inscrit",
+    peopleInterested: "intéressés",
+    comingSoon: "Bientôt Disponible",
+    waitlistSuccess: "Inscription terminée !",
+    waitlistSuccessMessage: "Nous vous contacterons lorsque la campagne sera active",
+    yourInterest: "Votre intérêt",
+    waitlistEmail: "Email",
+    waitlistPhone: "Téléphone (optionnel)",
+    waitlistName: "Nom Complet"
   },
   DE: {
     ...dealflowTranslations.DE,
@@ -543,6 +585,20 @@ export const translations = {
     taxSavings: "IRPEF-Ersparnis",
     netCost: "Nettokosten",
     effectiveDeduction: "Effektiver Abzug",
-    overLimitWarning: "Achtung: {amount} überschreitet die Jahresgrenze von 100.000 € und ist nicht zu 65% abzugsfähig."
+    overLimitWarning: "Achtung: {amount} überschreitet die Jahresgrenze von 100.000 € und ist nicht zu 65% abzugsfähig.",
+    
+    // Waitlist
+    waitlistTitle: "Warteliste Beitreten",
+    waitlistSubtitle: "Seien Sie unter den Ersten, die investieren, wenn wir die Kampagne starten",
+    joinWaitlist: "Interesse Zeigen",
+    alreadyOnWaitlist: "Bereits auf Warteliste",
+    peopleInterested: "interessiert",
+    comingSoon: "Demnächst Verfügbar",
+    waitlistSuccess: "Registrierung abgeschlossen!",
+    waitlistSuccessMessage: "Wir werden Sie kontaktieren, wenn die Kampagne aktiv ist",
+    yourInterest: "Ihr Interesse",
+    waitlistEmail: "E-Mail",
+    waitlistPhone: "Telefon (optional)",
+    waitlistName: "Vollständiger Name"
   }
 };
