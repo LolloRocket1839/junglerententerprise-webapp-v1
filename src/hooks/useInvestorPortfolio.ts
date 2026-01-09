@@ -19,9 +19,7 @@ export interface PortfolioInvestment {
 
 export interface InvestorPortfolio {
   totalInvested: number;
-  totalReturns: number;
   propertiesCount: number;
-  averageROI: number;
   investments: PortfolioInvestment[];
 }
 
@@ -34,9 +32,7 @@ export function useInvestorPortfolio() {
       if (!user) {
         return {
           totalInvested: 0,
-          totalReturns: 0,
           propertiesCount: 0,
-          averageROI: 0,
           investments: [],
         };
       }
@@ -75,18 +71,6 @@ export function useInvestorPortfolio() {
       const uniquePropertyIds = new Set(investments?.map(inv => inv.property_id).filter(Boolean));
       const propertiesCount = uniquePropertyIds.size;
 
-      // Calculate average ROI from properties
-      const rois = investments
-        ?.map(inv => (inv.unified_properties as any)?.investor_share_percentage)
-        .filter((roi): roi is number => roi !== null && roi !== undefined);
-      
-      const averageROI = rois && rois.length > 0
-        ? rois.reduce((sum, roi) => sum + roi, 0) / rois.length
-        : 8.5; // Default
-
-      // Estimate returns (simplified: totalInvested * averageROI% / 100)
-      const totalReturns = Math.round(totalInvested * (averageROI / 100));
-
       // Map investments with property data
       const mappedInvestments: PortfolioInvestment[] = (investments || []).map(inv => ({
         id: inv.id,
@@ -99,9 +83,7 @@ export function useInvestorPortfolio() {
 
       return {
         totalInvested,
-        totalReturns,
         propertiesCount,
-        averageROI,
         investments: mappedInvestments,
       };
     },

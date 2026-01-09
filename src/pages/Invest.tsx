@@ -4,7 +4,7 @@ import { StatsSection } from "@/components/invest/StatsSection";
 import { SimpleInvestmentTabs } from "@/components/invest/SimpleInvestmentTabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Shield, Users } from "lucide-react";
+import { Shield, Users } from "lucide-react";
 
 const FeatureCard = ({ icon, title, description, badge }: {
   icon: React.ReactNode;
@@ -38,12 +38,6 @@ const Invest = () => {
   const { t } = useLanguage();
 
   const features = [
-    {
-      icon: <TrendingUp className="w-6 h-6 text-primary" />,
-      title: t('guaranteedReturns'),
-      description: t('guaranteedReturnsDesc'),
-      badge: "8-12%"
-    },
     {
       icon: <Shield className="w-6 h-6 text-blue-600" />,
       title: t('secureInvestments'),
@@ -81,7 +75,7 @@ const Invest = () => {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {features.map((feature, index) => (
             <FeatureCard
               key={index}

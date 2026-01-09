@@ -30,7 +30,6 @@ export function InvestorDashboardView({ onViewChange }: InvestorDashboardViewPro
   
   const stats = {
     totalInvested: portfolio?.totalInvested || 0,
-    totalReturns: portfolio?.totalReturns || 0,
     propertiesCount: portfolio?.propertiesCount || 0,
   };
 

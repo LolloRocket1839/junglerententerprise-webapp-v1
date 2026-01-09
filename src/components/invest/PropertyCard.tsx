@@ -101,19 +101,12 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onInvest, onInfo,
         </div>
         <p className="text-sm text-muted-foreground line-clamp-2">{property.description}</p>
         
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <EuroIcon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-            <span className="text-base sm:text-lg font-bold text-foreground">
-              {property.investment_goal.toLocaleString()}
-            </span>
-          </div>
-          <div className="text-right">
-            <p className="text-xs text-muted-foreground">{t('expectedROI')}</p>
-            <p className="text-sm sm:text-base font-semibold text-primary">
-              {property.investor_share_percentage ? `${property.investor_share_percentage}%` : t('tbd')}
-            </p>
-          </div>
+        <div className="flex items-center gap-1.5">
+          <EuroIcon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+          <span className="text-sm text-muted-foreground">Obiettivo:</span>
+          <span className="text-base sm:text-lg font-bold text-foreground">
+            €{property.investment_goal.toLocaleString()}
+          </span>
         </div>
 
         <div className="space-y-2 sm:space-y-3">

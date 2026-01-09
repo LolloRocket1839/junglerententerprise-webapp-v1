@@ -22,7 +22,6 @@ export const translations = {
     // Investment Page
     investmentDashboard: "Dashboard Investimenti",
     totalProperties: "Proprietà Totali",
-    averageROI: "ROI Medio",
     activeInvestors: "Investitori Attivi",
     opportunities: "Opportunità",
     myInvestments: "I Miei Investimenti",
@@ -33,20 +32,17 @@ export const translations = {
     fundingProgress: "Progresso Raccolta Fondi",
     exterior: "Esterno",
     interior: "Interno",
-    expectedROI: "ROI Previsto",
     subscription: "Sottoscrizione",
     availablePhase2: "Disponibile nella Fase 2",
 
     // Investment Details
     investmentFeatures: "Caratteristiche dell'Investimento",
-    annualReturn: "Rendimento annuale previsto: 8-12%",
     minPeriod: "Periodo minimo di investimento: 24 mesi",
     profManagement: "Gestione professionale della proprietà",
     quarterlyReports: "Report trimestrali dettagliati",
     taxBenefits: "Vantaggi Fiscali",
     taxDeductions: "Detrazioni fiscali disponibili",
     taxAdvice: "Consulenza fiscale inclusa",
-    returnOptimization: "Ottimizzazione del rendimento",
     propertyManagement: "Gestione Proprietà",
     scheduledMaintenance: "Manutenzione programmata",
     cleaningService: "Servizio di pulizia professionale",
@@ -85,7 +81,7 @@ export const translations = {
     investor: "Investitore",
     studentDesc: "Cerca alloggi a lungo termine con sconti studenti",
     touristDesc: "Prenota soggiorni brevi in appartamenti",
-    investorDesc: "Gestisci proprietà e analizza rendimenti",
+    investorDesc: "Gestisci proprietà e investi nell'immobiliare",
 
     // Marketplace
     allItems: "Tutti gli articoli",

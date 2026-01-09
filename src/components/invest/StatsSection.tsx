@@ -1,4 +1,4 @@
-import { Building2, Users, TrendingUp } from "lucide-react";
+import { Building2, Users } from "lucide-react";
 import StatsCard from "@/components/invest/StatsCard";
 import { useInvestmentStats } from "@/hooks/useInvestmentStats";
 import { useInvestmentStatsSubscription } from "@/hooks/useInvestmentStatsSubscription";
@@ -15,17 +15,11 @@ export const StatsSection = () => {
   useInvestmentStatsSubscription(refetchStats);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
       <StatsCard 
         title={t('totalProperties')} 
         value={statsLoading ? t('loading') : stats?.totalProperties.toString() || "0"} 
         icon={Building2} 
-        trend="up" 
-      />
-      <StatsCard 
-        title={t('averageROI')} 
-        value={statsLoading ? t('loading') : stats?.averageRoi || "0%"} 
-        icon={TrendingUp} 
         trend="up" 
       />
       <StatsCard 

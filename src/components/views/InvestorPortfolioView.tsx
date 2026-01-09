@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Building2, Euro, TrendingUp, Calendar, ExternalLink } from "lucide-react";
+import { Building2, Euro, Calendar } from "lucide-react";
 import { useInvestorPortfolio } from "@/hooks/useInvestorPortfolio";
 import { useAuth } from "@/hooks/useAuth";
 import { format } from "date-fns";
@@ -35,11 +35,9 @@ export function InvestorPortfolioView() {
     );
   }
 
-  const { totalInvested, totalReturns, propertiesCount, averageROI, investments } = portfolio || {
+  const { totalInvested, propertiesCount, investments } = portfolio || {
     totalInvested: 0,
-    totalReturns: 0,
     propertiesCount: 0,
-    averageROI: 0,
     investments: [],
   };
 
@@ -50,7 +48,6 @@ export function InvestorPortfolioView() {
         <h2 className="text-2xl font-bold text-foreground mb-2">Nessun investimento</h2>
         <p className="text-muted-foreground mb-6">Non hai ancora effettuato investimenti. Esplora le opportunità disponibili!</p>
         <Button>
-          <TrendingUp className="h-4 w-4 mr-2" />
           Esplora Opportunità
         </Button>
       </div>
@@ -65,7 +62,7 @@ export function InvestorPortfolioView() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4">
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
@@ -83,40 +80,12 @@ export function InvestorPortfolioView() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <TrendingUp className="h-5 w-5 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Rendimenti Stimati</p>
-                <p className="text-xl font-bold text-green-600">€{totalReturns.toLocaleString()}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
               <div className="p-2 bg-blue-100 rounded-lg">
                 <Building2 className="h-5 w-5 text-blue-600" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Proprietà</p>
                 <p className="text-xl font-bold">{propertiesCount}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-100 rounded-lg">
-                <TrendingUp className="h-5 w-5 text-amber-600" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">ROI Medio</p>
-                <p className="text-xl font-bold">{averageROI.toFixed(1)}%</p>
               </div>
             </div>
           </CardContent>
@@ -168,9 +137,6 @@ export function InvestorPortfolioView() {
               <div className="text-right">
                 <p className="font-bold">€{investment.amount.toLocaleString()}</p>
                 <p className="text-sm text-muted-foreground">{investment.tokens} token</p>
-                <p className="text-xs text-green-600">
-                  +{investment.property?.investor_share_percentage || 8.5}% annuo
-                </p>
               </div>
             </div>
           ))}
