@@ -1,9 +1,8 @@
-const CACHE_NAME = 'jungle-rent-v1.0.0';
-const RUNTIME_CACHE = 'jungle-rent-runtime';
+const CACHE_NAME = 'jungle-rent-v1.0.2';
+const RUNTIME_CACHE = 'jungle-rent-runtime-v2';
 
-// Assets to cache during installation
+// Assets to cache during installation (only truly static assets)
 const PRECACHE_ASSETS = [
-  '/',
   '/manifest.json',
   '/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png'
 ];
@@ -30,24 +29,61 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch event - serve from cache, fallback to network
+// Helper: Check if request is for build-critical assets (JS/CSS/HTML)
+function isBuildCritical(request) {
+  const url = request.url;
+  const destination = request.destination;
+  
+  // Scripts and styles - always network first
+  if (destination === 'script' || destination === 'style') {
+    return true;
+  }
+  
+  // JS/CSS files by extension
+  if (url.endsWith('.js') || url.endsWith('.css') || url.endsWith('.mjs') || url.endsWith('.map')) {
+    return true;
+  }
+  
+  // Vite build assets and deps
+  if (url.includes('/assets/') || url.includes('node_modules/.vite')) {
+    return true;
+  }
+  
+  return false;
+}
+
+// Fetch event - network-first for critical assets, cache-first for static
 self.addEventListener('fetch', event => {
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) {
     return;
   }
 
-  // Handle navigation requests
+  // Kill switch: ?nocache=1 bypasses all caching
+  if (event.request.url.includes('nocache=1')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // Handle navigation requests - NETWORK FIRST for HTML
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      caches.match('/').then(response => {
-        return response || fetch(event.request);
-      })
+      fetch(event.request)
+        .catch(() => caches.match('/'))
+        .then(response => response || fetch(event.request))
     );
     return;
   }
 
-  // Handle other requests
+  // Build-critical assets (JS/CSS) - NETWORK FIRST, no caching
+  if (isBuildCritical(event.request)) {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Static assets (images, fonts) - cache first with network fallback
   event.respondWith(
     caches.match(event.request).then(response => {
       if (response) {
@@ -60,12 +96,14 @@ self.addEventListener('fetch', event => {
           return fetchResponse;
         }
 
-        // Clone the response before caching
-        const responseToCache = fetchResponse.clone();
-
-        caches.open(RUNTIME_CACHE).then(cache => {
-          cache.put(event.request, responseToCache);
-        });
+        // Only cache images and fonts
+        const destination = event.request.destination;
+        if (destination === 'image' || destination === 'font') {
+          const responseToCache = fetchResponse.clone();
+          caches.open(RUNTIME_CACHE).then(cache => {
+            cache.put(event.request, responseToCache);
+          });
+        }
 
         return fetchResponse;
       });
@@ -114,18 +152,11 @@ self.addEventListener('notificationclick', event => {
   event.notification.close();
 
   if (event.action === 'explore') {
-    // Open the app
-    event.waitUntil(
-      clients.openWindow('/')
-    );
+    event.waitUntil(clients.openWindow('/'));
   } else if (event.action === 'close') {
-    // Just close the notification
     return;
   } else {
-    // Default action - open the app
-    event.waitUntil(
-      clients.openWindow('/')
-    );
+    event.waitUntil(clients.openWindow('/'));
   }
 });
 
@@ -133,7 +164,6 @@ self.addEventListener('notificationclick', event => {
 self.addEventListener('sync', event => {
   if (event.tag === 'background-sync') {
     event.waitUntil(
-      // Handle background sync tasks
       console.log('Background sync triggered')
     );
   }
