@@ -114,7 +114,7 @@ export const MyInvestments = () => {
                 <Coins className="h-5 w-5 text-amber-600" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Token Totali</p>
+                <p className="text-sm text-muted-foreground">Jungle Seeds Totali</p>
                 <p className="text-xl font-bold text-foreground">
                   {stats?.totalTokens || 0}
                 </p>

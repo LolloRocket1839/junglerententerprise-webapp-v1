@@ -8,24 +8,24 @@ export function TokenizationView() {
   const { session } = useAuth();
   const { data: portfolio } = useInvestorPortfolio();
 
-  const totalTokens = portfolio?.investments.reduce((sum, inv) => sum + inv.tokens, 0) || 0;
+  const totalSeeds = portfolio?.investments.reduce((sum, inv) => sum + inv.tokens, 0) || 0;
   const totalValue = portfolio?.totalInvested || 0;
 
   return (
     <div className="space-y-6 animate-fade-in">
       <div>
-        <h1 className="text-2xl font-bold text-foreground">Tokenizzazione</h1>
-        <p className="text-muted-foreground">Come funziona la tokenizzazione degli investimenti</p>
+        <h1 className="text-2xl font-bold text-foreground">Jungle Seeds</h1>
+        <p className="text-muted-foreground">Come funzionano i Jungle Seeds</p>
       </div>
 
-      {/* User Tokens */}
+      {/* User Seeds */}
       {session && (
         <Card className="bg-gradient-to-r from-primary/10 to-primary/5 border-primary/20">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-muted-foreground mb-1">I Tuoi Token</p>
-                <p className="text-4xl font-bold text-primary">{totalTokens}</p>
+                <p className="text-sm text-muted-foreground mb-1">I Tuoi Jungle Seeds</p>
+                <p className="text-4xl font-bold text-primary">{totalSeeds}</p>
                 <p className="text-sm text-muted-foreground mt-1">
                   Valore: €{totalValue.toLocaleString()}
                 </p>
@@ -44,19 +44,19 @@ export function TokenizationView() {
               <div className="p-2 bg-primary/10 rounded-lg">
                 <Coins className="h-5 w-5 text-primary" />
               </div>
-              <CardTitle className="text-lg">Cos'è un Token?</CardTitle>
+              <CardTitle className="text-lg">Cos'è un Jungle Seed?</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-muted-foreground">
-              Un token rappresenta una quota di proprietà in un immobile. 
-              Ogni token ha un valore fisso di <strong>€100</strong> e ti dà diritto 
-              a una parte proporzionale dei rendimenti.
+              Un Jungle Seed rappresenta una quota di proprietà in un immobile. 
+              Ogni Jungle Seed ha un valore fisso di <strong>€100</strong> e ti dà diritto 
+              a una parte proporzionale della proprietà.
             </p>
             <div className="flex items-center gap-2 text-sm">
-              <Badge variant="outline">1 Token = €100</Badge>
+              <Badge variant="outline">1 Jungle Seed = €100</Badge>
               <ArrowRight className="h-4 w-4 text-muted-foreground" />
-              <Badge variant="outline">Quota proporzionale dei rendimenti</Badge>
+              <Badge variant="outline">Quota proporzionale della proprietà</Badge>
             </div>
           </CardContent>
         </Card>
@@ -67,18 +67,18 @@ export function TokenizationView() {
               <div className="p-2 bg-green-100 rounded-lg">
                 <TrendingUp className="h-5 w-5 text-green-600" />
               </div>
-              <CardTitle className="text-lg">Come Funzionano i Rendimenti?</CardTitle>
+              <CardTitle className="text-lg">Come Funzionano i Jungle Seeds?</CardTitle>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-muted-foreground">
-              I rendimenti vengono distribuiti trimestralmente in base al numero 
-              di token posseduti. Il ROI medio è del <strong>7-9% annuo</strong>.
+              I Jungle Seeds rappresentano la tua quota di proprietà. 
+              Più Seeds possiedi, maggiore è la tua partecipazione nell'immobile.
             </p>
             <div className="bg-muted/50 p-3 rounded-lg">
               <p className="text-sm">
-                <strong>Esempio:</strong> Con 100 token (€10.000) e ROI 8.5%, 
-                riceverai circa €850/anno in dividendi.
+                <strong>Esempio:</strong> Con 100 Jungle Seeds (€10.000) possiedi 
+                una quota significativa della proprietà.
               </p>
             </div>
           </CardContent>
@@ -95,7 +95,7 @@ export function TokenizationView() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-muted-foreground">
-              Ogni investimento è garantito da un immobile reale. I token sono 
+              Ogni investimento è garantito da un immobile reale. I Jungle Seeds sono 
               registrati in modo sicuro e trasparente, con tracciabilità completa.
             </p>
             <ul className="space-y-2 text-sm text-muted-foreground">
@@ -126,20 +126,20 @@ export function TokenizationView() {
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-muted-foreground">
-              Stiamo lavorando su funzionalità avanzate per i token:
+              Stiamo lavorando su funzionalità avanzate per i Jungle Seeds:
             </p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <Badge variant="secondary">Coming Soon</Badge>
-                Marketplace secondario per scambio token
+                Marketplace secondario per scambio Jungle Seeds
               </li>
               <li className="flex items-center gap-2">
                 <Badge variant="secondary">Coming Soon</Badge>
-                Token su blockchain per trasparenza
+                Jungle Seeds su blockchain per trasparenza
               </li>
               <li className="flex items-center gap-2">
                 <Badge variant="secondary">Coming Soon</Badge>
-                Staking per rendimenti bonus
+                Bonus per i possessori di Seeds
               </li>
             </ul>
           </CardContent>
