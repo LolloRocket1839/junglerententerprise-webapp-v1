@@ -6,7 +6,6 @@ import { InvestorAnalytics } from "@/components/invest/InvestorAnalytics";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 
-// Simple tabs without Radix context issues
 export const SimpleInvestmentTabs = () => {
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState("opportunities");
@@ -21,8 +20,8 @@ export const SimpleInvestmentTabs = () => {
   return (
     <div className="w-full space-y-6">
       {/* Tab Navigation */}
-      <div className="sticky top-20 z-50 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-md rounded-sm">
-        <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-black/60 backdrop-blur-lg border border-white/10 rounded-lg">
+      <div className="sticky top-20 z-50 bg-background/95 backdrop-blur-sm rounded-lg">
+        <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-2 p-1 bg-muted border border-border rounded-lg">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -31,8 +30,8 @@ export const SimpleInvestmentTabs = () => {
                 "text-sm py-2 px-4 rounded-md transition-all duration-200",
                 "focus:outline-none focus:ring-2 focus:ring-primary/50",
                 activeTab === tab.id
-                  ? "bg-primary text-white font-medium"
-                  : "text-white/70 hover:text-white hover:bg-white/5"
+                  ? "bg-primary text-primary-foreground font-medium shadow-sm"
+                  : "text-muted-foreground hover:text-foreground hover:bg-background"
               )}
             >
               {tab.label}
