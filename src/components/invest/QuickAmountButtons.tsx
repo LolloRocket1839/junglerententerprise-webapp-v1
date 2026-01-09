@@ -1,36 +1,45 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface QuickAmountButtonsProps {
   onSelect: (amount: number) => void;
   selectedAmount: number;
   maxAmount: number;
+  minAmount?: number;
 }
 
 const QuickAmountButtons: React.FC<QuickAmountButtonsProps> = ({
   onSelect,
   selectedAmount,
-  maxAmount
+  maxAmount,
+  minAmount = 100
 }) => {
-  // Calculate suggested amounts based on property value
-  const suggestedAmounts = [
-    5000,
-    10000,
-    Math.min(25000, maxAmount),
-    Math.min(50000, maxAmount)
-  ].filter(amount => amount <= maxAmount);
+  // Quick amounts for easy mobile selection
+  const quickAmounts = [100, 500, 1000, 2500, 5000, 10000];
+  
+  // Filter amounts that are within range
+  const availableAmounts = quickAmounts.filter(
+    amount => amount >= minAmount && amount <= maxAmount
+  );
 
   return (
-    <div className="flex flex-wrap gap-2 mt-2">
-      {suggestedAmounts.map((amount) => (
+    <div className="grid grid-cols-3 gap-2 sm:gap-3">
+      {availableAmounts.map((amount) => (
         <Button
           key={amount}
           variant={selectedAmount === amount ? "default" : "outline"}
-          size="sm"
+          size="lg"
           onClick={() => onSelect(amount)}
-          className="flex-1 min-w-[80px]"
+          className={cn(
+            "h-12 sm:h-14 text-sm sm:text-base font-bold transition-all duration-200",
+            "active:scale-95 touch-manipulation",
+            selectedAmount === amount
+              ? "bg-primary text-primary-foreground shadow-lg"
+              : "bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/30"
+          )}
         >
-          €{amount.toLocaleString()}
+          €{amount.toLocaleString('it-IT')}
         </Button>
       ))}
     </div>

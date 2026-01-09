@@ -49,19 +49,21 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 p-6 md:p-8">
-      <div className="space-y-6">
+    <div className="flex flex-col lg:grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 p-4 sm:p-6 lg:p-8">
+      {/* Left column - Property info */}
+      <div className="space-y-4 sm:space-y-6">
         <PropertyGallery
           images={property.images || []}
           currentImageIndex={currentImageIndex}
           onToggleImage={onToggleImage}
         />
-        <div className="glass-card p-6 space-y-6 shadow-xl backdrop-blur-2xl">
-          <div className="space-y-4">
-            <h3 className="text-3xl font-bold text-white tracking-tight antialiased">
+        
+        <div className="glass-card p-4 sm:p-6 space-y-4 sm:space-y-6 shadow-xl backdrop-blur-2xl">
+          <div className="space-y-3">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight antialiased">
               {property.title}
             </h3>
-            <p className="text-lg text-white/90 leading-relaxed font-medium antialiased">
+            <p className="text-sm sm:text-base lg:text-lg text-white/90 leading-relaxed font-medium antialiased">
               {property.description}
             </p>
           </div>
@@ -73,12 +75,12 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
             rating={property.investor_share_percentage || 8}
           />
           
-          <div className="pt-4">
+          <div className="pt-3 sm:pt-4">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-semibold text-white/90 antialiased">
+              <span className="text-xs sm:text-sm font-semibold text-white/90 antialiased">
                 {t('fundingProgress')}
               </span>
-              <span className="text-sm font-bold text-white antialiased">
+              <span className="text-xs sm:text-sm font-bold text-white antialiased">
                 €{property.amount_raised.toLocaleString()} / €{property.investment_goal.toLocaleString()}
               </span>
             </div>
@@ -90,31 +92,32 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
         </div>
       </div>
 
-      <div className="space-y-6">
+      {/* Right column - Investment controls */}
+      <div className="space-y-4 sm:space-y-6">
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="w-full grid grid-cols-3 bg-black/60 backdrop-blur-2xl border border-white/20 rounded-xl p-1">
+          <TabsList className="w-full grid grid-cols-3 bg-black/60 backdrop-blur-2xl border border-white/20 rounded-xl p-1 h-auto">
             <TabsTrigger 
               value="overview"
-              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased"
+              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased py-2.5 sm:py-3 text-xs sm:text-sm"
             >
               {t('overview')}
             </TabsTrigger>
             <TabsTrigger 
               value="details"
-              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased"
+              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased py-2.5 sm:py-3 text-xs sm:text-sm"
             >
               {t('details')}
             </TabsTrigger>
             <TabsTrigger 
               value="legal"
-              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased"
+              className="data-[state=active]:bg-white/20 data-[state=active]:text-white text-white/90 font-semibold rounded-lg transition-all antialiased py-2.5 sm:py-3 text-xs sm:text-sm"
             >
               {t('legal')}
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="overview" className="space-y-6 pt-6">
-            <div className="glass-card p-6 space-y-8 shadow-xl backdrop-blur-2xl">
+          <TabsContent value="overview" className="space-y-4 sm:space-y-6 pt-4 sm:pt-6">
+            <div className="glass-card p-4 sm:p-6 space-y-6 sm:space-y-8 shadow-xl backdrop-blur-2xl">
               <InvestmentControls
                 amount={investmentAmount}
                 onAmountChange={setInvestmentAmount}
@@ -124,7 +127,7 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
                 onInvest={onInvest}
               />
 
-              <div className="pt-4 border-t border-white/20">
+              <div className="pt-3 sm:pt-4 border-t border-white/20">
                 <InvestmentSummary
                   amount={investmentAmount}
                   roi={`€${calculateROI(investmentAmount)}`}
@@ -135,14 +138,14 @@ const InvestmentContent: React.FC<InvestmentContentProps> = ({
             </div>
           </TabsContent>
 
-          <TabsContent value="details" className="pt-6">
-            <div className="glass-card p-6 shadow-xl backdrop-blur-2xl">
+          <TabsContent value="details" className="pt-4 sm:pt-6">
+            <div className="glass-card p-4 sm:p-6 shadow-xl backdrop-blur-2xl">
               <PropertyDetailsTab />
             </div>
           </TabsContent>
           
-          <TabsContent value="legal" className="pt-6">
-            <div className="glass-card p-6 shadow-xl backdrop-blur-2xl">
+          <TabsContent value="legal" className="pt-4 sm:pt-6">
+            <div className="glass-card p-4 sm:p-6 shadow-xl backdrop-blur-2xl">
               <LegalDocumentsTab />
             </div>
           </TabsContent>
