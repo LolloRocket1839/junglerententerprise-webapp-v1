@@ -19,9 +19,11 @@ export function LandingView({ onSelectMode }: LandingViewProps) {
           <div className="text-center max-w-4xl mx-auto">
             {/* Logo */}
             <div className="flex items-center justify-center gap-3 mb-8">
-              <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-2xl">JR</span>
-              </div>
+              <img 
+                src="/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png" 
+                alt="Jungle Rent" 
+                className="w-20 h-20 rounded-2xl"
+              />
             </div>
 
             <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
