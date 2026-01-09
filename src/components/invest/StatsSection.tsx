@@ -1,4 +1,3 @@
-
 import { Building2, Users, TrendingUp } from "lucide-react";
 import StatsCard from "@/components/invest/StatsCard";
 import { useInvestmentStats } from "@/hooks/useInvestmentStats";
@@ -22,21 +21,18 @@ export const StatsSection = () => {
         value={statsLoading ? t('loading') : stats?.totalProperties.toString() || "0"} 
         icon={Building2} 
         trend="up" 
-        className="glass-card backdrop-blur-md bg-black/40 border-white/10" 
       />
       <StatsCard 
         title={t('averageROI')} 
         value={statsLoading ? t('loading') : stats?.averageRoi || "0%"} 
         icon={TrendingUp} 
         trend="up" 
-        className="glass-card backdrop-blur-md bg-black/40 border-white/10" 
       />
       <StatsCard 
         title={t('activeInvestors')} 
         value={statsLoading ? t('loading') : stats?.activeInvestors || "0"} 
         icon={Users} 
         trend="up" 
-        className="glass-card backdrop-blur-md bg-black/40 border-white/10" 
       />
     </div>
   );
