@@ -3,7 +3,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Toaster } from "@/components/ui/toaster";
 import { queryClient } from '@/lib/react-query';
-import { JungleLanguageProvider } from '@/lib/language-context';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 import { JungleHeader } from '@/components/jungle/JungleHeader';
 import { JungleNavigation } from '@/components/jungle/JungleNavigation';
 import { JungleFooter } from '@/components/jungle/JungleFooter';
@@ -38,10 +38,10 @@ function App() {
     return (
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <JungleLanguageProvider>
+          <LanguageProvider>
             <LandingView onSelectMode={handleModeChange} />
             <Toaster />
-          </JungleLanguageProvider>
+          </LanguageProvider>
         </QueryClientProvider>
       </ErrorBoundary>
     );
@@ -64,7 +64,7 @@ function App() {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <JungleLanguageProvider>
+        <LanguageProvider>
           <div className="min-h-screen bg-background flex flex-col">
             <JungleHeader userMode={userMode} onModeChange={handleModeChange} />
             <JungleNavigation 
@@ -110,7 +110,7 @@ function App() {
             <JungleFooter />
           </div>
           <Toaster />
-        </JungleLanguageProvider>
+        </LanguageProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );
