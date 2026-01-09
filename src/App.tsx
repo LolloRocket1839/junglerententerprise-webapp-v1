@@ -10,13 +10,9 @@ import { JungleFooter } from '@/components/jungle/JungleFooter';
 import { LandingView } from '@/components/views/LandingView';
 import { DashboardView } from '@/components/views/DashboardView';
 import { InvestorDashboardView } from '@/components/views/InvestorDashboardView';
+import { InvestorPortfolioView } from '@/components/views/InvestorPortfolioView';
 import { StudentDashboardView } from '@/components/views/StudentDashboardView';
 import { TouristDashboardView } from '@/components/views/TouristDashboardView';
-import { AdminDashboardView } from '@/components/views/AdminDashboardView';
-import { AdminPropertiesView } from '@/components/views/AdminPropertiesView';
-import { AdminUsersView } from '@/components/views/AdminUsersView';
-import { AdminApplicationsView } from '@/components/views/AdminApplicationsView';
-import { AdminBookingsView } from '@/components/views/AdminBookingsView';
 import Invest from '@/pages/Invest';
 import type { UserMode, AdminMode, ViewType } from '@/lib/types';
 import './App.css';
@@ -27,11 +23,7 @@ function App() {
 
   const handleModeChange = (mode: UserMode | AdminMode | null) => {
     setUserMode(mode);
-    if (mode === "administrator") {
-      setActiveView("admin");
-    } else {
-      setActiveView("dashboard");
-    }
+    setActiveView("dashboard");
   };
 
   // If no userMode selected, show landing page
@@ -57,8 +49,6 @@ function App() {
         return <StudentDashboardView />;
       case "tourist":
         return <TouristDashboardView />;
-      case "administrator":
-        return <AdminDashboardView />;
       default:
         return <DashboardView />;
     }
@@ -78,20 +68,14 @@ function App() {
             
             <main className="flex-1 container mx-auto px-4 py-6">
               {/* Dashboard views based on user mode */}
-              {(activeView === "dashboard" || activeView === "admin") && renderDashboard()}
-              
-              {/* Admin specific views */}
-              {activeView === "properties" && userMode === "administrator" && <AdminPropertiesView />}
-              {activeView === "admin-users" && userMode === "administrator" && <AdminUsersView />}
-              {activeView === "applications" && userMode === "administrator" && <AdminApplicationsView />}
-              {activeView === "bookings" && userMode === "administrator" && <AdminBookingsView />}
+              {activeView === "dashboard" && renderDashboard()}
               
               {/* Investor specific views */}
               {activeView === "invest" && userMode === "investor" && <Invest />}
-              {activeView === "portfolio" && userMode === "investor" && <Invest />}
+              {activeView === "portfolio" && userMode === "investor" && <InvestorPortfolioView />}
               
               {/* Placeholder for other views */}
-              {!["dashboard", "admin", "properties", "admin-users", "applications", "bookings", "invest", "portfolio"].includes(activeView) && (
+              {!["dashboard", "invest", "portfolio"].includes(activeView) && (
                 <div className="text-center py-20 animate-fade-in">
                   <h2 className="text-2xl font-bold text-foreground mb-4">
                     {activeView.charAt(0).toUpperCase() + activeView.slice(1).replace("-", " ")}

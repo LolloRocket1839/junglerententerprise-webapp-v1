@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { Dialog } from "@/components/ui/dialog";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { useUnifiedProperties, UnifiedProperty } from '@/hooks/useUnifiedProperties';
+import { UnifiedProperty } from '@/hooks/useUnifiedProperties';
+import { useAuth } from '@/hooks/useAuth';
+import { useCreateInvestment } from '@/hooks/useCreateInvestment';
 import PropertyCard from './PropertyCard';
 import InvestmentOpportunityDialog from './InvestmentOpportunityDialog';
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 
 const InvestmentOpportunities = () => {
   const [selectedProperty, setSelectedProperty] = useState<UnifiedProperty | null>(null);
   const [showDetails, setShowDetails] = useState(false);
+  const { session } = useAuth();
+  const createInvestment = useCreateInvestment();
 
   // Fetch properties available for investment (with investment_goal > 0)
   const { data: properties, isLoading, error } = useQuery({
@@ -116,8 +120,16 @@ const InvestmentOpportunities = () => {
           property={selectedProperty}
           open={showDetails}
           onOpenChange={setShowDetails}
-          onInvest={(amount) => {
-            toast.success("Investment simulated successfully!");
+          onInvest={async (amount) => {
+            if (!session) {
+              toast.error("Devi effettuare il login per investire");
+              return;
+            }
+            
+            await createInvestment.mutateAsync({
+              propertyId: selectedProperty.id,
+              amount,
+            });
             setShowDetails(false);
           }}
         />

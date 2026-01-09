@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
 import { 
   TrendingUp, 
   Wallet, 
@@ -9,33 +10,50 @@ import {
   ArrowUpRight, 
   ArrowDownRight,
   PieChart,
-  Calendar,
   Bell,
   ChevronRight,
   Euro
 } from "lucide-react";
-import { properties } from "@/lib/mock-data";
-
-// Investor stats derived from properties
-const investorStats = {
-  totalInvested: 25000,
-  totalReturns: 2125,
-  propertiesCount: 3,
-  activeProperties: 3,
-  averageROI: 8.5,
-  pendingDividends: 245,
-};
+import { useInvestorPortfolio } from "@/hooks/useInvestorPortfolio";
+import { useAuth } from "@/hooks/useAuth";
+import { format } from "date-fns";
+import { it } from "date-fns/locale";
 
 export function InvestorDashboardView() {
-  const stats = investorStats;
+  const { session } = useAuth();
+  const { data: portfolio, isLoading } = useInvestorPortfolio();
   
-  const portfolioProperties = properties.slice(0, 3);
-  
-  const recentActivity = [
-    { type: "dividend", amount: 245.00, property: "Via Roma 45", date: "2 giorni fa" },
-    { type: "investment", amount: 5000.00, property: "Corso Vittorio 12", date: "1 settimana fa" },
-    { type: "dividend", amount: 180.50, property: "Via Garibaldi 8", date: "2 settimane fa" },
-  ];
+  const stats = {
+    totalInvested: portfolio?.totalInvested || 0,
+    totalReturns: portfolio?.totalReturns || 0,
+    propertiesCount: portfolio?.propertiesCount || 0,
+    averageROI: portfolio?.averageROI || 8.5,
+  };
+
+  const investments = portfolio?.investments || [];
+
+  // Generate recent activity from investments
+  const recentActivity = investments.slice(0, 3).map(inv => ({
+    type: "investment" as const,
+    amount: inv.amount,
+    property: inv.property?.title || "Proprietà",
+    date: format(new Date(inv.created_at), "d MMM", { locale: it }),
+  }));
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6 animate-fade-in">
+        <Skeleton className="h-10 w-64" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map(i => <Skeleton key={i} className="h-24" />)}
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          <Skeleton className="h-64 md:col-span-2" />
+          <Skeleton className="h-64" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -107,7 +125,7 @@ export function InvestorDashboardView() {
               </div>
             </div>
             <p className="text-sm text-muted-foreground mt-2">
-              {stats.activeProperties} attive
+              {stats.propertiesCount} attive
             </p>
           </CardContent>
         </Card>
@@ -147,32 +165,51 @@ export function InvestorDashboardView() {
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            {portfolioProperties.map((property) => (
-              <div 
-                key={property.id} 
-                className="flex items-center gap-4 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer"
-              >
-                <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center">
-                  <Building2 className="h-6 w-6 text-muted-foreground" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium truncate">{property.name}</p>
-                  <p className="text-sm text-muted-foreground">{property.address}</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Badge variant="outline" className="text-xs">
-                      {property.currentMode === "student" ? "Studenti" : property.currentMode === "tourist" ? "Turisti" : "Ibrido"}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">
-                      Occupazione: {property.occupancy}%
-                    </span>
+            {investments.length === 0 ? (
+              <div className="text-center py-8">
+                <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                <p className="text-muted-foreground">Non hai ancora investimenti</p>
+                <Button className="mt-4" size="sm">
+                  <TrendingUp className="h-4 w-4 mr-2" />
+                  Esplora Opportunità
+                </Button>
+              </div>
+            ) : (
+              investments.slice(0, 3).map((investment) => (
+                <div 
+                  key={investment.id} 
+                  className="flex items-center gap-4 p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors cursor-pointer"
+                >
+                  <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center overflow-hidden">
+                    {investment.property?.images?.[0] ? (
+                      <img src={investment.property.images[0]} alt="" className="w-full h-full object-cover" />
+                    ) : (
+                      <Building2 className="h-6 w-6 text-muted-foreground" />
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium truncate">{investment.property?.title || 'Proprietà'}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {investment.property?.address}, {investment.property?.city}
+                    </p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <Badge variant="outline" className="text-xs">
+                        €{investment.amount.toLocaleString()}
+                      </Badge>
+                      <span className="text-xs text-muted-foreground">
+                        {investment.tokens} token
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold text-green-600">
+                      +{investment.property?.investor_share_percentage || 8.5}%
+                    </p>
+                    <p className="text-sm text-muted-foreground">annuo</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="font-semibold text-green-600">+{((property.noi / property.price) * 100).toFixed(1)}%</p>
-                  <p className="text-sm text-muted-foreground">annuo</p>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </CardContent>
         </Card>
 
@@ -182,33 +219,25 @@ export function InvestorDashboardView() {
             <CardTitle className="text-lg">Attività Recente</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {recentActivity.map((activity, index) => (
-              <div key={index} className="flex items-start gap-3">
-                <div className={`p-2 rounded-full ${
-                  activity.type === "dividend" 
-                    ? "bg-green-100 text-green-600" 
-                    : "bg-blue-100 text-blue-600"
-                }`}>
-                  {activity.type === "dividend" ? (
-                    <ArrowDownRight className="h-4 w-4" />
-                  ) : (
+            {recentActivity.length === 0 ? (
+              <p className="text-sm text-muted-foreground text-center py-4">Nessuna attività recente</p>
+            ) : (
+              recentActivity.map((activity, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <div className="p-2 rounded-full bg-blue-100 text-blue-600">
                     <ArrowUpRight className="h-4 w-4" />
-                  )}
-                </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">
-                    {activity.type === "dividend" ? "Dividendo ricevuto" : "Nuovo investimento"}
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">Nuovo investimento</p>
+                    <p className="text-xs text-muted-foreground">{activity.property}</p>
+                    <p className="text-xs text-muted-foreground">{activity.date}</p>
+                  </div>
+                  <p className="text-sm font-semibold text-foreground">
+                    €{activity.amount.toLocaleString()}
                   </p>
-                  <p className="text-xs text-muted-foreground">{activity.property}</p>
-                  <p className="text-xs text-muted-foreground">{activity.date}</p>
                 </div>
-                <p className={`text-sm font-semibold ${
-                  activity.type === "dividend" ? "text-green-600" : "text-foreground"
-                }`}>
-                  {activity.type === "dividend" ? "+" : ""}€{activity.amount.toFixed(2)}
-                </p>
-              </div>
-            ))}
+              ))
+            )}
           </CardContent>
         </Card>
       </div>
