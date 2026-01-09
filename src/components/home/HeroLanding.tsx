@@ -14,16 +14,13 @@ export const HeroLanding = () => {
       <div className="flex flex-col items-center justify-center min-h-screen px-6 py-20">
         {/* Logo Section */}
         <div className="mb-12 flex flex-col items-center">
-          {/* Shield/Crest Logo */}
-          <div className="relative mb-6">
-            <div className="w-24 h-28 bg-primary rounded-t-full rounded-b-lg flex items-center justify-center relative overflow-hidden">
-              {/* Shield inner design */}
-              <div className="absolute inset-2 border-2 border-primary-foreground/30 rounded-t-full rounded-b-md" />
-              <div className="flex flex-col items-center z-10">
-                <TreePalm className="w-8 h-8 text-primary-foreground mb-1" />
-                <Building2 className="w-6 h-6 text-primary-foreground" />
-              </div>
-            </div>
+          {/* Logo */}
+          <div className="mb-6">
+            <img 
+              src="/jungle-rent-logo.svg" 
+              alt="Jungle Rent" 
+              className="h-24 w-auto"
+            />
           </div>
           
           {/* Brand Name */}

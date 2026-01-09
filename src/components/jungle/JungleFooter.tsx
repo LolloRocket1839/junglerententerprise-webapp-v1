@@ -5,10 +5,12 @@ export function JungleFooter() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">JR</span>
-              </div>
+          <div className="flex items-center gap-2">
+              <img 
+                src="/jungle-rent-logo.svg" 
+                alt="Jungle Rent" 
+                className="h-8 w-auto"
+              />
               <span className="font-serif font-bold text-xl text-foreground">
                 Jungle Rent
               </span>
