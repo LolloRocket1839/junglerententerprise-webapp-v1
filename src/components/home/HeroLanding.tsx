@@ -17,9 +17,9 @@ export const HeroLanding = () => {
           {/* Logo */}
           <div className="mb-6">
             <img 
-              src="/jungle-rent-logo.svg" 
+              src="/lovable-uploads/1b19592a-c8d6-4a22-8f33-b07c78292f13.png" 
               alt="Jungle Rent" 
-              className="h-24 w-auto"
+              className="h-24 w-auto rounded-2xl"
             />
           </div>
           
