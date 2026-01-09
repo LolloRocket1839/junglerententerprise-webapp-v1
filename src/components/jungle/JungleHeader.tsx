@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Menu, X, Globe, LogOut, User } from "lucide-react";
 import { useState } from "react";
-import { useLanguage } from "@/lib/language-context";
+import { useLanguage } from "@/contexts/LanguageContext";
 import type { UserMode, AdminMode } from "@/lib/types";
 
 interface JungleHeaderProps {
