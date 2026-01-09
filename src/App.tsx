@@ -35,20 +35,6 @@ function App() {
     setActiveView("dashboard");
   };
 
-  // If no userMode selected, show landing page
-  if (!userMode) {
-    return (
-      <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <LanguageProvider>
-            <LandingView onSelectMode={handleModeChange} />
-            <Toaster />
-          </LanguageProvider>
-        </QueryClientProvider>
-      </ErrorBoundary>
-    );
-  }
-
   // Render dashboard based on user mode
   const renderDashboard = () => {
     switch (userMode) {
