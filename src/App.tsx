@@ -44,7 +44,7 @@ function App() {
   const renderDashboard = () => {
     switch (userMode) {
       case "investor":
-        return <InvestorDashboardView />;
+        return <InvestorDashboardView onViewChange={setActiveView} />;
       case "student":
         return <StudentDashboardView />;
       case "tourist":

@@ -18,8 +18,13 @@ import { useInvestorPortfolio } from "@/hooks/useInvestorPortfolio";
 import { useAuth } from "@/hooks/useAuth";
 import { format } from "date-fns";
 import { it } from "date-fns/locale";
+import type { ViewType } from "@/lib/types";
 
-export function InvestorDashboardView() {
+interface InvestorDashboardViewProps {
+  onViewChange?: (view: ViewType) => void;
+}
+
+export function InvestorDashboardView({ onViewChange }: InvestorDashboardViewProps) {
   const { session } = useAuth();
   const { data: portfolio, isLoading } = useInvestorPortfolio();
   
@@ -76,7 +81,7 @@ export function InvestorDashboardView() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <Card className="jungle-card">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
@@ -91,24 +96,6 @@ export function InvestorDashboardView() {
             <div className="flex items-center gap-1 mt-2 text-sm text-green-600">
               <ArrowUpRight className="h-4 w-4" />
               +12.5% questo mese
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="jungle-card">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <Euro className="h-5 w-5 text-green-600" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Rendimenti Totali</p>
-                <p className="text-xl font-bold">€{stats.totalReturns.toLocaleString()}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1 mt-2 text-sm text-green-600">
-              <ArrowUpRight className="h-4 w-4" />
-              +8.2% YoY
             </div>
           </CardContent>
         </Card>
@@ -169,7 +156,7 @@ export function InvestorDashboardView() {
               <div className="text-center py-8">
                 <Building2 className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
                 <p className="text-muted-foreground">Non hai ancora investimenti</p>
-                <Button className="mt-4" size="sm">
+                <Button className="mt-4" size="sm" onClick={() => onViewChange?.("invest")}>
                   <TrendingUp className="h-4 w-4 mr-2" />
                   Esplora Opportunità
                 </Button>
@@ -242,40 +229,6 @@ export function InvestorDashboardView() {
         </Card>
       </div>
 
-      {/* Revenue Breakdown */}
-      <Card className="jungle-card">
-        <CardHeader>
-          <CardTitle>Distribuzione Rendimenti</CardTitle>
-          <CardDescription>Ripartizione delle entrate per fonte</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span>Affitti Studenteschi (70%)</span>
-                  <span className="font-medium">€{(stats.totalReturns * 0.7).toLocaleString()}</span>
-                </div>
-                <Progress value={70} className="h-2" />
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span>Affitti Turistici (30%)</span>
-                  <span className="font-medium">€{(stats.totalReturns * 0.3).toLocaleString()}</span>
-                </div>
-                <Progress value={30} className="h-2" />
-              </div>
-            </div>
-            <div className="flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-3xl font-bold text-primary">{stats.averageROI}%</p>
-                <p className="text-sm text-muted-foreground">Rendimento annuo medio</p>
-                <p className="text-xs text-green-600 mt-1">+2.5% rispetto all'anno scorso</p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }
